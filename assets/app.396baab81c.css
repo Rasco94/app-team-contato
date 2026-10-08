@@ -1,0 +1,126 @@
+/*
+ * Guscio app Team Contato - stili - V1.0.1 (09/10/2026)
+ * Stili del GUSCIO (fuori dal Code Block): schermata d'avvio, area sicura del telefono,
+ * schede "Installa" e "Notifiche", foglio iPhone, avvisi. Il Code Block ha i suoi.
+ * Nessun dato riservato.
+ *
+ * CHANGELOG
+ * V1.0.0 (09/10/2026) - prima versione.
+ * V1.0.1 (09/10/2026) - la fascia "Sei offline" sta SOTTO la barra del titolo (prima la copriva); nota piccola nei passi della guida.
+ */
+:root{
+  --tc-navy:#0a2a5e; --tc-navy2:#12397a; --tc-navy-scuro:#071c40;
+  --tc-oro:#c9a961; --tc-avorio:#faf9f6; --tc-testo:#22222a;
+  --tc-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --tc-serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --tc-sa-t:env(safe-area-inset-top,0px); --tc-sa-b:env(safe-area-inset-bottom,0px);
+  --tc-sa-l:env(safe-area-inset-left,0px); --tc-sa-r:env(safe-area-inset-right,0px);
+}
+html{-webkit-tap-highlight-color:transparent;background:var(--tc-navy)}
+html.tc-guscio body{margin:0;min-height:100vh;min-height:100dvh;
+  background:radial-gradient(120% 90% at 50% 0%,var(--tc-navy2) 0%,var(--tc-navy) 55%,var(--tc-navy-scuro) 100%) fixed;
+  padding-left:var(--tc-sa-l);padding-right:var(--tc-sa-r);
+  overscroll-behavior-y:none;-webkit-font-smoothing:antialiased}
+/* dentro l'app il Code Block mette la sua classe e il suo fondo avorio */
+html.tcag-app-attiva body{background:#faf9f6 !important}
+html.tc-standalone{-webkit-user-select:none;user-select:none}
+html.tc-standalone input,html.tc-standalone textarea,html.tc-standalone [contenteditable]{-webkit-user-select:text;user-select:text}
+html.tc-standalone #tcag-content,html.tc-standalone .modal,html.tc-standalone .pop{-webkit-user-select:text;user-select:text}
+
+/* ===== Area sicura (notch, barra di stato, barra di casa) ===== */
+/* striscia navy sotto la barra di stato (stile iOS "black-translucent") */
+html.tc-standalone body::before,html.tc-inapp body::before{content:"";position:fixed;left:0;right:0;top:0;height:var(--tc-sa-t);background:var(--tc-navy);z-index:9990;pointer-events:none}
+html.tc-guscio #tcag .bar{padding-top:var(--tc-sa-t);height:calc(var(--barra-h,56px) + var(--tc-sa-t))}
+html.tc-guscio #tcag .bar.phone{height:calc(52px + var(--tc-sa-t))}
+html.tc-guscio #tcag .rq-detail{top:calc(var(--barra-h,56px) + var(--tc-sa-t) + 16px)}
+html.tc-guscio #tcag .comp-bar{top:calc(var(--barra-h,56px) + var(--tc-sa-t))}
+
+/* ===== Schermata d'avvio ===== */
+#tc-avvio{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:radial-gradient(120% 90% at 50% 30%,#12397a 0%,#0a2a5e 55%,#071c40 100%);
+  transition:opacity .38s ease,visibility .38s ease}
+#tc-avvio.tc-via{opacity:0;visibility:hidden}
+#tc-avvio img{width:min(46vw,210px);height:auto;display:block;animation:tc-entra .7s cubic-bezier(.2,.7,.2,1) both}
+#tc-avvio .tc-barra{margin-top:34px;width:84px;height:2px;border-radius:2px;background:rgba(201,169,97,.25);overflow:hidden;position:relative}
+#tc-avvio .tc-barra::after{content:"";position:absolute;inset:0;width:38%;background:var(--tc-oro);border-radius:2px;animation:tc-corsa 1.15s ease-in-out infinite}
+@keyframes tc-entra{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes tc-corsa{0%{transform:translateX(-110%)}100%{transform:translateX(280%)}}
+
+/* ===== Accesso: scheda centrata, logo sopra ===== */
+html.tc-guscio #tcag .tcag-login{min-height:100vh;min-height:100dvh;align-items:center;padding:calc(24px + var(--tc-sa-t)) 16px calc(32px + var(--tc-sa-b))}
+html.tc-guscio #tcag .tcag-login-carta{background:linear-gradient(180deg,#0f3573 0%,#0a2a5e 100%);border:1px solid rgba(201,169,97,.28);border-top:3px solid var(--tc-oro);
+  box-shadow:0 24px 60px rgba(0,0,0,.38);animation:tc-sali .5s .08s cubic-bezier(.2,.7,.2,1) both}
+html.tc-guscio #tcag .tcag-login-carta::before{content:"";display:block;width:150px;height:118px;margin:-8px auto 10px;
+  background:url(../icone/logo-chiaro.png) center/contain no-repeat}
+@keyframes tc-sali{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ===== Schede (installa, notifiche) ===== */
+.tc-scheda{position:fixed;left:50%;bottom:calc(14px + var(--tc-sa-b));transform:translate(-50%,24px);opacity:0;visibility:hidden;
+  z-index:6000;width:min(440px,calc(100vw - 24px));box-sizing:border-box;
+  background:#fff;color:var(--tc-testo);border-radius:16px;border:1px solid #e3e0d8;border-top:3px solid var(--tc-oro);
+  box-shadow:0 18px 50px rgba(7,28,64,.34);padding:14px 14px 14px 16px;display:flex;gap:12px;align-items:center;
+  font:14px/1.4 var(--tc-sans);transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .3s,visibility .3s}
+.tc-scheda.tc-su{transform:translate(-50%,0);opacity:1;visibility:visible}
+.tc-scheda img{width:44px;height:44px;border-radius:10px;flex:0 0 auto}
+.tc-scheda .tc-t{flex:1 1 auto;min-width:0}
+.tc-scheda b{display:block;font:600 15px/1.25 var(--tc-sans);color:var(--tc-navy)}
+.tc-scheda span.tc-s{display:block;color:#6b6b75;font-size:13px;margin-top:2px}
+.tc-scheda .tc-az{display:flex;flex-direction:column;gap:6px;flex:0 0 auto}
+.tc-btn{min-height:40px;padding:0 16px;border-radius:9px;border:1px solid transparent;font:600 14px var(--tc-sans);cursor:pointer;
+  background:var(--tc-navy);color:#fff;-webkit-appearance:none;appearance:none}
+.tc-btn:active{transform:scale(.98)}
+.tc-btn.tc-sec{background:transparent;color:#6b6b75;border-color:transparent;min-height:30px;font-weight:500;font-size:13px;padding:0 8px}
+.tc-btn[disabled]{opacity:.55;cursor:default}
+html.tcag-app-attiva .tc-scheda{bottom:calc(74px + var(--tc-sa-b))}
+@media(min-width:900px){html.tcag-app-attiva .tc-scheda{bottom:calc(18px + var(--tc-sa-b));left:auto;right:18px;transform:translate(0,24px)}html.tcag-app-attiva .tc-scheda.tc-su{transform:none}}
+
+/* ===== Foglio (guida iPhone, installazione) ===== */
+.tc-velo{position:fixed;inset:0;z-index:7000;background:rgba(7,20,40,.55);display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.tc-velo.tc-su{opacity:1;visibility:visible}
+.tc-foglio{width:min(520px,100%);max-height:92dvh;overflow:auto;background:#fff;color:var(--tc-testo);border-radius:20px 20px 0 0;
+  padding:20px 20px calc(22px + var(--tc-sa-b));box-sizing:border-box;font:15px/1.5 var(--tc-sans);
+  transform:translateY(40px);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.tc-velo.tc-su .tc-foglio{transform:none}
+.tc-foglio h2{margin:0 0 4px;font:600 22px/1.2 var(--tc-serif);color:var(--tc-navy)}
+.tc-foglio p{margin:0 0 14px;color:#55555f}
+.tc-passi{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:10px}
+.tc-passi li{display:flex;gap:12px;align-items:center;background:var(--tc-avorio);border:1px solid #e3e0d8;border-radius:12px;padding:10px 12px}
+.tc-passi .tc-n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--tc-navy);color:#fff;display:grid;place-items:center;font:600 14px var(--tc-sans)}
+.tc-passi svg{flex:0 0 auto;width:34px;height:34px}
+.tc-passi .tc-tx{flex:1 1 auto}
+.tc-passi .tc-tx b{color:var(--tc-navy)}
+.tc-passi .tc-tx small{display:block;margin-top:3px;color:#55555f;font-size:13px;line-height:1.35}
+.tc-foglio .tc-btn{width:100%}
+@media(min-width:700px){.tc-velo{align-items:center}.tc-foglio{border-radius:20px;padding-bottom:22px}}
+
+/* ===== Avvisi ===== */
+.tc-fascia{position:fixed;left:0;right:0;top:calc(52px + var(--tc-sa-t));z-index:1500;background:#7a1620;color:#fff;text-align:center;font:600 13px/1 var(--tc-sans);
+  padding:9px 12px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:transform .3s,opacity .3s,visibility .3s}
+.tc-fascia.tc-su{opacity:1;visibility:visible;transform:none}
+@media(min-width:900px){.tc-fascia{top:calc(var(--barra-h,56px) + var(--tc-sa-t))}}
+.tc-pillola{position:fixed;left:50%;top:calc(10px + var(--tc-sa-t));transform:translate(-50%,-140%);z-index:9996;background:var(--tc-navy);color:#fff;border:1px solid rgba(201,169,97,.5);
+  border-radius:99px;padding:9px 16px;font:600 13px var(--tc-sans);box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.2,.7,.2,1);cursor:pointer}
+.tc-pillola.tc-su{transform:translate(-50%,0)}
+.tc-toast{position:fixed;left:50%;bottom:calc(90px + var(--tc-sa-b));transform:translate(-50%,16px);opacity:0;z-index:9997;max-width:min(92vw,420px);
+  background:#1b1b22;color:#fff;padding:10px 16px;border-radius:10px;font:500 14px/1.4 var(--tc-sans);transition:transform .3s,opacity .3s;pointer-events:none}
+.tc-toast.tc-su{transform:translate(-50%,0);opacity:1}
+
+/* ===== Accesso con codice (ripiego, spento di default) ===== */
+#tcag .tc-codice{margin-top:18px;text-align:center}
+#tcag .tc-codice .tc-o{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.5);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+#tcag .tc-codice .tc-o::before,#tcag .tc-codice .tc-o::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.18)}
+#tcag .tc-codice .tc-apri{width:100%;min-height:46px;border-radius:9px;border:1px solid rgba(201,169,97,.55);background:transparent;color:#fff;font:600 15px var(--tc-sans);cursor:pointer}
+#tcag .tc-codice form{display:grid;gap:10px;margin-top:6px;text-align:left}
+#tcag .tc-codice label{font-size:13px;color:rgba(255,255,255,.8)}
+#tcag .tc-codice input{width:100%;box-sizing:border-box;min-height:48px;border-radius:9px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;
+  font:16px var(--tc-sans);padding:0 12px;margin-top:4px}
+#tcag .tc-codice input.tc-cifre{font-size:24px;letter-spacing:.4em;text-align:center;font-variant-numeric:tabular-nums}
+#tcag .tc-codice .tc-vai{min-height:48px;border-radius:9px;border:0;background:var(--tc-oro);color:#1b1b22;font:700 15px var(--tc-sans);cursor:pointer}
+#tcag .tc-codice .tc-link{background:none;border:0;color:rgba(255,255,255,.7);font:13px var(--tc-sans);text-decoration:underline;cursor:pointer;padding:6px}
+#tcag .tc-codice .tc-msg{font-size:13px;color:var(--tc-oro);margin:0 0 14px;min-height:1em}
+#tcag .tc-codice .tc-msg.tc-err{color:#ffd2d6}
+
+@media (prefers-reduced-motion:reduce){
+  #tc-avvio,#tc-avvio *,.tc-scheda,.tc-velo,.tc-foglio,.tc-pillola,.tc-toast,.tc-fascia,html.tc-guscio #tcag .tcag-login-carta{animation:none !important;transition:none !important}
+}

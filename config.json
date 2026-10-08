@@ -1,0 +1,41 @@
+{
+  "versione": "1.0.0",
+  "backend": {
+    "endpoint": "https://script.google.com/macros/s/AKfycbwB_Z8mHxxh_Olu48rYZE6aoc_-AYnWMMb8OeduIlEUdPtxMFgdo6WOvcBpWb7O5UcDIg/exec"
+  },
+  "cancello": {
+    "url": "https://ai.teamcontatoremax.com:8443",
+    "percorsoPush": "/ai/push"
+  },
+  "push": {
+    "attivo": true,
+    "chiavePubblica": ""
+  },
+  "sessione": {
+    "chiaviLocalStorage": [
+      "tcag_sessione_v4"
+    ],
+    "prefissoChiavi": "tcag_sessione"
+  },
+  "badge": {
+    "selettori": [
+      "#tcag-b-notif2",
+      "#tcag-b-notif",
+      "[data-b=rq]"
+    ],
+    "_nota": "Prima la campanella del telefono (#tcag-b-notif2, V6.1), poi quella del computer, poi le richieste non aperte (solo Code Block V6.0). Cosi' il numero dell'icona e' lo stesso che manda la push (notifiche non lette)."
+  },
+  "loginCodice": {
+    "abilitato": false,
+    "azioneRichiedi": "codice-richiedi",
+    "azioneVerifica": "codice-verifica"
+  },
+  "rinnovoSessione": {
+    "abilitato": false,
+    "azione": "dispositivo-rinnova",
+    "sogliaOre": 6
+  },
+  "android": {
+    "apkUrl": ""
+  }
+}
