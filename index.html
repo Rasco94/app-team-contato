@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.0.0 (build 1daaea0e)
+  Guscio app Team Contato - V1.0.0 (build 15b3c725)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.4 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.5 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.0.0', build: '1daaea0e', blocco: 'V6.4' };
+window.TC_APP = { versione: '1.0.0', build: '15b3c725', blocco: 'V6.5' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -118,6 +118,8 @@ html.tc-guscio body{margin:0}
       <symbol id="tci-home-brush" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8"/><path d="M5 9.5V20a1 1 0 0 0 1 1h5"/><path d="M14.5 21l-.5-3.5 6.2-6.2a1.4 1.4 0 0 1 2 2L16 19.5z"/></symbol>
       <symbol id="tci-chat-spark" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M12.5 7.5l1.1 2.9 2.9 1.1-2.9 1.1-1.1 2.9-1.1-2.9-2.9-1.1 2.9-1.1z"/></symbol>
       <symbol id="tci-contact" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3M15 9h3M15 13h3"/></symbol>
+      <symbol id="tci-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+      <symbol id="tci-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
       <symbol id="tci-send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
       <symbol id="tci-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
       <!-- SEGNAPOSTO del logo negativo (chiaro): sostituire con l'SVG vero ricavato dal PDF -->
@@ -692,9 +694,6 @@ html.tc-guscio body{margin:0}
 #tcag #tcag-str-precompila .str-card>*{grid-column:1}
 #tcag #tcag-str-precompila .str-card>.dis{grid-column:2;grid-row:1 / span 4}
 #tcag #tcag-str-precompila .drop.big{min-height:clamp(260px,40vh,520px)}
-#tcag #tcag-str-render .dis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:16px 32px;align-items:start}
-#tcag #tcag-str-render .dis>*{grid-column:1}
-#tcag #tcag-str-render .dis>.ba{grid-column:2;grid-row:1 / span 5;margin:0}
 }
 #tcag .str-card{padding:22px}
 #tcag .tcard .th{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
@@ -723,6 +722,120 @@ html.tc-guscio body{margin:0}
 }
 @media (min-width:1000px){#tcag .hub{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 #tcag .hub-tile{min-height:clamp(200px,26vh,300px)}
+}
+#tcag .ren{max-width:none;margin:0 auto}
+#tcag .ren-cols{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+#tcag .ren-form{display:flex;flex-direction:column;gap:16px;min-width:0}
+#tcag .ren-form.trascina{outline:3px dashed var(--oro);outline-offset:6px;border-radius:12px}
+#tcag .ren-out{display:flex;flex-direction:column;gap:16px;min-width:0;scroll-margin-top:64px}
+#tcag .ren-passo{padding:20px}
+#tcag .ren-passo h2,
+#tcag .ren-lav h2,
+#tcag .ren-ris h2,
+#tcag .ren-vuoto h2,
+#tcag .ren-storico h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font:600 22px/1.25 var(--serif);color:var(--nv)}
+#tcag .ren-n{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--nv);color:#fff;display:inline-flex;align-items:center;justify-content:center;font:700 17px var(--sans)}
+#tcag .ren-aiuto{margin:0 0 12px;font-size:16px;line-height:1.5;color:var(--testo)}
+#tcag .ren-nota{margin:8px 0 0;font-size:14px;line-height:1.45;color:var(--tenue)}
+#tcag .ren-warn{color:#8a5a00}
+#tcag .ren-err{margin:0 0 12px;padding:12px 14px;border:1px solid #f3b9bf;border-radius:10px;background:#fde8ea;color:#8f0f1b;font-size:16px;line-height:1.45}
+#tcag .ren-avviso{margin:0 0 16px;padding:14px 16px;border:1px solid #ecd68a;border-radius:12px;background:#fff8e1;color:#6b5314;font-size:16px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+#tcag .ren-avviso.err{border-color:#f3b9bf;background:#fde8ea;color:#8f0f1b}
+#tcag .ren-avviso p{margin:0}
+#tcag .ren-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#tcag .ren-anteprima{margin:0 0 12px}
+#tcag .ren-anteprima img{display:block;width:100%;max-height:420px;object-fit:contain;border-radius:10px;background:var(--avorio);border:1px solid var(--bordo)}
+#tcag .ren-prep{margin:0;padding:28px 12px;text-align:center;font-size:17px;color:var(--tenue);border:2px dashed var(--bordo);border-radius:10px}
+#tcag .ren-foto-btns{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+#tcag .ren-foto-btns .btn{width:100%}
+#tcag .ren-drop-nota{display:none}
+#tcag .ren-stili{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+#tcag .ren-stile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;min-height:64px;padding:12px 14px;text-align:left;border:2px solid var(--bordo);border-radius:12px;background:#fff;color:var(--testo)}
+#tcag .ren-stile:hover:not(:disabled){border-color:var(--oro)}
+#tcag .ren-stile[aria-pressed=true]{border-color:var(--nv);background:#eef2fa}
+#tcag .ren-stile[aria-pressed=true] .rs-n::before{content:"\2713\00a0"}
+#tcag .ren-stile:disabled,
+#tcag .ren-vbtn:disabled,
+#tcag .ren-chip:disabled{opacity:.55;cursor:not-allowed}
+#tcag .rs-n{font:700 18px/1.25 var(--sans);color:var(--nv)}
+#tcag .rs-a{font-size:15px;line-height:1.4;color:var(--tenue)}
+#tcag .ren-riga{display:flex;justify-content:flex-end}
+#tcag .ren-ordini{color:#8a5a00;font-weight:600}
+#tcag .ren-sugg-t{margin:10px 0 6px;font-size:15px;color:var(--tenue)}
+#tcag .ren-sugg{display:flex;flex-wrap:wrap;gap:8px}
+#tcag .ren-chip{min-height:44px;padding:0 14px;border:1px solid var(--bordo);border-radius:22px;background:#fff;font-size:16px;color:var(--nv)}
+#tcag .ren-chip:hover:not(:disabled){border-color:var(--oro)}
+#tcag .ren-var{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 14px}
+#tcag .ren-vbtn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:64px;padding:10px 12px;text-align:left;border:2px solid var(--bordo);border-radius:12px;background:#fff}
+#tcag .ren-vbtn[aria-pressed=true]{border-color:var(--nv);background:#eef2fa}
+#tcag .ren-vbtn[aria-pressed=true] .rv-n::before{content:"\2713\00a0"}
+#tcag .rv-n{font:700 16px/1.25 var(--sans);color:var(--nv)}
+#tcag .rv-t{font-size:14px;color:var(--tenue)}
+#tcag #tcag-ren-genera{width:100%}
+#tcag .ren-lav{padding:22px}
+#tcag .ren-barra{height:16px;background:var(--bordo);border-radius:8px;overflow:hidden;margin:6px 0 12px}
+#tcag .ren-barra i{display:block;height:100%;width:0;background:var(--oro);border-radius:8px;transition:width .9s linear}
+#tcag .ren-barra.ind i{width:35%;animation:tcag-ren-ind 1.5s ease-in-out infinite}
+@keyframes tcag-ren-ind{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
+#tcag .ren-tempo{margin:0 0 6px;font-size:18px}
+#tcag .ren-errbox{border-color:#f3b9bf;background:#fde8ea}
+#tcag .ren-errbox h2{color:#8f0f1b}
+#tcag .ren-errtxt{margin:0 0 6px;font-size:17px;line-height:1.5;color:#8f0f1b}
+#tcag .ren-ris{padding:16px}
+#tcag .cf{position:relative;width:100%;aspect-ratio:4 / 3;overflow:hidden;border-radius:10px;background:#1b1b22;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:ew-resize}
+#tcag .cf img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:fill;pointer-events:none;-webkit-user-drag:none}
+#tcag .cf .cf-dopo{height:var(--hh,100%)}
+#tcag .cf-solo{cursor:default}
+#tcag .ren-vecchio{padding:10px 12px;border-radius:8px;background:#fff7e0;border:1px solid #e6c36a;color:var(--testo);font-size:15px}
+#tcag .ren-canali{margin-top:12px;border:1px solid var(--bordo);border-radius:8px;padding:2px 12px 12px;background:#fff}
+#tcag .ren-canali summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:700;color:var(--nv);font-size:16px}
+#tcag .ren-canali .ren-cons{margin-bottom:12px}
+#tcag .ren-canali .btn{width:100%}
+#tcag .cf-prima{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+#tcag .cf-man{position:absolute;top:0;bottom:0;left:var(--p);width:4px;margin-left:-2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.35);pointer-events:none}
+#tcag .cf-man::after{content:"\2194";position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;color:var(--nv);box-shadow:0 1px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font:700 22px var(--sans)}
+#tcag .cf-et{position:absolute;top:10px;padding:4px 12px;border-radius:14px;background:rgba(10,42,94,.88);color:#fff;font:700 14px var(--sans);pointer-events:none}
+#tcag .cf-et-p{left:10px}
+#tcag .cf-et-d{right:10px}
+#tcag .cf-lab{display:block;margin:12px 0 0;font-size:15px;color:var(--tenue)}
+#tcag .cf-r{display:block;width:100%;height:48px;margin:2px 0 0;accent-color:var(--nv);background:none}
+#tcag .ren-btns{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:14px}
+#tcag .ren-btns .btn{width:100%;white-space:normal;text-align:center;line-height:1.25;padding-top:8px;padding-bottom:8px}
+#tcag .ris-corpo{display:flex;flex-wrap:wrap;gap:16px 20px;align-items:flex-start}
+#tcag .ris-img{flex:0 1 auto;width:min(100%,calc((100vh - 320px) * var(--ar,1.33)));width:min(100%,calc((100dvh - 320px) * var(--ar,1.33)));min-width:min(100%,260px)}
+#tcag .ris-az{flex:1 1 180px;min-width:0}
+#tcag .ris-az .ren-btns{margin-top:0}
+#tcag .ris-az .ren-nota{margin-top:10px}
+#tcag .ren-dic{padding:10px 12px;border-radius:8px;background:var(--avorio);border:1px solid var(--bordo);color:var(--testo)}
+#tcag .ren-vuoto,
+#tcag .ren-storico{padding:20px}
+#tcag .ren-cons-t{margin:14px 0 8px;font:700 16px var(--sans);color:var(--nv)}
+#tcag .ren-cons{display:flex;flex-direction:column;gap:8px}
+#tcag .ren-cons li{position:relative;padding-left:22px;font-size:16px;line-height:1.45}
+#tcag .ren-cons li::before{content:"\2022";position:absolute;left:6px;color:var(--oro-t);font-weight:700}
+#tcag .ren-sto-l{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+#tcag .ren-sto{display:flex;flex-direction:column;gap:6px;min-height:44px;padding:6px;border:2px solid var(--bordo);border-radius:10px;background:#fff;text-align:left;font-size:14px;line-height:1.3;color:var(--testo)}
+#tcag .ren-sto.on{border-color:var(--nv)}
+#tcag .ren-sto-n{font-weight:600;color:var(--nv);overflow-wrap:anywhere}
+#tcag .ren-sto-o{color:var(--tenue)}
+#tcag .ren-sto img{display:block;width:100%;aspect-ratio:4 / 3;object-fit:cover;border-radius:6px;background:var(--avorio)}
+@media (min-width:600px){#tcag .ren-stili{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:900px){#tcag .ren-cam{display:none!important}
+#tcag .ren-drop-nota{display:block}
+#tcag .ren-passo{padding:24px}
+}
+@media (min-width:1100px){#tcag .ren-cols{grid-template-columns:minmax(380px,1fr) minmax(0,1.35fr);gap:32px}
+#tcag .ren-out{position:sticky;top:calc(var(--barra-h) + 16px);max-height:calc(100vh - var(--barra-h) - 32px);overflow-y:auto;overscroll-behavior:contain;padding-bottom:2px}
+}
+@media (max-width:899px){#tcag .ren-vuoto{display:none}
+#tcag .ren-passo{padding:16px}
+#tcag .ren-passo h2,
+#tcag .ren-lav h2,
+#tcag .ren-ris h2,
+#tcag .ren-storico h2{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){#tcag .ren-barra.ind i{width:100%;transform:none}
 }
 #tcag .as-wrap{max-width:1800px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
 #tcag .as-main{display:flex;flex-direction:column;height:calc(100dvh - var(--barra-h) - 140px);min-height:440px;padding:0;overflow:hidden}
@@ -1130,7 +1243,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.4';
+  var VERSIONE = 'V6.5';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -1734,7 +1847,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     S.sec = sec; S.sub = sub;
     $$('section.sec').forEach(function(s){ s.hidden = s.id !== 'tcag-s-' + sec; });
     r.setAttribute('data-sec', sec);
-    r.classList.toggle('detail-open', isPhone() && ((sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'strumenti' && sub === 'assistente')));
+    r.classList.toggle('detail-open', isPhone() && ((sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'strumenti' && (sub === 'assistente' || sub === 'render'))));
     r.classList.toggle('chat-open', isPhone() && sec === 'strumenti' && sub === 'assistente');
     // i dati si chiedono solo la prima volta che si apre la sezione
     if(sec === 'immobili' && IM.stato === 'idle') caricaImmobili();
@@ -3247,7 +3360,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      STRUMENTI AI: hub, pagine intere, ASSISTENTE che funziona davvero
      =========================================================
      Rotte: #strumenti, #strumenti/precompila, #strumenti/render, #strumenti/assistente.
-     Precompila e Render sono pagine "in arrivo" (nessuna chiamata di rete).
+     Precompila e' una pagina "in arrivo" (nessuna chiamata di rete). Render (V6.5) e' in 04e4b-render.js.
      L'Assistente parla col cancello AI (indirizzo dalla pagina riservata, mai
      scritto qui): POST con "Authorization: Bearer <sessione del portale>" e
      {"message": testo, "stream": true}. La risposta arriva a pezzi (SSE formato
@@ -3260,7 +3373,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     g('t-str').textContent = STR_TITOLI[sub] || 'Strumenti AI';
     g('str-sub').textContent = sub ? 'Strumenti AI' : 'Assistenti per il lavoro di ogni giorno';
     g('str-back').hidden = !sub;
+    // il riquadro Render del hub: dalla V6.5 e' attivo (la pagina riservata dice ancora "In arrivo")
+    var tr = $('#tcag-str-hub [data-h="strumenti/render"] .soon');
+    if(tr && tr.textContent !== 'Attivo'){ tr.textContent = 'Attivo'; tr.classList.add('ok'); }
     if(sub === 'assistente') renderAssistente();
+    if(sub === 'render') renderRender();
   }
 
   /* ---------- il testo dell'AI: mini-renderer sicuro (solo nodi DOM) ---------- */
@@ -3592,6 +3709,673 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       });
   }
   function inviaDalForm(){ var q = g('as-q'); if(q) inviaDomanda(q.value); }
+  /* =========================================================
+     RENDER RUSTICI (V6.5): foto -> stile -> descrizione -> Genera -> prima/dopo
+     =========================================================
+     Pagina #strumenti/render. Parla col cancello AI (stesso indirizzo dell'Assistente, preso dalla pagina riservata:
+     qui dentro non c'e' nessun indirizzo, solo il percorso /ai/render): "Authorization: Bearer <sessione del portale>".
+       GET  stili            elenco stili, varianti, limiti, dicitura, stato del servizio
+       POST genera           { foto (base64), stile, descrizione, variante } -> 202 { id, stato, posizione }
+       GET  lavoro/<id>      stato: in_coda | attesa_gpu | caricamento | in_corso | fatto | errore (ogni 3 s)
+       GET  immagine/<id>    il JPEG finito, GIA' con la dicitura AI stampata dal cancello (obbligo AI Act)
+     La foto si ridimensiona NEL BROWSER (lato lungo 1344 px, JPEG): il canvas butta via EXIF e posizione GPS.
+     Una richiesta alla volta. Niente sul dispositivo: foto e risultati restano solo in memoria (si perdono con Esci/ricarica).
+     Il testo che arriva dal cancello (stili, messaggi) e' NON fidato: sempre come testo, mai HTML. */
+  var REN_LATO = 1344, REN_MIN_LATO = 512, REN_RAPPORTO_MAX = 2;   // lato lungo massimo inviato, lato corto minimo (dopo la riduzione), rapporto lungo/corto massimo (panoramiche no)
+  var REN_MAX_FILE = 30 * 1024 * 1024, REN_MAX_PX = 120e6;    // foto grezza: peso e megapixel (un telefono da 108 MP sta dentro)
+  var REN_MAX_JPEG = 12 * 1024 * 1024;                        // dopo la riduzione (il cancello accetta fino a 12 MB)
+  var REN_TEMPO_S = 75;                                       // misurato: ~73 s a immagine
+  var REN_POLL_MS = 3000, REN_POLL_GPU_MS = 5000, REN_POLL_LENTO_MS = 10000;
+  var REN_T_STILI = 20000, REN_T_INVIO = 60000, REN_T_POLL = 15000, REN_T_IMG = 60000;
+  var REN_ATTESA_MAX_MS = 25 * 60000;                         // oltre questo si smette di aspettare
+  var REN_ERR_POLL_MAX = 6;                                   // controlli falliti di fila prima di fermarsi
+  var REN_STORICO_MAX = 6;
+  var REN_DICITURA = "Simulazione generata con intelligenza artificiale. Non rappresenta lo stato attuale dell'immobile; arredi e finiture sono indicativi e non inclusi nella vendita.";
+  var REN_SUGG = ['pavimento in parquet di rovere', 'travi di legno a vista', 'parete in pietra naturale', 'grande finestra con luce calda',
+                  'camino in pietra', 'cucina con isola in legno', 'pareti bianche', 'arredi moderni e sobri'];
+  var REN_ORDINI = /^\s*(togli|togliere|metti|mettere|aggiungi|aggiungere|rimuovi|rimuovere|cambia|cambiare|elimina|eliminare|sposta|spostare|fai|fare|rendi|rendere|sostituisci|sostituire|costruisci|costruire|abbatti|abbattere)\b/i;
+  var REN = {
+    carico:'idle', errStili:'', stili:[], varianti:[], limiti:{ descrizione_max:300 }, serv:null, dicitura:'',
+    foto:null, fotoOcc:false, fotoMsg:'',
+    stile:'', descr:'', variante:'',
+    fase:'form',            // form | invio | lavoro | errore | fatto
+    lav:null, err:null, ris:null, storico:[], seq:0,
+    timer:0, tick:0, t0:0, tentErr:0, pronto:false, ultimoImp:null, errT:0
+  };
+
+  /* ---------- indirizzo e chiamate ---------- */
+  function renBase(){
+    try { var u = new URL(AI_URL); return u.origin + '/ai/render'; } catch(e){ return ''; }
+  }
+  function renErrore(testo, http){ var e = new Error(testo); e.testoUtente = testo; e.http = http || 0; return e; }
+  // fetch con Bearer e tempo massimo che vale ANCHE per la lettura del corpo (un server che manda le intestazioni e poi tace non blocca la pagina).
+  // come = 'json' (default) o 'blob'. Risolve con il JSON, oppure con { blob, tipo }. Rifiuta con un Error che ha testoUtente (+ http, rete, scaduto, corpo).
+  function renChiama(percorso, opz, tempo, come){
+    var base = renBase();
+    if(!base) return Promise.reject(renErrore("Lo strumento non è configurato.", 0));
+    opz = opz || {};
+    var ctl = window.AbortController ? new AbortController() : null, scaduto = false;
+    var tm = setTimeout(function(){ scaduto = true; if(ctl) ctl.abort(); }, tempo);
+    var h = { 'Authorization':'Bearer ' + (sessione ? sessione.s : '') };
+    if(opz.corpo !== undefined) h['Content-Type'] = 'application/json';
+    return fetch(base + percorso, { method: opz.metodo || 'GET', headers:h, body: opz.corpo, signal: ctl ? ctl.signal : undefined, cache:'no-store' })
+      .then(function(risp){
+        if(risp.ok){
+          if(come === 'blob') return risp.blob().then(function(b){ return { blob:b, tipo:String(risp.headers.get('Content-Type') || '').toLowerCase() }; });
+          return risp.json();
+        }
+        return risp.json().catch(function(){ return null; }).then(function(j){
+          var det = j && typeof j.detail === 'string' && j.detail.length <= 200 ? j.detail : '';
+          var e = renErrore(det, risp.status); e.corpo = j; throw e;
+        });
+      })
+      .then(function(d){ clearTimeout(tm); return d; }, function(e){
+        clearTimeout(tm);
+        if(e && e.testoUtente !== undefined && e.http) throw e;                   // errore del server, gia' scritto
+        if(e && e.name === 'SyntaxError') throw renErrore('Qualcosa non ha funzionato. Riprova.', 500);   // risposta che non e' JSON
+        var x = renErrore(scaduto ? 'Il servizio ci mette troppo.' : 'Non riesco a collegarmi. Controlla la connessione.', 0);
+        x.rete = !scaduto; x.scaduto = scaduto; x.orig = e;
+        throw x;
+      });
+  }
+  // segnalazione tecnica (V6.4): frasi fisse, mai testi dell'agente. Riusa il tipo 'ai' (lo script non cambia).
+  function diagRender(e){
+    try {
+      var cod, msg;
+      if(e && e.scaduto){ cod = 'TIMEOUT'; msg = 'Render AI troppo lento'; }
+      else if(e && e.rete){ cod = 'RETE'; msg = 'Render AI non raggiungibile'; }
+      else if(e && e.http >= 500 && e.http !== 503){ cod = 'S' + e.http; msg = 'Render AI in errore'; }
+      else return;
+      diagAccoda('ai', '', cod, msg, 0);
+    } catch(x){}
+  }
+  function renTestoErrore(e, contesto){
+    var st = e.http, det = e.testoUtente || '';
+    if(e.rete || e.scaduto || (!st && det)) return det;
+    if(st === 404) return contesto === 'lavoro' ? 'Il lavoro non c’è più (è scaduto). Riprova con la foto.' : 'Lo strumento Render non è ancora attivo. Riprova più tardi.';
+    if(st === 400) return det || 'Non riesco a usare la foto o la descrizione. Riprova.';
+    if(st === 409) return det || 'Hai già un render in corso.';
+    if(st === 413) return det || 'La foto o la descrizione sono troppo grandi.';
+    if(st === 429) return det || 'Hai raggiunto il limite di oggi. Riprova domani.';
+    if(st === 502 || st === 503 || st === 504) return det || 'Lo strumento è molto richiesto o spento. Riprova fra qualche minuto.';
+    return 'Qualcosa non ha funzionato. Riprova.';
+  }
+
+  /* ---------- la pagina ---------- */
+  function renderRender(){
+    var box = g('str-render');
+    // se la pagina riservata e' quella vecchia, il blocco "In arrivo" va tolto (sta accanto al nostro, mai dentro)
+    for(var k = box.firstChild; k;){ var nx = k.nextSibling; if(k.id !== 'tcag-ren') box.removeChild(k); k = nx; }
+    if(!g('ren')){
+      put(box, H`<div id="tcag-ren" class="ren">
+        <div id="tcag-ren-stato" class="ren-avviso" role="status" aria-live="polite" hidden></div>
+        <div class="ren-cols">
+          <div class="ren-form" id="tcag-ren-form">
+            <section class="card ren-passo" aria-labelledby="tcag-ren-h1">
+              <h2 id="tcag-ren-h1"><span class="ren-n" aria-hidden="true">1</span>La foto</h2>
+              <p class="ren-aiuto">Fotografa la stanza dal punto in cui vuoi vedere il risultato. Meglio in orizzontale e con la luce accesa.</p>
+              <div id="tcag-ren-anteprima" class="ren-anteprima" hidden></div>
+              <p id="tcag-ren-fmsg" class="ren-err" role="alert" hidden></p>
+              <div class="ren-foto-btns" id="tcag-ren-fbtns">
+                <button class="btn pri big ren-cam" type="button" data-act="ren-foto" data-k="cam">${ic('camera', 22)}<span>Scatta una foto</span></button>
+                <button class="btn sec big" type="button" data-act="ren-foto" data-k="gal" id="tcag-ren-gal">${ic('upload', 20)}<span id="tcag-ren-gal-t">Scegli una foto</span></button>
+              </div>
+              <p class="ren-nota ren-drop-nota">Su computer puoi anche trascinare qui la foto.</p>
+              <input type="file" id="tcag-ren-in-cam" class="ren-file" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+              <input type="file" id="tcag-ren-in-gal" class="ren-file" accept="image/*" tabindex="-1" aria-hidden="true">
+            </section>
+            <section class="card ren-passo" aria-labelledby="tcag-ren-h2">
+              <h2 id="tcag-ren-h2"><span class="ren-n" aria-hidden="true">2</span>Lo stile</h2>
+              <div id="tcag-ren-stili" class="ren-stili" role="group" aria-labelledby="tcag-ren-h2"><div class="skel skel-card"></div></div>
+            </section>
+            <section class="card ren-passo" aria-labelledby="tcag-ren-h3">
+              <h2 id="tcag-ren-h3"><span class="ren-n" aria-hidden="true">3</span>Cosa vuoi ottenere</h2>
+              <p class="ren-aiuto"><b>Descrivi come sarà alla fine</b>, non dare ordini. Scrivi «pavimento in legno chiaro», non «cambia il pavimento»: l’AI non esegue istruzioni.</p>
+              <label class="fld big" for="tcag-ren-d"><span class="sr">Descrizione in italiano</span>
+                <textarea id="tcag-ren-d" rows="4" maxlength="300" placeholder="Es. pavimento in legno chiaro, grande finestra sul lago, pareti bianche" autocomplete="off"></textarea></label>
+              <div class="ren-riga"><span id="tcag-ren-conta" class="ren-nota">0 / 300</span></div>
+              <p id="tcag-ren-ordini" class="ren-nota ren-ordini" role="note" hidden>Sembra un ordine. Meglio descrivere il risultato: per esempio «pavimento in legno chiaro».</p>
+              <p class="ren-sugg-t" id="tcag-ren-sugg-t">Tocca per aggiungere:</p>
+              <div id="tcag-ren-sugg" class="ren-sugg" role="group" aria-labelledby="tcag-ren-sugg-t"></div>
+            </section>
+            <section class="card ren-passo" aria-labelledby="tcag-ren-h4">
+              <h2 id="tcag-ren-h4"><span class="ren-n" aria-hidden="true">4</span>Crea il render</h2>
+              <div id="tcag-ren-var" class="ren-var" role="group" aria-label="Qualità" hidden></div>
+              <button class="btn pri big" type="button" id="tcag-ren-genera" data-act="ren-genera" disabled>${ic('sparkles', 20)}<span>Genera il render</span></button>
+              <p id="tcag-ren-hint" class="ren-nota" role="status" aria-live="polite"></p>
+              <p id="tcag-ren-servizio" class="ren-nota" hidden></p>
+            </section>
+          </div>
+          <div class="ren-out" id="tcag-ren-out" aria-live="off"></div>
+        </div>
+      </div>`);
+      legaRender();
+      aggiornaRender();
+    }
+    // si ridisegna solo quando cambia lo stato (lo fa chi lo cambia): un ridisegno qui azzererebbe il cursore del confronto
+    if(REN.carico === 'idle' || (REN.carico === 'err' && !REN.pronto && Date.now() - REN.errT > 30000)) caricaStili();
+  }
+  function legaRender(){
+    ['cam', 'gal'].forEach(function(k){
+      g('ren-in-' + k).addEventListener('change', function(ev){
+        var f = ev.target.files && ev.target.files[0]; ev.target.value = '';
+        if(f) renNuovaFoto(f);
+      });
+    });
+    var d = g('ren-d');
+    d.addEventListener('input', function(){ REN.descr = d.value; aggiornaDescr(); aggiornaGenera(); });
+    // trascinare la foto sulla pagina (computer)
+    var f1 = g('ren-form');
+    ['dragenter', 'dragover'].forEach(function(n){ f1.addEventListener(n, function(ev){ if(renOccupato()) return; ev.preventDefault(); f1.classList.add('trascina'); }); });
+    f1.addEventListener('dragleave', function(ev){ if(!ev.relatedTarget || !f1.contains(ev.relatedTarget)) f1.classList.remove('trascina'); });
+    f1.addEventListener('drop', function(ev){
+      ev.preventDefault(); f1.classList.remove('trascina');
+      var f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
+      if(f && !renOccupato()) renNuovaFoto(f);
+    });
+    // se la scheda torna visibile durante l'attesa si controlla subito (i telefoni fermano i timer in secondo piano)
+    document.addEventListener('visibilitychange', function(){
+      if(!document.hidden && REN.fase === 'lavoro' && REN.lav && REN.timer){ clearTimeout(REN.timer); REN.timer = 0; renPoll(REN.seq); }
+    });
+  }
+  var renOccupato = function(){ return REN.fase === 'invio' || REN.fase === 'lavoro'; };
+
+  /* ---------- stili, varianti, limiti ---------- */
+  function caricaStili(){
+    if(REN.carico === 'carico') return;
+    REN.carico = 'carico'; REN.errStili = '';
+    aggiornaRender();
+    renChiama('/stili', {}, REN_T_STILI).then(function(j){
+      var st = (j && Array.isArray(j.stili) ? j.stili : []).filter(function(s){ return s && typeof s.id === 'string' && /^[a-z0-9_]{1,40}$/.test(s.id) && typeof s.nome === 'string'; }).slice(0, 12);
+      if(!st.length) throw renErrore('Lo strumento Render non è ancora pronto. Riprova più tardi.', 503);
+      REN.stili = st.map(function(s){ return { id:s.id, nome:s.nome.slice(0, 60), aiuto: typeof s.aiuto === 'string' ? s.aiuto.slice(0, 120) : '' }; });
+      var vv = (j && Array.isArray(j.varianti) ? j.varianti : []).filter(function(v){ return v && typeof v.id === 'string' && /^[a-z0-9_]{1,20}$/.test(v.id) && typeof v.nome === 'string'; }).slice(0, 3);
+      REN.varianti = vv.map(function(v){ return { id:v.id, nome:v.nome.slice(0, 40), tempo: +v.tempo_s > 0 && +v.tempo_s < 600 ? Math.round(+v.tempo_s) : REN_TEMPO_S }; });
+      var li = j && j.limiti && typeof j.limiti === 'object' ? j.limiti : {};
+      REN.limiti = { descrizione_max: +li.descrizione_max > 0 && +li.descrizione_max <= 1000 ? Math.round(+li.descrizione_max) : 300 };
+      REN.serv = j && j.servizio && typeof j.servizio === 'object' ? { attivo: j.servizio.attivo !== false, in_coda: +j.servizio.in_coda || 0, attesa: +j.servizio.attesa_stimata_s || 0 } : { attivo:true, in_coda:0, attesa:0 };
+      REN.dicitura = typeof j.dicitura === 'string' && j.dicitura.length > 20 && j.dicitura.length <= 400 ? j.dicitura : REN_DICITURA;
+      if(REN.stile && !REN.stili.some(function(s){ return s.id === REN.stile; })) REN.stile = '';
+      if(!REN.variante || !REN.varianti.some(function(v){ return v.id === REN.variante; })) REN.variante = REN.varianti.length ? REN.varianti[0].id : '';
+      REN.carico = 'ok'; REN.pronto = true;
+      disegnaStili(); disegnaVarianti(); disegnaSugg();
+      var d = g('ren-d'); if(d) d.maxLength = REN.limiti.descrizione_max;
+      aggiornaRender();
+    }).catch(function(e){
+      diagRender(e);
+      if(e && e.http === 401){ esci('La sessione è scaduta: accedi di nuovo.'); return; }
+      REN.carico = 'err'; REN.errT = Date.now(); REN.errStili = renTestoErrore(e || {}, 'stili');
+      aggiornaRender();
+    });
+  }
+  function disegnaStili(){
+    var el = g('ren-stili'); if(!el) return;
+    put(el, REN.stili.map(function(s){
+      return H`<button class="ren-stile" type="button" aria-pressed="${s.id === REN.stile ? 'true' : 'false'}" data-act="ren-stile" data-id="${s.id}"><span class="rs-n">${s.nome}</span>${s.aiuto ? H`<span class="rs-a">${s.aiuto}</span>` : ''}</button>`;
+    }));
+  }
+  function disegnaVarianti(){
+    var el = g('ren-var'); if(!el) return;
+    el.hidden = REN.varianti.length < 2;
+    put(el, REN.varianti.map(function(v){
+      return H`<button class="ren-vbtn" type="button" aria-pressed="${v.id === REN.variante ? 'true' : 'false'}" data-act="ren-var" data-id="${v.id}"><span class="rv-n">${v.nome}</span><span class="rv-t">circa ${v.tempo} secondi</span></button>`;
+    }));
+  }
+  function disegnaSugg(){
+    var el = g('ren-sugg'); if(!el) return;
+    put(el, REN_SUGG.map(function(t, i){ return H`<button class="ren-chip" type="button" data-act="ren-sugg" data-i="${i}">${t}</button>`; }));
+  }
+  function renVariante(){
+    for(var i = 0; i < REN.varianti.length; i++) if(REN.varianti[i].id === REN.variante) return REN.varianti[i];
+    return null;
+  }
+  function renTempo(){ var v = renVariante(); return v ? v.tempo : REN_TEMPO_S; }
+
+  /* ---------- foto: lettura, riduzione nel browser, anteprima ---------- */
+  function renNuovaFoto(file){
+    if(renOccupato()) return;
+    var fm = g('ren-fmsg');
+    function nope(t){ REN.fotoOcc = false; REN.fotoMsg = t; aggiornaFoto(); }
+    var tipo = String(file.type || '').toLowerCase(), nome = String(file.name || '');
+    var heic = /hei[cf]/.test(tipo) || /\.hei[cf]$/i.test(nome);
+    if(file.size > REN_MAX_FILE){ nope('La foto è troppo grande (' + Math.round(file.size / 1048576) + ' MB, il massimo è 30 MB). Scattane una più piccola o riducila.'); return; }
+    if(!file.size){ nope('Il file è vuoto. Scegli un’altra foto.'); return; }
+    if(tipo && tipo.indexOf('image/') !== 0 && !heic){ nope('Questo file non è una foto. Scegli una foto (JPEG, PNG o WebP).'); return; }
+    REN.fotoOcc = true; REN.fotoMsg = ''; aggiornaFoto();
+    var url = URL.createObjectURL(file), img = new Image();
+    img.onload = function(){
+      var w = img.naturalWidth, h = img.naturalHeight;
+      URL.revokeObjectURL(url);
+      if(!w || !h){ nope('Non riesco a leggere questa foto. Scegline un’altra.'); return; }
+      if(w * h > REN_MAX_PX){ nope('La foto è troppo grande (' + w + ' × ' + h + ' punti). Scattane una con meno risoluzione.'); return; }
+      var s = Math.min(1, REN_LATO / Math.max(w, h)), cw = Math.max(1, Math.round(w * s)), ch = Math.max(1, Math.round(h * s));
+      if(Math.max(cw, ch) / Math.max(1, Math.min(cw, ch)) > REN_RAPPORTO_MAX){ nope('Usa una foto normale, non panoramica.'); return; }     // il render la deformerebbe e conta come un tentativo
+      if(Math.min(cw, ch) < REN_MIN_LATO){ nope('La foto è troppo piccola (' + w + ' × ' + h + ' punti). Ne serve una più grande.'); return; }
+      var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+      try {
+        var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cw, ch); cx.drawImage(img, 0, 0, cw, ch);
+        cv.toBlob(function(b){
+          if(!b){ nope('Non riesco a preparare la foto. Scegline un’altra.'); return; }
+          if(b.size > REN_MAX_JPEG){ nope('La foto è ancora troppo pesante. Scegline un’altra.'); return; }
+          renImpostaFoto(b, cw, ch);
+        }, 'image/jpeg', 0.85);
+      } catch(e){ nope('Non riesco a preparare la foto. Scegline un’altra.'); }
+    };
+    img.onerror = function(){
+      URL.revokeObjectURL(url);
+      nope(heic
+        ? 'Questa foto è in formato HEIC e questo telefono non la legge qui. Usa «Scatta una foto», oppure su iPhone: Impostazioni, Fotocamera, Formati, «Più compatibile».'
+        : 'Non riesco a leggere questo file. Scegli una foto JPEG, PNG o WebP.');
+    };
+    img.src = url;
+  }
+  function renFoto(k){
+    if(renOccupato()) return;
+    var inp = g('ren-in-' + (k === 'cam' ? 'cam' : 'gal'));
+    if(inp) inp.click();
+  }
+  function renStiliRiprova(){ REN.carico = 'idle'; caricaStili(); }
+  function renImpostaFoto(blob, w, h){
+    if(REN.foto && REN.foto.url) URL.revokeObjectURL(REN.foto.url);
+    REN.foto = { blob:blob, url:URL.createObjectURL(blob), w:w, h:h };
+    REN.fotoOcc = false; REN.fotoMsg = '';
+    if(REN.fase === 'errore'){ REN.fase = 'form'; REN.err = null; disegnaOut(); }
+    aggiornaFoto(); aggiornaGenera();
+  }
+  function aggiornaFoto(){
+    var an = g('ren-anteprima'), fm = g('ren-fmsg'), bt = g('ren-fbtns'); if(!an) return;
+    var occ = renOccupato();
+    fm.hidden = !REN.fotoMsg; fm.textContent = REN.fotoMsg;
+    if(REN.fotoOcc){
+      an.hidden = false; put(an, H`<p class="ren-prep">Preparo la foto…</p>`);
+    } else if(REN.foto){
+      an.hidden = false;
+      put(an, H`<img src="${REN.foto.url}" alt="La tua foto" width="${REN.foto.w}" height="${REN.foto.h}"><p class="ren-nota">Foto pronta (${REN.foto.w} × ${REN.foto.h}). L'indirizzo e la posizione di dove l'hai scattata non vengono inviati.</p>`);
+    } else { an.hidden = true; put(an, ''); }
+    g('ren-gal-t').textContent = REN.foto ? 'Scegli un’altra foto' : 'Scegli una foto';
+    $$('button', bt).forEach(function(b){ b.disabled = occ || REN.fotoOcc; });
+    var cam = $('.ren-cam', bt); if(cam) $('span', cam).textContent = REN.foto ? 'Scatta un’altra foto' : 'Scatta una foto';
+  }
+
+  /* ---------- descrizione ---------- */
+  function aggiornaDescr(){
+    var d = g('ren-d'), max = REN.limiti.descrizione_max || 300;
+    g('ren-conta').textContent = d.value.length + ' / ' + max;
+    g('ren-ordini').hidden = !REN_ORDINI.test(d.value);
+  }
+  function renAggiungiSugg(i){
+    var d = g('ren-d'), t = REN_SUGG[i]; if(!d || !t || renOccupato()) return;
+    var max = REN.limiti.descrizione_max || 300, v = d.value.replace(/[\s,]+$/, '');
+    var nuovo = v ? v + ', ' + t : t;
+    if(nuovo.length > max) return;
+    d.value = nuovo; REN.descr = nuovo; aggiornaDescr(); aggiornaGenera();
+  }
+
+  /* ---------- pulsante Genera e avvisi ---------- */
+  function renMotivo(){
+    if(REN.carico === 'carico' || REN.carico === 'idle') return 'Sto caricando gli stili…';
+    if(REN.carico === 'err') return 'Lo strumento non è raggiungibile. Premi «Riprova».';
+    if(REN.serv && REN.serv.attivo === false) return 'Lo strumento è spento in questo momento. Riprova più tardi.';
+    if(REN.fotoOcc) return 'Preparo la foto…';
+    if(!REN.foto) return 'Prima scegli o scatta la foto (passo 1).';
+    if(!REN.stile) return 'Scegli uno stile (passo 2).';
+    return '';
+  }
+  function aggiornaGenera(){
+    var b = g('ren-genera'); if(!b) return;
+    var occ = renOccupato(), mot = renMotivo();
+    b.disabled = occ || !!mot;
+    $('span', b).textContent = occ ? 'Sto lavorando…' : 'Genera il render';
+    var h = g('ren-hint');
+    h.textContent = occ ? 'Un render alla volta: aspetta che finisca.' : (mot || 'Ci vuole circa ' + renTempo() + ' secondi.');
+    var sv = g('ren-servizio');
+    if(REN.serv && REN.serv.attivo !== false && REN.serv.in_coda > 0 && !occ){
+      sv.hidden = false;
+      sv.textContent = 'Adesso ci sono ' + REN.serv.in_coda + (REN.serv.in_coda === 1 ? ' render' : ' render') + ' in coda' + (REN.serv.attesa > 0 ? ': attesa di circa ' + Math.max(1, Math.round(REN.serv.attesa / 60)) + ' min.' : '.');
+    } else sv.hidden = true;
+    // stile e qualità non si cambiano mentre si lavora
+    $$('#tcag-ren-stili button, #tcag-ren-var button, #tcag-ren-sugg button').forEach(function(x){ x.disabled = occ; });
+    g('ren-d').disabled = occ;
+  }
+  function aggiornaRender(){
+    var av = g('ren-stato'); if(!av) return;
+    if(REN.carico === 'err'){
+      av.hidden = false; av.className = 'ren-avviso err';
+      put(av, H`<p>${REN.errStili}</p><button class="btn sec big" type="button" data-act="ren-stili-riprova">Riprova</button>`);
+    } else if(REN.carico === 'carico'){
+      av.hidden = false; av.className = 'ren-avviso'; put(av, H`<p>Mi collego allo strumento…</p>`);
+    } else if(REN.serv && REN.serv.attivo === false){
+      av.hidden = false; av.className = 'ren-avviso err'; put(av, H`<p>Lo strumento è spento in questo momento. Riprova più tardi.</p>`);
+    } else { av.hidden = true; put(av, ''); }
+    aggiornaDescr(); aggiornaFoto(); aggiornaGenera(); disegnaOut();
+  }
+  function renScegliStile(id){
+    if(renOccupato()) return;
+    if(!REN.stili.some(function(s){ return s.id === id; })) return;
+    REN.stile = id;
+    $$('#tcag-ren-stili button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-id') === id ? 'true' : 'false'); });
+    aggiornaGenera();
+  }
+  function renScegliVar(id){
+    if(renOccupato()) return;
+    if(!REN.varianti.some(function(v){ return v.id === id; })) return;
+    REN.variante = id;
+    $$('#tcag-ren-var button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-id') === id ? 'true' : 'false'); });
+    aggiornaGenera();
+  }
+
+  /* ---------- invio ---------- */
+  function renBase64(blob){
+    return new Promise(function(ok, no){
+      var fr = new FileReader();
+      fr.onload = function(){ var s = String(fr.result || ''), i = s.indexOf(','); ok(i >= 0 ? s.slice(i + 1) : ''); };
+      fr.onerror = function(){ no(new Error('lettura')); };
+      fr.readAsDataURL(blob);
+    });
+  }
+  function renGenera(imp){
+    if(renOccupato()) return;                                   // niente doppio invio (doppio tocco, Invio ripetuto)
+    imp = imp || { foto:REN.foto && REN.foto.blob, w:REN.foto && REN.foto.w, h:REN.foto && REN.foto.h, stile:REN.stile, descr:REN.descr, variante:REN.variante };
+    if(!imp.foto || !imp.stile || !REN.pronto) return;
+    var seq = ++REN.seq;
+    REN.ultimoImp = imp; REN.err = null; REN.ris = null; REN.lav = null; REN.tentErr = 0;
+    REN.fase = 'invio'; REN.t0 = Date.now();
+    aggiornaRender(); renVaiAllOut();
+    renBase64(imp.foto).then(function(b64){
+      if(seq !== REN.seq) return;
+      return renChiama('/genera', { metodo:'POST', corpo: JSON.stringify({ foto:b64, stile:imp.stile, descrizione:String(imp.descr || '').trim(), variante:imp.variante || '' }) }, REN_T_INVIO)
+        .then(function(j){
+          if(seq !== REN.seq) return;
+          if(!j || typeof j.id !== 'string' || !/^[A-Za-z0-9_-]{8,64}$/.test(j.id)) throw renErrore('Qualcosa non ha funzionato. Riprova.', 500);
+          renInizioLavoro(j.id, j);
+        });
+    }).catch(function(e){
+      if(seq !== REN.seq) return;
+      diagRender(e);
+      if(e && e.http === 401){ esci('La sessione è scaduta: accedi di nuovo.'); return; }
+      if(e && e.http === 409 && e.corpo && typeof e.corpo.id === 'string' && /^[A-Za-z0-9_-]{8,64}$/.test(e.corpo.id)){
+        renInizioLavoro(e.corpo.id, { altro:true }); return;     // ne ha gia' uno in corso: lo seguo (con il SUO prima, non la foto nuova)
+      }
+      renFine({ testo: renTestoErrore(e || {}, 'genera'), foto: e && e.http === 400 });
+    });
+  }
+  function renInizioLavoro(id, j){
+    REN.fase = 'lavoro'; REN.tentErr = 0; REN.t0 = Date.now();
+    REN.lav = { id:id, stato: typeof j.stato === 'string' ? j.stato : 'in_coda', pos: +j.posizione || 0, attesa: +j.attesa_stimata_s || 0, trascorsi:0, prog:0, tOss:Date.now(), altro: !!j.altro };
+    aggiornaRender();
+    clearInterval(REN.tick); REN.tick = setInterval(renTick, 1000);
+    renPoll(REN.seq);
+  }
+  function renFine(err){
+    clearTimeout(REN.timer); REN.timer = 0; clearInterval(REN.tick); REN.tick = 0;
+    REN.fase = 'errore'; REN.err = err;
+    aggiornaRender(); renVaiAllOut();
+  }
+
+  /* ---------- controllo dello stato ---------- */
+  function renPoll(seq){
+    REN.timer = 0;
+    if(seq !== REN.seq || REN.fase !== 'lavoro' || !REN.lav) return;
+    if(Date.now() - REN.t0 > REN_ATTESA_MAX_MS){ renFine({ testo:'Ci sta mettendo troppo. Riprova più tardi.' }); return; }
+    var id = REN.lav.id;
+    renChiama('/lavoro/' + encodeURIComponent(id), {}, REN_T_POLL).then(function(j){
+      if(seq !== REN.seq || REN.fase !== 'lavoro') return;
+      REN.tentErr = 0;
+      var L = REN.lav, st = j && typeof j.stato === 'string' ? j.stato : '';
+      if(st === 'fatto'){ renPrendiImmagine(seq, id, j); return; }
+      if(st === 'errore'){
+        var cod = j && typeof j.errore === 'string' ? j.errore : '', msg = j && typeof j.messaggio === 'string' && j.messaggio.length <= 200 ? j.messaggio : '';
+        var PRED = { gpu_occupata:'La scheda video è occupata da troppo tempo. Riprova fra qualche minuto.', servizio_spento:'Lo strumento è spento. Riprova più tardi.',
+                     foto:'Non riesco a usare questa foto. Scattane un’altra.', interno:'Qualcosa non ha funzionato. Riprova.' };
+        renFine({ testo: msg || PRED[cod] || PRED.interno, foto: cod === 'foto' });
+        return;
+      }
+      if(['in_coda', 'attesa_gpu', 'caricamento', 'in_corso'].indexOf(st) < 0) st = L.stato;
+      L.stato = st; L.pos = +j.posizione || 0; L.attesa = +j.attesa_stimata_s || 0;
+      L.trascorsi = typeof j.trascorsi_s === 'number' && j.trascorsi_s >= 0 ? j.trascorsi_s : L.trascorsi;
+      L.prog = typeof j.progresso === 'number' && j.progresso >= 0 ? Math.min(95, j.progresso) : -1; L.tOss = Date.now();
+      disegnaOut();
+      var ms = st === 'attesa_gpu' ? REN_POLL_GPU_MS : REN_POLL_MS;
+      REN.timer = setTimeout(function(){ renPoll(seq); }, ms);
+    }).catch(function(e){
+      if(seq !== REN.seq || REN.fase !== 'lavoro') return;
+      diagRender(e);
+      if(e && e.http === 401){ esci('La sessione è scaduta: accedi di nuovo.'); return; }
+      if(e && e.http === 404){ renFine({ testo: renTestoErrore(e, 'lavoro') }); return; }
+      REN.tentErr++;
+      if(REN.tentErr >= REN_ERR_POLL_MAX){
+        renFine({ testo:'Non riesco a controllare il render. Potrebbe essere comunque in corso: controlla di nuovo fra poco.', ricontrolla:true });
+        return;
+      }
+      disegnaOut();
+      REN.timer = setTimeout(function(){ renPoll(seq); }, e && e.http === 429 ? REN_POLL_LENTO_MS : REN_POLL_MS * 2);
+    });
+  }
+  function renPrendiImmagine(seq, id, info){
+    var altro = !!(REN.lav && REN.lav.altro);
+    // fascia = altezza della striscia con la dicitura in fondo al file; il confronto usa solo la foto sopra
+    var fascia = info && typeof info.fascia_px === 'number' && info.fascia_px > 0 && info.fascia_px < 600 ? Math.round(info.fascia_px) : 0;
+    REN.lav.stato = 'finale'; disegnaOut();
+    renChiama('/immagine/' + encodeURIComponent(id), {}, REN_T_IMG, 'blob').then(function(r){
+      if(r.tipo.indexOf('image/') !== 0) throw renErrore('Qualcosa non ha funzionato. Riprova.', 500);
+      return r.blob;
+    }).then(function(b){
+      if(seq !== REN.seq) return;
+      if(!b || !b.size) throw renErrore('Qualcosa non ha funzionato. Riprova.', 500);
+      // si decodifica subito: cosi' si conoscono le proporzioni e un file rotto diventa un errore chiaro invece di un riquadro vuoto
+      return new Promise(function(ok, no){
+        var u = URL.createObjectURL(b), im = new Image();
+        im.onload = function(){ ok({ b:b, u:u, w:im.naturalWidth, h:im.naturalHeight }); };
+        im.onerror = function(){ URL.revokeObjectURL(u); no(renErrore('Il render è arrivato ma non riesco ad aprirlo. Riprova.', 500)); };
+        im.src = u;
+      });
+    }).then(function(x){
+      if(!x) return;
+      if(seq !== REN.seq){ URL.revokeObjectURL(x.u); return; }
+      if(!altro) return x;
+      // lavoro avviato prima (409): la foto scelta adesso NON e' quella del render, il "prima" giusto lo ha il Cancello
+      return renChiama('/immagine/' + encodeURIComponent(id) + '?v=prima', {}, REN_T_IMG, 'blob').then(function(r){
+        if(r.tipo.indexOf('image/') === 0 && r.blob && r.blob.size){ x.prima = URL.createObjectURL(r.blob); }
+        return x;
+      }, function(){ return x; });                                    // senza prima: si mostra solo il risultato
+    }).then(function(x){
+      if(!x) return;
+      if(seq !== REN.seq){ URL.revokeObjectURL(x.u); if(x.prima) URL.revokeObjectURL(x.prima); return; }
+      var b = x.b;
+      clearTimeout(REN.timer); REN.timer = 0; clearInterval(REN.tick); REN.tick = 0;
+      var imp = REN.ultimoImp, st = null;
+      for(var i = 0; i < REN.stili.length; i++) if(imp && REN.stili[i].id === imp.stile) st = REN.stili[i];
+      var fh = fascia > 0 && fascia < x.h ? x.h - fascia : x.h;      // altezza della sola foto
+      var voce = altro
+        ? { id:id, stile:'', ora: F_ORA.format(new Date()), prima: x.prima || '', dopo: x.u, w:x.w, h:x.h, fh:fh, blob:b, imp:null, avviso:'Stai vedendo il render che avevi già avviato, non quello della foto che hai scelto adesso.' }
+        : { id:id, stile: st ? st.nome : '', ora: F_ORA.format(new Date()), prima: URL.createObjectURL(imp.foto), dopo: x.u, w:x.w, h:x.h, fh:fh, blob:b, imp:imp, avviso:'' };
+      REN.storico.unshift(voce);
+      while(REN.storico.length > REN_STORICO_MAX){ var v = REN.storico.pop(); try { if(v.prima) URL.revokeObjectURL(v.prima); URL.revokeObjectURL(v.dopo); } catch(x){} }
+      REN.ris = voce; REN.fase = 'fatto'; REN.lav = null;
+      aggiornaRender();
+      if(S.sec === 'strumenti' && S.sub === 'render') renVaiAllOut();
+      else toast(voce.avviso ? 'È pronto il render che avevi già avviato.' : 'Il render è pronto.', { label:'Vedi', fn:function(){ go('strumenti/render'); } });
+      var sr = g('ren-sr'); if(sr) sr.textContent = 'Il render è pronto.';
+    }).catch(function(e){
+      if(seq !== REN.seq) return;
+      diagRender(e);
+      if(e && e.http === 401){ esci('La sessione è scaduta: accedi di nuovo.'); return; }
+      renFine({ testo: e && e.http === 404 ? renTestoErrore(e, 'lavoro') : (e && e.testoUtente) || 'Non riesco a scaricare il render. Riprova.', ricontrolla: !(e && e.http === 404) });
+    });
+  }
+
+  /* ---------- la colonna del risultato ---------- */
+  function renVaiAllOut(){
+    var o = g('ren-out'); if(!o || S.sec !== 'strumenti' || S.sub !== 'render') return;
+    try { o.scrollIntoView({ behavior:'smooth', block:'start' }); } catch(e){ o.scrollIntoView(); }
+  }
+  function renStima(L){
+    var tot = renTempo(), dt = Math.max(0, (Date.now() - L.tOss) / 1000), el, pct;
+    if(L.prog >= 0){ pct = Math.min(95, L.prog + 100 * dt / tot); el = pct / 100 * tot; }
+    else { el = (L.trascorsi || 0) + dt; pct = Math.min(95, 100 * el / tot); }
+    pct = Math.max(pct, L.mp || 0); L.mp = pct;                  // la barra non torna mai indietro
+    return { pct:Math.round(pct), resta: Math.max(0, Math.round(tot - pct / 100 * tot)) };
+  }
+  function renTestoStato(L){
+    switch(L.stato){
+      case 'in_coda': return { t: L.pos > 0 ? 'In coda: sei il numero ' + L.pos + '.' : 'In coda: ci sono altri render davanti al tuo.', s: (L.attesa > 0 ? 'Attesa di circa ' + Math.max(1, Math.round(L.attesa / 60)) + ' min. ' : '') + 'Non chiudere la pagina.' };
+      case 'attesa_gpu': return { t:'La scheda video è occupata, attendi.', s:'Sta finendo un altro lavoro. Ci penso io: non chiudere la pagina.' };
+      case 'caricamento': return { t:'Preparo lo strumento…', s:'Può volerci un minuto. Non chiudere la pagina.' };
+      case 'in_corso': return { t:'Sto creando il render…', s:'' };
+      case 'finale': return { t:'Scarico il risultato…', s:'' };
+      default: return { t:'Invio…', s:'' };
+    }
+  }
+  function disegnaOut(){
+    var o = g('ren-out'); if(!o) return;
+    var f = REN.fase, h, L2 = REN.lav;
+    if(f === 'invio'){
+      h = H`<div class="card ren-lav"><h2>Invio la foto…</h2><div class="ren-barra ind" role="progressbar" aria-label="Invio in corso"><i></i></div><p class="ren-nota">Non chiudere la pagina.</p></div>`;
+    } else if(f === 'lavoro' && REN.lav){
+      var L = REN.lav, ts = renTestoStato(L), inc = L.stato === 'in_corso', es = inc ? renStima(L) : null;
+      h = H`<div class="card ren-lav">
+        <h2 id="tcag-ren-st" data-stato="${L.stato}">${ts.t}</h2>
+        ${L.altro ? H`<p class="ren-nota">Stai seguendo il render che avevi già avviato.</p>` : ''}
+        ${REN.tentErr ? H`<p class="ren-nota ren-warn">La connessione è instabile. Riprovo…</p>` : ''}
+        ${inc ? H`<div class="ren-barra" role="progressbar" aria-label="Avanzamento del render" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${es.pct}"><i style="width:${es.pct}%"></i></div>
+          <p class="ren-tempo"><b id="tcag-ren-pct">${es.pct}%</b> · <span id="tcag-ren-resta">${es.resta > 0 ? 'circa ' + es.resta + ' secondi' : 'ancora un attimo…'}</span></p>`
+          : H`<div class="ren-barra ind" role="progressbar" aria-label="In attesa"><i></i></div>`}
+        ${ts.s ? H`<p class="ren-nota">${ts.s}</p>` : ''}
+        <span class="sr" id="tcag-ren-sr" role="status" aria-live="polite"></span>
+      </div>`;
+    } else if(f === 'errore' && REN.err){
+      var E = REN.err;
+      h = H`<div class="card ren-lav ren-errbox" role="alert"><h2>${ic('warn', 22)}Non è andata</h2><p class="ren-errtxt">${E.testo}</p>
+        <div class="ren-btns">${E.ricontrolla && REN.lav ? H`<button class="btn pri big" type="button" data-act="ren-ricontrolla">Controlla di nuovo</button>` : ''}
+        ${!E.ricontrolla && REN.ultimoImp ? H`<button class="btn pri big" type="button" data-act="ren-rigenera">Riprova</button>` : ''}
+        ${E.foto ? H`<button class="btn sec big" type="button" data-act="ren-foto" data-k="gal">Scegli un’altra foto</button>` : ''}</div></div>`;
+    } else if(f === 'fatto' && REN.ris){
+      var R = REN.ris, ok = !!(navigator.canShare && window.File && (function(){ try { return navigator.canShare({ files:[new File([R.blob], 'x.jpg', { type:'image/jpeg' })] }); } catch(e){ return false; } })());
+      var fh = R.fh || R.h;       // il confronto usa solo la FOTO: la striscia con la dicitura sta in fondo al file e viene tagliata fuori dal riquadro
+      h = H`<div class="card ren-ris" style="--ar:${(R.w / fh).toFixed(4)}">
+        <h2>Ecco il render${R.stile ? ' · ' + R.stile : ''}</h2>
+        ${R.avviso ? H`<p class="ren-nota ren-vecchio" role="note">${R.avviso}</p>` : ''}
+        <div class="ris-corpo"><div class="ris-img">
+        <div class="cf${R.prima ? '' : ' cf-solo'}" id="tcag-cf" style="--p:50%;--hh:${(R.h / fh * 100).toFixed(3)}%;aspect-ratio:${R.w} / ${fh}" data-id="${R.id}">
+          <img class="cf-dopo" id="tcag-cf-dopo" src="${R.dopo}" alt="Dopo: simulazione creata con intelligenza artificiale">
+          ${R.prima ? H`<img class="cf-prima" id="tcag-cf-prima" src="${R.prima}" alt="Prima: la tua foto"><span class="cf-et cf-et-p">Prima</span><span class="cf-et cf-et-d">Dopo</span><span class="cf-man" aria-hidden="true"></span>` : ''}
+        </div>
+        ${R.prima ? H`<label class="cf-lab" for="tcag-cf-r">Trascina per confrontare prima e dopo</label>
+        <input type="range" class="cf-r" id="tcag-cf-r" min="0" max="100" value="50" step="1" aria-label="Confronto prima e dopo: da 0 a 100">` : H`<p class="cf-lab">Il confronto con la foto di partenza non è disponibile.</p>`}
+        </div><div class="ris-az">
+        <div class="ren-btns">
+          <button class="btn pri big" type="button" data-act="ren-scarica">${ic('download', 20)}<span>Scarica con dicitura AI</span></button>
+          ${R.imp ? H`<button class="btn sec big" type="button" data-act="ren-rigenera">${ic('refresh', 20)}<span>Rigenera</span></button>` : ''}
+          ${ok ? H`<button class="btn sec big" type="button" data-act="ren-condividi">${ic('send', 20)}<span>Condividi</span></button>` : ''}
+          <button class="btn sec big" type="button" data-act="ren-nuova">Nuova foto</button>
+        </div>
+        <p class="ren-nota ren-dic"><b>Dicitura sull’immagine:</b> ${REN.dicitura || REN_DICITURA}</p>
+        <p class="ren-nota">È già stampata sul file che scarichi, in una striscia in fondo (qui sopra non si vede: il confronto mostra solo la foto), e c’è anche la scritta «Simulazione AI» dentro la foto. Non ritagliarle. Un render non sostituisce le foto reali.</p>
+        <details class="ren-canali"><summary>Dove lo pubblichi</summary>
+          <ul class="ren-cons">
+            <li><b>Sito, social, Vetrina TV:</b> usa il file com’è, con la striscia e la scritta.</li>
+            <li><b>idealista:</b> non accetta scritte sulle foto. La dicitura va <b>in testa alla descrizione</b> dell’annuncio (copiala qui sotto). Chiedi a Oscar prima di caricare il file.</li>
+            <li><b>Immobiliare.it e Casa.it:</b> nella didascalia della foto, se c’è il campo; altrimenti in testa alla descrizione.</li>
+          </ul>
+          <button class="btn sec big" type="button" data-act="ren-copia">${ic('copy', 20)}<span>Copia la dicitura</span></button>
+        </details>
+        </div></div>
+        <span class="sr" id="tcag-ren-sr" role="status" aria-live="polite"></span>
+      </div>`;
+    } else {
+      h = H`<div class="card ren-vuoto"><h2>Qui vedrai il risultato</h2><p class="ren-aiuto">Scegli la foto e lo stile, poi premi «Genera il render». Ci vogliono circa un minuto e un quarto.</p>
+        <h3 class="ren-cons-t">Per un risultato migliore</h3>
+        <ul class="ren-cons"><li>Inquadra tutta la stanza, con pareti e soffitto.</li><li>Luce accesa, foto ferma e a fuoco.</li><li>Niente persone e niente documenti dei clienti nella foto.</li><li>Descrivi il risultato («pavimento in legno chiaro»), non dare ordini.</li><li>È una simulazione: arredi e finiture sono indicativi.</li></ul></div>`;
+    }
+    var storico = REN.storico.length ? H`<div class="card ren-storico"><h2>I tuoi render di oggi</h2><p class="ren-nota">Restano solo finché tieni aperta l’app.</p><div class="ren-sto-l">${REN.storico.map(function(v, i){
+      return H`<button class="ren-sto${REN.ris === v ? ' on' : ''}" type="button" data-act="ren-storico" data-i="${i}" aria-label="Apri il render delle ${v.ora}${v.stile ? ', ' + v.stile : ''}"><img src="${v.dopo}" alt="" loading="lazy"><span class="ren-sto-n">${v.stile || 'Render'}</span><span class="ren-sto-o">${v.ora}</span></button>`;
+    })}</div></div>` : '';
+    var firma = [f, L2 ? L2.stato + '|' + L2.pos + '|' + L2.attesa : '', REN.tentErr, REN.err ? REN.err.testo + '|' + !!REN.err.ricontrolla + '|' + !!REN.err.foto : '',
+      REN.ris ? REN.ris.id : '', REN.storico.map(function(v){ return v.id; }).join(','), REN.ultimoImp ? 1 : 0, REN.dicitura].join('#');
+    if(o.getAttribute('data-firma') === firma && o.firstChild) return;
+    var visto = o.getAttribute('data-vis');
+    put(o, H`${h}${storico}`);
+    o.setAttribute('data-firma', firma);
+    o.setAttribute('data-vis', f);
+    var cf = g('cf'); if(cf && g('cf-r')) legaConfronto(cf);
+    if(f !== visto && f === 'fatto') { var sr = g('ren-sr'); if(sr) sr.textContent = 'Il render è pronto.'; }
+  }
+  // ogni secondo: aggiorna solo barra e secondi (il resto si ridisegna ai controlli)
+  function renTick(){
+    if(REN.fase !== 'lavoro' || !REN.lav || REN.lav.stato !== 'in_corso') return;
+    var b = $('#tcag-ren-out .ren-barra i'), p = g('ren-pct'), rs = g('ren-resta'); if(!b || !p || !rs) return;
+    var es = renStima(REN.lav);
+    b.style.width = es.pct + '%'; p.textContent = es.pct + '%';
+    rs.textContent = es.resta > 0 ? 'circa ' + es.resta + ' secondi' : 'ancora un attimo…';
+    var bar = $('#tcag-ren-out .ren-barra'); if(bar) bar.setAttribute('aria-valuenow', es.pct);
+  }
+
+  /* ---------- confronto prima / dopo ---------- */
+  function legaConfronto(cf){
+    var rg = g('cf-r');
+    function imposta(p){
+      p = Math.max(0, Math.min(100, p));
+      cf.style.setProperty('--p', p + '%'); rg.value = Math.round(p);
+    }
+    rg.addEventListener('input', function(){ imposta(+rg.value); });
+    var giu = false;
+    function da(ev){ var b = cf.getBoundingClientRect(); if(b.width) imposta((ev.clientX - b.left) / b.width * 100); }
+    cf.addEventListener('pointerdown', function(ev){ giu = true; try { cf.setPointerCapture(ev.pointerId); } catch(e){} da(ev); });
+    cf.addEventListener('pointermove', function(ev){ if(giu) da(ev); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function(n){ cf.addEventListener(n, function(){ giu = false; }); });
+  }
+
+  /* ---------- scarica, condividi, rigenera, storico ---------- */
+  function renNomeFile(){ return 'simulazione-ai-' + String(REN.ris ? REN.ris.id : 'render').replace(/[^A-Za-z0-9]/g, '').slice(0, 8) + '.jpg'; }
+  function renScarica(){
+    var R = REN.ris; if(!R) return;
+    var a = document.createElement('a');
+    a.href = R.dopo; a.download = renNomeFile(); a.rel = 'noopener'; a.style.display = 'none';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+  }
+  function renCondividi(){
+    var R = REN.ris; if(!R || !navigator.share) return;
+    try {
+      var file = new File([R.blob], renNomeFile(), { type:'image/jpeg' });
+      navigator.share({ files:[file], title:'Simulazione generata con intelligenza artificiale' }).catch(function(){});
+    } catch(e){}
+  }
+  function renCopia(){
+    var t = REN.dicitura || REN_DICITURA;
+    function ok(){ toast('Dicitura copiata. Incollala in testa alla descrizione.'); }
+    function ripiego(){
+      try {
+        var ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+        document.body.appendChild(ta); ta.select(); var r = document.execCommand && document.execCommand('copy'); document.body.removeChild(ta);
+        if(r) ok(); else toast('Non riesco a copiare. Tieni premuto il testo della dicitura e copialo a mano.');
+      } catch(e){ toast('Non riesco a copiare. Tieni premuto il testo della dicitura e copialo a mano.'); }
+    }
+    try { if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok, ripiego); return; } } catch(e){}
+    ripiego();
+  }
+  function renRigenera(){
+    var imp = REN.ris ? REN.ris.imp : REN.ultimoImp;
+    if(!imp) return;
+    renGenera(imp);
+  }
+  function renNuova(){
+    REN.fase = 'form'; REN.ris = null; REN.err = null;
+    aggiornaRender();
+    var f = g('ren-form'); if(f){ try { f.scrollIntoView({ behavior:'smooth', block:'start' }); } catch(e){ f.scrollIntoView(); } }
+  }
+  function renStorico(i){
+    var v = REN.storico[i]; if(!v || renOccupato()) return;
+    REN.ris = v; REN.fase = 'fatto'; REN.err = null;
+    aggiornaRender(); renVaiAllOut();
+  }
+  function renRicontrolla(){
+    if(!REN.lav) return;
+    REN.fase = 'lavoro'; REN.err = null; REN.tentErr = 0; REN.t0 = Date.now();
+    aggiornaRender();
+    clearInterval(REN.tick); REN.tick = setInterval(renTick, 1000);
+    renPoll(REN.seq);
+  }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
      =========================================================
@@ -5066,6 +5850,19 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       case 'ai-domanda': inviaDomanda(AI_DOMANDE[+el.getAttribute('data-i')]); break;
       case 'ai-svuota': if(!occupata()){ AI.msgs = []; AI.cur = null; disegnaChat(); aggiornaFormAi(); limAi(''); } break;
       case 'ai-riprova': inviaDomanda(AI.ultima, true); break;
+      case 'ren-foto': renFoto(el.getAttribute('data-k')); break;
+      case 'ren-stile': renScegliStile(el.getAttribute('data-id')); break;
+      case 'ren-var': renScegliVar(el.getAttribute('data-id')); break;
+      case 'ren-sugg': renAggiungiSugg(+el.getAttribute('data-i')); break;
+      case 'ren-genera': renGenera(); break;
+      case 'ren-rigenera': renRigenera(); break;
+      case 'ren-scarica': renScarica(); break;
+      case 'ren-condividi': renCondividi(); break;
+      case 'ren-copia': renCopia(); break;
+      case 'ren-nuova': renNuova(); break;
+      case 'ren-storico': renStorico(+el.getAttribute('data-i')); break;
+      case 'ren-ricontrolla': renRicontrolla(); break;
+      case 'ren-stili-riprova': renStiliRiprova(); break;
       case 'cookie-pref': cookiePref(); break;
       case 'camp-agg': caricaCamp(); break;
       case 'acct': apriAccount(el); break;
