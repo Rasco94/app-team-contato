@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.0.0 (build 9ffcdeef)
+  Guscio app Team Contato - V1.0.0 (build 1daaea0e)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.3 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.4 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.0.0', build: '9ffcdeef', blocco: 'V6.3' };
+window.TC_APP = { versione: '1.0.0', build: '1daaea0e', blocco: 'V6.4' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -280,7 +280,7 @@ html.tc-guscio body{margin:0}
       <section id="tcag-s-admin" class="sec" hidden aria-labelledby="tcag-t-adm">
         <div class="wrap">
           <div class="sec-head"><div><div class="sub">Solo segreteria e admin</div><h1 class="sec-t" id="tcag-t-adm">Amministrazione</h1></div></div>
-          <div class="chips" id="tcag-adm-tabs" style="margin-bottom:14px" role="group"></div>
+          <div class="chips adm-tabs" id="tcag-adm-tabs" style="margin-bottom:14px" role="group"></div>
           <div id="tcag-adm-body"></div>
         </div>
       </section>
@@ -669,7 +669,7 @@ html.tc-guscio body{margin:0}
 #tcag .cv-prog i{display:block;height:100%;width:0;background:var(--oro);transition:width .2s}
 #tcag .cv-tela{position:relative;display:inline-block;min-width:100%;text-align:left}
 #tcag .cv-tela canvas{display:block;max-width:none;height:auto;margin:0 auto}
-#tcag .cv-campi{position:absolute;top:0;left:0}
+#tcag .cv-campi{position:absolute;top:0;left:0;right:0;margin:0 auto}
 #tcag .cv-campi input[type=text]{position:absolute;border:0;padding:0 2px;margin:0;background:rgba(201,169,97,.16);font-family:inherit;color:var(--nv);outline:0;border-radius:2px;min-height:0;box-shadow:none}
 #tcag .cv-campi input[type=text]:focus{background:rgba(201,169,97,.42)}
 #tcag .cv-campi input[type=checkbox]{position:absolute;margin:0;padding:0;accent-color:var(--nv);cursor:pointer}
@@ -1073,6 +1073,28 @@ html.tc-guscio body{margin:0}
 }
 @media (prefers-reduced-motion:reduce){#tcag *{animation:none!important;transition:none!important}
 }
+#tcag .pb-num{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#tcag .pb-n{background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio);padding:12px 14px;box-shadow:var(--ombra);min-width:0}
+#tcag .pb-n .num{display:block;font:700 32px/1.1 var(--sans);font-variant-numeric:lining-nums;color:var(--nv)}
+#tcag .pb-n .lb{display:block;font:500 13px var(--sans);color:var(--tenue);overflow-wrap:anywhere;margin-top:2px}
+#tcag .pb-n.rosso .num{color:var(--rosso)}
+#tcag .pb-frase{margin:10px 0 0;font-size:14px}
+#tcag .pb-card{margin-top:14px}
+#tcag .pb-ok{display:flex;align-items:center;gap:12px;color:var(--verde);font:600 16px var(--sans);border-color:#bfe0d0;background:#f1f9f5}
+#tcag .pb-riga{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bordo)}
+#tcag .pb-riga:last-child{border-bottom:0;padding-bottom:0}
+#tcag .pb-riga .g{flex:1 1 auto;min-width:0;overflow-wrap:anywhere;font-size:14px}
+#tcag .pb-riga .pill{flex:0 0 auto}
+#tcag .pb-gr{padding:12px 0;border-bottom:1px solid var(--bordo);min-width:0}
+#tcag .pb-gr:last-child{border-bottom:0;padding-bottom:0}
+#tcag .pb-gt{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;font-size:15px}
+#tcag .pb-gt b{min-width:0;overflow-wrap:anywhere}
+#tcag .pb-gt .pill{flex:0 0 auto}
+#tcag .pb-meta{display:flex;flex-wrap:wrap;gap:2px 14px;font:500 13px var(--sans);color:var(--tenue);overflow-wrap:anywhere}
+#tcag .pb-msg{margin:6px 0;padding:6px 8px;background:#f4f3ef;border-radius:6px;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--testo);overflow-wrap:anywhere;white-space:pre-wrap}
+@media (max-width:899px){#tcag .chips.adm-tabs{flex-wrap:wrap;overflow-x:visible;width:auto}
+#tcag .chips.adm-tabs .chip{min-height:44px}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1084,6 +1106,9 @@ html.tcag-app-attiva footer.Footer,
 html.tcag-app-attiva .weglot-container,
 html.tcag-app-attiva .wg-default{display:none!important}
 html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
+
+html.tcag-app-attiva .cookie-banner-manager .manage-cookies-bar,
+html.tcag-app-attiva .manage-cookies-bar{display:none!important}
 </style>
 
 <script>
@@ -1093,10 +1118,19 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
   // Code Block incollato due volte: si avvia una volta sola
   if(!r || r.getAttribute('data-avviato')) return;
   r.setAttribute('data-avviato', '1');
+  // DIAGNOSTICA (CONTRATTO-V6.4 par. 4): i due ascoltatori si installano SUBITO, cosi' si vedono anche gli errori dell'avvio e del login.
+  // Il resto del modulo sta in 04e9-diagnostica.js: finche' non e' pronto gli eventi si tengono da parte (al massimo 10). Non lancia mai.
+  var DIAG_PRONTO = false, DIAG_PRE = [];
+  window.addEventListener('error', function(ev){
+    try { if(DIAG_PRONTO) diagJs(ev); else if(DIAG_PRE.length < 10) DIAG_PRE.push(['js', ev]); } catch(e){}
+  });
+  window.addEventListener('unhandledrejection', function(ev){
+    try { if(DIAG_PRONTO) diagPromessa(ev); else if(DIAG_PRE.length < 10) DIAG_PRE.push(['promessa', ev]); } catch(e){}
+  });
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.3';
+  var VERSIONE = 'V6.4';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -1256,14 +1290,17 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
     if(sessione) corpo.sessione = sessione.s;
     for(var k in dati) corpo[k] = dati[k];
     var ctl = window.AbortController ? new AbortController() : null;
-    var timer = ctl ? setTimeout(function(){ ctl.abort(); }, 90000) : 0;
+    var t0 = Date.now(), scaduto = false;
+    var timer = ctl ? setTimeout(function(){ scaduto = true; ctl.abort(); }, 90000) : 0;
     return fetch(PORTALE.endpoint, {
       method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' },
       body: JSON.stringify(corpo), signal: ctl ? ctl.signal : undefined
     })
     .catch(function(){
       // rete assente, oppure errore di Google senza intestazioni CORS
-      throw new Error('Il server non risponde. Controlla la connessione e riprova.');
+      diagChiamata(azione, scaduto ? 'TIMEOUT' : 'RETE', '', 0);
+      var e = new Error('Il server non risponde. Controlla la connessione e riprova.'); e.diag = true;
+      throw e;
     })
     .then(function(risp){ return risp.text(); })
     .then(function(testo){
@@ -1271,16 +1308,22 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
       // in caso di timeout o quota Google risponde con una pagina HTML, non JSON
       var j;
       try { j = JSON.parse(testo); }
-      catch(e){ throw new Error('Il server di Google ha avuto un problema. Riprova tra un minuto.'); }
+      catch(e){
+        diagChiamata(azione, 'NONJSON', '', 0);
+        var e2 = new Error('Il server di Google ha avuto un problema. Riprova tra un minuto.'); e2.diag = true;
+        throw e2;
+      }
       return j;
     }, function(e){ clearTimeout(timer); throw e; })
     .then(function(j){
-      if(j && j.ok) return j;
+      if(j && j.ok){ diagLenta(azione, Date.now() - t0); return j; }
       if(j && j.status === 401 && azione !== 'accedi'){
         esci('La sessione è scaduta: accedi di nuovo.');
       }
       var e = new Error((j && j.error) || 'risposta non valida');
       e.status = j && j.status;
+      e.diag = true;           // gia' trattato qui: se nessuno lo prende non diventa anche un "errore nascosto"
+      if(e.status >= 500 && !j.atteso) diagChiamata(azione, 'S' + e.status, j.error, 0);     // j.atteso: stato previsto (es. richieste non ancora attivate), non e' un guasto
       throw e;
     });
   }
@@ -1329,6 +1372,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
       // One Tap: su telefono compare in basso. Non dopo Esci.
       if(!uscito){ try { google.accounts.id.prompt(); } catch(e){} }
     }).catch(function(e){
+      diagLogin('GSI', 'Pulsante Google non caricato');
       avvisoAccesso('Non riesco a caricare il pulsante di Google (' + e.message +
         '). Controlla la connessione o disattiva i blocchi pubblicità per questa pagina.', true);
     });
@@ -1391,7 +1435,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
   var OGGI = ris();
   var RQ = { stato:'idle', ok:false, lista:[], conteggi:null, troncato:false, totale:0, attive:true, err:'', agg:0, vol:null, srv:null };
   var IM = { stato:'idle', ok:false, lista:[], ambito:'miei', richiesto:'miei', err:'', agg:0, vol:null };
-  var ADM = { assegna: ris(), accessi: ris(), log: ris() };
+  var ADM = { assegna: ris(), accessi: ris(), log: ris(), problemi: ris() };
   var S = {
     sec:'oggi', sub:'', oggiF:'',
     rq:{ f:'tutte', q:'', tipo:'', imm:'' }, im:{ f:'tutti', q:'' },
@@ -1544,6 +1588,8 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
     return conRis(R, function(){
       if(sez === 'assegna')
         return chiama('richieste', { assegnatoA:'nessuno', filtro:'tutte' }).then(function(j){ R.dati = ordina((j.richieste || []).slice()); });
+      if(sez === 'problemi')
+        return chiama('amministrazione', { sezione:'problemi', giorni:7 }).then(function(j){ R.dati = j; });
       return chiama('amministrazione', { sezione: sez }).then(function(j){ R.dati = sez === 'accessi' ? (j.accessi || []) : (j.eventi || []); });
     });
   }
@@ -1553,7 +1599,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
     if(IM.ok) p.push(caricaImmobili());
     if(IMP.ok && !impSporco()) p.push(caricaImp());
     if(DOC.albero.ok) p.push(caricaAlbero(true));
-    if(staff()) ['assegna', 'accessi', 'log'].forEach(function(k){ if(ADM[k].ok) p.push(caricaAdm(k)); });
+    if(staff()) ['assegna', 'accessi', 'log', 'problemi'].forEach(function(k){ if(ADM[k].ok) p.push(caricaAdm(k)); });
     Promise.all(p).then(function(){ toast('Dati aggiornati'); });
   }
   function riprova(){
@@ -1680,7 +1726,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
       foglioUscitaImp();
       return;
     }
-    if(sec === 'admin'){ if(['assegna', 'accessi', 'log'].indexOf(sub) < 0) sub = S.adm; S.adm = sub; }
+    if(sec === 'admin'){ if(['assegna', 'accessi', 'log', 'problemi'].indexOf(sub) < 0) sub = S.adm; S.adm = sub; }
     if(sec === 'richieste' && sub && !RE_ID.test(sub)) sub = '';
     if(sec === 'documenti' && sub === 'compila' && !DOC.compile) sub = '';
     if(sec === 'strumenti' && STR_SUB.indexOf(sub) < 0) sub = '';
@@ -1693,7 +1739,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
     // i dati si chiedono solo la prima volta che si apre la sezione
     if(sec === 'immobili' && IM.stato === 'idle') caricaImmobili();
     if(sec === 'documenti' && DOC.albero.stato === 'idle') caricaAlbero(false);
-    if(sec === 'admin' && ADM[S.adm].stato === 'idle') caricaAdm(S.adm);
+    if(sec === 'admin' && (ADM[S.adm].stato === 'idle' || (S.adm === 'problemi' && ADM.problemi.ok && Date.now() - ADM.problemi.agg > 60000))) caricaAdm(S.adm);
     if(sec === 'impostazioni' && (IMP.stato === 'idle' || (IMP.stato === 'err' && !IMP.ok))) caricaImp();
     if(sec === 'campagne' && !CAMP.vol && (CAMP.stato === 'idle' || (CAMP.stato === 'err' && !CAMP.ok) || Date.now() - CAMP.agg > CAMP_RIAPRI_MS)) caricaCamp();
     if(sec === 'richieste' && sub && !trova(sub) && RQ.ok) cercaPerId(sub);
@@ -3071,7 +3117,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
      Tutti i testi sono testo (H``): titolo e testo possono venire da righe
      scritte a mano nel foglio "Notifiche Portale". */
   var NT_ICONE = { richiesta:'inbox', sollecito:'bell', promemoria:'bell', appuntamento:'calendar', assegnata:'user', daAssegnare:'user', questionario:'chat', documento:'file', novita:'sparkles' };
-  var RE_LINK_HASH = /^(oggi|richieste|immobili|documenti|strumenti|altro)(\/[A-Za-z0-9_-]{1,40}){0,1}$/;
+  var RE_LINK_HASH = /^(oggi|richieste|immobili|documenti|strumenti|altro|admin)(\/[A-Za-z0-9_-]{1,40}){0,1}$/;
   var RE_ID_RICH = /^richieste\/((?:RC|OM|CG|VA|TE)-\d{4,6})$/;
   var F_GIORNO = fmtDT({ day:'numeric', month:'long' });
   var notifAperta = function(){ return openPopId === 'pop-notif'; };
@@ -3483,7 +3529,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
       else if(st === 429) t = det || 'Aspetta un minuto e riprova: una domanda alla volta.';
       else if(st === 502 || st === 503 || st === 504) t = det || "L'assistente non è raggiungibile o è lento. Riprova tra qualche minuto.";
       else t = "L'assistente ha avuto un problema. Riprova.";
-      var e = new Error(t); e.testoUtente = t; throw e;
+      var e = new Error(t); e.testoUtente = t; e.http = st; throw e;
     });
   }
   function leggiRispostaAi(risp, m){
@@ -3538,6 +3584,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
       .then(function(){ fineChat(m, ''); })
       .catch(function(e){
         var t;
+        diagAi(e, AI.scaduto);
         if(AI.scaduto) t = "L'assistente ci mette troppo. Riprova tra un minuto.";
         else if(e && e.testoUtente) t = e.testoUtente;
         else t = "Non riesco a collegarmi all'assistente. Controlla la connessione.";
@@ -3546,27 +3593,48 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
   }
   function inviaDalForm(){ var q = g('as-q'); if(q) inviaDomanda(q.value); }
   /* =========================================================
-     ALTRO: "Preferenze cookie"
+     ALTRO: "Preferenze cookie"  (V6.4)
      =========================================================
-     Oscar ha messo il banner cookie di Squarespace in stile "Sub-footer": il
-     link sta nel pie' di pagina, che qui e' nascosto ma esiste nel DOM.
-     Si cerca (fuori da questa app) un link o pulsante del footer con testo
-     breve che parla di cookie e di preferenze/impostazioni, e lo si clicca.
-     Se non si trova, il pulsante NON compare. Il banner vero: non testato. */
-  var COOKIE = { el:null };
+     Il banner cookie nativo di Squarespace e' acceso. Dopo la scelta Squarespace mette in fondo alla pagina la pillola
+     "Preferenze sui cookie" (.manage-cookies-bar), che l'app nasconde con il CSS. Qui si cerca, nell'ordine:
+     1) il bottone della pillola, 2) "Gestisci i cookie" del banner ancora aperto, 3) un bottone del banner per testo,
+     4) il vecchio link nel pie' di pagina. Si clicca quello trovato (anche se nascosto). Se non c'e' niente: il pulsante sparisce. */
+  var COOKIE = { el:null, via:'' };
+  var COOKIE_SEL_PILLOLA = ['.cookie-banner-manager .manage-cookies-bar button', '.manage-cookies-bar button.manage-bar-action', '.manage-cookies-bar button', 'button.manage-bar-action'];
+  var COOKIE_SEL_BANNER = ['.gdpr-cookie-banner button.manage', '.sqs-cookie-banner-v2-cta-container button.manage'];
   function normTesto(s){
     return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
   }
+  function cookieFuori(e){                       // fuori dal blocco dell'app e fuori dal pannello dei cookie
+    return e && !r.contains(e) && !e.closest('.manage-cookies-overlay');
+  }
+  function cookiePrimo(sels){
+    for(var i = 0; i < sels.length; i++){
+      var l = document.querySelectorAll(sels[i]);
+      for(var k = 0; k < l.length; k++) if(cookieFuori(l[k])) return l[k];
+    }
+    return null;
+  }
+  function cookieTesto(t){
+    return t && t.length <= PREFERENZE_COOKIE_MAX && t.indexOf('cookie') >= 0 && /preferenz|impostazion|gestisc|preferences|settings/.test(t);
+  }
   function cercaCookie(){
-    COOKIE.el = null;
+    COOKIE.el = null; COOKIE.via = '';
+    var e = cookiePrimo(COOKIE_SEL_PILLOLA);
+    if(e){ COOKIE.el = e; COOKIE.via = 'pillola'; return; }
+    e = cookiePrimo(COOKIE_SEL_BANNER);
+    if(e){ COOKIE.el = e; COOKIE.via = 'banner'; return; }
+    var b = document.querySelectorAll('.cookie-banner-manager button, .cookie-banner-mount-point button');
+    for(var j = 0; j < b.length; j++){
+      if(cookieFuori(b[j]) && cookieTesto(normTesto(b[j].textContent))){ COOKIE.el = b[j]; COOKIE.via = 'testo'; return; }
+    }
     var cont = document.querySelectorAll('footer, #footer-sections, [class*="footer" i]');
     for(var i = 0; i < cont.length; i++){
       var f = cont[i];
       if(r.contains(f) || f.contains(r)) continue;                 // fuori dal blocco dell'app
       var cand = f.querySelectorAll('a, button, [role="button"]');
       for(var k = 0; k < cand.length; k++){
-        var t = normTesto(cand[k].textContent);
-        if(t && t.length <= PREFERENZE_COOKIE_MAX && t.indexOf('cookie') >= 0 && /preferenz|impostazion|gestisc|preferences|settings/.test(t)){ COOKIE.el = cand[k]; return; }
+        if(cookieTesto(normTesto(cand[k].textContent))){ COOKIE.el = cand[k]; COOKIE.via = 'footer'; return; }
       }
     }
   }
@@ -3575,9 +3643,17 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
     g('cookie-box').hidden = !COOKIE.el;
   }
   function cookiePref(){
-    if(!COOKIE.el || !COOKIE.el.isConnected) cercaCookie();
-    if(COOKIE.el) COOKIE.el.click();
-    else { g('cookie-box').hidden = true; toast('Preferenze cookie non disponibili'); }
+    cercaCookie();                               // la pillola nasce e sparisce con le scelte: si cerca sempre al momento del clic
+    if(!COOKIE.el){ g('cookie-box').hidden = true; toast('Preferenze cookie non disponibili'); return; }
+    var visto = !!document.querySelector('.manage-cookies-overlay');
+    var o = window.MutationObserver ? new MutationObserver(function(){ if(document.querySelector('.manage-cookies-overlay')) visto = true; }) : null;
+    if(o) o.observe(document.documentElement, { childList:true, subtree:true });
+    COOKIE.el.click();
+    if(document.querySelector('.manage-cookies-overlay')) visto = true;
+    setTimeout(function(){                        // il pannello deve essere comparso (anche se l'utente l'ha gia' chiuso)
+      if(o) o.disconnect();
+      if(!visto && o) toast('Preferenze cookie non disponibili');
+    }, 800);
   }
   /* =========================================================
      IMPOSTAZIONI  —  CONTRATTO-V6.2 par. 3.1, 3.2, 8.1
@@ -3705,7 +3781,9 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
   }
   function impAttiva(){
     var A = window.TC_APP; if(!A || typeof A.attivaNotifiche !== 'function') return;
-    Promise.resolve().then(function(){ return A.attivaNotifiche(); }).catch(function(){}).then(impDispAggiorna);
+    Promise.resolve().then(function(){ return A.attivaNotifiche(); })
+      .then(function(ok){ if(ok === false) diagPushSub(); }, function(){ diagPushSub(); })
+      .catch(function(){}).then(impDispAggiorna);
   }
   function impDisattiva(){
     var A = window.TC_APP; if(!A || typeof A.disattivaNotifiche !== 'function') return;
@@ -3723,11 +3801,16 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
     fetch(PUSH_URL + '/prova', { method:'POST', headers:{ 'Authorization':'Bearer ' + sessione.s }, signal: ctl ? ctl.signal : undefined })
       .then(function(risp){
         clearTimeout(timer);
+        if(risp.status >= 500) diagPush('S' + risp.status, 'Notifiche in errore');
         if(risp.ok) toast('Notifica mandata. Dovrebbe arrivare tra pochi secondi.');
         else if(risp.status === 429) toast('Hai già provato 3 volte: riprova tra 10 minuti.');
         else toast('Non sono riuscito a mandarla.');
       })
-      .catch(function(){ clearTimeout(timer); toast('Non sono riuscito a mandarla.'); })
+      .catch(function(e){
+        clearTimeout(timer);
+        if(e && e.name === 'AbortError') diagPush('TIMEOUT', 'Notifiche troppo lente'); else diagPush('RETE', 'Notifiche non raggiungibili');
+        toast('Non sono riuscito a mandarla.');
+      })
       .then(function(){ IMP.provando = false; impDispAggiorna(); });
   }
 
@@ -4310,6 +4393,452 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
     var vecchia = CAMP.err ? H`<div class="stale">${ic('clock', 14)}<span>Dati non aggiornati. Non riesco a ricaricare: ${CAMP.err}</span> <button class="btn sec sm" type="button" data-act="retry">Riprova</button></div>` : '';
     put(b, H`${vecchia}${corpo}`);
   }
+  /* =========================================================
+     DIAGNOSTICA  (CONTRATTO-V6.4)
+     =========================================================
+     Perche': se qualcosa si rompe sul telefono di un agente, nessuno lo sa. Questo modulo manda allo script
+     SOLO dati tecnici: versione, schermata, tipo di errore, telefono o computer e browser. MAI dati dei clienti,
+     note, messaggi, domande o risposte dell'assistente. Due barriere: qui il messaggio si ripulisce (pulisciMsg),
+     e lo script lo ripulisce di nuovo senza fidarsi di questo.
+     Regole del contratto (par. 0.4): ogni pezzo e' in try/catch, non lancia, non blocca, non parte mentre l'utente
+     aspetta, e la sua caduta NON si segnala (niente giri su se stessa).
+     Sul dispositivo si salva solo il contatore del giorno (tcag_diag): le firme degli errori gia' mandati e quanti.
+  */
+
+  /* DIAG-PURO-INIZIO: queste funzioni sono provate contro prove/diagnostica-riferimento.cjs (stesso risultato su ogni esempio).
+     Niente lookbehind e niente gruppi con nome: Safari prima di iOS 16.4 non compila lo script. */
+  // il dominio del cancello AI e' nella lista del contratto ma NON si scrive per intero: nel Code Block pubblico non deve comparire il suo indirizzo (controllo statico)
+  var DIAG_HOST_OK = ['script.google.com', 'accounts.google.com', ['ai', 'teamcontatoremax', 'com'].join('.'), 'www.teamcontatoremax.com', 'teamcontatoremax.com', 'agenti.teamcontatoremax.com'];
+  var DIAG_MSG_INGRESSO = 1000;    // il messaggio si taglia a questa lunghezza PRIMA delle regole (costo quadratico delle espressioni)
+  var DIAG_PRECEDE_OK = ['reading ', 'property ', 'execute ', ' on ', ' of '];     // prima della virgoletta: le uniche dove un nome tra apici resta
+  function pulisciMsg(testo, max){
+    max = max || 160;
+    var s = '';
+    try { s = (testo === null || testo === undefined) ? '' : String(testo); } catch(e){ s = ''; }
+    s = s.slice(0, 3000).replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+    // ingresso tagliato a 1000 caratteri prima delle regole, all'ultimo spazio (cosi' non resta un'email a meta'): un messaggio da 50.000 caratteri costava 5,8 s
+    if(s.length > DIAG_MSG_INGRESSO){ var cut = s.slice(0, DIAG_MSG_INGRESSO), sp = cut.lastIndexOf(' '); s = sp > 0 ? cut.slice(0, sp) : cut; }
+    // messaggi di JSON non valido: il browser ci mette dentro un pezzo del testo ricevuto, quindi si butta tutto
+    if(/JSON\.parse|Unexpected (?:token|end of JSON|non-whitespace)|is not valid JSON|in JSON at position/i.test(s)) return 'JSON non valido';
+    // indirizzi: restano solo i domini della lista, senza percorso ne' parametri
+    s = s.replace(/\b(?:https?|wss?|blob|data|file|ftp):[^\s'"<>)]*/gi, function(m){
+      var h = /^(?:https?|wss?):\/\/([^\/:?#@]+)/i.exec(m);
+      var host = h ? h[1].toLowerCase() : '';
+      return DIAG_HOST_OK.indexOf(host) >= 0 ? '[url:' + host + ']' : '[url]';
+    });
+    // email
+    s = s.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, '[email]');
+    // gettoni: ID token Google (eyJ...), sessione (corpo.firma), stringhe lunghe, esadecimali lunghi
+    s = s.replace(/\beyJ[A-Za-z0-9_-]{5,}(?:\.[A-Za-z0-9_-]+){0,2}/g, '[token]');
+    s = s.replace(/[A-Za-z0-9_-]{24,}(?:\.[A-Za-z0-9_-]{16,})?/g, '[token]');
+    s = s.replace(/\b[0-9a-fA-F]{16,}\b/g, '[token]');
+    // codice fiscale (anche con omocodia) e codici richiesta/immobile (RC-0001, MR-0003, anche piu' lunghi): collegano a un cliente
+    s = s.replace(/\b[A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]\b/gi, '[cf]');
+    s = s.replace(/\b[A-Z]{2,3}-\d{4,}\b/g, '[id]');
+    // telefoni e numeri lunghi: 7 cifre o piu' (anche con spazi, punti, trattini, parentesi, + iniziale)
+    s = s.replace(/(?:\+|00)?\d[\d ()./-]{5,}\d/g, function(m){ return m.replace(/\D/g, '').length >= 7 ? '[tel]' : m; });
+    // testo tra virgolette: resta solo un nome di campo (identificatore, al massimo 24 caratteri) dopo le parole della lista.
+    // La virgoletta apre solo dopo un carattere che non e' lettera o cifra e chiude solo prima di uno che non lo e':
+    // gli apostrofi italiani (l'agente, dell'immobile) non contano.
+    // anche la virgoletta NON chiusa (si butta il resto della frase) e le virgolette „…“
+    s = s.replace(/(^|[^A-Za-z0-9_])(["'`“‘«„])([^"'`”’»“]*)(?:(["'`”’»“])(?![A-Za-z0-9_])|$)/g, function(m, pre, a, dentro, z, pos, tutto){
+      var fine = pos + pre.length;
+      var prima = tutto.slice(Math.max(0, fine - 10), fine);
+      var ok = z !== undefined && /^[A-Za-z_$][A-Za-z0-9_$]{0,23}$/.test(dentro), trovata = false;
+      for(var i = 0; ok && i < DIAG_PRECEDE_OK.length; i++){ if(prima.slice(-DIAG_PRECEDE_OK[i].length) === DIAG_PRECEDE_OK[i]) trovata = true; }
+      return pre + (ok && trovata ? a + dentro + z : '"…"');
+    });
+    s = s.replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+    if(s.length > max) s = s.slice(0, max - 1).replace(/\s+$/, '') + '…';
+    return s;
+  }
+  // messaggio per la firma: minuscolo, ogni gruppo di cifre diventa '#', spazi singoli, al massimo 100 caratteri
+  function normalizzaMsg(pulito){
+    return String(pulito || '').toLowerCase().replace(/\d+/g, '#').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '').slice(0, 100);
+  }
+  function fnv32(testo, base){
+    var h = base >>> 0;
+    for(var i = 0; i < testo.length; i++){
+      h ^= testo.charCodeAt(i);          // unita' UTF-16, come lo script
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return h >>> 0;
+  }
+  function esa8(n){ return ('00000000' + (n >>> 0).toString(16)).slice(-8); }
+  // firma = 16 caratteri esadecimali minuscoli. NON entrano: sezione, versioni, dispositivo, agente, ripetizioni.
+  function firmaErrore(k, az, cod, msgPulito){
+    var t = [k, az || '', cod || '', normalizzaMsg(msgPulito)].join('|');
+    return esa8(fnv32(t, 0x811c9dc5)) + esa8(fnv32(t, 0x9747b28c));
+  }
+  /* DIAG-PURO-FINE */
+
+  // ---- costanti (CONTRATTO-V6.4 par. 4.4) ----
+  var DIAG_STESSO_MIN = 10;        // stessa firma: al massimo 1 invio ogni 10 minuti (nel frattempo si conta)
+  var DIAG_MAX_GIORNO = 20;        // eventi al giorno per dispositivo (giorno locale)
+  var DIAG_MAX_PAGINA = 40;        // eventi messi in coda per caricamento della pagina
+  var DIAG_LENTO_MS = 15000;       // oltre: risposta lenta
+  var DIAG_BLOCCO = 10;            // eventi per POST
+  var DIAG_ANON_GIORNO = 3;        // senza sessione: eventi al giorno
+  var DIAG_ANON_STESSO_MIN = 30;   // senza sessione: stessa firma ogni 30 minuti
+  var DIAG_ANON_BLOCCO = 3;        // senza sessione: eventi per POST
+  var DIAG_CODA_MAX = 30;          // eventi in memoria in attesa
+  var DIAG_CORPO_MAX = 8000;       // caratteri del corpo
+  var DIAG_CHIAVE = 'tcag_diag';
+  // tempi (millisecondi). Solo le PROVE li accorciano, con window.__DIAG_TEST = { attesa: .., traPost: .., online: .., lento: .. }
+  // jitter: dopo un invio fallito il nuovo tentativo aspetta in piu' un tempo a caso fino a traPost x jitter, cosi' dopo un guasto i telefoni non rimandano tutti insieme
+  // (lo script risponderebbe 503 Occupato alle azioni vere). Nelle prove (window.__DIAG_TEST) il jitter e' 0 se la prova non lo chiede.
+  var DIAG_T = { attesa:8000, traPost:30000, online:5000, lento:DIAG_LENTO_MS, ricontrolla:60000, jitter:0.5 };
+  try {
+    var dtest = window.__DIAG_TEST;
+    if(dtest && typeof dtest === 'object'){
+      DIAG_T.jitter = 0;
+      for(var dk in DIAG_T){ if(typeof dtest[dk] === 'number' && dtest[dk] >= 0) DIAG_T[dk] = dtest[dk]; }
+    }
+  } catch(e){}
+  var DIAG_SEZIONI = ['login', 'oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin'];
+  var DIAG_AZIONI = ['accedi', 'pagina', 'albero', 'oggi', 'richieste', 'richiesta-aggiorna', 'richiesta-nuova', 'richiesta-letta', 'immobili', 'amministrazione',
+    'notifiche', 'notifiche-lette', 'questionario-link', 'impostazioni-leggi', 'impostazioni-salva', 'richiesta-rimanda', 'note-aggiungi', 'note-elenco',
+    'campagne', 'moduli', 'cartella', 'scarica', 'verifica', 'dispositivo-rinnova', 'codice-richiedi', 'codice-verifica'];
+  var DIAG_TIPI = ['js', 'promessa', 'chiamata', 'ai', 'push', 'login'];
+
+  var DG = { coda:[], sosp:{}, sospEv:{}, pagina:0, timer:0, ultimoPost:0, pausaFino:0, inviando:false, attendeOnline:false, chiude:false, mem:null, jit:0, memo:null };
+
+  /* --- dove siamo e con che dispositivo --- */
+  function diagSez(){
+    var s = '';
+    try { s = (appEl && !appEl.hidden) ? S.sec : (sessione ? 'oggi' : 'login'); } catch(e){}
+    return DIAG_SEZIONI.indexOf(s) >= 0 ? s : '';
+  }
+  function diagAz(a){
+    a = String(a || '');
+    if(!a) return '';
+    return DIAG_AZIONI.indexOf(a) >= 0 ? a : 'altro';
+  }
+  function diagCod(c){
+    c = String(c == null ? '' : c).replace(/[^A-Za-z0-9_.:-]/g, '').slice(0, 16);
+    return c || '?';
+  }
+  function diagDisp(){
+    var ua = '', so = 'altro', br = 'altro', bv = 0, m;
+    try { ua = navigator.userAgent || ''; } catch(e){}
+    try {
+      if(/Android/.test(ua)) so = 'android';
+      else if(/iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) so = 'ios';
+      else if(/CrOS/.test(ua)) so = 'chromeos';
+      else if(/Windows/.test(ua)) so = 'windows';
+      else if(/Macintosh|Mac OS X/.test(ua)) so = 'mac';
+      else if(/Linux|X11/.test(ua)) so = 'linux';
+      if((m = /(?:Edg|EdgA|EdgiOS)\/(\d+)/.exec(ua))){ br = 'edge'; bv = +m[1]; }
+      else if((m = /(?:OPR|OPT)\/(\d+)/.exec(ua))){ br = 'opera'; bv = +m[1]; }
+      else if((m = /SamsungBrowser\/(\d+)/.exec(ua))){ br = 'samsung'; bv = +m[1]; }
+      else if((m = /(?:Firefox|FxiOS)\/(\d+)/.exec(ua))){ br = 'firefox'; bv = +m[1]; }
+      else if((m = /(?:Chrome|CriOS)\/(\d+)/.exec(ua))){ br = 'chrome'; bv = +m[1]; }
+      else if(/Safari\//.test(ua)){ br = 'safari'; m = /Version\/(\d+)/.exec(ua); bv = m ? +m[1] : 0; }
+    } catch(e){}
+    var app = false;
+    try { app = !!(document.documentElement.classList.contains('tc-standalone') || navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)); } catch(e){}
+    var w = 0; try { w = window.innerWidth || 0; } catch(e){}
+    return { so: so, br: br, bv: (bv > 0 && bv < 1000) ? bv : 0, app: app, sch: w < 900 ? 'telefono' : (w < 1200 ? 'tablet' : 'pc') };
+  }
+  function diagSv(){
+    var v = '';
+    try { v = (OGGI && OGGI.dati && OGGI.dati.versioneScript) || ''; } catch(e){}
+    return /^V\d{1,2}(\.\d{1,2}){1,2}$/.test(String(v)) ? String(v) : '';
+  }
+
+  /* --- contatore del giorno (localStorage, sempre in try/catch; senza, resta la memoria della pagina) --- */
+  function diagGiorno(){ var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function diagStato(){
+    var oggi = diagGiorno(), st = null, lsOk = false;
+    try { var t = localStorage.getItem(DIAG_CHIAVE); lsOk = true; if(t) st = JSON.parse(t); } catch(e){}
+    if(!lsOk) st = DG.mem;
+    if(!st || typeof st !== 'object' || typeof st.n !== 'number' || !st.f || typeof st.f !== 'object' || st.g !== oggi) st = { g: oggi, n: 0, f: {} };
+    DG.mem = st;
+    return st;
+  }
+  function diagSalva(st){
+    var ch = Object.keys(st.f);
+    if(ch.length > 30){                     // al massimo 30 firme: le piu' vecchie si tolgono
+      ch.sort(function(a, b){ return st.f[a] - st.f[b]; });
+      for(var i = 0; i < ch.length - 30; i++) delete st.f[ch[i]];
+    }
+    DG.mem = st;
+    try { localStorage.setItem(DIAG_CHIAVE, JSON.stringify(st)); } catch(e){}
+  }
+
+  /* --- accodare un evento (qui stanno TUTTI i limiti del dispositivo) --- */
+  function diagAmmessoAnon(k, sez){ return k === 'login' || ((k === 'js' || k === 'promessa') && sez === 'login'); }
+  function diagAccoda(k, az, cod, msg, ms){
+    try {
+      if(DG.chiude || DIAG_TIPI.indexOf(k) < 0) return;
+      if(navigator.onLine === false && k !== 'js' && k !== 'promessa') return;     // senza rete le chiamate che falliscono non sono un guasto nostro (un errore della pagina invece resta in coda)
+      var anon = !sessione, sez = diagSez();
+      if(anon && !diagAmmessoAnon(k, sez)) return;
+      var mx = anon ? 100 : 160, m, grezzo = String(msg == null ? '' : msg).slice(0, 3000);
+      if(DG.memo && DG.memo.g === grezzo && DG.memo.x === mx) m = DG.memo.m;
+      else { m = pulisciMsg(grezzo, mx); DG.memo = { g: grezzo, x: mx, m: m }; }
+      var a = diagAz(az), c = diagCod(cod);
+      var f = firmaErrore(k, a, c, m), adesso = Date.now(), st = diagStato();
+      var stesso = (anon ? DIAG_ANON_STESSO_MIN : DIAG_STESSO_MIN) * 60000, ultimo = st.f[f];
+      var ev = { k: k, sez: sez, az: a, cod: c, msg: m, n: 1, ms: Math.max(0, Math.min(600000, Math.round(ms) || 0)) };
+      if(ultimo === undefined || ultimo > adesso || adesso - ultimo >= stesso){
+        if(st.n >= (anon ? DIAG_ANON_GIORNO : DIAG_MAX_GIORNO)) return;       // tetto del giorno
+        if(DG.pagina >= DIAG_MAX_PAGINA) return;                             // tetto per caricamento
+        ev.n = Math.min(1000, 1 + (DG.sosp[f] || 0));
+        delete DG.sosp[f]; delete DG.sospEv[f];
+        st.n++; st.f[f] = adesso; diagSalva(st);
+        DG.pagina++;
+        DG.coda.push(ev);
+        while(DG.coda.length > DIAG_CODA_MAX) DG.coda.shift();
+        diagPianifica();
+      } else if(DG.sosp[f] || Object.keys(DG.sosp).length < 50){
+        DG.sosp[f] = (DG.sosp[f] || 0) + 1;                                  // stesso errore da poco: si conta e basta
+        DG.sospEv[f] = ev;
+      }
+    } catch(e){}
+  }
+  // gli errori ripetuti tenuti da parte (4.4): in uscita partono in un solo blocco, dentro il tetto del giorno
+  function diagSvuotaSospesi(){
+    try {
+      var anon = !sessione, st = diagStato(), adesso = Date.now(), ch = Object.keys(DG.sosp);
+      for(var i = 0; i < ch.length; i++){
+        var f = ch[i], ev = DG.sospEv[f], n = DG.sosp[f];
+        if(!ev || !(n > 0)) continue;
+        if(anon && !diagAmmessoAnon(ev.k, ev.sez)) continue;
+        if(st.n >= (anon ? DIAG_ANON_GIORNO : DIAG_MAX_GIORNO)) break;
+        ev.n = Math.min(1000, n);
+        st.n++; st.f[f] = adesso;
+        DG.coda.push(ev);
+      }
+      DG.sosp = {}; DG.sospEv = {};
+      diagSalva(st);
+    } catch(e){}
+  }
+
+  /* --- cosa si cattura --- */
+  function diagStessaOrigine(url){
+    try { return new URL(url, location.href).origin === location.origin; } catch(e){ return true; }
+  }
+  function diagJs(ev){
+    var fn = String(ev.filename || ''), msg = String(ev.message || '');
+    if(/^(?:chrome|moz|safari|safari-web)-extension:/i.test(fn)) return;     // estensioni del browser
+    if(fn && !diagStessaOrigine(fn)) return;                                // script di altri (Squarespace, gtag, Google)
+    if(/^Script error\.?$/i.test(msg) && !ev.lineno) return;
+    if(/ResizeObserver loop/i.test(msg)) return;
+    diagAccoda('js', '', 'R' + (+ev.lineno || 0) + ':' + (+ev.colno || 0), msg, 0);
+  }
+  // lo stack nomina SOLO indirizzi di altri siti (Squarespace, gtag, Google...)? Senza indirizzi nello stack: si segnala (non si sa di chi sia)
+  function diagStackAltrui(rs){
+    try {
+      var st = String(rs.stack || ''), re = /https?:\/\/[^\s)]+/g, m, n = 0;
+      while((m = re.exec(st))){ n++; if(diagStessaOrigine(m[0].replace(/:\d+:\d+$/, ''))) return false; if(n > 50) break; }
+      return n > 0;
+    } catch(e){ return false; }
+  }
+  function diagPromessa(ev){
+    var rs = ev.reason;
+    if(rs && rs.diag) return;                                              // gia' segnalata da chiama()
+    if(rs && rs.name === 'AbortError') return;                            // interruzione voluta
+    var isErr = !!rs && typeof rs === 'object' && typeof rs.message === 'string';
+    // un fetch che fallisce per la rete lo segnalano gia' chiama() e gli altri moduli; qui sarebbe lo script di un altro sito (blocca-pubblicita', gtag...)
+    if(isErr && /^(?:Failed to fetch|Load failed|NetworkError|Network request failed|network error)/i.test(rs.message)) return;
+    if(isErr && diagStackAltrui(rs)) return;
+    diagAccoda('promessa', '', isErr ? 'P' : 'NOERR', isErr ? rs.message : '', 0);
+  }
+  // chiama() verso lo script. 400, 401, 403, 404, 413, 429 non si segnalano mai (errori attesi o dell'utente); il chiamante manda solo RETE, TIMEOUT, NONJSON, S5xx
+  function diagChiamata(azione, cod, msgServer, ms){
+    try {
+      if(azione === 'scarica') return;
+      if(azione === 'accedi'){
+        diagAccoda('login', 'accedi', cod, (cod === 'RETE' || cod === 'TIMEOUT') ? 'Accesso: server non raggiungibile' : 'Accesso: server in errore', 0);
+        return;
+      }
+      diagAccoda('chiamata', azione, cod, /^S\d/.test(cod) ? msgServer : '', ms);
+    } catch(e){}
+  }
+  function diagLenta(azione, ms){
+    try {
+      if(azione === 'scarica' || azione === 'accedi' || !(ms > DIAG_T.lento)) return;
+      diagAccoda('chiamata', azione, 'LENTO', 'Risposta lenta: ' + Math.round(ms / 1000) + ' s', ms);
+    } catch(e){}
+  }
+  // cancello AI: i messaggi sono una lista chiusa, mai il testo della risposta ne' della domanda
+  function diagAi(e, scaduto){
+    try {
+      var cod, msg;
+      if(scaduto){ cod = 'TIMEOUT'; msg = 'Assistente troppo lento'; }
+      else if(e && e.http){ if(e.http >= 500){ cod = 'S' + e.http; msg = 'Assistente in errore'; } else return; }
+      else if(e && e.name === 'AbortError') return;
+      else if(e && e.name === 'TypeError' && /^(?:Failed to fetch|Load failed|NetworkError|Network request failed|network error)/i.test(String(e.message))){ cod = 'RETE'; msg = 'Assistente non raggiungibile'; }
+      else if(e && e.name === 'TypeError'){ cod = 'JS'; msg = 'Errore nel disegno della risposta'; }       // un errore nostro nel disegnare la risposta non e' la rete
+      else return;
+      diagAccoda('ai', '', cod, msg, 0);
+    } catch(x){}
+  }
+  function diagPush(cod, msg){ diagAccoda('push', '', cod, msg, 0); }
+  function diagPushSub(){
+    try { if('Notification' in window && Notification.permission === 'granted') diagAccoda('push', '', 'SUB', 'Iscrizione alle notifiche non riuscita', 0); } catch(e){}
+  }
+  function diagLogin(cod, msg){ diagAccoda('login', '', cod, msg, 0); }
+
+  /* --- invio: in blocco, mai mentre l'utente aspetta, sendBeacon in uscita --- */
+  function diagPianifica(){
+    try {
+      if(DG.timer || DG.inviando || !DG.coda.length || DG.attendeOnline) return;
+      var t = DIAG_T.attesa, minimo = DG.ultimoPost + DIAG_T.traPost - Date.now();
+      if(minimo > t) t = minimo;
+      if(DG.jit > 0){ t += Math.floor(Math.random() * DG.jit); DG.jit = 0; }
+      DG.timer = setTimeout(diagInvia, t);
+    } catch(e){}
+  }
+  // prende dalla coda un blocco: toglie quello che non e' ammesso senza sessione e rispetta la misura del corpo (8000 caratteri)
+  function diagBlocco(){
+    var anon = !sessione, max = anon ? DIAG_ANON_BLOCCO : DIAG_BLOCCO, pronti = [], resto = [], i, ev;
+    for(i = 0; i < DG.coda.length; i++){
+      ev = DG.coda[i];
+      if(anon && !diagAmmessoAnon(ev.k, ev.sez)) continue;           // la sessione e' sparita nel frattempo: solo l'accesso
+      if(pronti.length < max) pronti.push(ev); else resto.push(ev);
+    }
+    DG.coda = resto;
+    return pronti;
+  }
+  function diagCorpo(eventi){
+    var anon = !sessione, c = { type:'portale-agenti', azione:'diagnostica-segnala' }, i, ev, testo;
+    if(!anon) c.sessione = sessione.s;
+    c.v = 1; c.cb = VERSIONE; c.sv = diagSv(); c.disp = diagDisp();
+    c.eventi = eventi.map(function(e){
+      return { k:e.k, sez:e.sez, az:e.az, cod:e.cod, msg: anon && e.msg.length > 100 ? pulisciMsg(e.msg, 100) : e.msg, n:e.n, ms:e.ms };
+    });
+    testo = JSON.stringify(c);
+    while(testo.length > DIAG_CORPO_MAX && c.eventi.length > 1){ c.eventi.pop(); testo = JSON.stringify(c); }
+    return { corpo: c, testo: testo };
+  }
+  function diagInvia(){
+    DG.timer = 0;
+    try {
+      if(!DG.coda.length || DG.inviando) return;
+      var adesso = Date.now();
+      if(DG.pausaFino > adesso){ DG.timer = setTimeout(diagInvia, Math.min(DG.pausaFino - adesso + 50, DIAG_T.ricontrolla)); return; }
+      if(navigator.onLine === false){ DG.attendeOnline = true; return; }
+      var pronti = diagBlocco();
+      if(!pronti.length){ diagPianifica(); return; }
+      var c = diagCorpo(pronti), inviati = pronti.slice(0, c.corpo.eventi.length);
+      DG.inviando = true; DG.ultimoPost = adesso;
+      var ctl = window.AbortController ? new AbortController() : null;
+      var tm = ctl ? setTimeout(function(){ ctl.abort(); }, 15000) : 0;
+      var fine = function(){ DG.inviando = false; clearTimeout(tm); diagPianifica(); };
+      // fetch diretta (non passa da chiama()): la sua caduta non si segnala. Gli eventi tornano in coda UNA volta sola.
+      var ritorna = function(){
+        for(var i = inviati.length - 1; i >= 0; i--){ if(!inviati[i].r){ inviati[i].r = true; DG.coda.unshift(inviati[i]); } }
+        DG.jit = Math.round(DIAG_T.traPost * DIAG_T.jitter);
+      };
+      fetch(PORTALE.endpoint, {
+        method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body: c.testo, keepalive: true, signal: ctl ? ctl.signal : undefined
+      }).then(function(risp){ return risp.text(); }).then(function(testo){
+        var j = null;
+        try { j = JSON.parse(testo); } catch(e){}
+        if(!j){ ritorna(); return; }
+        if(j.ok){ if(+j.pausa > 0) DG.pausaFino = Date.now() + Math.min(+j.pausa, 86400) * 1000; return; }
+        if(j.status === 400 || j.status === 503) DG.pausaFino = Date.now() + 3600 * 1000;   // script vecchio o diagnostica spenta: 1 ora di pausa
+        else if(j.status === 401) return;                                                    // sessione scaduta: si buttano
+        else ritorna();
+      }).catch(function(){ ritorna(); }).then(fine, fine);
+    } catch(e){ DG.inviando = false; }
+  }
+  // in uscita: tutto quello che e' in coda, piu' le ripetizioni tenute da parte, con sendBeacon (non legge la risposta)
+  function diagBeacon(testo){
+    var ok = false;
+    try { if(navigator.sendBeacon) ok = navigator.sendBeacon(PORTALE.endpoint, new Blob([testo], { type:'text/plain;charset=UTF-8' })); } catch(e){ ok = false; }
+    if(!ok){ try { fetch(PORTALE.endpoint, { method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body: testo, keepalive: true }).catch(function(){}); } catch(e){} }
+  }
+  function diagUscita(){
+    try {
+      diagSvuotaSospesi();
+      if(!DG.coda.length) return;
+      if(DG.pausaFino > Date.now() || navigator.onLine === false) return;
+      clearTimeout(DG.timer); DG.timer = 0;
+      var giri = 0;
+      while(DG.coda.length && giri++ < 5){
+        var pronti = diagBlocco();
+        if(!pronti.length) break;
+        diagBeacon(diagCorpo(pronti).testo);
+      }
+    } catch(e){}
+  }
+
+  /* --- avvio del modulo --- */
+  window.addEventListener('pagehide', function(){ diagUscita(); DG.chiude = true; });
+  window.addEventListener('pageshow', function(){ DG.chiude = false; });
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) diagUscita(); });
+  window.addEventListener('online', function(){
+    DG.attendeOnline = false;
+    if(DG.coda.length){ clearTimeout(DG.timer); DG.timer = setTimeout(diagInvia, DIAG_T.online); }
+  });
+  DIAG_PRONTO = true;
+  (function(){
+    var pre = DIAG_PRE; DIAG_PRE = [];
+    for(var i = 0; i < pre.length; i++){ try { if(pre[i][0] === 'js') diagJs(pre[i][1]); else diagPromessa(pre[i][1]); } catch(e){} }
+  })();
+
+  /* =========================================================
+     SCHEDA "PROBLEMI"  (Amministrazione, solo segreteria e admin)
+     =========================================================
+     I dati arrivano dall'azione 'amministrazione' con sezione 'problemi' (CONTRATTO-V6.4 par. 8). Sono solo dati tecnici.
+     Ogni testo si scrive con H`` (escape): un messaggio con <img onerror> resta testo. */
+  var DIAG_ET = { js:'Errore nella pagina', promessa:'Errore nascosto nella pagina', chiamata:'Il server non risponde o è lento', ai:'Assistente AI',
+    push:'Notifiche (dal dispositivo)', login:'Accesso', srv:'Errore dello script', 'srv-push':'Giro delle notifiche', 'srv-ads':'Scambio conversioni Ads' };
+  var DIAG_AZ_PAROLE = { accedi:'accesso', pagina:'testi della pagina', albero:'elenco documenti', oggi:'schermata Oggi', richieste:'elenco richieste', 'richiesta-aggiorna':'salvataggio di una richiesta',
+    'richiesta-nuova':'nuova richiesta', 'richiesta-letta':'richiesta letta', immobili:'immobili', amministrazione:'amministrazione', notifiche:'notifiche', 'notifiche-lette':'notifiche lette',
+    'questionario-link':'link del questionario', 'impostazioni-leggi':'lettura impostazioni', 'impostazioni-salva':'salvataggio impostazioni', 'richiesta-rimanda':'Rimanda del promemoria',
+    'note-aggiungi':'nuova nota', 'note-elenco':'elenco note', campagne:'campagne', moduli:'moduli', cartella:'cartella', scarica:'scarico di un file', verifica:'verifica',
+    'dispositivo-rinnova':'rinnovo dell’accesso', 'codice-richiedi':'codice di accesso', 'codice-verifica':'verifica del codice', altro:'altra azione', push:'giro delle notifiche', promemoria:'promemoria', ads:'scambio Ads' };
+  var DIAG_SEZ_PAROLE = { login:'Accesso', oggi:'Oggi', richieste:'Richieste', immobili:'Immobili', documenti:'Documenti', strumenti:'Strumenti AI', altro:'Altro',
+    impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione' };
+  function diagEt(k){ return DIAG_ET[k] || String(k || 'Altro'); }
+  function diagCodParole(c){
+    c = String(c || '');
+    var m;
+    if(c === 'RETE') return 'rete non raggiungibile';
+    if(c === 'TIMEOUT') return 'tempo scaduto';
+    if(c === 'NONJSON') return 'Google ha risposto con una pagina di errore';
+    if(c === 'LENTO') return 'risposta lenta';
+    if(c === 'GSI') return 'pulsante Google non caricato';
+    if(c === 'SUB') return 'iscrizione non riuscita';
+    if(c === 'P') return 'promessa rifiutata';
+    if(c === 'NOERR') return 'promessa rifiutata senza errore';
+    if(c === 'ERR') return 'errore interno';
+    if((m = /^S(\d{3})$/.exec(c))) return 'errore ' + m[1] + ' del server';
+    if((m = /^R(\d+):(\d+)$/.exec(c))) return 'riga ' + m[1] + ', colonna ' + m[2];
+    return '';
+  }
+  function diagUltimo(iso){ var r = rel(iso); return r ? 'ultimo: ' + r : ''; }
+  function problemiHTML(d){
+    d = d || {};
+    var tot = d.totale || {}, tipi = d.perTipo || [], ag = d.perAgente || [], gr = d.gruppi || [], giorni = d.giorni || 7;
+    var numeri = H`<div class="pb-num">
+      <div class="pb-n${tot.eventi > 0 ? ' rosso' : ''}"><span class="num">${tot.eventi || 0}</span><span class="lb">Errori</span></div>
+      <div class="pb-n"><span class="num">${tot.agenti || 0}</span><span class="lb">Agenti colpiti</span></div>
+      <div class="pb-n"><span class="num">${tipi.length}</span><span class="lb">Tipi di problema</span></div></div>
+      <p class="mut pb-frase">Ultimi ${giorni} ${giorni === 1 ? 'giorno' : 'giorni'}. Solo dati tecnici: nessun dato dei clienti.${d.troncato ? ' Ci sono molte righe: sono contate solo le più recenti.' : ''}</p>`;
+    if(!(tot.eventi > 0) && !gr.length && !tipi.length){
+      return H`${numeri}<div class="card pb-card pb-ok" role="status">${ic('check', 22)}<span>Nessun problema negli ultimi ${giorni} ${giorni === 1 ? 'giorno' : 'giorni'}.</span></div>`;
+    }
+    var perTipo = H`<div class="card pb-card"><div class="sec-h">Per tipo</div>${tipi.map(function(t){
+      return H`<div class="pb-riga"><span class="g"><b>${diagEt(t.k)}</b><br><span class="mut">${t.agenti || 0} ${t.agenti === 1 ? 'agente' : 'agenti'}${t.ultimo ? ' · ' + diagUltimo(t.ultimo) : ''}</span></span><span class="pill s-rich">${t.n || 0}</span></div>`;
+    })}</div>`;
+    var perAgente = ag.length ? H`<div class="card pb-card"><div class="sec-h">Per agente</div>${ag.map(function(a){
+      return H`<div class="pb-riga"><span class="g"><b>${a.nome || a.email || ''}</b>${a.email && a.nome && a.email !== a.nome ? H`<br><span class="mut">${a.email}</span>` : ''}<br><span class="mut">${diagUltimo(a.ultimo)}${a.tipi && a.tipi.length ? ' · ' + a.tipi.map(diagEt).join(', ') : ''}</span></span><span class="pill s-rich">${a.n || 0}</span></div>`;
+    })}</div>` : '';
+    var gruppi = gr.length ? H`<div class="card pb-card"><div class="sec-h">I problemi più frequenti</div>${gr.map(function(x){
+      var cp = diagCodParole(x.cod), sezp = DIAG_SEZ_PAROLE[x.sez] || '', azp = DIAG_AZ_PAROLE[x.az] || '';
+      return H`<div class="pb-gr"><div class="pb-gt"><b>${diagEt(x.k)}</b><span class="pill s-rich">${x.n || 0} ${x.n === 1 ? 'volta' : 'volte'}</span></div>
+        <div class="pb-meta">${sezp ? H`<span>Schermata: ${sezp}</span>` : ''}${azp ? H`<span>Azione: ${azp}</span>` : ''}${x.cod ? H`<span>Codice: ${x.cod}${cp ? ' (' + cp + ')' : ''}</span>` : ''}</div>
+        ${x.msg ? H`<div class="pb-msg">${x.msg}</div>` : ''}
+        <div class="pb-meta"><span>${x.agenti || 0} ${x.agenti === 1 ? 'agente' : 'agenti'}</span>${x.disp ? H`<span>${x.disp}</span>` : ''}${x.vp || x.vs ? H`<span>Pagina ${x.vp || '?'} · script ${x.vs || '?'}</span>` : ''}${x.ultimo ? H`<span>${diagUltimo(x.ultimo)}</span>` : ''}</div></div>`;
+    })}</div>` : '';
+    var foglio = linkPer('Foglio Errori Portale') ? H`<p style="margin:14px 0 0"><button class="btn sec sm" type="button" data-act="link" data-l="Foglio Errori Portale">${ic('ext', 14)}Apri il foglio Errori Portale</button></p>` : '';
+    return H`${numeri}${perTipo}${perAgente}${gruppi}${foglio}`;
+  }
 
   /* =========================================================
      AMMINISTRAZIONE  (solo segreteria e admin: azioni 'richieste' con assegnatoA, 'amministrazione')
@@ -4317,7 +4846,7 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
   var EVENTI_LOG = { aperta:'ha aperto la richiesta', stato:'ha cambiato lo stato di', nota:'ha aggiornato la nota di', contatto:'ha registrato un contatto su', assegnata:'ha assegnato', creata:'ha creato' };
   function renderAdmin(){
     var da = (RQ.conteggi && RQ.conteggi.daAssegnare) != null ? RQ.conteggi.daAssegnare : (ADM.assegna.dati ? ADM.assegna.dati.length : 0);
-    put(g('adm-tabs'), [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead']].map(function(t){
+    put(g('adm-tabs'), [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']].map(function(t){
       return H`<button class="chip" type="button" data-act="adm" data-t="${t[0]}" aria-pressed="${String(S.adm === t[0])}">${t[1]}</button>`;
     }));
     var R = ADM[S.adm], b = g('adm-body'), h;
@@ -4335,6 +4864,8 @@ html.tcag-app-attiva,html.tcag-app-attiva body{background:#faf9f6}
       h = H`<div class="card"><p class="mut" style="margin-top:0">Sola lettura. Si modifica nel foglio.</p>${R.dati.map(function(a){
         return H`<div class="lrow"><span class="g"><b>${a.email}</b><br><span class="mut">${a.nome || ''}</span></span><span class="pill ${a.ruolo === 'admin' ? 's-rich' : a.ruolo === 'segreteria' ? 's-app' : 's-corso'}">${a.ruolo}</span>${a.attivo ? '' : H`<span class="pill s-chiusa">non attivo</span>`}<span class="mut">${a.ultimoAccesso ? fmt(a.ultimoAccesso) : 'mai entrato'}</span></div>`;
       })}${linkPer('Foglio Accessi Portale') ? H`<p style="margin-bottom:0"><button class="btn sec sm" type="button" data-act="link" data-l="Foglio Accessi Portale">${ic('ext', 14)}Apri il foglio</button></p>` : ''}</div>`;
+    } else if(S.adm === 'problemi'){
+      h = problemiHTML(R.dati);
     } else {
       h = R.dati.length ? H`<div class="card">${R.dati.map(function(l){
         return H`<div class="lrow"><span class="mut">${fmt(l.quando)}</span><span class="g"><b>${l.chi}</b> ${EVENTI_LOG[l.evento] || l.evento}</span><button class="pill s-chiusa" type="button" data-act="open-req" data-id="${l.id}">${l.id}</button></div>`;
