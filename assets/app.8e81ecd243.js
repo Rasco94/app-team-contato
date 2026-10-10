@@ -1,5 +1,5 @@
 /*
- * Guscio app Team Contato - logica - V1.0.1 (09/10/2026)
+ * Guscio app Team Contato - logica - V1.1.0 (09/10/2026)
  *
  * Questo file NON contiene le funzioni dell'Area Agenti: quelle stanno nel Code Block
  * (incollato dentro index.html dal programma di costruzione). Qui c'e' solo cio' che serve a
@@ -13,6 +13,13 @@
  *   niente ricarica automatica se c'e' una nota non salvata, badge uguale a push (campanella del telefono), uscita: il
  *   dispositivo si disiscrive anche a sessione scaduta, codice di accesso a 8 cifre, fascia offline sotto la barra,
  *   invito 'Installa' non doppio con la sezione 'App sul telefono', icone vere nelle guide Android e computer, /\D/g.
+ * V1.1.0 (09/10/2026) - revisione: la sessione che sparisce PRIMA della scadenza (401, utente tolto) toglie l'iscrizione push di questo dispositivo come il clic su Esci (prima restava e sul telefono condiviso arrivavano titolo, codice e zona); la scadenza naturale (12 ore) la lascia.
+ * V1.1.0 (09/10/2026) - notifiche su TUTTI i dispositivi e in tempo reale: il service worker avvisa le finestre aperte quando arriva una push
+ *   (messaggio {tipo:'push'} -> evento 'tc:push' sulla pagina: la campanella si aggiorna subito); chiede al cancello quanti dispositivi ha
+ *   l'utente (POST /ai/push/stato, con l'endpoint di QUESTO dispositivo) e manda alla pagina l'evento 'tc:notifiche' {stato, questo, dispositivi};
+ *   scheda "Attiva le notifiche su questo dispositivo" (e, se il permesso e' negato, "Come si sblocca"); se il permesso c'e' ma questo
+ *   dispositivo non risulta iscritto lo si iscrive subito; voce Notifiche con "attive su N dispositivi"; messaggio 'aggiornamento-pronto'
+ *   del service worker (pagina dalla copia in cache, rete arrivata dopo) -> pillola "Nuova versione pronta".
  */
 (function () {
   'use strict';
@@ -132,7 +139,7 @@
     // tornato dopo piu' di 5 minuti con un aggiornamento pronto: ricarica (la sessione resta, i dati si rileggono)
     // se c'e' del lavoro in corso resta solo la pillola "Nuova versione pronta": decide l'agente
     if (aggiornamentoPronto && nascostoDal && Date.now() - nascostoDal > 5 * 60 * 1000) { if (modificheInCorso()) mostraPillola(); else location.reload(); }
-    aggiornaSchede(); aggiornaBadge();
+    aggiornaSchede(); aggiornaBadge(); aggiornaStatoDispositivi(false);
   });
   if (SUPPORTO_SW) {
     navigator.serviceWorker.addEventListener('message', function (e) {
@@ -140,7 +147,15 @@
       if (d.tipo === 'vai' && d.url) {
         try { var u = new URL(d.url, location.origin); if (u.origin === location.origin) { if (u.hash) location.hash = u.hash; else location.hash = 'oggi'; } } catch (x) { /* url non valido */ }
       } else if (d.tipo === 'risincronizza') { sincronizzaIscrizione(true); }
+      else if (d.tipo === 'push') { allaPush(d); }
+      else if (d.tipo === 'aggiornamento-pronto') { aggiornamentoPronto = true; mostraPillola(); }
     });
+  }
+  /* Arrivata una push (il service worker l'ha mostrata e avvisa le finestre): la pagina lo sa SUBITO. Nessun testo, solo id, numero e ora. */
+  function allaPush(d) {
+    var dettaglio = { id: d.id || null, badge: typeof d.badge === 'number' ? d.badge : null, ts: typeof d.ts === 'number' ? d.ts : Date.now() };
+    try { window.dispatchEvent(new CustomEvent('tc:push', { detail: dettaglio })); } catch (x) { /* browser vecchio */ }
+    aggiornaBadge();
   }
 
   /* ---------- installazione ---------- */
@@ -223,12 +238,25 @@
     if (!schedaEl) return; var s = schedaEl; schedaEl = null; schedaTipo = '';
     s.classList.remove('tc-su'); setTimeout(function () { if (s.parentNode) s.parentNode.removeChild(s); }, subito ? 0 : 450);
   }
-  var primaVistaSessione = 0;
+  var primaVistaSessione = 0, sessionePrec = null;
+  // V1.1.0 (revisione): se la sessione SPARISCE prima della sua scadenza (401, utente tolto, Esci da un'altra scheda) questo dispositivo smette di
+  // ricevere le notifiche, come con il clic su Esci; se invece e' scaduta per il tempo (12 ore) le notifiche restano: sono del suo proprietario
+  // e deve poterle ricevere anche il mattino dopo, prima di riaccedere. Sul telefono condiviso l'altro utente che attiva le notifiche le sposta a se' (un endpoint = una sola email).
+  function disiscriviQuestoDispositivo() {
+    if (!SUPPORTO_PUSH || !SUPPORTO_SW) return;
+    navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (sub) {
+      if (sub) sub.unsubscribe().catch(function () {});
+    }).catch(function () {});
+    ls('tc_push_ok', null);
+  }
   function aggiornaSchede() {
     if (!D.body) return;
     var sess = leggiSessione();
-    if (sess && !primaVistaSessione) primaVistaSessione = Date.now();
-    if (!sess) primaVistaSessione = 0;
+    if (sessionePrec && !sess && sessionePrec.scade - Date.now() > 120000) disiscriviQuestoDispositivo();
+    sessionePrec = sess ? { s: sess.s, scade: sess.scade } : null;
+    if (sess && !primaVistaSessione) { primaVistaSessione = Date.now(); aggiornaStatoDispositivi(true); }
+    if (!sess) { primaVistaSessione = 0; statoGw = { dispositivi: null, questo: null, t: 0, vol: false, sess: '' }; }
+    else if (statoGw.sess && statoGw.sess !== sess.s.slice(-12)) { statoGw = { dispositivi: null, questo: null, t: 0, vol: false, sess: '' }; aggiornaStatoDispositivi(true); }   // altro utente su questo dispositivo
     // 1) installa (solo fuori dall'app, solo dove ha senso)
     // se la sezione "App sul telefono" dell'Area Agenti e' sullo schermo dice gia' la stessa cosa: niente scheda doppia
     var sez = q('.apx-sez'), sezioneVisibile = !!(sez && sez.getClientRects().length);
@@ -241,12 +269,72 @@
     }
     // 2) notifiche (solo dopo l'accesso, con un piccolo ritardo, mai su iPhone fuori dalla Home)
     var perm = SUPPORTO_PUSH ? Notification.permission : 'unsupported';
+    // V1.1.0: "su questo dispositivo" (le notifiche sono per dispositivo: il telefono non basta per il computer)
+    var n = statoGw.dispositivi;
     if (CFG.push.attivo && sess && perm === 'default' && !recente('tc_notif_no', 7) && Date.now() - primaVistaSessione > 2500) {
-      mostraScheda('notifiche', 'Attiva le notifiche',
-        'Ricevi subito le nuove richieste, anche con l’app chiusa.', 'Attiva notifiche', function () { attivaNotifiche(); }, function () { ls('tc_notif_no', String(Date.now())); });
+      mostraScheda('notifiche', 'Attiva le notifiche su questo dispositivo',
+        n > 0 ? 'Le ricevi già su ' + n + (n === 1 ? ' dispositivo' : ' dispositivi') + ': attivale anche qui, così arrivano insieme.' : 'Ricevi subito le nuove richieste, anche con l’app chiusa.',
+        'Attiva notifiche', function () { attivaNotifiche(); }, function () { ls('tc_notif_no', String(Date.now())); });
+      return;
+    }
+    if (CFG.push.attivo && sess && perm === 'denied' && !recente('tc_notif_no', 7) && Date.now() - primaVistaSessione > 2500) {
+      mostraScheda('bloccate', 'Notifiche bloccate su questo dispositivo',
+        'Per riceverle anche qui vanno sbloccate nelle impostazioni.', 'Come si sblocca', guidaSblocco, function () { ls('tc_notif_no', String(Date.now())); });
       return;
     }
     nascondiScheda();
+  }
+  function guidaSblocco() {
+    if (IOS) {
+      apriFoglio('Sblocca le notifiche', 'Su iPhone si fa dalle Impostazioni del telefono.',
+        passo(1, SVG_APP, 'Apri <b>Impostazioni</b> e cerca <b>Team Contato</b>') +
+        passo(2, SVG_APP, 'Tocca <b>Notifiche</b> e attiva <b>Consenti notifiche</b>') +
+        passo(3, SVG_APP, 'Torna nell’app: il banner sparisce da solo'));
+    } else if (ANDROID) {
+      apriFoglio('Sblocca le notifiche', 'Si fa dalle impostazioni dell’app.',
+        passo(1, SVG_PUNTINI_V, 'Tieni premuta l’icona <b>Team Contato</b>, poi tocca <b>Info app</b> (la «i»)') +
+        passo(2, SVG_APP, 'Tocca <b>Notifiche</b> e attiva <b>Consenti</b>') +
+        passo(3, SVG_APP, 'Torna nell’app e ricaricala'));
+    } else {
+      apriFoglio('Sblocca le notifiche', 'Si fa dalla barra dell’indirizzo del browser.',
+        passo(1, SVG_MONITOR, 'Clicca l’icona a sinistra dell’indirizzo (il lucchetto o i cursori)') +
+        passo(2, SVG_APP, 'Vicino a <b>Notifiche</b> scegli <b>Consenti</b>') +
+        passo(3, SVG_MONITOR_FRECCIA, 'Ricarica la pagina: poi tocca «Attiva notifiche»'));
+    }
+  }
+
+  /* ---------- notifiche: quanti dispositivi, e questo? (V1.1.0) ---------- */
+  var statoGw = { dispositivi: null, questo: null, t: 0, vol: false, sess: '' }, ultimoTentativoIscr = 0;
+  function emettiNotifiche() {
+    try { window.dispatchEvent(new CustomEvent('tc:notifiche', { detail: { stato: statoNotifiche(), questo: statoGw.questo, dispositivi: statoGw.dispositivi } })); } catch (x) { /* browser vecchio */ }
+  }
+  function endpointQuesto() {   // { ep, ok }: ok=false se non so (service worker non pronto)
+    if (!SUPPORTO_PUSH) return Promise.resolve({ ep: null, ok: false });
+    return Promise.race([navigator.serviceWorker.ready, ritardo(4000).then(function () { return null; })]).then(function (reg) {
+      if (!reg || !reg.pushManager) return { ep: null, ok: false };
+      return reg.pushManager.getSubscription().then(function (s) { return { ep: s ? s.endpoint : null, ok: true }; });
+    }).catch(function () { return { ep: null, ok: false }; });
+  }
+  function aggiornaStatoDispositivi(forza) {
+    if (!SUPPORTO_PUSH || !CFG.push.attivo || statoGw.vol) return Promise.resolve();
+    var sess = leggiSessione(); if (!sess) return Promise.resolve();
+    if (!forza && statoGw.t && Date.now() - statoGw.t < 10 * 60 * 1000) return Promise.resolve();
+    statoGw.vol = true;
+    return endpointQuesto().then(function (e) {
+      return gwFetch('POST', '/stato', e.ep ? { endpoint: e.ep } : {}, sess).then(function (j) {
+        statoGw.vol = false;
+        if (!j || !j.ok) return;                                   // cancello giu o sessione scaduta: resta quello che si sapeva
+        statoGw.dispositivi = typeof j.dispositivi === 'number' ? j.dispositivi : null;
+        statoGw.questo = !e.ok ? null : (!e.ep ? false : (typeof j.questo === 'boolean' ? j.questo : null));   // un cancello che non risponde come previsto = non lo so (mai 'false' per errore)
+        statoGw.sess = sess.s.slice(-12); statoGw.t = Date.now();
+        emettiNotifiche(); aggiornaVoce(); aggiornaSchede();
+        // permesso gia' dato ma questo dispositivo non risulta iscritto: lo si iscrive subito (al massimo ogni 10 minuti)
+        if (Notification.permission === 'granted' && statoGw.questo === false && Date.now() - ultimoTentativoIscr > 10 * 60 * 1000) {
+          ultimoTentativoIscr = Date.now();
+          sincronizzaIscrizione(true).then(function () { return aggiornaStatoDispositivi(true); });
+        }
+      });
+    }).catch(function () { statoGw.vol = false; });
   }
 
   /* ---------- notifiche push ---------- */
@@ -276,7 +364,9 @@
     if (!SUPPORTO_PUSH) return IOS && !STANDALONE ? 'ios-fuori-home' : 'non-supportato';
     if (!CFG.push.attivo) return 'spento';
     if (Notification.permission === 'denied') return 'negato';
-    if (Notification.permission === 'granted' && ls('tc_push_ok')) return 'attive';
+    // V1.1.0: il cancello e' l'ultima parola: permesso dato ma questo dispositivo non risulta iscritto = 'concesso' (da iscrivere)
+    if (Notification.permission === 'granted' && statoGw.questo === false) return 'concesso';
+    if (Notification.permission === 'granted' && (ls('tc_push_ok') || statoGw.questo === true)) return 'attive';
     if (Notification.permission === 'granted') return 'concesso';
     return 'da-attivare';
   }
@@ -317,7 +407,7 @@
       toast('Attivo le notifiche…', 40000);
       return iscriviInCoda(sess).then(function (j) {
         if (!j.ok) { toast(j.status === 401 ? 'Sessione scaduta: accedi di nuovo.' : 'Non riesco a registrare le notifiche (' + (j.error || 'errore') + ').', 5200); return false; }
-        ls('tc_notif_no', null); nascondiScheda(); aggiornaVoce(); toast('Notifiche attive su questo dispositivo.'); return true;
+        ls('tc_notif_no', null); nascondiScheda(); aggiornaVoce(); toast('Notifiche attive su questo dispositivo.'); aggiornaStatoDispositivi(true); return true;
       });
     }).catch(function (e) { toast('Notifiche non attivate: ' + (e && e.message ? e.message : 'errore'), 5200); aggiornaVoce(); return false; });
   }
@@ -327,7 +417,7 @@
       if (!sub) return true;
       var ep = sub.endpoint;
       return sub.unsubscribe().then(function () { return sess ? gwFetch('POST', '/disiscrivi', { endpoint: ep }, sess).catch(function () {}) : null; });
-    }).then(function () { ls('tc_push_ok', null); ls('tc_notif_no', String(Date.now())); aggiornaVoce(); toast('Notifiche disattivate su questo dispositivo.'); return true; })
+    }).then(function () { ls('tc_push_ok', null); ls('tc_notif_no', String(Date.now())); aggiornaVoce(); toast('Notifiche disattivate su questo dispositivo.'); statoGw.t = 0; aggiornaStatoDispositivi(true); return true; })
       .catch(function () { toast('Non riesco a disattivarle ora.'); return false; });
   }
   // a ogni avvio: se il permesso c'e' gia', rimette in pari l'iscrizione (idempotente, al massimo una volta al giorno)
@@ -352,7 +442,9 @@
       if (ver && !pop.querySelector('.tc-ver')) { var v = el('div', 'ver tc-ver'); v.textContent = 'App ' + APP.versione + ' (' + APP.build + ')'; ver.parentNode.insertBefore(v, ver.nextSibling); }
     }
     var s = statoNotifiche(), ico = '<svg class="i" width="16" height="16" aria-hidden="true"><use href="#tci-bell"/></svg>';
-    var t = { 'da-attivare': 'Attiva notifiche', 'concesso': 'Attiva notifiche', 'attive': 'Notifiche attive · disattiva', 'negato': 'Notifiche bloccate (impostazioni)', 'ios-fuori-home': 'Notifiche: aggiungi l’app alla Home', 'non-supportato': 'Notifiche non supportate', 'spento': 'Notifiche non disponibili' }[s];
+    var nd = statoGw.dispositivi;
+    var attive = (nd > 0) ? 'Notifiche attive su ' + nd + (nd === 1 ? ' dispositivo' : ' dispositivi') + ' · disattiva qui' : 'Notifiche attive · disattiva';
+    var t = { 'da-attivare': 'Attiva notifiche su questo dispositivo', 'concesso': 'Attiva notifiche su questo dispositivo', 'attive': attive, 'negato': 'Notifiche bloccate (impostazioni)', 'ios-fuori-home': 'Notifiche: aggiungi l’app alla Home', 'non-supportato': 'Notifiche non supportate', 'spento': 'Notifiche non disponibili' }[s];
     voceEl.innerHTML = ico + '<span></span>'; voceEl.lastChild.textContent = t;
     voceEl.disabled = (s === 'non-supportato' || s === 'spento' || s === 'negato');
     voceEl.style.display = (s === 'spento') ? 'none' : '';
@@ -372,6 +464,7 @@
         sub.unsubscribe().catch(function () {});
       }).catch(function () {});
       ls('tc_push_ok', null);
+      statoGw = { dispositivi: null, questo: null, t: 0, vol: false, sess: '' };
     }
   }, true);
 
@@ -493,7 +586,7 @@
      Se il Code Block ha gia' il suo logo (nessun <text> nel simbolo) non si tocca niente. */
   function logoVero() {
     var s = q('#tci-logo');
-    if (s && s.querySelector('text')) s.innerHTML = '<image href="icone/logo-chiaro.png" x="0" y="3.5" width="32" height="25"/>';
+    if (s && s.querySelector('text')) s.innerHTML = '<image href="icone/logo-chiaro.png" x="0" y="1.7" width="32" height="26.6"/>';
   }
   function avvia() {
     logoVero();
@@ -509,10 +602,10 @@
   APP.diagnostica = function () {
     return { versione: APP.versione, build: APP.build, standalone: STANDALONE, ios: IOS, android: ANDROID, supportoSW: SUPPORTO_SW, supportoPush: SUPPORTO_PUSH,
       permesso: SUPPORTO_PUSH ? Notification.permission : null, statoNotifiche: statoNotifiche(), sessione: !!leggiSessione(), controller: !!(SUPPORTO_SW && navigator.serviceWorker.controller),
-      promptInstallazione: !!promptInstall, schedaVisibile: schedaTipo, badge: leggiBadge(), cfg: { cancello: CFG.cancello.url, push: CFG.push.attivo, loginCodice: CFG.loginCodice.abilitato } };
+      promptInstallazione: !!promptInstall, schedaVisibile: schedaTipo, badge: leggiBadge(), dispositivi: statoGw.dispositivi, questoDispositivo: statoGw.questo, cfg: { cancello: CFG.cancello.url, push: CFG.push.attivo, loginCodice: CFG.loginCodice.abilitato } };
   };
   // appoggi per le prove automatiche (non usati dall'app)
-  APP._prova = { modificheInCorso: modificheInCorso, aggiornamentoPronto: function () { aggiornamentoPronto = true; nascostoDal = Date.now() - 6 * 60 * 1000; } };
+  APP._prova = { modificheInCorso: modificheInCorso, statoDispositivi: aggiornaStatoDispositivi, guidaSblocco: guidaSblocco, aggiornamentoPronto: function () { aggiornamentoPronto = true; nascostoDal = Date.now() - 6 * 60 * 1000; } };
   APP.attivaNotifiche = attivaNotifiche; APP.disattivaNotifiche = disattivaNotifiche; APP.guidaInstallazione = guidaInstallazione; APP.sincronizza = sincronizzaIscrizione;
 
   fetch('config.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; })

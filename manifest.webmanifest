@@ -121,9 +121,9 @@
       ]
     },
     {
-      "name": "Assistente",
-      "short_name": "Assistente",
-      "description": "Apri Assistente",
+      "name": "Diana Assistant",
+      "short_name": "Diana",
+      "description": "Apri Diana Assistant",
       "url": "/#strumenti",
       "icons": [
         {

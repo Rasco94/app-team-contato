@@ -1,10 +1,10 @@
 {
   "app": "Team Contato",
-  "versione": "1.0.0",
-  "build": "15b3c725",
+  "versione": "1.2.0",
+  "build": "fb21adc4",
   "codeBlock": {
-    "versione": "V6.5",
-    "impronta": "574e74e01352"
+    "versione": "V6.7.1",
+    "impronta": "fdb61cd8d707"
   },
-  "programma": "1.1.0"
+  "programma": "1.3.0"
 }

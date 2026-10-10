@@ -50,7 +50,7 @@ html.tc-guscio #tcag .comp-bar{top:calc(var(--barra-h,56px) + var(--tc-sa-t))}
 html.tc-guscio #tcag .tcag-login{min-height:100vh;min-height:100dvh;align-items:center;padding:calc(24px + var(--tc-sa-t)) 16px calc(32px + var(--tc-sa-b))}
 html.tc-guscio #tcag .tcag-login-carta{background:linear-gradient(180deg,#0f3573 0%,#0a2a5e 100%);border:1px solid rgba(201,169,97,.28);border-top:3px solid var(--tc-oro);
   box-shadow:0 24px 60px rgba(0,0,0,.38);animation:tc-sali .5s .08s cubic-bezier(.2,.7,.2,1) both}
-html.tc-guscio #tcag .tcag-login-carta::before{content:"";display:block;width:150px;height:118px;margin:-8px auto 10px;
+html.tc-guscio #tcag .tcag-login-carta::before{content:"";display:block;width:150px;height:125px;margin:-8px auto 10px;
   background:url(../icone/logo-chiaro.png) center/contain no-repeat}
 @keyframes tc-sali{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
