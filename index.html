@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.2.0 (build fb21adc4)
+  Guscio app Team Contato - V1.2.1 (build 5c17d149)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.7.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.7.2 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.2.0', build: 'fb21adc4', blocco: 'V6.7.1' };
+window.TC_APP = { versione: '1.2.1', build: '5c17d149', blocco: 'V6.7.2' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -271,6 +271,7 @@ html.tc-guscio body{margin:0}
       <section id="tcag-s-impostazioni" class="sec" hidden aria-labelledby="tcag-t-imp">
         <div class="wrap">
           <div class="sec-head"><div><div class="sub">Valgono solo per te, su tutti i tuoi dispositivi</div><h1 class="sec-t" id="tcag-t-imp">Impostazioni</h1></div></div>
+          <div id="tcag-imp-diana" hidden></div>
           <div id="tcag-imp-body"></div>
         </div>
       </section>
@@ -297,6 +298,7 @@ html.tc-guscio body{margin:0}
       <section id="tcag-s-admin" class="sec" hidden aria-labelledby="tcag-t-adm">
         <div class="wrap">
           <div class="sec-head"><div><div class="sub">Solo segreteria e admin</div><h1 class="sec-t" id="tcag-t-adm">Amministrazione</h1></div></div>
+          <div id="tcag-adm-diana" hidden></div>
           <div class="chips adm-tabs" id="tcag-adm-tabs" style="margin-bottom:14px" role="group"></div>
           <div id="tcag-adm-body"></div>
         </div>
@@ -1254,6 +1256,10 @@ html.tc-guscio body{margin:0}
 @media (max-width:899px){#tcag .as-cmd{gap:6px;padding:6px 10px;flex-wrap:nowrap}
 #tcag .as-cmd .cmd{flex:1 1 0;min-width:0;padding:2px 6px;font-size:13.5px;line-height:1.15;white-space:normal}
 }
+@media (max-width:520px){#tcag .as-cmd.as-cmd4{flex-wrap:wrap}
+#tcag .as-cmd.as-cmd4 .cmd{flex:1 1 calc(33.33% - 6px)}
+#tcag .as-cmd.as-cmd4 .cmd[data-gest]{flex:1 1 100%}
+}
 @media (min-width:900px){#tcag .nt-banner{grid-template-columns:1fr auto;align-items:center}
 #tcag .nt-banner-b .btn{flex:0 0 auto;min-width:150px}
 }
@@ -1265,15 +1271,18 @@ html.tc-guscio body{margin:0}
 #tcag .as-legale{padding:8px 14px 10px;font-size:13px;line-height:1.4;color:#4a4a54;background:#fff;border-top:1px solid var(--bordo);flex:0 0 auto;max-height:34vh;overflow-y:auto}
 #tcag .as-legale p{margin:0}
 #tcag .as-leg-r+.as-leg-r{margin-top:3px}
-#tcag.as-kb .as-leg-r{display:none}
-#tcag.as-kb .as-leg-ai{display:block}
-#tcag.as-kb .as-legale{padding:4px 12px 6px}
+#tcag .as-ai{display:flex;align-items:center;flex-wrap:wrap;gap:0 6px;padding:0 14px;min-height:44px;font-size:14px;line-height:1.35;color:#4a4a54;background:#fff;border-top:1px solid var(--bordo);flex:0 0 auto}
+#tcag .as-ai-t{padding:4px 0}
+#tcag .as-ai-s{color:var(--tenue)}
+#tcag .as-ai-b{min-height:44px;min-width:44px;padding:0 6px;background:none;border:0;color:var(--nv);font:700 14px var(--sans);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+#tcag .as-ai-b:focus-visible{outline:3px solid var(--oro,#c9a961);outline-offset:-3px;border-radius:6px}
+@media (max-width:340px){#tcag .as-ai{padding:0 8px;gap:0 4px;font-size:13px}
+#tcag .as-ai-b{padding:0 4px;font-size:13px}
+}
+#tcag .as-avvisi .as-leg-r{font-size:16px;line-height:1.5;margin:0 0 12px;color:#2a2a33}
 #tcag.as-kb .as-cmd,
 #tcag.as-kb .as-riga{display:none}
-@media (max-width:899px) and (max-height:560px){#tcag .as-leg-r{display:none}
-#tcag .as-leg-ai{display:block}
-#tcag .as-legale{padding:4px 12px 6px}
-#tcag .as-cmd,
+@media (max-width:899px) and (max-height:560px){#tcag .as-cmd,
 #tcag .as-riga{display:none}
 }
 #tcag .as-guida p{margin:0 0 6px;font-size:16px}
@@ -1284,6 +1293,9 @@ html.tc-guscio body{margin:0}
 #tcag .altro-grid>script,
 #tcag .altro-grid>template{display:none}
 #tcag .dg-tabs{margin-bottom:14px}
+#tcag .dg-vai{margin-bottom:16px}
+#tcag .dg-vai .btn{white-space:normal;min-height:52px;text-align:center}
+#tcag .dg-vai-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
 #tcag .dg-tabs .chip{min-height:44px}
 #tcag .dg-pt{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--rosso);vertical-align:middle;margin-left:2px}
 #tcag .dg-body{display:block;max-width:1500px}
@@ -1422,7 +1434,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.7.1';
+  var VERSIONE = 'V6.7.2';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2238,6 +2250,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   }
   function closeModals(){
     $$('.modal-bg').forEach(function(m){ m.hidden = true; });
+    if(typeof avvisoDianaChiuso === 'function') avvisoDianaChiuso();       // V6.7.2: finestra degli avvisi di Diana chiusa in qualunque modo = vista per questa sessione
     if(ultimoFuoco && ultimoFuoco.focus){ try { ultimoFuoco.focus(); } catch(e){} }
     ultimoFuoco = null;
   }
@@ -2316,6 +2329,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       try { history.replaceState(null, '', '#diana' + (GD.tab ? '/' + GD.tab : '')); } catch(e){}
       return;
     }
+    if(sec !== 'diana') GD.da = '';                                                       // V6.7.2: l'origine di Gestione Diana vale solo finche' si resta li' (si azzera QUI, a navigazione avvenuta: con «Annulla» al dialogo resta)
+    if(avvisiAperti() && !(sec === 'strumenti' && sub === 'assistente')) closeModals();    // V6.7.2: lasciata la chat (Indietro del telefono, link): la finestra degli avvisi si chiude
     var cambiata = sec !== S.sec, eraChat = S.sec === 'strumenti' && S.sub === 'assistente';
     S.sec = sec; S.sub = sub;
     $$('section.sec').forEach(function(s){ s.hidden = s.id !== 'tcag-s-' + sec; });
@@ -2334,6 +2349,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'richieste' && sub && !trova(sub) && RQ.ok) cercaPerId(sub);
     if(sec === 'strumenti' && sub === 'assistente' && !eraChat){ AI.segui = true; chatApri(); }     // V6.6: cronologia dal cancello (prima la copia sul dispositivo)
     renderCorrente();
+    if(sec === 'strumenti' && sub === 'assistente' && !eraChat) avvisoIngresso();          // V6.7.2: una volta per sessione, all'ingresso nella chat
     if(cambiata || isPhone()) window.scrollTo(0, 0);
   }
   function ridisegna(){ if(!appEl.hidden) renderCorrente(); }
@@ -2370,7 +2386,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(S.sec === 'richieste') go('richieste');
     else if(S.sec === 'documenti') go('documenti');
     else if(S.sec === 'strumenti') go(S.sub ? 'strumenti' : 'altro');
-    else if(S.sec === 'campagne' || S.sec === 'diana') go('altro');
+    else if(S.sec === 'diana') go(GD.da || 'altro');               // V6.7.2: da Impostazioni/Amministrazione/chat si torna li'; da Altro, ad Altro
+    else if(S.sec === 'campagne') go('altro');
     else go('oggi');
   }
 
@@ -3594,8 +3611,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   }
 
   /* --- fogli (dal basso su telefono, finestra al centro su computer) --- */
-  function apriFoglio(html){
+  function apriFoglio(html, etichetta, descrId){
     put(g('sheet'), html);
+    g('sheet').setAttribute('aria-label', etichetta || 'Scelta');         // V6.7.2: ogni foglio dice cos'e' (prima sempre «Scelta»)
+    // V6.7.2 revisione: se il foglio ha un testo da leggere (gli avvisi di Diana) il lettore di schermo lo annuncia insieme al titolo; gli altri fogli no
+    if(descrId) g('sheet').setAttribute('aria-describedby', 'tcag-' + descrId); else g('sheet').removeAttribute('aria-describedby');
     openModal('m-sheet');
   }
   var dtLocale = function(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
@@ -4037,6 +4057,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function dianaApplica(j, t){
     DI.dati = dianaPulita(j); DI.ok = true; DI.agg = t || Date.now();
     STR_TITOLI.assistente = DI.dati.nome;
+    disegnaRigaAi(); if(AI.avvisiAperti) disegnaLegale();          // V6.7.2: nome e testo dell'admin arrivati a finestra gia' aperta
     if(S.sec === 'strumenti'){ if(g('as-log')){ disegnaChat(); aggiornaFormAi(); } if(typeof renderStrumenti === 'function') renderStrumenti(); if(typeof aggiornaRender === 'function' && g('ren-stato')) aggiornaRender(); }
     if(!appEl.hidden) aggiornaBarre();
   }
@@ -4205,7 +4226,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      Se il cancello e' quello vecchio (1.3.0, la cronologia risponde 404) tutto resta come nella V6.5: solo su questo schermo. */
   var AI = { msgs:[], stato:'pronto', ctl:null, timer:0, tick:0, t0:0, ultima:'', pend:0, ultimoRender:0, scaduto:false, cur:null,
     conv:'', rev:0, srv:null, remoto:false, remotoDa:0, caricata:false, daCache:false, sync:null, ultimoSync:0, conferma:'', lavoro:false, poll:0,
-    segui:true, gesto:0, raf:0, sig:'', lenCur:-1, nuovi:false };       // V6.7: auto-scorrimento (segui = la chat va in fondo da sola)
+    segui:true, gesto:0, raf:0, sig:'', lenCur:-1, nuovi:false,
+    avvisiAperti:false, avvisoMem:false };       // V6.7.2: finestra degli avvisi (aperta adesso / vista in questa sessione, copia in memoria se sessionStorage non va)       // V6.7: auto-scorrimento (segui = la chat va in fondo da sola)
   var AI_T_PRIMO = 120000, AI_T_PAUSA = 45000;     // nessun byte dopo l'invio / pausa dopo il primo byte
   var AI_SYNC_MS = 8000, AI_SYNC_REMOTO_MS = 4000, AI_REMOTO_MAX_MS = 180000;
   var occupata = function(){ return AI.stato === 'attesa' || AI.stato === 'scrittura'; };
@@ -4242,7 +4264,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
             <textarea id="tcag-as-q" rows="1" maxlength="2000" enterkeyhint="send" placeholder="Scrivi la tua domanda..." aria-label="La tua domanda a Diana Assistant"></textarea>
             <button class="btn pri" type="button" id="tcag-as-send" data-act="ai-invia">Invia</button>
           </div>
-          <div class="as-legale" id="tcag-as-legale" role="note" aria-label="Avviso su Diana Assistant"></div>
+          <div class="as-ai" id="tcag-as-ai" role="note" aria-label="Avviso su Diana Assistant"><span class="as-ai-t" id="tcag-as-ai-t">🤖 Diana è un'intelligenza artificiale</span><span class="as-ai-s" aria-hidden="true"> · </span><button class="as-ai-b" type="button" id="tcag-as-avvisi" data-act="ai-avvisi" aria-haspopup="dialog">Avvisi</button></div>
           <span class="sr" id="tcag-as-sr" role="status" aria-live="polite"></span>
         </div>
         <aside class="card as-side"><h2>Domande suggerite</h2><div id="tcag-as-sugg"></div></aside>
@@ -4269,7 +4291,34 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   }
   function cresciCasella(q){ q.style.height = 'auto'; q.style.height = Math.min(q.scrollHeight, 136) + 'px'; if(AI.segui && inChat()) scorriFondo(); }
   function limAi(testo){ var l = g('as-lim'); if(!l) return; l.textContent = testo || ''; l.hidden = !testo; }
-  // V6.7: testo legale (approvato) in fondo alla chat, ogni riga in un blocco suo; renderer sicuro (solo nodi DOM)
+  /* ---------- AVVISI DI DIANA (V6.7.2, richiesta di Oscar 10/10/2026: "la scritta sull'AI e' troppo invasiva") ----------
+     Prima (V6.7) in fondo alla chat c'era il testo legale intero (4 righe, fino a 34% dell'altezza): rubava lo spazio ai messaggi.
+     Adesso: 1) quando si ENTRA nella chat compare UNA volta per sessione della scheda/app (sessionStorage) una finestra con il testo legale
+     intero (approvato, NON cambiato) e il pulsante grande «Ho capito»; 2) in fondo resta SEMPRE una riga sola: «🤖 Diana è un'intelligenza
+     artificiale · Avvisi» (Avvisi riapre la finestra). Cosi' la persona sa che parla con un'AI dalla prima interazione (AI Act, art. 50). */
+  var AVVISO_CHIAVE = 'tcag_avviso_diana';
+  function avvisoVisto(){
+    if(AI.avvisoMem) return true;
+    try { return sessionStorage.getItem(AVVISO_CHIAVE) === '1'; } catch(e){ return false; }
+  }
+  function segnaAvvisoVisto(){ AI.avvisoMem = true; try { sessionStorage.setItem(AVVISO_CHIAVE, '1'); } catch(e){} }
+  function finestraAperta(){ return $$('.modal-bg').some(function(m){ return !m.hidden; }); }
+  function avvisiAperti(){ return AI.avvisiAperti && !g('m-sheet').hidden; }
+  // chiamata da closeModals(): la finestra si e' chiusa (Ho capito, Esc, o si e' lasciata la chat): da ora in poi e' vista
+  function avvisoDianaChiuso(){ if(!AI.avvisiAperti) return; AI.avvisiAperti = false; segnaAvvisoVisto(); }
+  // V6.7.2 revisione: nome INTERO scelto dall'admin, senza l'ultima parola «Assistant» (di partenza «Diana Assistant» -> «Diana») e senza il robot iniziale (c'e' gia' nella riga).
+  // Prima prendeva solo la prima parola: «Il tuo assistente» diventava «Il», «Dott. Diana» diventava «Dott.».
+  function dianaPrimoNome(){
+    var n = String(dianaNome() || '').replace(/^[\s\u{1F916}\uFE0F]+/u, '').replace(/\s+assistant\s*$/i, '').trim();
+    return n || 'Diana';
+  }
+  // riga compatta in fondo alla chat: sempre visibile, mai nascosta (nemmeno con la tastiera aperta)
+  function disegnaRigaAi(){
+    var t = g('as-ai-t'); if(!t) return;
+    var s = '🤖 ' + dianaPrimoNome() + " è un'intelligenza artificiale";
+    if(t.textContent !== s) t.textContent = s;
+  }
+  // testo legale (approvato): ogni riga in un blocco suo; renderer sicuro (solo nodi DOM). Sta dentro la finestra (#tcag-as-legale).
   function disegnaLegale(){
     var box = g('as-legale'); if(!box) return;
     var t = dianaLegale();
@@ -4279,6 +4328,27 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       if(!riga.trim()) return;
       var d = mdEl('div'); d.className = 'as-leg-r' + (riga.trim() === DIANA_AI_RIGA ? ' as-leg-ai' : ''); d.appendChild(renderSicuro(riga)); box.appendChild(d);
     });
+  }
+  function apriAvvisiDiana(){
+    var nome = dianaPrimoNome();
+    AI.avvisiAperti = true;
+    apriFoglio(H`<h2>Cosa devi sapere su ${nome}</h2><div class="as-avvisi" id="tcag-as-legale" role="note"></div><div class="sheet-btns"><button class="btn pri big" type="button" id="tcag-as-capito" data-act="close-modal">Ho capito</button></div>`, 'Avvisi su ' + nome, 'as-legale');
+    disegnaLegale();
+  }
+  // all'ingresso nella chat: una volta per sessione. Se non c'e' il cancello AI la chat non funziona e non c'e' niente da dire.
+  function avvisoIngresso(){
+    if(!AI_URL || avvisoVisto() || avvisiAperti() || !g('m-sheet').hidden) return;
+    apriAvvisiDiana();
+  }
+  // Tab dentro la finestra: il fuoco resta tra i suoi pulsanti (la finestra e' modale)
+  function avvisoTab(e){
+    if(!avvisiAperti() || e.key !== 'Tab') return false;
+    var cerca = g('m-search'); if(cerca && !cerca.hidden) return false;       // V6.7.2 revisione: se per qualunque via si apre la ricerca sopra, il Tab e' suo
+    var f = $$('button,[href],input,textarea,select,[tabindex]:not([tabindex="-1"])', g('sheet')).filter(function(x){ return !x.disabled && x.getClientRects().length; });
+    if(!f.length){ e.preventDefault(); return true; }
+    var i = f.indexOf(document.activeElement);
+    if(i < 0 || (e.shiftKey && i === 0) || (!e.shiftKey && i === f.length - 1)){ e.preventDefault(); f[e.shiftKey ? f.length - 1 : 0].focus(); return true; }
+    return false;
   }
   // V6.7: «Come funziona», la guida di Diana Assistant (scritta dall'admin) in un foglio
   function apriGuidaDiana(){
@@ -4291,9 +4361,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   }
   function comandiAi(){
     var bl = chatBloccata() || !AI_URL, guida = H`<button class="btn sec cmd" type="button" id="tcag-as-guida" data-act="ai-guida" aria-haspopup="dialog">${dianaGuidaTitolo()}</button>`;
-    if(AI.srv === false) return H`<button class="btn sec cmd" type="button" id="tcag-as-svuota" data-act="ai-svuota" ${bl ? 'disabled' : ''}>Svuota schermo</button>${guida}`;
+    // V6.7.2: solo l'admin vede «⚙ Gestione» (porta a Gestione Diana Assistant, scheda Conoscenza; Indietro riporta alla chat). Agenti e segreteria: niente.
+    var gest = U && U.ruolo === 'admin' ? H`<button class="btn sec cmd" type="button" id="tcag-as-gestione" data-act="diana-vai" data-gest="1" data-h="diana/conoscenza" data-da="strumenti/assistente" aria-label="Gestione di Diana Assistant (solo amministratore)" title="Gestione di Diana Assistant">⚙ Gestione</button>` : '';
+    if(AI.srv === false) return H`<button class="btn sec cmd" type="button" id="tcag-as-svuota" data-act="ai-svuota" ${bl ? 'disabled' : ''}>Svuota schermo</button>${guida}${gest}`;
     return H`<button class="btn sec cmd" type="button" id="tcag-as-nuova" data-act="ai-nuova" ${bl ? 'disabled' : ''}>Nuova conversazione</button>
-      <button class="btn sec cmd" type="button" id="tcag-as-svuota" data-act="ai-svuota" ${bl ? 'disabled' : ''}>Cancella cronologia</button>${guida}`;
+      <button class="btn sec cmd" type="button" id="tcag-as-svuota" data-act="ai-svuota" ${bl ? 'disabled' : ''}>Cancella cronologia</button>${guida}${gest}`;
   }
   function confermaAi(){
     var c = g('as-conf'); if(!c) return;
@@ -4312,10 +4384,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     q.disabled = !AI_URL || spenta;
     q.placeholder = spenta ? DIANA_NOME + ' è in manutenzione' : 'Scrivi la tua domanda...';
     var mn = g('as-manut'); if(mn){ mn.hidden = !spenta; mn.textContent = spenta ? dianaMessaggioSpento() : ''; }
-    disegnaLegale();
+    disegnaRigaAi(); if(AI.avvisiAperti) disegnaLegale();
     g('as-log').setAttribute('aria-busy', String(oc || AI.remoto));
     if(!AI_URL) limAi('Diana Assistant non è configurata.');
     put(g('as-cmd'), comandiAi());
+    g('as-cmd').classList.toggle('as-cmd4', !!g('as-gestione'));             // V6.7.2: con «⚙ Gestione» (admin) i comandi sono 4: sul telefono stretto vanno su due righe
     confermaAi();
     put(g('as-sugg'), bottoniDomande());
     put(g('as-riga'), AI.msgs.length ? bottoniDomande() : '');
@@ -4474,7 +4547,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(logF && AI.segui) scorriFondo(logF);                    // la riga Copia/Riprova allunga il fondo: si resta in fondo
     aggiornaFormAi();
     var sr = g('as-sr'); if(sr) sr.textContent = errore ? '' : 'Risposta pronta';
-    if(!errore && !isPhone()){ var q = g('as-q'); if(q) try { q.focus(); } catch(e){} }
+    // V6.7.2 revisione: se una finestra e' aperta (Avvisi, Come funziona, ricerca) il fuoco resta li': prima si finiva a scrivere nella chat sotto
+    if(!errore && !isPhone() && !finestraAperta()){ var q = g('as-q'); if(q) try { q.focus(); } catch(e){} }
     // il cancello salva la coppia domanda-risposta appena finisce di leggere: poco dopo si allinea il numero di revisione
     // (la schermata non si ridisegna se il testo e' lo stesso)
     if(AI.srv !== false) setTimeout(function(){ if(!occupata()) caricaCronologia(); }, 700);
@@ -5576,6 +5650,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     return H`<button class="sw" type="button" role="switch" aria-checked="${String(!!on)}" data-act="imp-toggle" data-k="${k}" ${spento ? 'disabled' : ''}><span class="sw-t">${testo}</span><span class="sw-st">${on ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button>`;
   }
   function renderImpostazioni(forza){
+    dgRiquadro('imp-diana', 'impostazioni');          // V6.7.2: Gestione Diana Assistant (solo admin), anche se le impostazioni non si caricano
     var box = g('imp-body');
     if(!IMP.ok){ if(gate(box, IMP, 'le impostazioni', 3)) return; }
     if(!IMP.bozza) return;
@@ -6615,7 +6690,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var DG_FILE_MAX = 10 * 1024 * 1024, DG_LOTTO = 20, DG_CODA_MAX = 200, DG_LIVELLI = 4, DG_TIPI = ['md', 'txt', 'pdf', 'docx'];
   var DG_STATO_MS = 30000, DG_CON_POLL_MS = 3000;
   var GD = {
-    tab: 'personalita',
+    tab: 'personalita', da: '',
     imp: ris(), per: ris(), con: ris(), sta: ris(),
     vecchio: false,
     perB: null, benB: null, intB: null, txtB: null,
@@ -6761,6 +6836,24 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     dgChips();
     if(dgDigitando()) return;                                        // mai ridisegnare sotto le dita di chi sta scrivendo
     dgDisegna();
+  }
+  /* V6.7.2 (richiesta di Oscar 10/10/2026: "non vedo nelle impostazioni dell'amministratore la sezione per la gestione della conoscenza"):
+     la Gestione Diana Assistant si apriva SOLO da Altro. Adesso l'admin la trova anche in Impostazioni e in Amministrazione, con un pulsante per
+     ogni scheda (Conoscenza in evidenza), e in chat col pulsante «⚙ Gestione». Agenti e segreteria: niente (la rotta e il cancello lo ribadiscono). */
+  function dgRiquadroHTML(da){
+    return H`<section class="card imp-card dg-vai" aria-labelledby="tcag-dgv-h-${da}"><div class="sec-h" id="tcag-dgv-h-${da}">Gestione Diana Assistant</div>
+      <p class="imp-p">Solo per l'amministratore: cosa sa, cosa dice e cosa può fare Diana.</p>
+      <button class="btn pri big" type="button" data-act="diana-vai" data-h="diana/conoscenza" data-da="${da}">Conoscenza: i documenti di Diana</button>
+      <div class="dg-vai-l">${DG_TABS.filter(function(t){ return t[0] !== 'conoscenza'; }).map(function(t){
+        return H`<button class="btn sec" type="button" data-act="diana-vai" data-h="diana/${t[0]}" data-da="${da}">${t[1]}</button>`;
+      })}</div></section>`;
+  }
+  function dgRiquadro(id, da){
+    var c = g(id); if(!c) return;
+    if(!(U && U.ruolo === 'admin')){ if(c.firstChild) c.textContent = ''; c.removeAttribute('data-ok'); c.hidden = true; return; }
+    c.hidden = false;
+    if(c.getAttribute('data-ok') === da) return;
+    put(c, dgRiquadroHTML(da)); c.setAttribute('data-ok', da);
   }
   function dgTutto(){ dgChips(); dgDisegna(); }
   function dgDisegna(){
@@ -7023,8 +7116,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     return H`${dgMsgHTML('txt')}
       <div class="dg-griglia">
       <section class="card dg-card" aria-labelledby="tcag-dg-lg-h">
-        <h2 id="tcag-dg-lg-h">Avviso legale (in fondo alla chat)</h2>
-        <p class="mut">Va sempre mostrato in fondo alla chat. Per il grassetto scrivi il testo tra due asterischi.</p>
+        <h2 id="tcag-dg-lg-h">Avviso legale (finestra della chat)</h2>
+        <p class="mut">Si apre in una finestra quando l'agente entra in chat (una volta per sessione) e con «Avvisi». In fondo alla chat resta una riga sola con 🤖. Per il grassetto scrivi il testo tra due asterischi.</p>
         <p class="dg-aiuto" id="tcag-dg-lg-ai">La riga con 🤖 (intelligenza artificiale) è obbligatoria per legge: <b>non si può togliere né cambiare</b>. Le altre righe sì.</p>
         <p class="dg-aiuto" id="tcag-dg-lg-cambiato" role="status" ${camb ? '' : 'hidden'}>Hai cambiato il testo approvato da Oscar.</p>
         <label class="fld">Testo<textarea id="tcag-dg-lg" rows="9" maxlength="1200">${T.legale}</textarea></label>
@@ -7631,6 +7724,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      ========================================================= */
   var EVENTI_LOG = { aperta:'ha aperto la richiesta', stato:'ha cambiato lo stato di', nota:'ha aggiornato la nota di', contatto:'ha registrato un contatto su', assegnata:'ha assegnato', creata:'ha creato' };
   function renderAdmin(){
+    dgRiquadro('adm-diana', 'admin');                 // V6.7.2: Gestione Diana Assistant (solo admin)
     var da = (RQ.conteggi && RQ.conteggi.daAssegnare) != null ? RQ.conteggi.daAssegnare : (ADM.assegna.dati ? ADM.assegna.dati.length : 0);
     put(g('adm-tabs'), [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']].map(function(t){
       return H`<button class="chip" type="button" data-act="adm" data-t="${t[0]}" aria-pressed="${String(S.adm === t[0])}">${t[1]}</button>`;
@@ -7853,6 +7947,10 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       case 'ai-invia': inviaDalForm(); break;
       case 'ai-domanda': inviaDomanda(dianaDomande()[+el.getAttribute('data-i')]); break;
       case 'ai-guida': apriGuidaDiana(); break;
+      case 'ai-avvisi': apriAvvisiDiana(); break;                                   // V6.7.2: «Avvisi» nella riga in fondo alla chat
+      case 'diana-vai':                                                              // V6.7.2: link a Gestione Diana Assistant da Impostazioni, Amministrazione e chat (solo admin; la rotta lo controlla comunque)
+        if(U && U.ruolo === 'admin'){ closePops(); GD.da = el.getAttribute('data-da') || ''; go(el.getAttribute('data-h')); }
+        break;
       case 'ai-nuovi': seguiOra(); break;                                          // V6.7: «Nuovi messaggi ↓»                                    // V6.7: «Come funziona»
       case 'ai-svuota': chiediComandoChat('cancella'); break;                      // V6.6: Cancella cronologia (con conferma); col cancello vecchio svuota solo lo schermo
       case 'ai-nuova': chiediComandoChat('nuova'); break;
@@ -7943,7 +8041,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(appEl.hidden) return;
     var t = e.target;
     if((e.key === 'Enter' || e.key === ' ') && t.getAttribute && t.getAttribute('role') === 'button' && t.getAttribute('data-act')){ e.preventDefault(); t.click(); return; }
-    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); closePops(); openModal('m-search'); g('s-input').focus(); return; }
+    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); if(avvisiAperti()) return; closePops(); openModal('m-search'); g('s-input').focus(); return; }       // V6.7.2 revisione: con la finestra degli avvisi aperta la ricerca non si apre sopra
+    if(avvisoTab(e)) return;
     if(e.key === 'Escape'){
       if(openPopId){ var an = popAnchor; closePops(); if(an && an.focus) an.focus(); return; }
       closeModals(); return;
