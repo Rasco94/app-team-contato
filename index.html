@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.2.1 (build 5c17d149)
+  Guscio app Team Contato - V1.3.0 (build 478090c4)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.7.2 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.8.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.2.1', build: '5c17d149', blocco: 'V6.7.2' };
+window.TC_APP = { versione: '1.3.0', build: '478090c4', blocco: 'V6.8.1' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -140,6 +140,11 @@ html.tc-guscio body{margin:0}
       <p class="tcag-accesso-aiuto">Se Google mostra "Accesso bloccato", il tuo account non pu&ograve; usare
         siti esterni: chiedi in agenzia di abilitarne un altro.</p>
     </div>
+    <!-- V6.8.1: pulsante PUBBLICO sotto la carta (porta alla guida dell'app, non mostra niente di riservato). Il JS lo nasconde dentro l'app installata. -->
+    <a class="tcag-app-pub" id="tcag-app-pub" href="https://www.teamcontatoremax.com/app">
+      <span class="tcag-app-pub-t"><span aria-hidden="true">&#128241;</span> Installa l&rsquo;app del team</span>
+      <span class="tcag-app-pub-s">iPhone e Android &middot; 1 minuto</span>
+    </a>
   </div>
 
   <p class="tcag-carico" id="tcag-carico" hidden>Apro l&rsquo;area agenti&hellip;</p>
@@ -360,6 +365,14 @@ html.tc-guscio body{margin:0}
 
     <div class="modal-bg sheet-bg" id="tcag-m-sheet" hidden><div class="modal sheet" id="tcag-sheet" role="dialog" aria-modal="true" aria-label="Scelta"></div></div>
 
+    <!-- V6.8: Precompila con AI. Computer: pannello a destra del PDF. Telefono: a schermo intero. Si disegna con 04e1b-precompila-ai.js -->
+    <div class="pre-bg" id="tcag-pre" hidden><aside class="pre" role="dialog" aria-modal="false" aria-labelledby="tcag-pre-h">
+      <div class="pre-top"><h2 id="tcag-pre-h" tabindex="-1">Precompila con AI</h2><button class="btn sec sm" type="button" data-act="pre-chiudi">Chiudi</button></div>
+      <div class="pre-body" id="tcag-pre-body"></div>
+      <input class="dg-fin" type="file" id="tcag-pre-cam" data-act="pre-cam" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+      <input class="dg-fin" type="file" id="tcag-pre-file" data-act="pre-file" tabindex="-1" aria-hidden="true">
+    </aside></div>
+
     <div id="tcag-toast" role="status" aria-live="polite" hidden></div>
   </div>
 
@@ -406,7 +419,7 @@ html.tc-guscio body{margin:0}
 #tcag .i{flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #tcag :focus-visible{outline:2px solid var(--oro);outline-offset:2px}
 #tcag .mut{color:var(--tenue)}
-#tcag .tcag-login{display:flex; justify-content:center; padding:48px 0 64px}
+#tcag .tcag-login{display:flex; flex-direction:column; align-items:center; gap:18px; padding:48px 0 64px}
 #tcag .tcag-login-carta{width:100%; max-width:440px; text-align:center;
   background:var(--nv); color:#fff; border-radius:16px; padding:40px 28px 30px;
   border-top:3px solid var(--oro); box-shadow:0 18px 40px rgba(10,42,94,.18);}
@@ -419,9 +432,17 @@ html.tc-guscio body{margin:0}
 #tcag .tcag-accesso-msg.errore{color:#ffd2d6}
 #tcag .tcag-accesso-aiuto{margin:18px 0 0; font-size:12px; color:rgba(255,255,255,.55); line-height:1.5}
 #tcag .tcag-carico{text-align:center; padding:60px 0; color:var(--tenue); font-size:15px}
+#tcag .tcag-app-pub{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; width:100%; max-width:440px; min-height:60px; padding:10px 18px; text-align:center; text-decoration:none!important; background:#fff; color:var(--nv)!important; border:2px solid var(--nv); border-radius:14px; box-shadow:0 2px 10px rgba(10,42,94,.08)}
+#tcag .tcag-app-pub-t{font:700 17px/1.3 var(--sans); color:var(--nv)}
+#tcag .tcag-app-pub-s{font:500 16px/1.3 var(--sans); color:var(--tenue)}
+#tcag .tcag-app-pub:hover{background:var(--nv); color:#fff!important}
+#tcag .tcag-app-pub:hover .tcag-app-pub-t{color:#fff}
+#tcag .tcag-app-pub:hover .tcag-app-pub-s{color:rgba(255,255,255,.85)}
+#tcag .tcag-app-pub:focus-visible{outline:3px solid var(--oro); outline-offset:3px}
 @media(max-width:560px){#tcag .tcag-login{padding:24px 0 40px}
 #tcag .tcag-login-carta{padding:32px 20px 24px; border-radius:14px}
 #tcag .tcag-login-titolo{font-size:28px}
+#tcag .tcag-app-pub{padding:10px 14px}
 }
 #tcag.tcag-dentro{max-width:none; background:var(--avorio); min-height:100vh;
   width:var(--tcag-w,100vw); margin-left:var(--tcag-ml,calc(50% - 50vw)); margin-right:0;}
@@ -1399,6 +1420,109 @@ html.tc-guscio body{margin:0}
 @media (prefers-reduced-motion:reduce){#tcag .im-barra i{animation:none;width:100%}
 #tcag .im-sk .ph.skel{animation:none}
 }
+#tcag .pre .note-s,
+#tcag .pre .fld,
+#tcag .pre label.fld{font-size:14px}
+#tcag .pre-btn-w{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap}
+#tcag .pre-why{font-size:14px;color:var(--tenue);flex-basis:100%;overflow-wrap:anywhere}
+#tcag .cv-campi input[type=text].ai-g{background:#fff1a8;box-shadow:0 0 0 2px #e0b400 inset;outline:2px dashed #7a5c00;outline-offset:-4px}
+#tcag .cv-campi input[type=text].ai-g:focus{background:#ffe86b}
+#tcag .cv-hits{position:absolute;inset:0;pointer-events:none}
+#tcag .cv-hit{position:absolute;pointer-events:auto;cursor:pointer;border-radius:4px}
+#tcag .pre-bg{position:fixed;inset:0;z-index:2050;background:rgba(10,20,40,.5);display:flex;justify-content:flex-end}
+#tcag .pre{background:#fff;width:100%;height:100%;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+#tcag .pre-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 16px;border-bottom:1px solid var(--bordo);background:#fff;flex:0 0 auto}
+#tcag .pre-top h2{font:600 20px var(--serif);color:var(--nv);margin:0}
+#tcag .pre-top h2:focus{outline:0}
+#tcag .pre-body{flex:1 1 auto;overflow:auto;-webkit-overflow-scrolling:touch;padding:14px 16px calc(24px + env(safe-area-inset-bottom));min-height:0}
+@media (min-width:1100px){#tcag .pre-bg{background:none;pointer-events:none;top:var(--barra-h)}
+#tcag .pre{width:min(480px,40vw);pointer-events:auto;border-left:1px solid var(--bordo);box-shadow:-6px 0 18px rgba(10,42,94,.12)}
+#tcag.pre-lato #tcag-doc-comp{margin-right:min(480px,40vw)}
+}
+#tcag .pre-passi{display:flex;gap:8px;margin:0 0 12px;padding:0;list-style:none}
+#tcag .pre-passi li{flex:1;padding:8px 10px;border:1px solid var(--bordo);border-radius:8px;font:600 14px var(--sans);color:var(--tenue);background:#fff}
+#tcag .pre-passi li.on{border-color:var(--nv);color:var(--nv);background:#f1f4fa}
+#tcag .pre-passi b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:99px;background:var(--bordo);color:var(--nv);margin-right:6px;font-size:14px}
+#tcag .pre-passi li.on b{background:var(--nv);color:#fff}
+#tcag .pre-intro{font-size:16px;margin:0 0 12px}
+#tcag .pre-nota{font-size:14px;margin:4px 0 8px}
+#tcag .pre-sez{border:1px solid var(--bordo);border-radius:10px;padding:12px 14px;margin:0 0 12px;background:#fff}
+#tcag .pre-sez h3{font:600 17px var(--serif);color:var(--nv);margin:0 0 6px;display:flex;align-items:center;gap:8px}
+#tcag .pre-sez p{margin:0 0 8px;font-size:15px}
+#tcag .pre-info{background:#f1f4fa;border-color:#c9d4ea}
+#tcag .pre-info-c{display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:10px 0 2px;cursor:pointer;font-size:16px}
+#tcag .pre-info-c input,
+#tcag .pre-chk input,
+#tcag .pre-u input{width:24px;height:24px;flex:0 0 24px;margin:0;accent-color:var(--nv);cursor:pointer}
+#tcag .pre-lista summary{cursor:pointer;font:600 16px var(--sans);color:var(--nv);min-height:36px;display:flex;align-items:center;gap:6px}
+#tcag .pre-chk{display:grid;gap:2px;margin:0;padding:0;list-style:none}
+#tcag .pre-chk label{display:flex;gap:12px;align-items:flex-start;min-height:44px;padding:8px 0;font-size:15px;cursor:pointer}
+#tcag .pre-scelto{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--bordo);border-radius:8px;background:#faf9f6}
+#tcag .pre-scelto>div{min-width:0;overflow-wrap:anywhere}
+#tcag .pre-ris{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:6px}
+#tcag .pre-ris-b{width:100%;flex-direction:column;align-items:flex-start;gap:2px;white-space:normal;text-align:left;min-height:52px;padding:8px 12px;height:auto}
+#tcag .pre-ris-b span{font-size:14px;font-weight:400}
+#tcag .pre-slot{border:1px dashed #c8c4b8;border-radius:10px;padding:10px 12px;margin:0 0 10px;background:#fff}
+#tcag .pre-slot.drop{border-color:var(--oro);background:#fffaf0}
+#tcag .pre-slot.st-ok{border-style:solid;border-color:#b9dccb;background:#f4faf7}
+#tcag .pre-slot.st-err{border-style:solid;border-color:#e6b3b9;background:#fff7f8}
+#tcag .pre-sl-t{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;justify-content:space-between}
+#tcag .pre-sl-e{font-size:14px;color:var(--tenue)}
+#tcag .pre-sl-e.err{color:#8f0f1b;font-weight:600}
+#tcag .pre-slot.st-ok .pre-sl-e{color:#1f5e44;font-weight:600}
+#tcag .pre-bar{height:6px;background:var(--bordo);border-radius:3px;overflow:hidden;margin:8px 0}
+#tcag .pre-bar i{display:block;height:100%;background:var(--oro);transition:width .2s}
+#tcag .pre-bar.ind i{width:100%!important;background:linear-gradient(90deg,var(--bordo),var(--oro),var(--bordo));background-size:200% 100%;animation:pre-scorri 1.2s linear infinite}
+@keyframes pre-scorri{from{background-position:200% 0}to{background-position:0 0}}
+#tcag .pre-avvisi{margin:6px 0 0;padding:0 0 0 18px;font-size:14px;color:#6b5314;list-style:disc}
+#tcag .pre-sl-b{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+#tcag .pre-az{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 8px}
+#tcag .pre-az .btn{flex:1 1 200px}
+#tcag .pre-az-fisso{position:sticky;bottom:0;background:#fff;padding:10px 0 calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--bordo);margin-top:14px}
+#tcag .pre-body:has(.pre-az-fisso){padding-bottom:0}
+#tcag .pre-leg{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:6px;font-size:14px}
+#tcag .pre-leg li{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#tcag .pre-st{display:inline-flex;align-items:center;font:700 14px/1 var(--sans);padding:5px 9px;border-radius:99px;white-space:nowrap}
+#tcag .pre-st.st-ok{background:#e3f1ea;color:#1f5e44}
+#tcag .pre-st.st-da_controllare{background:#fff8e1;color:#6b5314;border:1px solid #ecd68a}
+#tcag .pre-st.st-conflitto{background:#fdecee;color:#8f0f1b;border:1px solid #e6b3b9}
+#tcag .pre-spunte{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+#tcag .pre-gr h3{font-size:16px}
+#tcag .pre-r{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--bordo);align-items:flex-start}
+#tcag .pre-r:first-of-type{border-top:0}
+#tcag .pre-u{display:flex;align-items:center;justify-content:center;width:44px;min-height:44px;flex:0 0 44px;cursor:pointer}
+#tcag .pre-rc{flex:1;min-width:0}
+#tcag .pre-re{display:flex;gap:6px 10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+#tcag .pre-rl{font:600 14px var(--sans);color:var(--tenue);overflow-wrap:anywhere}
+#tcag .pre-rv{display:block;width:100%;min-height:44px;border:1px solid var(--bordo);border-radius:8px;padding:8px 10px;font:16px var(--sans);background:#fff;color:var(--testo)}
+#tcag .pre-r.st-da_controllare .pre-rv{background:#fffbe9;border-color:#ecd68a}
+#tcag .pre-r.st-conflitto .pre-rv{background:#fff7f8;border-color:#e6b3b9}
+#tcag .pre-r.fatto{opacity:.65}
+#tcag .pre-rm{font-size:14px;color:var(--tenue);margin-top:4px;overflow-wrap:anywhere}
+#tcag .pre-non summary{cursor:pointer;font:600 15px var(--sans);color:var(--nv);min-height:36px;display:flex;align-items:center}
+#tcag .pre-non ul{margin:6px 0 0;padding:0 0 0 18px;list-style:disc;font-size:14px}
+#tcag .pre-vai{margin:12px 0}
+@media (max-width:899px){#tcag .pre-top{padding-top:calc(10px + env(safe-area-inset-top))}
+#tcag .pre-body{padding-left:12px;padding-right:12px}
+#tcag .pre-passi li{font-size:14px;padding:8px}
+}
+#tcag .dg-elenco{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:8px;font-size:15px}
+#tcag .dg-mod-due{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px}
+#tcag .dg-mod-med{border:1px solid var(--bordo);border-radius:10px;padding:12px;margin:0 0 12px;background:#faf9f6}
+#tcag .dg-mod-med-t{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+@media (max-width:699px){#tcag .dg-mod-due{grid-template-columns:minmax(0,1fr)}
+}
+#tcag .as-testa{display:none;align-items:center;justify-content:flex-end;padding:0 10px;background:#fff;border-bottom:1px solid var(--bordo);flex:0 0 auto}
+#tcag .as-testa .as-nuova-top{flex:0 0 auto;min-height:44px;min-width:44px;padding:0 14px;font-size:16px;white-space:nowrap}
+@media (max-width:899px){#tcag.as-kb .as-testa{display:flex}
+}
+@media (max-width:899px) and (max-height:560px){#tcag .as-testa{display:flex}
+}
+@media (max-width:899px){#tcag.as-kb-basso .as-testa{display:none}
+}
+#tcag .imp-passi{list-style:decimal;margin:0 0 6px;padding:0 0 0 26px}
+#tcag .imp-passi li{margin:0 0 8px;font-size:16px;line-height:1.5;padding-left:2px}
+#tcag .np-testo{margin:0 0 10px;font-size:16px;line-height:1.5}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1434,7 +1558,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.7.2';
+  var VERSIONE = 'V6.8.1';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -1506,6 +1630,16 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     return raw('<svg class="i" width="' + s + '" height="' + s + '" aria-hidden="true"><use href="#tci-' + n + '"/></svg>');
   }
   var isPhone = function(){ return window.matchMedia('(max-width:899px)').matches; };
+  /* V6.8.1: la pagina gira GIA' DENTRO l'app installata? Stessa regola del guscio (app/pwa, index.template.html): classe tc-standalone (la mette il guscio, anche per l'APK),
+     navigator.standalone (iPhone), display-mode standalone / fullscreen / minimal-ui, referrer android-app: (APK, primo avvio). Non lancia mai. */
+  function inAppInstallata(){
+    try {
+      if(document.documentElement.classList.contains('tc-standalone') || navigator.standalone === true) return true;
+      if(window.matchMedia && (window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: fullscreen)').matches || window.matchMedia('(display-mode: minimal-ui)').matches)) return true;
+      if(/^android-app:/.test(document.referrer || '')) return true;
+    } catch(e){}
+    return false;
+  }
   var pad = function(n){ return (n < 10 ? '0' : '') + n; };
   var mb = function(n){ return n.toFixed(1).replace('.', ','); };
   function maiusc(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
@@ -1647,6 +1781,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function mostraLogin(messaggio, errore){
     r.classList.remove('tcag-dentro');
     boxAccesso.hidden = false;
+    var appPub = g('app-pub'); if(appPub) appPub.hidden = inAppInstallata() || !!window.TC_APP;      // V6.8.1: «Installa l'app del team» solo fuori dall'app. Nella pagina dell'app aperta nel browser (guscio, window.TC_APP gia' c'e') l'invito lo fa la scheda «Installa l'app» del guscio: niente doppio invito (revisione 13/10)
     caricoEl.hidden = true;
     appEl.hidden = true;
     riservato.innerHTML = '';
@@ -2334,9 +2469,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var cambiata = sec !== S.sec, eraChat = S.sec === 'strumenti' && S.sub === 'assistente';
     S.sec = sec; S.sub = sub;
     $$('section.sec').forEach(function(s){ s.hidden = s.id !== 'tcag-s-' + sec; });
+    preSync();                                            // V6.8: il pannello «Precompila con AI» esiste solo mentre si compila un modulo
     r.setAttribute('data-sec', sec);
     r.classList.toggle('detail-open', isPhone() && ((sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'strumenti' && (sub === 'assistente' || sub === 'render'))));
     r.classList.toggle('chat-open', isPhone() && sec === 'strumenti' && sub === 'assistente');
+    if(typeof tastieraAi === 'function') tastieraAi();                                  // V6.8.1: lasciata la chat non resta la classe as-kb
     // i dati si chiedono solo la prima volta che si apre la sezione
     if(sec === 'immobili' && IM.stato === 'idle') caricaImmobili();
     if(sec === 'immobili') caricaCopertine();            // V6.6: foto di copertina dal sito pubblico (una volta ogni 30 minuti al massimo)
@@ -3349,7 +3486,6 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     put(main, H`${staleBar(DOC.albero)}${DOC.compile ? H`<div class="avviso">Modulo in compilazione: <b>${DOC.compile.titolo}</b> <button class="btn sec sm" type="button" data-act="comp-riprendi">Riprendi</button> <button class="btn sec sm" type="button" data-act="comp-chiudi">Chiudi</button></div>` : ''}${crumb}${righe}
       <div class="doc-foot"><span>${ic('device', 14)} Sul dispositivo: ${nsalv} file (massimo ${DB_MAX}, i più vecchi escono per primi).</span>
         <label class="btn sec sm" style="cursor:pointer">${ic('upload', 14)}Apri PDF dal telefono<input type="file" accept="application/pdf,.pdf" data-act="open-local"></label>
-        <button class="btn sec sm" type="button" disabled title="In arrivo">${ic('sparkles', 14)}Precompila con AI <span class="soon">in arrivo</span></button>
         <button class="btn sec sm" type="button" data-act="retry">${ic('clock', 14)}Aggiorna l’elenco</button></div>`);
   }
   function scaricaNodo(id){
@@ -3392,6 +3528,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     return H`<div class="comp-bar"><button class="btn sec sm" type="button" data-act="back">${ic('arrow-left', 14)}Documenti</button><span class="ttl">${DOC.compile.titolo}</span>
         <button class="btn sec sm hide-phone" type="button" data-act="comp-chiudi">Chiudi modulo</button>
         <span class="comp-pg">Pagina <button class="chip" type="button" id="tcag-pg-prec" data-act="pg" data-d="-1" aria-label="Pagina precedente" disabled>&lsaquo;</button> <b id="tcag-pg-n">1</b> / <span id="tcag-pg-t">1</span> <button class="chip" type="button" id="tcag-pg-succ" data-act="pg" data-d="1" aria-label="Pagina successiva" disabled>&rsaquo;</button></span>
+        <span class="pre-btn-w" id="tcag-pre-btn"></span>
         <button class="btn pri sm dl-main" type="button" id="tcag-comp-salva" data-act="salva-comp" disabled>${ic('download', 14)}Scarica compilato</button></div>
       <div class="avviso" id="tcag-cv-avviso" hidden style="margin-top:12px"></div>
       <div class="cv-foglio" id="tcag-cv-foglio"><div class="cv-vuoto" id="tcag-cv-vuoto"><span id="tcag-cv-txt">Carico il modulo…</span><div class="cv-prog"><i id="tcag-cv-bar"></i></div></div>
@@ -3414,6 +3551,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     DOC.pdf = null; DOC.byte = null; DOC.vals = {}; DOC.pagina = 1;
     main.setAttribute('data-id', DOC.compile.chiave);
     put(main, compHTML());
+    preReset(); preBtn();                           // V6.8: Precompila con AI: nuovo modulo = pannello e letture azzerati
     var v = DOC.compile, sorgente;
     if(v.locale) sorgente = v.locale.arrayBuffer().then(function(b){ return b; });
     else sorgente = ottieniFile(v.nodo, function(pc){
@@ -3436,6 +3574,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     cc.removeAttribute('data-id'); cc.innerHTML = ''; cc.hidden = true;
     try { if(DOC.pdf && DOC.pdf.destroy) DOC.pdf.destroy(); } catch(e){}
     DOC.pdf = null; DOC.byte = null; DOC.vals = {}; DOC.compile = null;
+    preReset();                                     // V6.8: documenti letti e valori proposti si perdono col modulo (mai sul dispositivo)
   }
   function mostraPdf(buf){
     DOC.byte = buf;
@@ -3445,6 +3584,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       g('pg-t').textContent = d.numPages;
       g('cv-vuoto').hidden = true; g('cv-tela').hidden = false;
       g('comp-salva').disabled = false;
+      preControlla();                                 // V6.8: interruttore, servizio e mappa di QUESTO PDF (sha256)
       return disegna();
     });
   }
@@ -3468,22 +3608,44 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
         .then(function(ann){ campi(ann, vista, strato); });
     });
   }
+  /* V6.8: (1) le caselle da spuntare del PDF misurano 4-5 pt (circa 10 px a scala 2,2): per toccarle col dito ognuna ha un'AREA DI TOCCO di 22 px
+     (mezzo lato = 11 px, ridotto a meta' della distanza dalla casella piu' vicina, cosi' due aree non si sovrappongono). L'area e' un <span> nello strato
+     .cv-hits SOTTO tutti gli input: non copre mai un campo di testo ne' un'altra casella. L'input resta ESATTAMENTE sul rettangolo del PDF.
+     (2) un campo messo dalla precompilazione AI e da controllare ha la classe .ai-g (giallo) finche' l'agente non lo tocca. */
+  var CV_TOCCO = 22;
+  var CV_GIALLO = 'Da controllare: scritto dall’AI e non verificato. Guardalo prima di farlo firmare.';
   function campi(annotazioni, vista, strato){
     strato.innerHTML = '';
+    var elenco = [];
     annotazioni.forEach(function(a){
       if(a.subtype !== 'Widget' || !a.fieldName) return;
       var q = window.pdfjsLib.Util.normalizeRect(vista.convertToViewportRectangle(a.rect));
       var x = Math.min(q[0], q[2]), y = Math.min(q[1], q[3]), l = Math.abs(q[2] - q[0]), h = Math.abs(q[3] - q[1]);
-      var el = document.createElement('input');
+      elenco.push({ a:a, x:x, y:y, l:l, h:h, cx:x + l / 2, cy:y + h / 2 });
+    });
+    var caselle = elenco.filter(function(e){ return e.a.checkBox; });
+    var hits = document.createElement('div'); hits.className = 'cv-hits'; strato.appendChild(hits);
+    elenco.forEach(function(e){
+      var a = e.a, el = document.createElement('input');
       if(a.checkBox){
         el.type = 'checkbox'; el.checked = !!DOC.vals[a.fieldName];
         el.addEventListener('change', function(){ DOC.vals[a.fieldName] = el.checked; });
+        var dmin = 1e9;
+        caselle.forEach(function(o){ if(o !== e) dmin = Math.min(dmin, Math.max(Math.abs(o.cx - e.cx), Math.abs(o.cy - e.cy))); });
+        var mezzo = Math.min(CV_TOCCO / 2, dmin / 2);
+        if(mezzo * 2 > Math.max(e.l, e.h) + 1){
+          var sp = document.createElement('span'); sp.className = 'cv-hit'; sp.setAttribute('aria-hidden', 'true');
+          sp.style.left = (e.cx - mezzo) + 'px'; sp.style.top = (e.cy - mezzo) + 'px'; sp.style.width = (mezzo * 2) + 'px'; sp.style.height = (mezzo * 2) + 'px';
+          sp.addEventListener('click', function(){ el.click(); });
+          hits.appendChild(sp);
+        }
       } else {
         el.type = 'text'; el.value = DOC.vals[a.fieldName] || '';
-        el.style.fontSize = Math.max(11, Math.min(h * 0.78, 16)) + 'px';
-        el.addEventListener('input', function(){ DOC.vals[a.fieldName] = el.value; });
+        el.style.fontSize = Math.max(11, Math.min(e.h * 0.78, 16)) + 'px';
+        if(PRE.m && PRE.m.gialli[a.fieldName]){ el.className = 'ai-g'; el.title = CV_GIALLO; el.setAttribute('aria-description', CV_GIALLO); }       // V6.8 correzioni 13/10 sera: non solo colore (contorno tratteggiato + testo)
+        el.addEventListener('input', function(){ DOC.vals[a.fieldName] = el.value; preTocco(a.fieldName, el); });
       }
-      el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.width = l + 'px'; el.style.height = h + 'px';
+      el.style.left = e.x + 'px'; el.style.top = e.y + 'px'; el.style.width = e.l + 'px'; el.style.height = e.h + 'px';
       el.setAttribute('aria-label', a.fieldName);
       strato.appendChild(el);
     });
@@ -3515,6 +3677,845 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     DOC.compile = { titolo:titolo, nodo:nodo || null, locale:locale || null, chiave:String(Date.now()) };
     DOC.nomeFile = String(titolo).replace(/\.pdf$/i, '').replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase() || 'modulo';
     go('documenti/compila');
+  }
+  /* =========================================================
+     PRECOMPILA CON AI NEI MODULI PDF  (V6.8, CONTRATTO-MODULI-AI.md revisione 2, par. 5, 7.3, 7.4 e 9)
+     =========================================================
+     Il pulsante «Precompila con AI» sta nella barra del compilatore PDF (04e). Si accende solo se TUTTE e tre le cose sono vere:
+       1) GET /ai/moduli/stato  dice  attivo  e  servizio.raggiungibile   (l'interruttore lo gira l'admin: Gestione > Moduli AI);
+       2) il browser sa calcolare lo sha256 del PDF aperto (SubtleCrypto);
+       3) GET /ai/moduli/mappa/<sha256 del PDF>  esiste (404 = «Modulo non ancora preparato per l'AI»).
+     Il pannello (a destra del PDF sul computer, a schermo intero sul telefono) ha due passi: FONTI e CONTROLLA.
+       Fonti: informativa + spunta obbligatoria, lista «Documenti da raccogliere» (solo promemoria), richiesta collegata, immobile,
+              documenti di Persona 1 e Persona 2 (carta d'identita' fronte e retro, tessera, passaporto se abilitato) e visura catastale.
+              Ogni file parte SUBITO (POST /ai/moduli/leggi, file grezzo, una richiesta alla volta per agente: il cancello rifiuta la seconda con 409).
+       Controlla: POST /ai/moduli/proponi (JSON piccolo, mai immagini) -> una riga per campo: valore, fonte, stato (controllato / da controllare / scegli).
+              «Applica al modulo» scrive in DOC.vals SOLO le righe spuntate; mai sopra un campo gia' scritto dall'agente (diventa «scegli»).
+     Regole che il cancello e il servizio gia' fanno e che qui si rispettano:
+       - mai contratto, prezzo, clausole, firme, accettazione, ritiro, luogo e data, caselle da spuntare: la LISTA CHIUSA sta nella mappa del servizio,
+         la pagina scrive solo i campi che la proposta le manda (e ignora quelli che non ci sono nella mappa);
+       - i dati di agenzia e mediatore non passano di qui: li aggiunge il cancello dalle impostazioni dell'admin;
+       - NIENTE sul dispositivo: ne' documenti ne' valori letti in nessun archivio del browser. Tutto vive in PRE.m (memoria) e sparisce
+         con «Chiudi modulo», «Esci» o ricarica. Il file letto si butta appena il servizio risponde (si tiene solo se l'errore e' da riprovare).
+     Il testo che arriva dal cancello e' NON fidato: sempre come testo (H``/textContent), mai HTML. */
+  var PRE_FOTO_MAX = 15000000, PRE_PDF_MAX = 10000000;          // byte DECIMALI: coincidono con i 15MB di Caddy per /ai/* e con i limiti del cancello 1.7.0
+  var PRE_LATO_GROSSA = 4032, PRE_LATO_HEIC = 6000;             // lato lungo massimo se una foto va rifatta in JPEG (troppo pesante / HEIC)
+  var PRE_T_STATO = 15000, PRE_T_PROPONI = 30000, PRE_T_LEGGI = 75000;
+  var PRE_STATO_TTL = 60000;
+  var PRE_PROPONI_MAX = 256000;
+  var PRE_TIPI_STD = ['cie_fronte', 'cie_retro', 'tessera', 'visura'];
+  var PRE_TIPO_NOME = { cie_fronte:'Carta d’identità, fronte', cie_retro:'Carta d’identità, retro', tessera:'Tessera sanitaria o codice fiscale', passaporto:'Passaporto (pagina con la foto)', visura:'Visura catastale' };
+  var PRE_INFO_TESTO = 'Le foto e i PDF che carichi servono solo a compilare questo modulo. Li legge il server dell’agenzia, in ufficio: non escono su internet e non li vede nessun servizio esterno. Non vengono salvati: il server li cancella appena ha finito di leggerli. Restano solo nel modulo che scarichi tu. Controlla ogni campo prima di farlo firmare: la lettura automatica può sbagliare.';
+  var PRE_GRUPPI = ['Persona 1', 'Persona 2', 'Immobile', 'Catasto 1', 'Catasto 2', 'Catasto 3', 'Agenzia', 'Mediatore'];
+  var PRE_AVVISI = {
+    visione_occupata: 'Letto senza l’aiuto dell’AI (la scheda video era occupata): controlla bene i campi.',
+    piu_unita_non_lette: 'La visura ha più unità catastali: ho letto solo la prima.',
+    foto_sfocata: 'La foto è sfocata: se i dati sono pochi, provane una più nitida.',
+    retro_incompleto: 'Del retro si vede solo una parte: se mancano dati, rifai la foto.',
+    nessun_cf: 'Non trovo il codice fiscale.',
+    pdf_con_strato_ocr: 'Il PDF è una scansione: ho letto l’immagine, non il testo nascosto. Controlla i dati.'
+  };
+  // frasi per i codici del cancello (par. 7.3): in testo semplice; il testo del server si usa solo per il messaggio dell'admin (manutenzione)
+  var PRE_MSG = {
+    moduli_parametri:'Richiesta non valida.',
+    moduli_informativa:'Prima conferma che il cliente è informato.',
+    moduli_mappa_assente:'Modulo non ancora preparato per l’AI.',
+    moduli_lettura_in_corso:'Hai già una lettura in corso: aspetta che finisca.',
+    moduli_file_grande:'File troppo grande (massimo 15 MB per le foto, 10 MB per i PDF).',
+    moduli_troppe_pagine:'Il PDF ha troppe pagine (massimo 6).',
+    moduli_tipo_file:'Formato non leggibile. Usa una foto JPEG o un PDF.',
+    moduli_non_riconosciuto:'Non è un documento riconosciuto.',
+    moduli_visura_non_digitale:'Visura troppo sfocata: chiedi la visura digitale (PDF).',
+    moduli_pdf_protetto:'Il PDF è protetto da password.',
+    moduli_pdf_rotto:'Il PDF non si apre.',
+    moduli_frequenza:'Troppe richieste: attendi qualche secondo.',
+    moduli_occupato:'Il lettore è occupato: riprova fra qualche secondo.',
+    moduli_spento:'Lo strumento è in manutenzione.',
+    moduli_servizio_giu:'Lo strumento non è raggiungibile. Riprova fra qualche minuto.',
+    moduli_lettura_lenta:'La lettura ha impiegato troppo tempo.',
+    moduli_servizio_errore:'Errore dello strumento. Riprova.'
+  };
+  var PRE = {
+    stato:null, statoT:0, statoVol:null, statoErr:null,     // GET /ai/moduli/stato (una copia per 60 s)
+    mappe:{},                                                // sha256 -> mappa compatta (solo memoria)
+    aperto:false, m:null
+  };
+  // stato del singolo modulo aperto nel compilatore (si azzera ogni volta che se ne apre un altro o si chiude)
+  function preNuovo(chiave){
+    return { chiave:chiave, fase:'controllo', motivo:'', msg:'', sha:'', mappa:null,
+             passo:'fonti', info:false, spunte:{},
+             richiesta:null, immobile:null, qr:'', qi:'',
+             slot:{}, coda:[], inCorso:'', letture:{},
+             righe:null, nonRiemp:[], proponi:'', propVol:false, avvisiProp:[], uguali:0,
+             applicate:{}, gialli:{}, nApplicate:0, slotAttivo:'' };
+  }
+  function preReset(){
+    PRE.m = null;
+    var p = g('pre'); if(p){ p.hidden = true; var b = g('pre-body'); if(b) b.innerHTML = ''; }
+    PRE.aperto = false; r.classList.remove('pre-on', 'pre-lato');
+  }
+  function preAttivoSuModulo(){ return !!PRE.m && !!DOC.compile && PRE.m.chiave === DOC.compile.chiave; }
+
+  /* ---------- chiamate al cancello ---------- */
+  function preBase(){ try { return new URL(AI_URL).origin + '/ai/moduli'; } catch(e){ return ''; } }
+  function preErrore(testo, http, codice){ var e = new Error(testo); e.testoUtente = testo; e.http = http || 0; e.codice = codice || ''; return e; }
+  function preFraseErrore(http, j){
+    var cod = j && typeof j.codice === 'string' ? j.codice : '', det = j && typeof j.detail === 'string' && j.detail.length <= 200 ? j.detail : '';
+    if(cod === 'moduli_spento' && det) return det;                           // il messaggio dell'admin
+    if(cod && PRE_MSG[cod]) return PRE_MSG[cod];
+    if(http === 413) return PRE_MSG.moduli_file_grande;
+    if(http === 415) return PRE_MSG.moduli_tipo_file;
+    if(http === 429) return PRE_MSG.moduli_frequenza;
+    if(http === 504) return PRE_MSG.moduli_lettura_lenta;
+    if(http === 503) return PRE_MSG.moduli_servizio_giu;
+    return 'Qualcosa non ha funzionato. Riprova.';              // mai il testo grezzo del server (solo il messaggio dell'admin per la manutenzione)
+  }
+  // JSON in e JSON fuori, con Bearer e tempo massimo (vale anche per la lettura del corpo). Rifiuta con Error (testoUtente, http, codice).
+  function preChiama(metodo, percorso, corpo, ms){
+    var base = preBase();
+    if(!base || !sessione) return Promise.reject(preErrore('Lo strumento non è configurato.', 0));
+    var ctl = window.AbortController ? new AbortController() : null, scaduto = false;
+    var tm = setTimeout(function(){ scaduto = true; if(ctl) ctl.abort(); }, ms);
+    var h = { 'Authorization':'Bearer ' + sessione.s };
+    if(corpo !== null && corpo !== undefined) h['Content-Type'] = 'application/json';
+    return fetch(base + percorso, { method:metodo, headers:h, body:(corpo !== null && corpo !== undefined) ? JSON.stringify(corpo) : undefined, signal:ctl ? ctl.signal : undefined, cache:'no-store' })
+      .then(function(risp){
+        return risp.json().catch(function(){ return null; }).then(function(j){
+          if(risp.status === 401){ esci('La sessione è scaduta: accedi di nuovo.'); throw preErrore('', 401); }
+          if(!risp.ok || !j || j.ok === false) throw preErrore(preFraseErrore(risp.status, j), risp.status || 502, (j && j.codice) || '');
+          return j;
+        });
+      })
+      .then(function(j){ clearTimeout(tm); return j; }, function(e){
+        clearTimeout(tm);
+        if(e && e.testoUtente !== undefined && e.http) throw e;
+        var x = preErrore(scaduto ? 'Il servizio ci mette troppo.' : 'Non riesco a collegarmi. Controlla la connessione.', 0);
+        x.rete = !scaduto; x.scaduto = scaduto; throw x;
+      });
+  }
+  function preStato(forza){
+    if(!forza && PRE.statoT && Date.now() - PRE.statoT < PRE_STATO_TTL && (PRE.stato || PRE.statoErr)) return Promise.resolve(PRE.stato);
+    if(PRE.statoVol) return PRE.statoVol;
+    PRE.statoVol = preChiama('GET', '/stato', null, PRE_T_STATO).then(function(j){
+      PRE.stato = j; PRE.statoErr = null; PRE.statoT = Date.now(); return j;
+    }, function(e){
+      PRE.stato = null; PRE.statoErr = e; PRE.statoT = Date.now(); return null;
+    }).then(function(j){ PRE.statoVol = null; return j; });
+    return PRE.statoVol;
+  }
+  function preSha(buf){
+    var d = (window.crypto && window.crypto.subtle && window.crypto.subtle.digest('SHA-256', buf)) || null;
+    if(!d) return Promise.reject(new Error('nocrypto'));
+    return d.then(function(h){
+      return Array.prototype.map.call(new Uint8Array(h), function(x){ return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+
+  /* ---------- il pulsante nella barra del compilatore ---------- */
+  function preBtnHTML(){
+    var m = PRE.m, k = m ? m.fase : 'controllo', annulla = m && m.nApplicate > 0;
+    var pill = '', why = '', pronto = k === 'pronto', riprova = false;
+    if(k === 'controllo') pill = 'controllo…';
+    else if(k === 'spento') pill = 'in arrivo';
+    else if(k === 'manutenzione'){ pill = 'in manutenzione'; why = m.motivo; riprova = true; }
+    else if(k === 'giu'){ pill = 'non raggiungibile'; why = 'Il server non risponde.'; riprova = true; }
+    else if(k === 'assente'){ pill = 'modulo non preparato'; why = 'Modulo non ancora preparato per l’AI.'; }
+    else if(k === 'errore'){ pill = 'non riesco a controllare'; why = m.motivo; riprova = true; }
+    else if(k === 'browser'){ pill = 'browser non adatto'; why = 'Questo browser non può controllare il modulo. Aggiorna il browser.'; }
+    return H`<button class="btn ${pronto ? 'pri' : 'sec'} sm" type="button" id="tcag-pre-btn-b" data-act="pre-apri" ${pronto ? '' : 'disabled'} ${pronto ? '' : H`title="${why || pill}"`}>${ic('sparkles', 14)}Precompila con AI${pill ? H` <span class="soon">${pill}</span>` : ''}</button>${riprova ? H`<button class="btn sec sm" type="button" data-act="pre-ricontrolla">Riprova</button>` : ''}${annulla ? H`<button class="btn sec sm" type="button" data-act="pre-annulla">Annulla precompilazione</button>` : ''}${why && !pronto ? H`<span class="pre-why" role="status">${why}</span>` : ''}`;
+  }
+  function preBtn(){ var c = g('pre-btn'); if(c) put(c, preBtnHTML()); }
+  // il PDF e' aperto: controlla stato del servizio, interruttore, mappa del modulo
+  function preControlla(){
+    if(!DOC.compile || !DOC.byte) return;
+    var m = PRE.m = preNuovo(DOC.compile.chiave);
+    preBtn();
+    preSha(DOC.byte).then(function(hex){
+      if(PRE.m !== m) return null;
+      m.sha = hex;
+      return preStato(false);
+    }).then(function(st){
+      if(PRE.m !== m) return;
+      return preValuta(m, st);
+    }).catch(function(e){
+      if(PRE.m !== m) return;
+      if(e && e.message === 'nocrypto'){ m.fase = 'browser'; m.motivo = ''; }
+      else { m.fase = 'errore'; m.motivo = (e && e.testoUtente) || 'Non riesco a controllare il modulo.'; }
+      preBtn();
+    });
+  }
+  function preValuta(m, st){
+    if(!st){
+      var e = PRE.statoErr, http = e && e.http;
+      if(http === 404 || http === 405 || http === 501) m.fase = 'spento';              // cancello senza la funzione (prima della 1.7.0)
+      else if(http === 503) m.fase = 'giu';
+      else { m.fase = 'errore'; m.motivo = (e && e.testoUtente) || 'Non riesco a collegarmi. Controlla la connessione.'; }
+      preBtn(); return;
+    }
+    if(!st.attivo){
+      if(st.manutenzione){ m.fase = 'manutenzione'; m.motivo = typeof st.messaggio === 'string' && st.messaggio ? st.messaggio : 'Strumento in manutenzione.'; }
+      else m.fase = 'spento';
+      preBtn(); return;
+    }
+    if(!(st.servizio && st.servizio.raggiungibile)){ m.fase = 'giu'; preBtn(); return; }
+    if(PRE.mappe[m.sha]){ m.mappa = PRE.mappe[m.sha]; m.fase = 'pronto'; preBtn(); return; }
+    return preChiama('GET', '/mappa/' + m.sha, null, PRE_T_STATO).then(function(j){
+      if(PRE.m !== m) return;
+      if(!j || !Array.isArray(j.campi)) throw preErrore('Mappa del modulo non valida.', 502);
+      PRE.mappe[m.sha] = j; m.mappa = j; m.fase = 'pronto'; preBtn();
+    }, function(e){
+      if(PRE.m !== m) return;
+      if(e.http === 404) m.fase = 'assente';
+      else { m.fase = 'errore'; m.motivo = e.testoUtente || 'Non riesco a controllare il modulo.'; }
+      preBtn();
+    });
+  }
+  function preRicontrolla(){
+    var m = PRE.m; if(!m) return;
+    m.fase = 'controllo'; m.motivo = ''; preBtn();
+    preStato(true).then(function(st){ if(PRE.m !== m) return; return preValuta(m, st); });
+  }
+
+  /* ---------- il pannello: apertura, chiusura, disegno ---------- */
+  function preLatoOk(){ return window.matchMedia && window.matchMedia('(min-width:1100px)').matches; }
+  function preApri(){
+    var m = PRE.m; if(!m || m.fase !== 'pronto' || !preAttivoSuModulo()) return;
+    PRE.aperto = true;
+    var lato = preLatoOk();
+    r.classList.add('pre-on'); r.classList.toggle('pre-lato', lato);
+    g('pre').hidden = false;
+    // questi due elenchi servono alle fonti; se non sono ancora arrivati partono adesso
+    if(RQ.stato === 'idle') caricaRichieste();
+    if(IM.stato === 'idle') caricaImmobili();
+    preDisegna();
+    var h = g('pre-h'); if(h) try { h.focus(); } catch(e){}
+    if(lato && DOC.pdf) setTimeout(disegna, 60);                // il foglio si restringe: va ridisegnato alla nuova larghezza
+  }
+  function preChiudi(){
+    if(!PRE.aperto) return;
+    PRE.aperto = false;
+    var lato = r.classList.contains('pre-lato');
+    r.classList.remove('pre-on', 'pre-lato');
+    g('pre').hidden = true;
+    var b = g('pre-btn-b'); if(b && b.focus) try { b.focus(); } catch(e){}
+    if(lato && DOC.pdf) setTimeout(disegna, 60);
+  }
+  // chiamata da route(): il pannello esiste solo mentre si compila un modulo
+  function preSync(){
+    var pannello = g('pre'); if(!pannello) return;
+    var qui = S.sec === 'documenti' && S.sub === 'compila' && !!DOC.compile;
+    if(PRE.aperto && !qui){ PRE.aperto = false; r.classList.remove('pre-on', 'pre-lato'); pannello.hidden = true; }       // lasciato il modulo: il pannello si chiude (le letture restano finche' il modulo e' aperto)
+  }
+  function preTipiPersona(){
+    var t = PRE.stato && PRE.stato.servizio && Array.isArray(PRE.stato.servizio.tipi) ? PRE.stato.servizio.tipi : PRE_TIPI_STD;
+    return ['cie_fronte', 'cie_retro', 'tessera', 'passaporto'].filter(function(x){ return t.indexOf(x) >= 0; });
+  }
+  function preVisuraAbilitata(){
+    var t = PRE.stato && PRE.stato.servizio && Array.isArray(PRE.stato.servizio.tipi) ? PRE.stato.servizio.tipi : PRE_TIPI_STD;
+    return t.indexOf('visura') >= 0;
+  }
+  // quali fonti servono a QUESTO modulo, ricavato dai significati della mappa
+  function preHa(m){
+    var s = (m.mappa && m.mappa.campi || []).map(function(c){ return String(c.s || ''); });
+    var t = function(re){ return s.some(function(x){ return re.test(x); }); };
+    return { p1:t(/^parte\.[^.\[]+\[1\]\./), p2:t(/^parte\.[^.\[]+\[2\]\./), imm:t(/^immobile\.(comune|via|civico)$/),
+             cat:t(/^immobile\.(catasto|intestatario)/) && preVisuraAbilitata() };
+  }
+  function preGiaFatti(m){
+    var n = 0; Object.keys(m.letture).forEach(function(){ n++; }); return n;
+  }
+  function preOccupato(m){ return !!m.inCorso || m.coda.length > 0 || Object.keys(m.slot).some(function(k){ return m.slot[k].st === 'prep'; }); }
+  function preDisegna(){
+    var b = g('pre-body'); if(!b || !PRE.m) return;
+    var m = PRE.m;
+    var a = document.activeElement, fk = a && b.contains(a) ? (a.getAttribute('data-f') || '') : '', sel = null, top = b.scrollTop;
+    if(a && a.selectionStart !== undefined && fk){ try { sel = [a.selectionStart, a.selectionEnd]; } catch(e){} }
+    g('pre-h').textContent = 'Precompila con AI';
+    var passi = H`<ol class="pre-passi" aria-label="Passi"><li class="${m.passo === 'fonti' ? 'on' : ''}"><b>1</b> Documenti</li><li class="${m.passo === 'rev' ? 'on' : ''}"><b>2</b> Controlla</li></ol>`;
+    put(b, H`${passi}${m.passo === 'rev' ? preRevHTML() : preFontiHTML()}`);
+    b.scrollTop = top;
+    if(fk){
+      var n = b.querySelector('[data-f="' + fk.replace(/"/g, '') + '"]');
+      if(n && n.focus){ try { n.focus(); if(sel && n.setSelectionRange) n.setSelectionRange(sel[0], sel[1]); } catch(e){} }
+    }
+  }
+
+  /* ---------- passo 1: fonti ---------- */
+  function preInfoTesto(){
+    var t = PRE.stato && PRE.stato.informativa && typeof PRE.stato.informativa.testo === 'string' ? PRE.stato.informativa.testo : '';
+    if(!t) return PRE_INFO_TESTO;
+    // il testo del cancello ha anche la riga con la casella (☐ …): la casella la disegna la pagina
+    return t.split('\n').filter(function(x){ return x.trim().indexOf('☐') !== 0; }).join('\n').replace(/\*\*/g, '').trim() || PRE_INFO_TESTO;
+  }
+  function preListaHTML(m){
+    var d = m.mappa && m.mappa.docs || {}, base = Array.isArray(d.base) ? d.base : [], extra = Array.isArray(d.extra) ? d.extra : [];
+    var voci = base.concat(extra).filter(function(x){ return typeof x === 'string' && x; });
+    if(!voci.length) return '';
+    return H`<details class="pre-sez pre-lista" ${m.listaAperta ? 'open' : ''}><summary data-act="pre-lista-ap">Documenti da raccogliere <span class="mut">(promemoria)</span></summary>
+      <p class="mut pre-nota">Spunta quelli che hai già. Serve solo a ricordarti cosa chiedere al cliente: qui non si legge niente e le spunte non vengono salvate.</p>
+      <ul class="pre-chk">${voci.map(function(v, i){
+        return H`<li><label><input type="checkbox" data-act="pre-spunta" data-i="${i}" data-f="spunta${i}" ${m.spunte[i] ? 'checked' : ''}><span>${v}</span></label></li>`;
+      })}</ul></details>`;
+  }
+  function preFiltra(lista, q, f, max){
+    q = String(q || '').trim().toLowerCase(); if(q.length < 2) return [];
+    return lista.filter(function(x){ return f(x).toLowerCase().indexOf(q) >= 0; }).slice(0, max || 6);
+  }
+  function preRichiesteTesto(x){ return [x.id, x.nome, x.telefono, x.email, x.immobile ? x.immobile.codice : ''].join(' '); }
+  function preImmobiliTesto(i){ return [i.codice, i.titolo, i.citta, i.zona].join(' '); }
+  function preRisRichiesteHTML(m){
+    if(!RQ.ok) return H`<p class="mut pre-nota">${RQ.stato === 'err' ? 'Non riesco a leggere le richieste.' : 'Carico le richieste…'}</p>`;
+    var ris = preFiltra(RQ.lista, m.qr, preRichiesteTesto);
+    if(String(m.qr).trim().length < 2) return '';
+    if(!ris.length) return H`<p class="mut pre-nota">Nessuna richiesta con questo nome.</p>`;
+    return H`<ul class="pre-ris">${ris.map(function(x){
+      return H`<li><button class="btn sec pre-ris-b" type="button" data-act="pre-sel-r" data-id="${x.id}"><b>${x.nome || '(senza nome)'}</b><span class="mut">${[x.telefono, x.email].filter(Boolean).join(' · ')}</span></button></li>`;
+    })}</ul>`;
+  }
+  function preRisImmobiliHTML(m){
+    if(String(m.qi).trim().length < 2) return '';
+    if(!IM.ok) return H`<p class="mut pre-nota">${IM.stato === 'err' ? 'Non riesco a leggere gli immobili.' : 'Carico gli immobili…'}</p>`;
+    var ris = preFiltra(IM.lista.filter(imMostrabile), m.qi, preImmobiliTesto);
+    if(!ris.length) return H`<p class="mut pre-nota">Nessun immobile con questo codice.</p>`;
+    return H`<ul class="pre-ris">${ris.map(function(i){
+      return H`<li><button class="btn sec pre-ris-b" type="button" data-act="pre-sel-i" data-c="${i.codice}"><b>${i.codice}</b><span class="mut">${[i.titolo, i.citta].filter(Boolean).join(' · ')}</span></button></li>`;
+    })}</ul>`;
+  }
+  function preSceltoHTML(testo, sotto, act){
+    return H`<div class="pre-scelto"><div><b>${testo}</b>${sotto ? H`<div class="mut">${sotto}</div>` : ''}</div><button class="btn sec sm" type="button" data-act="${act}" aria-label="Togli">${ic('x', 14)}Togli</button></div>`;
+  }
+  function preTouch(){ return isPhone() || (navigator.maxTouchPoints || 0) > 0; }
+  function preEsitoSlot(s){
+    if(s.st === 'ok') return s.nota || 'Letto';
+    if(s.st === 'err') return s.msg || 'Non riuscito';
+    if(s.st === 'coda') return 'In attesa…';
+    if(s.st === 'prep') return 'Preparo il file…';
+    if(s.st === 'invio') return 'Invio… ' + (s.pc || 0) + '%';
+    if(s.st === 'lettura') return 'Leggo il documento…';
+    return '';
+  }
+  function preSlotHTML(k){
+    var m = PRE.m, s = m.slot[k] || { st:'vuoto' }, parti = k.split(':'), tipo = parti[1];
+    var visura = tipo === 'visura', occ = s.st === 'coda' || s.st === 'prep' || s.st === 'invio' || s.st === 'lettura', off = !m.info || occ;
+    var barra = s.st === 'invio' || s.st === 'lettura' || s.st === 'prep';
+    return H`<div class="pre-slot st-${s.st}" id="tcag-pre-s-${k.replace(':', '-')}" data-k="${k}" data-v="${s.v || 0}">
+      <div class="pre-sl-t"><b>${PRE_TIPO_NOME[tipo] || tipo}</b><span class="pre-sl-e ${s.st === 'err' ? 'err' : ''}" role="status">${preEsitoSlot(s)}</span></div>
+      ${barra ? H`<div class="pre-bar ${s.st !== 'invio' ? 'ind' : ''}" aria-hidden="true"><i style="width:${s.st === 'invio' ? (s.pc || 0) : 100}%"></i></div>` : ''}
+      ${s.nota2 ? H`<ul class="pre-avvisi">${s.nota2.map(function(t){ return H`<li>${t}</li>`; })}</ul>` : ''}
+      <div class="pre-sl-b">
+        ${!visura && preTouch() ? H`<button class="btn sec sm" type="button" data-act="pre-scegli" data-k="${k}" data-m="cam" data-f="cam-${k}" ${off ? 'disabled' : ''}>${ic('camera', 14)}Scatta una foto</button>` : ''}
+        <button class="btn sec sm" type="button" data-act="pre-scegli" data-k="${k}" data-m="file" data-f="file-${k}" ${off ? 'disabled' : ''}>${ic('upload', 14)}${visura ? 'Scegli il PDF' : 'Scegli file'}</button>
+        ${s.st === 'ok' || s.st === 'err' ? H`<button class="btn sec sm" type="button" data-act="pre-togli" data-k="${k}">${s.st === 'err' && s.blob ? 'Lascia' : 'Togli'}</button>` : ''}
+        ${s.st === 'err' && s.blob ? H`<button class="btn pri sm" type="button" data-act="pre-riprova" data-k="${k}" ${m.info ? '' : 'disabled'}>Riprova</button>` : ''}
+      </div></div>`;
+  }
+  function preFontiHTML(){
+    var m = PRE.m, ha = preHa(m), occ = preOccupato(m);
+    var persone = [];
+    if(ha.p1) persone.push('1');
+    if(ha.p2) persone.push('2');
+    var haFonte = !!m.richiesta || !!m.immobile || preGiaFatti(m) > 0;
+    var cta = occ ? 'Aspetta che finisca la lettura…' : 'Controlla i dati';
+    var vuoto = !ha.p1 && !ha.p2 && !ha.imm && !ha.cat;
+    return H`
+      <p class="pre-intro">Carico i documenti, leggo i dati e te li propongo. <b>Tu controlli ogni campo</b> prima di metterlo nel modulo.</p>
+      <section class="pre-sez pre-info" aria-labelledby="tcag-pre-info-h"><h3 id="tcag-pre-info-h">${ic('shield', 16)}Documenti del cliente</h3>
+        ${preInfoTesto().split('\n').filter(function(x){ return x.trim(); }).map(function(x){ return H`<p>${x}</p>`; })}
+        <label class="pre-info-c"><input type="checkbox" data-act="pre-info" data-f="info" ${m.info ? 'checked' : ''}><span><b>Il cliente sa che uso i suoi documenti per compilare questo modulo.</b></span></label>
+        ${m.info ? '' : H`<p class="pre-nota mut">Finché non spunti, il caricamento resta spento.</p>`}
+      </section>
+      ${preListaHTML(m)}
+      ${m.msg ? H`<p class="dg-msg err" role="alert">${ic('warn', 18)}<span>${m.msg}</span></p>` : ''}
+      ${ha.p1 ? H`<section class="pre-sez"><h3>Richiesta del cliente <span class="mut">(facoltativa)</span></h3>
+        <p class="mut pre-nota">Dà nome, email e telefono.</p>
+        ${m.richiesta ? preSceltoHTML(m.richiesta.nome || '(senza nome)', [m.richiesta.telefono, m.richiesta.email].filter(Boolean).join(' · '), 'pre-no-r') : H`
+          <label class="fld">Cerca per nome, telefono o email<input type="search" id="tcag-pre-q-r" data-f="qr" autocomplete="off" value="${m.qr}"></label>
+          <div id="tcag-pre-ris-r">${preRisRichiesteHTML(m)}</div>`}</section>` : ''}
+      ${ha.imm ? H`<section class="pre-sez"><h3>Immobile <span class="mut">(facoltativo)</span></h3>
+        <p class="mut pre-nota">Dà codice e comune. Via e numero civico arrivano dalla visura, perché la pagina non riceve l’indirizzo preciso.</p>
+        ${m.immobile ? preSceltoHTML(m.immobile.codice, [m.immobile.titolo, m.immobile.citta].filter(Boolean).join(' · '), 'pre-no-i') : H`
+          <label class="fld">Cerca per codice o titolo<input type="search" id="tcag-pre-q-i" data-f="qi" autocomplete="off" value="${m.qi}"></label>
+          <div id="tcag-pre-ris-i">${preRisImmobiliHTML(m)}</div>`}</section>` : ''}
+      ${persone.map(function(p){
+        return H`<section class="pre-sez"><h3>Persona ${p}</h3>
+          <p class="mut pre-nota">${p === '1' ? 'Chi firma il modulo.' : 'Se c’è una seconda persona.'} Basta la carta d’identità (fronte e retro) oppure la tessera sanitaria.</p>
+          ${preTipiPersona().map(function(t){ return preSlotHTML('p' + p + ':' + t); })}</section>`;
+      })}
+      ${ha.cat ? H`<section class="pre-sez"><h3>Immobile: visura catastale</h3>
+        <p class="mut pre-nota">Dà foglio, particella, subalterno, categoria, rendita e intestatario. Usa la visura <b>in PDF</b> (digitale): quella scansionata male non si legge.</p>
+        ${preSlotHTML('v:visura')}</section>` : ''}
+      ${vuoto ? H`<p class="avviso">Per questo modulo non c’è niente da leggere dai documenti. Restano i dati dell’agenzia e del mediatore, se l’amministrazione li ha scritti.</p>` : ''}
+      <div class="pre-az"><button class="btn pri big" type="button" data-act="pre-rev" data-f="rev" ${occ || m.propVol || (!haFonte && !vuoto) ? 'disabled' : ''}>${m.propVol ? 'Preparo…' : cta}</button>
+        ${haFonte || preGiaFatti(m) ? H`<button class="btn sec" type="button" data-act="pre-svuota">Ricomincia da capo</button>` : ''}</div>
+      ${haFonte || vuoto ? '' : H`<p class="pre-nota mut">Aggiungi almeno un documento, la richiesta o l’immobile.</p>`}
+      <p class="note-s">${ic('lock', 12)} I documenti non vengono salvati: dopo la lettura il server li cancella.</p>`;
+  }
+
+  /* ---------- scelta e preparazione dei file ---------- */
+  function preSlotAgg(k){
+    var m = PRE.m; if(!m || !PRE.aperto) return;
+    var el = g('pre-s-' + k.replace(':', '-'));
+    if(!el){ preDisegna(); return; }
+    var fuoco = document.activeElement && el.contains(document.activeElement) ? document.activeElement.getAttribute('data-f') : '';
+    var nuovo = document.createElement('div'); nuovo.innerHTML = val(preSlotHTML(k));
+    el.parentNode.replaceChild(nuovo.firstElementChild, el);
+    if(fuoco){ var n = r.querySelector('#tcag-pre-body [data-f="' + fuoco + '"]'); if(n && !n.disabled && n.focus) try { n.focus(); } catch(e){} }
+    var cta = g('pre-body') && g('pre-body').querySelector('[data-act="pre-rev"]');
+    if(cta){ var ha = preHa(m), occ = preOccupato(m); cta.disabled = occ || m.propVol || !(m.richiesta || m.immobile || preGiaFatti(m) > 0); cta.textContent = occ ? 'Aspetta che finisca la lettura…' : 'Controlla i dati'; }
+  }
+  function preProg(k, pc){
+    var el = g('pre-s-' + k.replace(':', '-')); if(!el) return;
+    var i = el.querySelector('.pre-bar i'), t = el.querySelector('.pre-sl-e');
+    if(i) i.style.width = pc + '%';
+    if(t) t.textContent = 'Invio… ' + pc + '%';
+  }
+  function preMimeDa(file){
+    var tp = String(file.type || '').toLowerCase(), nome = String(file.name || '');
+    if(tp === 'application/pdf' || /\.pdf$/i.test(nome)) return 'application/pdf';
+    if(/^image\/(jpeg|png|webp)$/.test(tp)) return tp;
+    if(/\.jpe?g$/i.test(nome)) return 'image/jpeg';
+    if(/\.png$/i.test(nome)) return 'image/png';
+    if(/\.webp$/i.test(nome)) return 'image/webp';
+    return '';
+  }
+  // Promise<Blob> pronto da mandare: PDF e JPEG/PNG/WebP sotto il limite partono COSI' COME SONO (nessuna riduzione, par. 5.1);
+  // HEIC o foto troppo pesante: ridisegnate in JPEG nel browser (come il Render); il server non riceve mai HEIC.
+  function preFilePronto(file, tipo){
+    return new Promise(function(ok, no){
+      var rifiuta = function(t){ var e = new Error(t); e.testoUtente = t; no(e); };
+      if(!file || !file.size){ rifiuta('Il file è vuoto. Scegline un altro.'); return; }
+      var heic = fotoEHeic(file), mime = preMimeDa(file);
+      if(mime === 'application/pdf'){
+        if(file.size > PRE_PDF_MAX){ rifiuta('PDF troppo grande (' + mb(file.size / 1000000) + ' MB, il massimo è 10 MB).'); return; }
+        ok(file.slice(0, file.size, 'application/pdf')); return;
+      }
+      if(!heic && !mime){ rifiuta(PRE_MSG.moduli_tipo_file); return; }
+      if(!heic && file.size <= PRE_FOTO_MAX){ ok(file.slice(0, file.size, mime)); return; }
+      var maxLato = heic && file.size <= PRE_FOTO_MAX ? PRE_LATO_HEIC : PRE_LATO_GROSSA;
+      fotoDecodifica(file, function(img, w, h){
+        if(!w || !h){ rifiuta('Non riesco a leggere questa foto. Scegline un’altra.'); return; }
+        if(w * h > 120e6){ rifiuta('La foto ha troppi punti (' + w + ' × ' + h + '). Scattane una con meno risoluzione.'); return; }
+        var passo = function(lato, q, dopo){
+          var s = Math.min(1, lato / Math.max(w, h)), cw = Math.max(1, Math.round(w * s)), ch = Math.max(1, Math.round(h * s));
+          fotoInJpeg(img, cw, ch, q, function(b){
+            if(!b){ rifiuta('Non riesco a preparare la foto. Scegline un’altra.'); return; }
+            if(b.size <= PRE_FOTO_MAX){ ok(b); return; }
+            if(dopo) dopo(); else rifiuta('La foto è ancora troppo pesante (massimo 15 MB). Scegline un’altra.');
+          });
+        };
+        passo(maxLato, 0.92, function(){ passo(3000, 0.85); });
+      }, function(){
+        rifiuta(heic
+          ? 'Questa foto è in formato HEIC e questo telefono non la legge qui. Usa «Scatta una foto», oppure su iPhone: Impostazioni, Fotocamera, Formati, «Più compatibile».'
+          : 'Non riesco a leggere questo file. Scegli una foto JPEG, PNG o WebP, oppure un PDF.');
+      });
+    });
+  }
+  function preScegli(k, modo){
+    var m = PRE.m; if(!m || !m.info) return;
+    var inp = g(modo === 'cam' ? 'pre-cam' : 'pre-file'); if(!inp) return;
+    m.slotAttivo = k;
+    inp.value = '';
+    // la visura: PDF (o scansione); le persone: foto o PDF
+    if(modo !== 'cam') inp.accept = k.indexOf('v:') === 0 ? 'application/pdf,.pdf,image/jpeg,image/png,image/webp' : 'image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif,application/pdf,.pdf';
+    try { inp.click(); } catch(e){}
+  }
+  function preScelto(input){
+    var m = PRE.m, f = input.files && input.files[0], k = m && m.slotAttivo;
+    input.value = '';
+    if(!m || !f || !k) return;
+    preCarica(k, f);
+  }
+  function preCarica(k, file){
+    var m = PRE.m; if(!m) return;
+    if(!m.info){ m.msg = 'Prima spunta che il cliente è informato.'; preDisegna(); return; }
+    m.msg = '';
+    var tipo = k.split(':')[1];
+    m.vers = (m.vers || 0) + 1;                                   // numero della lettura in questa casella (serve a chi guarda da fuori: le prove)
+    var s = m.slot[k] = { st:'prep', pc:0, v:m.vers };
+    delete m.letture[k];
+    m.righe = null;                                               // le fonti sono cambiate: la revisione va rifatta
+    if(m.passo === 'rev') m.passo = 'fonti';
+    preSlotAgg(k);
+    preFilePronto(file, tipo).then(function(blob){
+      if(PRE.m !== m || m.slot[k] !== s) return;
+      s.blob = blob; s.mime = blob.type || 'application/octet-stream'; s.st = 'coda';
+      m.coda.push(k); preSlotAgg(k); preAvanti();
+    }, function(e){
+      if(PRE.m !== m || m.slot[k] !== s) return;
+      s.st = 'err'; s.msg = (e && e.testoUtente) || 'Non riesco a preparare il file.'; preSlotAgg(k);
+    });
+  }
+  // una lettura alla volta (il cancello ne ammette una per agente)
+  function preAvanti(){
+    var m = PRE.m; if(!m || m.inCorso) return;
+    var k = m.coda.shift(); if(!k) return;
+    var s = m.slot[k]; if(!s || !s.blob){ preAvanti(); return; }
+    m.inCorso = k; s.st = 'invio'; s.pc = 0; s.t0 = Date.now(); preSlotAgg(k);
+    preLeggi(k, s).then(function(j){
+      if(PRE.m !== m || m.slot[k] !== s) return;
+      delete s.blob;                                              // letto: il file si butta
+      s.st = 'ok'; s.nota = preNotaLettura(k, j); s.nota2 = preAvvisi(j); m.letture[k] = j;
+    }, function(e){
+      if(PRE.m !== m || m.slot[k] !== s) return;
+      s.st = 'err'; s.msg = (e && e.testoUtente) || 'Qualcosa non ha funzionato. Riprova.';
+      if(!(e && (e.rete || e.scaduto || e.http === 409 || e.http === 429 || e.http === 502 || e.http === 503 || e.http === 504))) delete s.blob;    // si tiene il file solo se vale la pena riprovare
+      if(e && e.codice === 'moduli_informativa') m.info = false;
+      if(e && (e.codice === 'moduli_spento' || e.codice === 'moduli_servizio_giu')) PRE.statoT = 0;
+    }).then(function(){
+      if(PRE.m !== m) return;
+      m.inCorso = '';
+      if(PRE.aperto){ if(m.passo === 'fonti') preSlotAgg(k); }
+      preAvanti();
+    });
+  }
+  function preNotaLettura(k, j){
+    var tipo = k.split(':')[1], n = 0, dubbi = 0;
+    if(tipo === 'visura'){
+      n = Array.isArray(j.catasto) ? j.catasto.length : 0;
+      var dc = (Array.isArray(j.catasto) ? j.catasto : []).some(function(c){ return c && c.stato && c.stato !== 'ok'; });
+      return n ? 'Letta · ' + n + (n === 1 ? ' unità catastale' : ' unità catastali') + (dc ? ' · da controllare' : '') : 'Letta · ' + Object.keys(j.campi || {}).length + ' dati';
+    }
+    var c = j.campi || {};
+    Object.keys(c).forEach(function(x){ n++; if(c[x] && c[x].stato && c[x].stato !== 'ok') dubbi++; });
+    return 'Letto · ' + n + (n === 1 ? ' campo' : ' campi') + (dubbi ? ' · ' + dubbi + ' da controllare' : '');
+  }
+  function preAvvisi(j){
+    var a = Array.isArray(j.avvisi) ? j.avvisi : [], out = [];
+    a.forEach(function(c){ if(typeof c === 'string' && PRE_AVVISI[c]) out.push(PRE_AVVISI[c]); });
+    return out.length ? out : null;
+  }
+  // POST /ai/moduli/leggi?tipo=&persona=  con il file GREZZO. XMLHttpRequest per vedere l'avanzamento dell'invio.
+  function preLeggi(k, s, tentativo){
+    tentativo = tentativo || 0;
+    return new Promise(function(ok, no){
+      var base = preBase(), parti = k.split(':'), tipo = parti[1], pers = parti[0] === 'v' ? '' : parti[0].slice(1);
+      if(!base || !sessione){ no(preErrore('Lo strumento non è configurato.', 0)); return; }
+      var x = new XMLHttpRequest(), fine = false;
+      x.open('POST', base + '/leggi?tipo=' + encodeURIComponent(tipo) + (pers ? '&persona=' + encodeURIComponent(pers) : ''));
+      x.timeout = PRE_T_LEGGI;
+      x.setRequestHeader('Authorization', 'Bearer ' + sessione.s);
+      x.setRequestHeader('Content-Type', s.mime);
+      x.setRequestHeader('X-Moduli-Informativa', '1');
+      x.upload.onprogress = function(ev){ if(ev.lengthComputable){ s.pc = Math.min(99, Math.round(ev.loaded * 100 / ev.total)); preProg(k, s.pc); } };
+      x.upload.onload = function(){ if(!fine && s.st === 'invio'){ s.st = 'lettura'; preSlotAgg(k); } };
+      var esito = function(f){ if(fine) return; fine = true; f(); };
+      x.onload = function(){
+        var j = null; try { j = JSON.parse(x.responseText); } catch(e){}
+        esito(function(){
+          if(x.status === 401){ esci('La sessione è scaduta: accedi di nuovo.'); no(preErrore('', 401)); return; }
+          if(x.status >= 200 && x.status < 300 && j && j.ok !== false){ ok(j); return; }
+          var cod = j && typeof j.codice === 'string' ? j.codice : '';
+          if(x.status === 409 && cod === 'moduli_lettura_in_corso' && tentativo < 4){
+            setTimeout(function(){ preLeggi(k, s, tentativo + 1).then(ok, no); }, 3000); return;
+          }
+          no(preErrore(preFraseErrore(x.status, j), x.status || 502, cod));
+        });
+      };
+      x.onerror = function(){ esito(function(){ var e = preErrore('Non riesco a collegarmi. Controlla la connessione.', 0); e.rete = true; no(e); }); };
+      x.ontimeout = function(){ esito(function(){ var e = preErrore('La lettura ha impiegato troppo tempo.', 0); e.scaduto = true; no(e); }); };
+      x.onabort = x.onerror;
+      try { x.send(s.blob); } catch(e){ esito(function(){ no(preErrore('Non riesco a inviare il file.', 0)); }); }
+    });
+  }
+
+  /* ---------- passo 2: proposta e revisione ---------- */
+  function preCorpoProponi(m){
+    var persone = [];
+    ['1', '2'].forEach(function(p){
+      var ls = [];
+      Object.keys(m.letture).forEach(function(k){
+        if(k.indexOf('p' + p + ':') !== 0) return;
+        var j = m.letture[k]; ls.push({ tipo:j.tipo || k.split(':')[1], persona:+p, campi:j.campi || {} });
+      });
+      if(ls.length) persone.push({ n:+p, letture:ls });
+    });
+    var corpo = { sha256:m.sha, persone:persone };
+    var v = m.letture['v:visura'];
+    if(v){
+      var c = v.campi && v.campi.comune;
+      corpo.visura = { catasto:Array.isArray(v.catasto) ? v.catasto : [], intestatari:Array.isArray(v.intestatari) ? v.intestatari : [], comune:c && typeof c === 'object' ? String(c.valore || '') : '' };
+      // V6.8 correzioni 13/10 sera (revisione 13/10/2026, punto 1): via e civico letti dalla visura vanno nella VISURA, con lo stato della visura. Se andassero in «immobile»
+      // il servizio li prenderebbe per dati del foglio Immobili (verificati) e una scansione uscirebbe verde e gia' spuntata.
+      var viaOk = true;
+      ['via', 'civico'].forEach(function(k){
+        var cc = v.campi && v.campi[k];
+        if(cc && typeof cc === 'object' && String(cc.valore || '').trim()){ corpo.visura[k] = String(cc.valore).trim(); if(cc.stato !== 'ok') viaOk = false; }
+      });
+      if(c && typeof c === 'object' && c.stato !== 'ok') viaOk = false;
+      corpo.visura.stato = viaOk ? 'ok' : 'da_controllare';
+    }
+    if(m.richiesta) corpo.richiesta = { nome:m.richiesta.nome || '', email:m.richiesta.email || '', telefono:m.richiesta.telefono || '' };
+    // L'elenco immobili della pagina NON ha via e civico (l'indirizzo preciso non arriva mai alla pagina): in «immobile» ci sono SOLO codice e comune
+    // dell'elenco, cosi' il servizio puo' confrontare il comune con quello della visura (conflitto). Via e civico stanno in corpo.visura (sopra).
+    var im = {};
+    if(m.immobile){ im.codice = m.immobile.codice || ''; im.comune = m.immobile.citta || ''; }
+    if(Object.keys(im).length) corpo.immobile = im;
+    return corpo;
+  }
+  function preProponi(){
+    var m = PRE.m; if(!m || m.propVol || preOccupato(m)) return;
+    if(!m.info){ m.msg = 'Prima spunta che il cliente è informato.'; preDisegna(); return; }
+    var corpo = preCorpoProponi(m);
+    if(JSON.stringify(corpo).length > PRE_PROPONI_MAX){ m.msg = 'Ci sono troppi dati da controllare in una volta. Togli qualche documento.'; preDisegna(); return; }
+    m.propVol = true; m.msg = ''; preDisegna();
+    preChiama('POST', '/proponi', corpo, PRE_T_PROPONI).then(function(j){
+      if(PRE.m !== m) return;
+      m.propVol = false;
+      preRicevi(m, j);
+      m.passo = 'rev';
+      preDisegna();
+      var b = g('pre-body'); if(b) b.scrollTop = 0;
+    }, function(e){
+      if(PRE.m !== m) return;
+      m.propVol = false; m.msg = e.testoUtente || 'Qualcosa non ha funzionato. Riprova.';
+      if(e.codice === 'moduli_informativa') m.info = false;
+      preDisegna();
+    });
+  }
+  // rende le righe della proposta; regola del par. 5.3: un campo gia' scritto dall'agente NON si sovrascrive da solo (diventa «scegli»)
+  function preRicevi(m, j){
+    var righe = Array.isArray(j.righe) ? j.righe : [], valide = {};
+    (m.mappa && m.mappa.campi || []).forEach(function(c){ valide[c.n] = true; });
+    m.uguali = 0; m.avvisiProp = Array.isArray(j.avvisi) ? j.avvisi.filter(function(x){ return typeof x === 'string'; }).slice(0, 5) : [];
+    m.nonRiemp = Array.isArray(j.non_riempiti) ? j.non_riempiti.slice(0, 80) : [];
+    m.righe = [];
+    righe.forEach(function(x){
+      if(!x || typeof x.campo !== 'string' || !valide[x.campo]) return;                  // mai un campo che la mappa non elenca
+      if(typeof x.valore !== 'string' || !x.valore.trim()) return;
+      var riga = {
+        campo:x.campo, etichetta:typeof x.etichetta === 'string' ? x.etichetta : x.campo, gruppo:typeof x.gruppo === 'string' ? x.gruppo : 'Altro',
+        valore:x.valore, val:x.valore, fonte:typeof x.fonte === 'string' ? x.fonte : '', motivo:typeof x.motivo === 'string' ? x.motivo : '',
+        stato:x.stato === 'ok' ? 'ok' : (x.stato === 'conflitto' ? 'conflitto' : 'da_controllare'),
+        usa:!!x.usa && x.stato === 'ok',
+        continua:(Array.isArray(x.continua) ? x.continua : []).filter(function(c){ return c && typeof c.campo === 'string' && valide[c.campo] && typeof c.valore === 'string'; }),
+        alt:(Array.isArray(x.alternative) ? x.alternative : []).filter(function(a){ return a && typeof a.valore === 'string'; }).map(function(a){ return { valore:a.valore, fonte:typeof a.fonte === 'string' ? a.fonte : '' }; }),
+        scelta:-1, mod:false, fatto:false, esistente:false
+      };
+      var gia = DOC.vals[riga.campo];
+      var daAi = m.applicate[riga.campo];
+      if(typeof gia === 'string' && gia.trim() && !daAi){
+        if(gia === riga.valore){ m.uguali++; return; }                                  // gia' scritto uguale: niente da fare
+        riga.stato = 'conflitto'; riga.usa = false; riga.esistente = true;
+        riga.alt = [{ valore:gia, fonte:'Già scritto nel modulo', esistente:true }, { valore:riga.valore, fonte:riga.fonte }].concat(riga.alt);
+        riga.scelta = 0;
+        riga.motivo = 'Nel modulo c’è già scritto qualcosa: scegli cosa tenere.';
+      } else if(riga.stato === 'conflitto'){
+        riga.usa = false;
+        riga.alt = [{ valore:riga.valore, fonte:riga.fonte }].concat(riga.alt);
+        riga.scelta = -1;                    // V6.8 correzioni 13/10 sera: NESSUN valore e' scelto finche' l'agente non sceglie (contratto par. 5.2: «l'agente sceglie»)
+      }
+      m.righe.push(riga);
+    });
+  }
+  function preStatoNome(s){ return s === 'ok' ? 'Controllato' : (s === 'conflitto' ? 'Scegli' : 'Da controllare'); }
+  function preValoreRiga(r2){
+    if(r2.scelta >= 0 && r2.alt[r2.scelta]) return r2.alt[r2.scelta].valore;
+    return r2.val;
+  }
+  function preRigaHTML(r2, i){
+    var conf = r2.stato === 'conflitto', cl = 'pre-r st-' + r2.stato + (r2.fatto ? ' fatto' : '');
+    return H`<div class="${cl}" id="tcag-pre-r-${i}">
+      <label class="pre-u" title="Usa questa riga"><input type="checkbox" data-act="pre-usa" data-i="${i}" data-f="usa${i}" ${r2.usa ? 'checked' : ''} ${r2.fatto ? 'disabled' : ''} aria-label="Usa: ${r2.etichetta}"></label>
+      <div class="pre-rc">
+        <div class="pre-re"><span class="pre-rl">${r2.etichetta}</span><span class="pre-st st-${r2.stato}">${r2.fatto ? 'Messo nel modulo' : preStatoNome(r2.stato)}</span></div>
+        ${conf ? H`<select class="pre-rv" data-act="pre-scelta" data-i="${i}" data-f="sc${i}" aria-label="Valore per ${r2.etichetta}" ${r2.fatto ? 'disabled' : ''}>${r2.scelta < 0 ? H`<option value="-1" selected disabled>Scegli un valore…</option>` : ''}${r2.alt.map(function(a, k){
+          return H`<option value="${k}" ${r2.scelta === k ? 'selected' : ''}>${a.valore} — ${a.fonte || 'fonte non indicata'}</option>`;
+        })}</select>`
+        : H`<input class="pre-rv" type="text" data-act="pre-val" data-i="${i}" data-f="val${i}" value="${r2.val}" maxlength="200" autocomplete="off" aria-label="Valore per ${r2.etichetta}" ${r2.fatto ? 'disabled' : ''}>`}
+        <div class="pre-rm"><span>Fonte: ${r2.fonte || 'non indicata'}</span>${r2.motivo ? H`<span> · ${r2.motivo}</span>` : ''}${r2.continua.length ? H`<span> · continua su ${r2.continua.length} ${r2.continua.length === 1 ? 'altra riga' : 'altre righe'} del modulo</span>` : ''}</div>
+      </div></div>`;
+  }
+  function preUsate(m){ return (m.righe || []).filter(function(x){ return x.usa && !x.fatto && !(x.stato === 'conflitto' && x.scelta < 0) && (x.scelta < 0 || !x.alt[x.scelta] || !x.alt[x.scelta].esistente); }).length; }
+  function preRevHTML(){
+    var m = PRE.m, righe = m.righe || [];
+    var gruppi = PRE_GRUPPI.slice(); righe.forEach(function(x){ if(gruppi.indexOf(x.gruppo) < 0) gruppi.push(x.gruppo); });
+    var n = preUsate(m), tot = righe.length, gialli = righe.filter(function(x){ return x.stato !== 'ok'; }).length;
+    var titolo = function(gr){ return /^Catasto (\d)$/.test(gr) ? 'Catasto, riga ' + gr.slice(-1) : gr; };
+    return H`
+      <p class="pre-intro">${tot ? H`Ho trovato <b>${tot}</b> ${tot === 1 ? 'campo' : 'campi'}. Spunta le righe che vanno nel modulo.` : 'Non ho trovato niente da mettere in questo modulo con questi documenti.'}</p>
+      <ul class="pre-leg" aria-label="Significato dei colori">
+        <li><span class="pre-st st-ok">Controllato</span> il programma ha verificato il dato</li>
+        <li><span class="pre-st st-da_controllare">Da controllare</span> guardalo tu, poi spunta</li>
+        <li><span class="pre-st st-conflitto">Scegli</span> due dati diversi</li>
+      </ul>
+      ${m.msg ? H`<p class="dg-msg err" role="alert">${ic('warn', 18)}<span>${m.msg}</span></p>` : ''}
+      ${m.avvisiProp.length ? H`<ul class="pre-avvisi">${m.avvisiProp.map(function(t){ return H`<li>${t}</li>`; })}</ul>` : ''}
+      ${m.uguali ? H`<p class="pre-nota mut">${m.uguali} ${m.uguali === 1 ? 'campo era già scritto uguale' : 'campi erano già scritti uguali'} nel modulo.</p>` : ''}
+      ${tot ? H`<div class="pre-spunte"><button class="btn sec sm" type="button" data-act="pre-tutte">Spunta tutte</button><button class="btn sec sm" type="button" data-act="pre-nessuna">Togli le spunte</button></div>` : ''}
+      ${gruppi.map(function(gr){
+        var rr = righe.map(function(x, i){ return [x, i]; }).filter(function(p){ return p[0].gruppo === gr; });
+        return rr.length ? H`<section class="pre-sez pre-gr"><h3>${titolo(gr)}</h3>${rr.map(function(p){ return preRigaHTML(p[0], p[1]); })}</section>` : '';
+      })}
+      ${m.nonRiemp.length ? H`<details class="pre-sez pre-non"><summary>Campi che non ho riempito (${m.nonRiemp.length})</summary>
+        <ul>${m.nonRiemp.slice(0, 40).map(function(x){
+          var c = (m.mappa && m.mappa.campi || []).filter(function(y){ return x && y.n === x.campo; })[0];
+          return H`<li><b>${c ? c.e : (x && x.campo)}</b> <span class="mut">${x && typeof x.motivo === 'string' ? x.motivo : ''}</span></li>`;
+        })}</ul></details>` : ''}
+      <p class="note-s">${tot ? gialli + ' da controllare. ' : ''}Mai riempiti: contratto, prezzo, clausole, firme, accettazione, ritiro, luogo e data, caselle da spuntare.</p>
+      <div class="pre-az pre-az-fisso"><button class="btn sec" type="button" data-act="pre-fonti">${ic('arrow-left', 14)}Cambia i documenti</button>
+        <button class="btn pri big" type="button" id="tcag-pre-applica" data-act="pre-applica" data-f="applica" ${n ? '' : 'disabled'}>Applica al modulo (${n})</button></div>`;
+  }
+  function preAggApplica(){
+    var m = PRE.m, b = g('pre-applica'); if(!m || !b) return;
+    var n = preUsate(m); b.disabled = !n; b.textContent = 'Applica al modulo (' + n + ')';
+  }
+
+  /* ---------- applica e annulla ---------- */
+  function preApplica(){
+    var m = PRE.m; if(!m || !m.righe) return;
+    var messi = 0, gialli = 0;
+    m.righe.forEach(function(x){
+      if(!x.usa || x.fatto) return;
+      if(x.stato === 'conflitto' && x.scelta < 0) return;                   // V6.8 correzioni 13/10 sera: un conflitto si applica solo dopo una scelta esplicita
+      var altro = x.scelta >= 0 ? x.alt[x.scelta] : null;
+      if(altro && altro.esistente) return;                                 // «tieni quello che c'e'»: niente da scrivere
+      var v = String(preValoreRiga(x)).trim(); if(!v) return;
+      var giallo = x.stato === 'da_controllare' && !x.mod;        // giallo = letto ma non verificato e NON corretto dall'agente; un «scegli» risolto dall'agente e' una sua decisione
+      preScrivi(m, x.campo, v, giallo);
+      if(!x.mod) x.continua.forEach(function(c){ if(String(c.valore).trim()) preScrivi(m, c.campo, String(c.valore).trim(), giallo); });
+      x.fatto = true; messi++; if(giallo) gialli++;
+    });
+    m.nApplicate = Object.keys(m.applicate).length;
+    if(!messi){ m.msg = 'Nessuna riga spuntata da applicare.'; preDisegna(); return; }
+    preBtn();
+    if(DOC.pdf) disegna();
+    preChiudi();
+    toast('Messo nel modulo: ' + messi + (messi === 1 ? ' campo' : ' campi') + (gialli ? ' · ' + gialli + ' in giallo da controllare' : '') + '.', { label:'Annulla', fn:preAnnulla });
+  }
+  function preScrivi(m, campo, v, giallo){
+    if(!m.applicate[campo]) m.applicate[campo] = { prima:Object.prototype.hasOwnProperty.call(DOC.vals, campo) ? DOC.vals[campo] : undefined };
+    m.applicate[campo].messo = v;
+    DOC.vals[campo] = v;
+    if(giallo) m.gialli[campo] = true; else delete m.gialli[campo];
+  }
+  // l'agente ha toccato un campo: da quel momento e' suo (non e' piu' giallo e «Annulla» non lo tocca)
+  function preTocco(campo, el){
+    var m = PRE.m; if(!m) return;
+    if(m.gialli[campo]){ delete m.gialli[campo]; if(el){ el.classList.remove('ai-g'); el.title = ''; el.removeAttribute('aria-description'); } }
+    if(m.applicate[campo]){ delete m.applicate[campo]; m.nApplicate = Object.keys(m.applicate).length; if(!m.nApplicate) preBtn(); }
+  }
+  function preAnnulla(){
+    var m = PRE.m; if(!m || !m.nApplicate) return;
+    var n = 0;
+    Object.keys(m.applicate).forEach(function(c){
+      var a = m.applicate[c];
+      if(DOC.vals[c] !== a.messo) return;                                   // cambiato dall'agente: non si tocca
+      if(a.prima === undefined) delete DOC.vals[c]; else DOC.vals[c] = a.prima;
+      n++;
+    });
+    m.applicate = {}; m.gialli = {}; m.nApplicate = 0;
+    (m.righe || []).forEach(function(x){ x.fatto = false; });
+    preBtn();
+    if(DOC.pdf) disegna();
+    if(PRE.aperto && m.passo === 'rev') preDisegna();
+    toast(n ? 'Ho tolto i valori messi dall’AI (' + n + ').' : 'Niente da annullare.');
+  }
+
+  /* ---------- eventi ---------- */
+  function preClic(a, el){
+    var m = PRE.m, i = +el.getAttribute('data-i'), k = el.getAttribute('data-k');
+    switch(a){
+      case 'pre-apri': preApri(); break;
+      case 'pre-chiudi': preChiudi(); break;
+      case 'pre-ricontrolla': preRicontrolla(); break;
+      case 'pre-annulla': preAnnulla(); break;
+      case 'pre-scegli': preScegli(k, el.getAttribute('data-m')); break;
+      case 'pre-togli': if(m){ delete m.slot[k]; delete m.letture[k]; m.righe = null; preSlotAgg(k); } break;
+      case 'pre-riprova':
+        if(m && m.slot[k] && m.slot[k].blob){ var s = m.slot[k]; m.vers = (m.vers || 0) + 1; s.v = m.vers; s.st = 'coda'; s.msg = ''; m.coda.push(k); preSlotAgg(k); preAvanti(); }
+        break;
+      case 'pre-sel-r': if(m){ var x = RQ.lista.filter(function(q){ return q.id === el.getAttribute('data-id'); })[0] || (RQ.srv && RQ.srv.lista.filter(function(q){ return q.id === el.getAttribute('data-id'); })[0]); if(x){ m.richiesta = { id:x.id, nome:x.nome || '', email:x.email || '', telefono:x.telefono || '' }; m.righe = null; preDisegna(); } } break;
+      case 'pre-no-r': if(m){ m.richiesta = null; m.qr = ''; m.righe = null; preDisegna(); } break;
+      case 'pre-sel-i': if(m){ var im = IM.lista.filter(function(q){ return q.codice === el.getAttribute('data-c'); })[0]; if(im){ m.immobile = { codice:im.codice, titolo:im.titolo || '', citta:im.citta || '' }; m.righe = null; preDisegna(); } } break;
+      case 'pre-no-i': if(m){ m.immobile = null; m.qi = ''; m.righe = null; preDisegna(); } break;
+      case 'pre-lista-ap': if(m) m.listaAperta = !el.parentNode.open; break;
+      case 'pre-rev': preProponi(); break;
+      case 'pre-fonti': if(m){ m.passo = 'fonti'; m.msg = ''; preDisegna(); } break;
+      case 'pre-svuota':
+        if(m && window.confirm('Tolgo tutto quello che ho letto e riparto da capo?')){
+          var info = m.info; var nuovo = preNuovo(m.chiave); nuovo.fase = m.fase; nuovo.sha = m.sha; nuovo.mappa = m.mappa; nuovo.info = info;
+          nuovo.applicate = m.applicate; nuovo.gialli = m.gialli; nuovo.nApplicate = m.nApplicate;
+          PRE.m = nuovo; preDisegna();
+        }
+        break;
+      case 'pre-tutte': if(m && m.righe){ m.righe.forEach(function(x){ if(!x.fatto && x.stato === 'ok') x.usa = true; }); preDisegna(); } break;   // V6.8 correzioni 13/10 sera: solo le righe «Controllato»; gialli e conflitti si spuntano a mano
+      case 'pre-nessuna': if(m && m.righe){ m.righe.forEach(function(x){ if(!x.fatto) x.usa = false; }); preDisegna(); } break;
+      case 'pre-applica': preApplica(); break;
+    }
+  }
+  function preCambio(t, a){
+    var m = PRE.m; if(!m) return;
+    var i = +t.getAttribute('data-i');
+    if(a === 'pre-info'){ m.info = !!t.checked; m.msg = ''; preDisegna(); }
+    else if(a === 'pre-spunta'){ m.spunte[i] = !!t.checked; }
+    else if(a === 'pre-usa' && m.righe && m.righe[i]){
+      var rx = m.righe[i];
+      if(t.checked && rx.stato === 'conflitto' && rx.scelta < 0){ rx.usa = false; t.checked = false; toast('Scegli prima il valore.'); preAggApplica(); return; }
+      rx.usa = !!t.checked; preAggApplica();
+    }
+    else if(a === 'pre-scelta' && m.righe && m.righe[i]){
+      var x = m.righe[i]; x.scelta = +t.value;
+      var esiste = x.alt[x.scelta] && x.alt[x.scelta].esistente;
+      x.usa = !esiste;                                     // «tieni quello che c'e'» = non applicare; un altro valore = applica
+      var cb = r.querySelector('#tcag-pre-body [data-act="pre-usa"][data-i="' + i + '"]'); if(cb) cb.checked = x.usa;
+      preAggApplica();
+    }
+    else if(a === 'pre-cam' || a === 'pre-file'){ preScelto(t); }
+  }
+  function preInput(t){
+    var m = PRE.m; if(!m) return;
+    if(t.id === 'tcag-pre-q-r'){ m.qr = t.value; var c = g('pre-ris-r'); if(c) put(c, preRisRichiesteHTML(m)); }
+    else if(t.id === 'tcag-pre-q-i'){ m.qi = t.value; var c2 = g('pre-ris-i'); if(c2) put(c2, preRisImmobiliHTML(m)); }
+    else if(t.getAttribute('data-act') === 'pre-val' && m.righe){
+      var x = m.righe[+t.getAttribute('data-i')]; if(!x) return;
+      x.val = t.value; x.mod = true;                       // l'ha riscritto l'agente: lo considera controllato (non va in giallo)
+      if(t.value.trim() && !x.usa){ x.usa = true; var cb = r.querySelector('#tcag-pre-body [data-act="pre-usa"][data-i="' + t.getAttribute('data-i') + '"]'); if(cb) cb.checked = true; }
+      preAggApplica();
+    }
+  }
+  // trascinamento di un file sopra un documento (computer)
+  function preLega(){
+    var p = g('pre-body'); if(!p) return;
+    var slotDa = function(e){ return e.target && e.target.closest ? e.target.closest('.pre-slot[data-k]') : null; };
+    p.addEventListener('dragover', function(e){ if(slotDa(e) && e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') >= 0){ e.preventDefault(); slotDa(e).classList.add('drop'); } });
+    p.addEventListener('dragleave', function(e){ var s = slotDa(e); if(s) s.classList.remove('drop'); });
+    p.addEventListener('drop', function(e){
+      var s = slotDa(e); if(!s) return;
+      e.preventDefault(); s.classList.remove('drop');
+      var m = PRE.m, f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if(!m || !f) return;
+      if(!m.info){ m.msg = 'Prima spunta che il cliente è informato.'; preDisegna(); return; }
+      preCarica(s.getAttribute('data-k'), f);
+    });
+  }
+
+  /* ---------- Strumenti AI: il riquadro «Precompila» non e' piu' «in arrivo» quando l'admin accende lo strumento ---------- */
+  function preRitoccaStrumenti(){
+    var attivo = !!(PRE.stato && PRE.stato.attivo && PRE.stato.servizio && PRE.stato.servizio.raggiungibile);
+    var manut = !!(PRE.stato && !PRE.stato.attivo && PRE.stato.manutenzione);
+    var hub = $('#tcag-str-hub [data-h="strumenti/precompila"] .soon'), pag = $('#tcag-str-precompila .th .soon');
+    [hub, pag].forEach(function(e){
+      if(!e) return;
+      e.textContent = attivo ? 'Attivo' : (manut ? 'In manutenzione' : 'In arrivo'); e.classList.toggle('ok', attivo);
+    });
+    var sez = g('str-precompila'); if(!sez) return;
+    var card = $('.str-card', sez); if(!card) return;
+    var dis = $('.dis', card); if(dis) dis.hidden = attivo;
+    var vai = $('.pre-vai', card);
+    if(attivo && !vai){
+      vai = document.createElement('div'); vai.className = 'pre-vai';
+      vai.innerHTML = '<p class="str-lead">Si usa dentro <b>Documenti</b>: apri un modulo e tocca <b>Precompila con AI</b>.</p><button class="btn pri big" type="button" data-act="go" data-h="documenti">Apri i Documenti</button>';
+      var lead = $('.str-lead', card); if(lead && lead.nextSibling) card.insertBefore(vai, $('.steps', card) || lead.nextSibling); else card.appendChild(vai);
+    }
+    if(vai) vai.hidden = !attivo;
+  }
+  var preStrumentiT = 0;
+  function preStrumenti(){
+    preRitoccaStrumenti();
+    if(Date.now() - preStrumentiT < PRE_STATO_TTL || PRE.statoVol) return;
+    preStrumentiT = Date.now();
+    preStato(false).then(function(){ if(S.sec === 'strumenti') preRitoccaStrumenti(); });
   }
   /* =========================================================
      SCHEDA RICHIESTA (come MyClass)  —  CONTRATTO-V6.1 par. 8.3, 8.5, 8.6, 6 + CONTRATTO-V6.2 par. 8.2-8.4
@@ -3962,6 +4963,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       tr.textContent = rOff ? 'In manutenzione' : 'Attivo'; tr.classList.toggle('ok', !rOff);
     }
     ritocchiHubDiana();
+    preStrumenti();                       // V6.8: il riquadro Precompila dice «Attivo» quando l'admin accende lo strumento
     if(sub === 'assistente') renderAssistente();
     if(sub === 'render') renderRender();
   }
@@ -4226,7 +5228,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      Se il cancello e' quello vecchio (1.3.0, la cronologia risponde 404) tutto resta come nella V6.5: solo su questo schermo. */
   var AI = { msgs:[], stato:'pronto', ctl:null, timer:0, tick:0, t0:0, ultima:'', pend:0, ultimoRender:0, scaduto:false, cur:null,
     conv:'', rev:0, srv:null, remoto:false, remotoDa:0, caricata:false, daCache:false, sync:null, ultimoSync:0, conferma:'', lavoro:false, poll:0,
-    segui:true, gesto:0, raf:0, sig:'', lenCur:-1, nuovi:false,
+    segui:true, gesto:0, raf:0, sig:'', lenCur:-1, nuovi:false, giu:0, kbT:0,
     avvisiAperti:false, avvisoMem:false };       // V6.7.2: finestra degli avvisi (aperta adesso / vista in questa sessione, copia in memoria se sessionStorage non va)       // V6.7: auto-scorrimento (segui = la chat va in fondo da sola)
   var AI_T_PRIMO = 120000, AI_T_PAUSA = 45000;     // nessun byte dopo l'invio / pausa dopo il primo byte
   var AI_SYNC_MS = 8000, AI_SYNC_REMOTO_MS = 4000, AI_REMOTO_MAX_MS = 180000;
@@ -4236,16 +5238,38 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
 
   /* Tastiera del telefono: su iOS la chat e' "fixed" e la casella finirebbe sotto la tastiera.
      visualViewport dice quanto spazio copre la tastiera: la chat si alza di tanto. Non testato su telefono vero. */
+  /* V6.8.1: la tastiera conta come aperta SOLO se la casella della domanda e' a fuoco E lo spazio mancante e' almeno AI_KB_MIN px.
+     Prima (V6.7-V6.8) bastava che visualViewport fosse piu' basso della finestra: su iPhone puo' esserlo anche senza tastiera (barre di Safari, zoom) o restare cosi'
+     dopo che la tastiera si e' chiusa senza un evento «resize» (iOS non lo manda sempre): la classe as-kb restava attaccata e i comandi della chat sparivano per sempre.
+     Adesso la casella che perde il fuoco la toglie subito (e di nuovo dopo 400 ms, a tastiera chiusa del tutto). */
+  var AI_KB_MIN = 100, AI_KB_BASSO = 400;      // AI_KB_BASSO: con la tastiera aperta restano meno di 400 px di schermo libero (SE, telefono girato): il pulsante «✚ Nuova chat» in testa non c'e' (ogni riga pesa)
+  /* V6.8.1 (revisione 13/10/2026): su Chrome (Android) toccare «Invia» sposta il fuoco sul pulsante: la casella perde il fuoco PRIMA che il dito si alzi.
+     Se in quel momento la pagina ricalcola la tastiera (a fuoco perso vale 0), la chat scende di tutta l'altezza della tastiera e il rilascio cade fuori dal pulsante:
+     il clic non parte e la domanda resta nella casella (MISURATO sulla V6.8.1: «Invia» con la tastiera aperta = 0 su 2 col mouse e col tocco; sulla V6.8 2 su 2).
+     Percio' mentre un tocco dentro la chat non e' finito (clic, annullamento, oppure AI_TOCCO_MAX_MS) la tastiera NON si ricalcola: lo si fa subito dopo. */
+  var AI_TOCCO_MAX_MS = 900;
+  function toccoInizio(){ AI.giu = Date.now(); }
+  function toccoFine(){ if(!AI.giu) return; AI.giu = 0; clearTimeout(AI.kbT); AI.kbT = setTimeout(tastieraAi, 0); }
   function tastieraAi(){
     var vv = window.visualViewport; if(!vv) return;
-    var kb = r.classList.contains('chat-open') ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
+    if(AI.giu){
+      var resto = AI_TOCCO_MAX_MS - (Date.now() - AI.giu);
+      if(resto > 0){ clearTimeout(AI.kbT); AI.kbT = setTimeout(tastieraAi, resto + 20); return; }
+      AI.giu = 0;
+    }
+    var q = g('as-q'), fuoco = !!q && document.activeElement === q;
+    var kb = r.classList.contains('chat-open') && fuoco ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
     r.style.setProperty('--as-kb', kb + 'px');
-    r.classList.toggle('as-kb', kb > 0);          // V6.7: con la tastiera aperta il testo legale si riduce a una riga (resta leggibile dopo)
+    r.classList.toggle('as-kb', kb >= AI_KB_MIN);
+    r.classList.toggle('as-kb-basso', kb >= AI_KB_MIN && vv.height < AI_KB_BASSO);          // V6.7: con la tastiera aperta il testo legale si riduce a una riga (resta leggibile dopo)
   }
   if(window.visualViewport){
     window.visualViewport.addEventListener('resize', tastieraAi);
     window.visualViewport.addEventListener('scroll', tastieraAi);
   }
+  r.addEventListener('pointerdown', function(e){ var t = e.target; if(t && t.closest && t.closest('.as-main')) toccoInizio(); }, true);
+  document.addEventListener('click', toccoFine, true);
+  document.addEventListener('pointercancel', toccoFine, true);
   function renderAssistente(){
     var box = g('str-assistente');
     tastieraAi();
@@ -4253,6 +5277,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       box.setAttribute('data-ok', '1');
       put(box, H`<div class="as-wrap">
         <div class="card as-main">
+          <div class="as-testa" id="tcag-as-testa"><button class="btn sec as-nuova-top" type="button" id="tcag-as-nuova-top" data-act="ai-nuova"><span aria-hidden="true">✚</span> Nuova chat</button></div>
           <div class="as-manut" id="tcag-as-manut" role="alert" hidden></div>
           <div class="as-cmd" id="tcag-as-cmd" role="group" aria-label="Comandi della chat"></div>
           <div class="as-conf" id="tcag-as-conf" role="alertdialog" aria-label="Conferma" hidden></div>
@@ -4270,6 +5295,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
         <aside class="card as-side"><h2>Domande suggerite</h2><div id="tcag-as-sugg"></div></aside>
       </div>`);
       var q = g('as-q');
+      q.addEventListener('focus', tastieraAi);                                              // V6.8.1: la tastiera conta solo a casella a fuoco
+      q.addEventListener('blur', function(){ tastieraAi(); setTimeout(tastieraAi, 400); });
       q.addEventListener('keydown', function(e){
         // Invio invia, Maiusc+Invio va a capo; su schermo tattile Invio va a capo (si invia col pulsante)
         if(e.key === 'Enter' && !e.shiftKey && !e.isComposing && !window.matchMedia('(pointer: coarse)').matches){ e.preventDefault(); inviaDalForm(); }
@@ -4388,6 +5415,13 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     g('as-log').setAttribute('aria-busy', String(oc || AI.remoto));
     if(!AI_URL) limAi('Diana Assistant non è configurata.');
     put(g('as-cmd'), comandiAi());
+    var nt = g('as-nuova-top');
+    if(nt){                                                      // V6.8.1: «✚ Nuova chat» (in testa quando i comandi sotto non si vedono) = stesso stato e stessa azione del comando della barra
+      var vecchio = AI.srv === false;                            // cancello vecchio: la barra ha «Svuota schermo» (solo lo schermo, senza conferma) e il pulsante in testa fa lo stesso e lo dice
+      nt.disabled = chatBloccata() || !AI_URL;
+      nt.setAttribute('data-act', vecchio ? 'ai-svuota' : 'ai-nuova');
+      if(nt.lastChild) nt.lastChild.textContent = vecchio ? ' Svuota schermo' : ' Nuova chat';
+    }
     g('as-cmd').classList.toggle('as-cmd4', !!g('as-gestione'));             // V6.7.2: con «⚙ Gestione» (admin) i comandi sono 4: sul telefono stretto vanno su due righe
     confermaAi();
     put(g('as-sugg'), bottoniDomande());
@@ -4974,42 +6008,49 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function renTempo(){ var v = renVariante(); return v ? v.tempo : REN_TEMPO_S; }
 
   /* ---------- foto: lettura, riduzione nel browser, anteprima ---------- */
+  /* V6.8: lettura comune di una foto, usata dal Render e da «Precompila con AI» (moduli).
+     fotoEHeic: il file e' HEIC/HEIF (tipo o estensione). fotoDecodifica: apre il file in un <img> (il browser lo decodifica: Safari legge anche HEIC, gli altri no)
+     e chiama ok(img, larghezza, altezza) oppure ko(). fotoInJpeg: disegna l'immagine su una tela bianca (butta via EXIF e posizione GPS) e dà il JPEG a cb(blob), cb(null) se non riesce. */
+  function fotoEHeic(file){ return /hei[cf]/.test(String(file.type || '').toLowerCase()) || /\.hei[cf]$/i.test(String(file.name || '')); }
+  function fotoDecodifica(file, ok, ko){
+    var url = URL.createObjectURL(file), img = new Image();
+    img.onload = function(){ var w = img.naturalWidth, h = img.naturalHeight; URL.revokeObjectURL(url); ok(img, w, h); };
+    img.onerror = function(){ URL.revokeObjectURL(url); ko(); };
+    img.src = url;
+  }
+  function fotoInJpeg(img, cw, ch, qualita, cb){
+    try {
+      var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+      var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cw, ch); cx.drawImage(img, 0, 0, cw, ch);
+      cv.toBlob(function(b){ cb(b || null); }, 'image/jpeg', qualita);
+    } catch(e){ cb(null); }
+  }
   function renNuovaFoto(file){
     if(renOccupato()) return;
     var fm = g('ren-fmsg');
     function nope(t){ REN.fotoOcc = false; REN.fotoMsg = t; aggiornaFoto(); }
-    var tipo = String(file.type || '').toLowerCase(), nome = String(file.name || '');
-    var heic = /hei[cf]/.test(tipo) || /\.hei[cf]$/i.test(nome);
+    var tipo = String(file.type || '').toLowerCase();
+    var heic = fotoEHeic(file);
     if(file.size > REN_MAX_FILE){ nope('La foto è troppo grande (' + Math.round(file.size / 1048576) + ' MB, il massimo è 30 MB). Scattane una più piccola o riducila.'); return; }
     if(!file.size){ nope('Il file è vuoto. Scegli un’altra foto.'); return; }
     if(tipo && tipo.indexOf('image/') !== 0 && !heic){ nope('Questo file non è una foto. Scegli una foto (JPEG, PNG o WebP).'); return; }
     REN.fotoOcc = true; REN.fotoMsg = ''; aggiornaFoto();
-    var url = URL.createObjectURL(file), img = new Image();
-    img.onload = function(){
-      var w = img.naturalWidth, h = img.naturalHeight;
-      URL.revokeObjectURL(url);
+    fotoDecodifica(file, function(img, w, h){
       if(!w || !h){ nope('Non riesco a leggere questa foto. Scegline un’altra.'); return; }
       if(w * h > REN_MAX_PX){ nope('La foto è troppo grande (' + w + ' × ' + h + ' punti). Scattane una con meno risoluzione.'); return; }
       var s = Math.min(1, REN_LATO / Math.max(w, h)), cw = Math.max(1, Math.round(w * s)), ch = Math.max(1, Math.round(h * s));
       if(Math.max(cw, ch) / Math.max(1, Math.min(cw, ch)) > REN_RAPPORTO_MAX){ nope('Usa una foto normale, non panoramica.'); return; }     // il render la deformerebbe e conta come un tentativo
       if(Math.min(cw, ch) < REN_MIN_LATO){ nope('La foto è troppo piccola (' + w + ' × ' + h + ' punti). Ne serve una più grande.'); return; }
-      var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
-      try {
-        var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cw, ch); cx.drawImage(img, 0, 0, cw, ch);
-        cv.toBlob(function(b){
-          if(!b){ nope('Non riesco a preparare la foto. Scegline un’altra.'); return; }
-          if(b.size > REN_MAX_JPEG){ nope('La foto è ancora troppo pesante. Scegline un’altra.'); return; }
-          renImpostaFoto(b, cw, ch);
-        }, 'image/jpeg', 0.85);
-      } catch(e){ nope('Non riesco a preparare la foto. Scegline un’altra.'); }
-    };
-    img.onerror = function(){
-      URL.revokeObjectURL(url);
+      fotoInJpeg(img, cw, ch, 0.85, function(b){
+        if(!b){ nope('Non riesco a preparare la foto. Scegline un’altra.'); return; }
+        if(b.size > REN_MAX_JPEG){ nope('La foto è ancora troppo pesante. Scegline un’altra.'); return; }
+        renImpostaFoto(b, cw, ch);
+      });
+    }, function(){
       nope(heic
         ? 'Questa foto è in formato HEIC e questo telefono non la legge qui. Usa «Scatta una foto», oppure su iPhone: Impostazioni, Fotocamera, Formati, «Più compatibile».'
         : 'Non riesco a leggere questo file. Scegli una foto JPEG, PNG o WebP.');
-    };
-    img.src = url;
+    });
   }
   function renFoto(k){
     if(renOccupato()) return;
@@ -5601,20 +6642,85 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       ${prova ? H`<button class="btn pri big" type="button" data-act="imp-prova" id="tcag-imp-prova" ${IMP.provando ? 'disabled' : ''}>${ic('bell', 20)}Manda una notifica di prova</button>` : ''}</div>`;
     if(s === 'da-attivare' || s === 'concesso') return H`<p class="imp-p">Le notifiche su questo dispositivo sono spente.</p>${dispRiga()}
       <button class="btn pri big" type="button" data-act="imp-attiva">${ic('bell', 20)}Attiva notifiche</button>`;
-    if(s === 'negato') return H`<p class="imp-p imp-no">${ic('warn', 18)}Bloccate: cambiali nelle impostazioni del telefono</p>`;
+    if(s === 'negato') return H`<p class="imp-p imp-no">${ic('warn', 18)}Le notifiche sono bloccate su questo dispositivo.</p>${impSbloccoHTML()}`;   // V6.8.1: passi PER DISPOSITIVO (prima: una frase sola)
     if(s === 'ios-fuori-home') return H`<p class="imp-p">Aggiungi l’app alla Home per le notifiche</p>
       <button class="btn pri big" type="button" data-act="imp-guida">Come si fa</button>`;
     return H`<p class="imp-p">Questo dispositivo non supporta le notifiche.</p>`;
   }
+  /* V6.8.1 — notifiche BLOCCATE ("negato"): come si sbloccano, passo per passo, PER DISPOSITIVO.
+     Su iPhone, se si tocca «Non consentire», la web app sparisce da Impostazioni > Notifiche e l'unico rimedio e' toglierla dalla Home e rimetterla
+     (segnalazione di utenti, NON documentazione Apple: per questo i passi dicono cosa fare, non perche').
+     Il dispositivo si riconosce come `data-dev` (stessa regola della scheda «App sul telefono»); su Android e sul computer conta se la pagina gira dentro l'app installata
+     (la finestra dell'app sul computer NON ha la barra dell'indirizzo: «clicca il lucchetto accanto all'indirizzo» non si puo' fare: revisione 13/10/2026).
+     iPhone: i passi per rimettere l'app sulla Home sono quelli di iOS 26 del guscio (⋯ poi Condividi; «Apri come app web» acceso: se resta spento l'icona apre Safari e le notifiche non
+     funzionano). Vengono da segnalazioni e fonti secondarie, NON da un iPhone provato. */
+  function impSbloccoTipo(){
+    var dev = r.getAttribute('data-dev');
+    if(dev === 'ios') return 'ios';
+    if(dev === 'android') return inAppInstallata() ? 'android-app' : 'web';
+    return inAppInstallata() ? 'pc-app' : 'web';
+  }
+  function impSbloccoHTML(){
+    var t = impSbloccoTipo(), pc = r.getAttribute('data-dev') === 'pc', passi, intro;
+    if(t === 'ios'){
+      intro = 'Su iPhone si rimette l’app sulla Home. Segui questi passi.';
+      passi = [raw('Togli l’app dalla schermata <b>Home</b>: tieni premuta l’icona e rimuovila.'),
+        raw('Apri <b>Safari</b> e vai su <b>agenti.teamcontatoremax.com</b>.'),
+        raw('Tocca <b>⋯</b> in basso a destra, poi <b>Condividi</b>.'),
+        raw('Scegli <b>Aggiungi alla schermata Home</b>.'),
+        raw('Lascia acceso <b>Apri come app web</b> e tocca <b>Aggiungi</b>.'),
+        raw('Apri l’app dalla nuova icona.'),
+        raw('Tocca <b>Attiva notifiche</b>.'),
+        raw('Quando il telefono lo chiede, tocca <b>Consenti</b>.')];
+    } else if(t === 'android-app'){
+      intro = 'Si cambia dalle impostazioni del telefono.';
+      passi = [raw('Apri le <b>Impostazioni</b> del telefono.'), raw('Tocca <b>App</b>, poi <b>Team Contato</b>.'), raw('Tocca <b>Notifiche</b> e attivale.'), raw('Torna nell’app.')];
+    } else if(t === 'pc-app'){
+      intro = 'Si cambia dalla finestra dell’app.';
+      passi = [raw('Clicca il menu <b>⋮</b> in alto a destra della finestra dell’app.'),
+        raw('Clicca <b>Impostazioni app</b> (o <b>Informazioni app</b>).'),
+        raw('Vicino a <b>Notifiche</b> scegli <b>Consenti</b>.'),
+        raw('Chiudi e riapri l’app.')];
+    } else {
+      intro = 'Si cambia dalla barra dell’indirizzo.';
+      passi = [raw((pc ? 'Clicca' : 'Tocca') + ' l’icona a sinistra dell’indirizzo: il <b>lucchetto</b> o i <b>cursori</b>.'), raw((pc ? 'Clicca' : 'Tocca') + ' <b>Notifiche</b>.'), raw('Scegli <b>Consenti</b>.'), raw('Ricarica la pagina.')];
+    }
+    var nota = t === 'pc-app' ? H`<p class="imp-p">Non trovi la voce? Apri <b>agenti.teamcontatoremax.com</b> nel browser, non nell’app. Clicca il lucchetto o i cursori a sinistra dell’indirizzo. Scegli <b>Consenti</b> su <b>Notifiche</b>.</p>`
+      : t === 'ios' ? H`<p class="imp-p">iOS 18 o precedente: <b>Condividi</b> è già nella barra in basso, senza <b>⋯</b>.</p>` : '';
+    return H`<p class="imp-p"><b>${intro}</b></p><ol class="imp-passi">${passi.map(function(p){ return H`<li>${p}</li>`; })}</ol>${nota}`;
+  }
+  /* V6.8.1 — PRIMA della domanda di sistema (Notification.requestPermission): una finestra breve «Nel messaggio che appare tocca Consenti».
+     Se si tocca «Non consentire» il permesso resta negato e, su iPhone, non si cambia piu' (vedi sopra). La domanda compare solo con permesso 'default':
+     con 'granted' o 'denied' la finestra non serve e si va avanti subito. «Continua» richiama la funzione `avanti` (che chiama il guscio); «Piu' tardi» non fa niente.
+     window.TC_NOTIF_PRIMA e' il gancio per il guscio (app/pwa): il suo banner e la voce del menu account chiamano requestPermission da soli e, finche' non usano
+     questo gancio, non passano da qui. */
+  var NOTIF_AVANTI = null;
+  function notifPrima(avanti){
+    if(typeof avanti !== 'function') return;
+    var d = false; try { d = !!(window.Notification && Notification.permission === 'default'); } catch(e){}
+    if(!d){ avanti(); return; }
+    NOTIF_AVANTI = avanti;
+    apriFoglio(H`<h2>Prima di attivare le notifiche</h2><p class="np-testo">Tra poco ${r.getAttribute('data-dev') === 'pc' ? 'il browser' : 'il telefono'} ti fa una domanda.</p>
+      <p class="np-testo"><b>Nel messaggio che appare tocca «Consenti».</b></p>
+      <div class="sheet-btns"><button class="btn pri" type="button" data-act="notif-continua">Continua</button><button class="btn sec" type="button" data-act="close-modal">Più tardi</button></div>`, 'Prima di attivare le notifiche');
+  }
+  function notifContinua(){
+    var f = NOTIF_AVANTI; NOTIF_AVANTI = null;
+    closeModals();
+    if(f) f();
+  }
+  window.TC_NOTIF_PRIMA = notifPrima;
   function impDispAggiorna(){
     var box = g('imp-disp');
     if(box && S.sec === 'impostazioni') put(box, impDispHTML());
   }
   function impAttiva(){
     var A = window.TC_APP; if(!A || typeof A.attivaNotifiche !== 'function') return;
-    Promise.resolve().then(function(){ return A.attivaNotifiche(); })
-      .then(function(ok){ if(ok === false) diagPushSub(); }, function(){ diagPushSub(); })
-      .catch(function(){}).then(impDispAggiorna);
+    notifPrima(function(){          // V6.8.1: prima la finestra «tocca Consenti» (solo se il telefono sta per fare la domanda), poi il guscio chiede il permesso
+      Promise.resolve().then(function(){ return A.attivaNotifiche(); })
+        .then(function(ok){ if(ok === false) diagPushSub(); }, function(){ diagPushSub(); })
+        .catch(function(){}).then(impDispAggiorna);
+    });
   }
   function impDisattiva(){
     var A = window.TC_APP; if(!A || typeof A.disattivaNotifiche !== 'function') return;
@@ -6675,7 +7781,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   /* =========================================================
      GESTIONE DIANA ASSISTANT  (V6.7, CONTRATTO-V6.7 par. 6, 9.2) — SOLO ADMIN
      =========================================================
-     Sezione #diana (sei schede: Personalita', Benvenuto e domande, Conoscenza, Interruttori e limiti, Stato e uso, Testi).
+     Sezione #diana (sette schede: Personalita', Benvenuto e domande, Conoscenza, Interruttori e limiti, Moduli AI (V6.8, in 04e9c), Stato e uso, Testi).
      Si apre dal riquadro in "Altro", che esiste solo per l'admin. Nascondere il riquadro NON protegge niente: ogni chiamata passa dal cancello
      (GET/POST <origine del cancello>/ai/admin/...), che controlla la sessione E il ruolo admin a ogni volta; qui si mostra solo l'esito.
      Con cancello 1.4.0 le rotte rispondono 404: la pagina dice "server non aggiornato" e non rompe niente.
@@ -6684,7 +7790,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      Caricamento file: .md .txt .pdf .docx, 10 MB, controllo anche nel browser (il server rifiuta comunque), un file alla volta (XMLHttpRequest,
      per vedere l'avanzamento), a lotti di 20 (limite del server sui file in attesa): controllo privacy (codice fiscale, IBAN, telefono, email)
      PRIMA di mettere i file nella conoscenza. Con un avviso si chiede sempre; senza avvisi il lotto entra da solo. */
-  var DG_TABS = [['personalita', 'Personalità'], ['benvenuto', 'Benvenuto e domande'], ['conoscenza', 'Conoscenza'], ['interruttori', 'Interruttori e limiti'], ['stato', 'Stato e uso'], ['testi', 'Testi']];
+  var DG_TABS = [['personalita', 'Personalità'], ['benvenuto', 'Benvenuto e domande'], ['conoscenza', 'Conoscenza'], ['interruttori', 'Interruttori e limiti'], ['moduli', 'Moduli AI'], ['stato', 'Stato e uso'], ['testi', 'Testi']];
   var DG_TAB_ID = DG_TABS.map(function(t){ return t[0]; });
   var DG_PER_MIN = 40, DG_PER_MAX = 2500;
   var DG_FILE_MAX = 10 * 1024 * 1024, DG_LOTTO = 20, DG_CODA_MAX = 200, DG_LIVELLI = 4, DG_TIPI = ['md', 'txt', 'pdf', 'docx'];
@@ -6693,7 +7799,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     tab: 'personalita', da: '',
     imp: ris(), per: ris(), con: ris(), sta: ris(),
     vecchio: false,
-    perB: null, benB: null, intB: null, txtB: null,
+    perB: null, benB: null, intB: null, txtB: null, modB: null,
     salvando: '', msg: {},
     an: { q: '', vol: false, risposta: '', secondi: 0, err: '' },
     prova: { q: '', vol: false, ris: null, err: '' },
@@ -6777,12 +7883,13 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(DG_TAB_ID.indexOf(sub) >= 0) GD.tab = sub;
     var t = GD.tab, k = t === 'personalita' ? 'per' : t === 'conoscenza' ? 'con' : t === 'stato' ? 'sta' : 'imp', R = GD[k];
     if(R.stato === 'idle' || (R.stato === 'err' && !R.ok) || k === 'sta') dgCarica(k);
+    if(t === 'moduli') preStato(true).then(function(){ if(S.sec === 'diana' && GD.tab === 'moduli') dgDisegna(); });       // V6.8: stato del servizio dei moduli
     if(!GD.timer) GD.timer = setInterval(function(){
       if(S.sec === 'diana' && GD.tab === 'stato' && !document.hidden && !appEl.hidden && !GD.sta.vol) dgCarica('sta', true);
     }, DG_STATO_MS);
   }
   // sezione chiusa: niente piu' letture a vuoto; i dati restano in memoria (mai sul dispositivo)
-  function dgBozzaVuota(){ GD.perB = null; GD.benB = null; GD.intB = null; GD.txtB = null; }
+  function dgBozzaVuota(){ GD.perB = null; GD.benB = null; GD.intB = null; GD.txtB = null; GD.modB = null; }
 
   /* ---------- le bozze: quello che l'admin ha scritto e non ha ancora salvato ---------- */
   function dgPerSalvato(){ return GD.per.dati && typeof GD.per.dati.testo === 'string' ? GD.per.dati.testo : ''; }
@@ -6818,7 +7925,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function dgSporcoBen(){ return !!GD.benB && JSON.stringify(GD.benB) !== JSON.stringify(dgBenSalvato()); }
   function dgSporcoInt(){ return !!GD.intB && JSON.stringify(GD.intB) !== JSON.stringify(dgIntSalvato()); }
   function dgSporcoTxt(){ return !!GD.txtB && JSON.stringify(GD.txtB) !== JSON.stringify(dgTxtSalvato()); }
-  function dgSporco(){ return dgSporcoPer() || dgSporcoBen() || dgSporcoInt() || dgSporcoTxt(); }
+  function dgSporco(){ return dgSporcoPer() || dgSporcoBen() || dgSporcoInt() || dgSporcoTxt() || dgSporcoMod(); }
 
   /* ---------- pagina e schede ---------- */
   function dgDigitando(){
@@ -6827,7 +7934,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   }
   function dgChips(){
     put(g('dg-tabs'), DG_TABS.map(function(t){
-      var sp = (t[0] === 'personalita' && dgSporcoPer()) || (t[0] === 'benvenuto' && dgSporcoBen()) || (t[0] === 'interruttori' && dgSporcoInt()) || (t[0] === 'testi' && dgSporcoTxt());
+      var sp = (t[0] === 'personalita' && dgSporcoPer()) || (t[0] === 'benvenuto' && dgSporcoBen()) || (t[0] === 'interruttori' && dgSporcoInt()) || (t[0] === 'moduli' && dgSporcoMod()) || (t[0] === 'testi' && dgSporcoTxt());
       return H`<button class="chip" type="button" data-act="dg-tab" data-k="${t[0]}" aria-pressed="${String(GD.tab === t[0])}">${t[1]}${sp ? raw(' <span class="dg-pt" title="Modifiche non salvate" aria-label="modifiche non salvate"></span>') : ''}</button>`;
     }));
   }
@@ -6844,7 +7951,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     return H`<section class="card imp-card dg-vai" aria-labelledby="tcag-dgv-h-${da}"><div class="sec-h" id="tcag-dgv-h-${da}">Gestione Diana Assistant</div>
       <p class="imp-p">Solo per l'amministratore: cosa sa, cosa dice e cosa può fare Diana.</p>
       <button class="btn pri big" type="button" data-act="diana-vai" data-h="diana/conoscenza" data-da="${da}">Conoscenza: i documenti di Diana</button>
-      <div class="dg-vai-l">${DG_TABS.filter(function(t){ return t[0] !== 'conoscenza'; }).map(function(t){
+      <button class="btn sec big" type="button" data-act="diana-vai" data-h="diana/moduli" data-da="${da}" style="margin-top:10px">Dati agenzia e mediatore per i moduli</button>
+      <div class="dg-vai-l">${DG_TABS.filter(function(t){ return t[0] !== 'conoscenza' && t[0] !== 'moduli'; }).map(function(t){
         return H`<button class="btn sec" type="button" data-act="diana-vai" data-h="diana/${t[0]}" data-da="${da}">${t[1]}</button>`;
       })}</div></section>`;
   }
@@ -6858,7 +7966,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function dgTutto(){ dgChips(); dgDisegna(); }
   function dgDisegna(){
     var b = g('dg-body'); if(!b) return;
-    var h = GD.tab === 'personalita' ? dgPerHTML() : GD.tab === 'benvenuto' ? dgBenHTML() : GD.tab === 'conoscenza' ? dgConHTML() : GD.tab === 'interruttori' ? dgIntHTML() : GD.tab === 'stato' ? dgStatoHTML() : dgTxtHTML();
+    var h = GD.tab === 'personalita' ? dgPerHTML() : GD.tab === 'benvenuto' ? dgBenHTML() : GD.tab === 'conoscenza' ? dgConHTML() : GD.tab === 'interruttori' ? dgIntHTML() : GD.tab === 'moduli' ? dgModHTML() : GD.tab === 'stato' ? dgStatoHTML() : dgTxtHTML();
     put(b, h);
     dgDopoDisegno();
     // i due selettori di file stanno FUORI dalla parte che si ridisegna (HTML fisso): se un ridisegno in sottofondo (rilettura dell'elenco) li sostituisse mentre si sta scegliendo, la scelta andrebbe persa
@@ -7650,19 +8758,21 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       c = g('dg-txt-salva'); if(c) c.disabled = !sp4 || vuoto || senzaAi || !!GD.salvando;
       if(id === 'tcag-dg-lg' && (c = g('dg-txt-legale-p'))) dgAnteprimaRighe(c, T.legale);
       if(id === 'tcag-dg-gd' && (c = g('dg-txt-guida-p'))){ c.textContent = ''; c.appendChild(renderSicuro(T.guida)); }
+    } else if(id.indexOf('tcag-dg-mod-') === 0){ dgModInput(t);
     } else if(id === 'tcag-dg-pr-q'){ GD.prova.q = v;
     } else if(id === 'tcag-dg-cartella'){ GD.cartella = v; }
     aggiornaBarreDg();
   }
   function aggiornaBarreDg(){
     $$('#tcag-dg-tabs .chip').forEach(function(b){
-      var k = b.getAttribute('data-k'), sp = (k === 'personalita' && dgSporcoPer()) || (k === 'benvenuto' && dgSporcoBen()) || (k === 'interruttori' && dgSporcoInt()) || (k === 'testi' && dgSporcoTxt()), p = $('.dg-pt', b);
+      var k = b.getAttribute('data-k'), sp = (k === 'personalita' && dgSporcoPer()) || (k === 'benvenuto' && dgSporcoBen()) || (k === 'interruttori' && dgSporcoInt()) || (k === 'moduli' && dgSporcoMod()) || (k === 'testi' && dgSporcoTxt()), p = $('.dg-pt', b);
       if(sp && !p){ var s = document.createElement('span'); s.className = 'dg-pt'; s.title = 'Modifiche non salvate'; b.appendChild(document.createTextNode(' ')); b.appendChild(s); }
       else if(!sp && p){ b.removeChild(p); }
     });
   }
   function dgClic(a, el){
     var i = +el.getAttribute('data-i'), k = el.getAttribute('data-k');
+    if(a.indexOf('dg-mod-') === 0){ dgModClic(a, el); return; }                 // V6.8: scheda «Moduli AI» (04e9c)
     switch(a){
       case 'dg-tab': go('diana/' + k); break;
       case 'dg-riprova': dgRiprova(); break;
@@ -7713,9 +8823,192 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
         else if(k === 'per-usa') dgPerRipristina(v);
         else if(k === 'ben-parti') dgRipristinaImp(['benvenuto', 'domande'], 'ben', 'Ho rimesso i testi approvati.');
         else if(k === 'int-salva') dgIntSalva(true);
+        else if(k === 'mod-salva') dgModSalva(true);
         else if(k === 'con-elimina') dgEliminaOk(v);
         break;
       }
+    }
+  }
+  /* =========================================================
+     GESTIONE > MODULI AI  (V6.8, CONTRATTO-MODULI-AI.md rev. 2, par. 7.3 e 7.4) — SOLO ADMIN
+     =========================================================
+     Settima scheda di Gestione Diana Assistant (si trova anche in Impostazioni, nel riquadro «Gestione Diana Assistant»).
+     Tre cose, tutte nella sezione «moduli» del file delle impostazioni del cancello (POST /ai/admin/impostazioni, stessa conferma di versione delle altre schede):
+       1) interruttore «Precompila con AI» + messaggio per gli agenti (parte SPENTO: il pulsante dice «in arrivo» finche' l'admin non lo accende);
+       2) DATI DELL'AGENZIA (11 voci) scritti UNA VOLTA: finiscono nei moduli senza passare dall'AI;
+       3) MEDIATORI: una riga per email dell'agente (nome, P.IVA, CCIAA, REA, assicurazione). Il cancello cerca il mediatore per l'email della SESSIONE.
+     I dati di agenzia e mediatori NON arrivano mai agli agenti (GET /ai/diana/impostazioni manda solo attivo e messaggio): qui li legge solo l'admin.
+     Il controllo qui (11 cifre, email, lunghezze) e' una comodita': il cancello li rifiuta comunque se sbagliati. */
+  var DG_MOD_AG = [
+    ['denominazione', 'Nome dell’agenzia'], ['sede_via', 'Sede: via'], ['sede_civico', 'Sede: numero civico'], ['sede_comune', 'Sede: comune'],
+    ['partita_iva', 'Partita IVA (11 cifre)'], ['pec', 'PEC'], ['cciaa_comune', 'Camera di commercio: comune'], ['cciaa_numero', 'Camera di commercio: numero di iscrizione'],
+    ['polizza_compagnia', 'Assicurazione: compagnia'], ['polizza_numero', 'Assicurazione: numero polizza'], ['modulo_depositato_cciaa', 'Modulo depositato presso la Camera di commercio di…']
+  ];
+  var DG_MOD_MED = [
+    ['nominativo', 'Nome e cognome del mediatore'], ['partita_iva', 'Partita IVA (11 cifre)'], ['cciaa_comune', 'Camera di commercio: comune'],
+    ['rea', 'Numero REA'], ['polizza_compagnia', 'Assicurazione: compagnia'], ['polizza_numero', 'Assicurazione: numero polizza']
+  ];
+  var DG_MOD_MAX = 120, DG_MOD_MED_MAX = 60;
+  var DG_RE_MAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]{2,}$/;
+  function dgModDati(){ var m = dgImpDati().moduli; return m && typeof m === 'object' ? m : null; }
+  function dgModSalvato(){
+    var m = dgModDati() || {}, a = m.agenzia && typeof m.agenzia === 'object' ? m.agenzia : {}, med = m.mediatori && typeof m.mediatori === 'object' ? m.mediatori : {};
+    var ag = {}; DG_MOD_AG.forEach(function(c){ ag[c[0]] = typeof a[c[0]] === 'string' ? a[c[0]] : ''; });
+    var lista = Object.keys(med).sort().map(function(e){
+      var o = { email:e }, x = med[e] && typeof med[e] === 'object' ? med[e] : {};
+      DG_MOD_MED.forEach(function(c){ o[c[0]] = typeof x[c[0]] === 'string' ? x[c[0]] : ''; });
+      return o;
+    });
+    return { on:m.attivo === true, msg:typeof m.messaggio === 'string' ? m.messaggio : '', ag:ag, med:lista };
+  }
+  function dgModBozza(){ if(!GD.modB) GD.modB = JSON.parse(JSON.stringify(dgModSalvato())); return GD.modB; }
+  function dgSporcoMod(){ return !!GD.modB && JSON.stringify(GD.modB) !== JSON.stringify(dgModSalvato()); }
+  function dgModTestoMale(t){ return /[<>]/.test(t) || /[\u0000-\u001f\u007f]/.test(t); }
+  // primo problema, in italiano semplice ('' = tutto a posto)
+  function dgModProblemi(B){
+    var i, c, v;
+    if(B.msg.length > DG_MOD_MAX) return 'Il messaggio è più lungo di ' + DG_MOD_MAX + ' caratteri.';
+    if(dgModTestoMale(B.msg)) return 'Nel messaggio non si possono usare < e >.';
+    for(i = 0; i < DG_MOD_AG.length; i++){
+      c = DG_MOD_AG[i]; v = B.ag[c[0]].trim();
+      if(v.length > DG_MOD_MAX) return '«' + c[1] + '» è più lungo di ' + DG_MOD_MAX + ' caratteri.';
+      if(dgModTestoMale(v)) return '«' + c[1] + '»: non si possono usare < e >.';
+    }
+    v = B.ag.partita_iva.trim(); if(v && !/^\d{11}$/.test(v)) return 'La partita IVA dell’agenzia deve avere 11 cifre.';
+    v = B.ag.pec.trim(); if(v && !DG_RE_MAIL.test(v)) return 'La PEC dell’agenzia non sembra un indirizzo email.';
+    if(B.med.length > DG_MOD_MED_MAX) return 'I mediatori possono essere al massimo ' + DG_MOD_MED_MAX + '.';
+    var viste = {};
+    for(i = 0; i < B.med.length; i++){
+      var m = B.med[i], n = 'Mediatore ' + (i + 1), e = m.email.trim().toLowerCase();
+      if(!e) return n + ': scrivi l’email dell’agente.';
+      if(!DG_RE_MAIL.test(e) || e.length > 120) return n + ': l’email non è valida.';
+      if(viste[e]) return n + ': l’email ' + e + ' c’è due volte.';
+      viste[e] = 1;
+      for(var k = 0; k < DG_MOD_MED.length; k++){
+        c = DG_MOD_MED[k]; v = m[c[0]].trim();
+        if(v.length > DG_MOD_MAX) return n + ': «' + c[1] + '» è più lungo di ' + DG_MOD_MAX + ' caratteri.';
+        if(dgModTestoMale(v)) return n + ': «' + c[1] + '», non si possono usare < e >.';
+      }
+      v = m.partita_iva.trim(); if(v && !/^\d{11}$/.test(v)) return n + ': la partita IVA deve avere 11 cifre.';
+      v = m.rea.trim(); if(v && !/^[A-Za-z0-9-]+$/.test(v)) return n + ': il numero REA può avere solo lettere, cifre e trattino.';
+    }
+    return '';
+  }
+  function dgModConta(B){
+    var fatte = DG_MOD_AG.filter(function(c){ return B.ag[c[0]].trim(); }).length;
+    return fatte;
+  }
+  function dgModCampoHTML(id, etichetta, valore, extra){
+    return H`<label class="fld">${etichetta}<input id="${id}" maxlength="${DG_MOD_MAX}" autocomplete="off" value="${valore}" ${extra || ''}></label>`;
+  }
+  function dgModServizioHTML(){
+    var st = PRE.stato, e = PRE.statoErr;
+    if(!st){
+      if(PRE.statoVol) return H`<p class="mut">Controllo il servizio…</p>`;
+      return H`<p class="dg-msg err" role="status">${ic('warn', 18)}<span>${e && (e.http === 404 || e.http === 405 || e.http === 501) ? 'Il server non ha ancora questa funzione: serve il cancello AI 1.7.0.' : 'Non riesco a leggere lo stato del servizio.'}</span></p>
+        <button class="btn sec" type="button" data-act="dg-mod-ricontrolla">Riprova</button>`;
+    }
+    var sv = st.servizio && typeof st.servizio === 'object' ? st.servizio : {}, tipi = Array.isArray(sv.tipi) ? sv.tipi : [];
+    var vis = sv.visione === 'libera' ? 'libera' : (sv.visione === 'occupata' ? 'occupata (un render usa la scheda video: si legge senza AI)' : (sv.visione === 'spenta' ? 'spenta' : 'non indicata'));
+    return H`<ul class="dg-elenco">
+        <li>Servizio di lettura: ${dgSiNo(sv.raggiungibile === true, 'Raggiungibile', 'Non raggiungibile')}</li>
+        <li>Versione del servizio: <b>${typeof sv.versione === 'string' ? sv.versione : 'non indicata'}</b></li>
+        <li>Aiuto dell’AI per i casi dubbi: <b>${vis}</b></li>
+        <li>Documenti che sa leggere: <b>${tipi.length ? tipi.map(function(t){ return PRE_TIPO_NOME[t] || t; }).join(', ') : 'non indicati'}</b></li>
+        <li>Interruttore sul server: ${dgSiNo(st.attivo === true, 'Acceso', 'Spento')}</li></ul>
+      <button class="btn sec" type="button" data-act="dg-mod-ricontrolla">Ricontrolla</button>`;
+  }
+  function dgModHTML(){
+    var car = dgCaricamento(GD.imp, 'le impostazioni'); if(car) return car;
+    if(!dgModDati()){
+      return H`<p class="dg-msg err" role="status">${ic('warn', 18)}<span>Il server non ha ancora questa funzione: serve il cancello AI 1.7.0.</span></p>`;
+    }
+    var B = dgModBozza(), pr = dgModProblemi(B), sp = dgSporcoMod();
+    var fatte = dgModConta(B);
+    return H`${dgMsgHTML('mod')}
+      <div class="dg-griglia">
+      <section class="card dg-card" aria-labelledby="tcag-dg-mod-h">
+        <h2 id="tcag-dg-mod-h">Precompila con AI</h2>
+        <p class="mut">Nei moduli PDF compilabili, l’agente può far leggere carta d’identità, tessera e visura. <b>Parte spento.</b> Accendilo dopo le prove.</p>
+        <div class="sw-lista"><button class="sw" type="button" role="switch" aria-checked="${String(!!B.on)}" data-act="dg-mod-sw" id="tcag-dg-mod-sw"><span class="sw-t">Precompila con AI funziona</span><span class="sw-st">${B.on ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button></div>
+        ${B.on ? '' : H`<p class="dg-msg err" role="status">${ic('warn', 18)}<span>Spento: gli agenti vedono «in arrivo» sul pulsante.</span></p>`}
+        <label class="fld">Messaggio per gli agenti (facoltativo)<input id="tcag-dg-mod-msg" maxlength="${DG_MOD_MAX}" autocomplete="off" value="${B.msg}" placeholder="Es. Torno online alle 14:00."></label>
+        <p class="mut dg-nota">Se il servizio è spento per manutenzione, l’agente legge questo messaggio.</p>
+      </section>
+      <section class="card dg-card" aria-labelledby="tcag-dg-mod-st-h">
+        <h2 id="tcag-dg-mod-st-h">Stato del servizio</h2>
+        <div id="tcag-dg-mod-servizio">${dgModServizioHTML()}</div>
+      </section></div>
+      <section class="card dg-card" aria-labelledby="tcag-dg-mod-ag-h">
+        <h2 id="tcag-dg-mod-ag-h">Dati dell’agenzia</h2>
+        <p class="mut">Si scrivono una volta. Finiscono nei moduli così come li scrivi, senza passare dall’AI. <b id="tcag-dg-mod-conta">${fatte} su ${DG_MOD_AG.length} compilati.</b> Una voce vuota resta vuota nel modulo.</p>
+        <div class="dg-due dg-mod-due">${DG_MOD_AG.map(function(c){ return dgModCampoHTML('tcag-dg-mod-a-' + c[0], c[1], B.ag[c[0]], c[0] === 'partita_iva' ? 'inputmode="numeric"' : ''); })}</div>
+      </section>
+      <section class="card dg-card" aria-labelledby="tcag-dg-mod-me-h">
+        <h2 id="tcag-dg-mod-me-h">Mediatori</h2>
+        <p class="mut">Una riga per ogni agente che firma come mediatore. Il programma trova la riga con l’<b>email con cui l’agente entra nel portale</b>. Se l’agente non c’è, i campi del mediatore restano vuoti e il programma lo scrive.</p>
+        ${B.med.length ? '' : H`<p class="mut">Nessun mediatore scritto.</p>`}
+        ${B.med.map(function(m, i){
+          return H`<div class="dg-mod-med" role="group" aria-label="Mediatore ${i + 1}">
+            <div class="dg-mod-med-t"><b>Mediatore ${i + 1}</b><button class="btn sec sm" type="button" data-act="dg-mod-del" data-i="${i}">Togli</button></div>
+            ${dgModCampoHTML('tcag-dg-mod-m-' + i + '-email', 'Email dell’agente (quella del portale)', m.email, 'type="email" inputmode="email"')}
+            <div class="dg-due dg-mod-due">${DG_MOD_MED.map(function(c){ return dgModCampoHTML('tcag-dg-mod-m-' + i + '-' + c[0], c[1], m[c[0]], c[0] === 'partita_iva' ? 'inputmode="numeric"' : ''); })}</div></div>`;
+        })}
+        <button class="btn sec" type="button" data-act="dg-mod-add" ${B.med.length >= DG_MOD_MED_MAX ? 'disabled' : ''}>${ic('plus', 14)}Aggiungi un mediatore</button>
+      </section>
+      <p class="dg-aiuto" id="tcag-dg-mod-pr" role="status" ${pr ? '' : 'hidden'}>${pr}</p>
+      <div class="dg-az dg-fondo"><span class="dg-sporco" id="tcag-dg-mod-s" ${sp ? '' : 'hidden'}>Non salvato</span>
+        <button class="btn pri big" type="button" id="tcag-dg-mod-salva" data-act="dg-mod-salva" ${sp && !pr && !GD.salvando ? '' : 'disabled'}>${GD.salvando === 'mod' ? 'Salvo…' : 'Salva'}</button></div>`;
+  }
+  function dgModSalva(forza){
+    var B = dgModBozza(), S0 = dgModSalvato();
+    if(dgModProblemi(B)) return;
+    if(S0.on !== B.on && forza !== true){
+      dgFoglioConferma(B.on ? 'Accendere «Precompila con AI» per tutti?' : 'Spegnere «Precompila con AI» per tutti?',
+        B.on ? 'Gli agenti vedranno il pulsante in ogni modulo compilabile che il servizio conosce.' : 'Gli agenti non potranno usarla finché non la riaccendi.',
+        B.on ? 'Sì, accendi' : 'Sì, spegni', 'mod-salva');
+      return;
+    }
+    var ag = {}; DG_MOD_AG.forEach(function(c){ ag[c[0]] = B.ag[c[0]].trim(); });
+    var med = {};
+    B.med.forEach(function(m){
+      var o = {}; DG_MOD_MED.forEach(function(c){ o[c[0]] = m[c[0]].trim(); });
+      med[m.email.trim().toLowerCase()] = o;
+    });
+    dgSalvaImp('mod', { moduli: { attivo:B.on, messaggio:B.msg.trim(), agenzia:ag, mediatori:med } }, function(){
+      GD.modB = null; PRE.statoT = 0; preStrumentiT = 0;
+      dgMsg('mod', 'ok', 'Salvato.');
+      preStato(true).then(function(){ if(S.sec === 'diana' && GD.tab === 'moduli') dgDisegna(); });
+    });
+  }
+  // digitazione: si aggiorna la bozza e i pezzi che cambiano, senza ridisegnare sotto le dita
+  function dgModInput(t){
+    var B = dgModBozza(), id = t.id, v = t.value, m;
+    if(id === 'tcag-dg-mod-msg') B.msg = v;
+    else if((m = /^tcag-dg-mod-a-(.+)$/.exec(id)) && Object.prototype.hasOwnProperty.call(B.ag, m[1])) B.ag[m[1]] = v;
+    else if((m = /^tcag-dg-mod-m-(\d+)-(.+)$/.exec(id)) && B.med[+m[1]] && Object.prototype.hasOwnProperty.call(B.med[+m[1]], m[2])) B.med[+m[1]][m[2]] = v;
+    var pr = dgModProblemi(B), sp = dgSporcoMod(), c;
+    c = g('dg-mod-pr'); if(c){ c.hidden = !pr; c.textContent = pr; }
+    c = g('dg-mod-s'); if(c) c.hidden = !sp;
+    c = g('dg-mod-salva'); if(c) c.disabled = !sp || !!pr || !!GD.salvando;
+    c = g('dg-mod-conta'); if(c) c.textContent = dgModConta(B) + ' su ' + DG_MOD_AG.length + ' compilati.';
+  }
+  function dgModClic(a, el){
+    var i = +el.getAttribute('data-i'), B;
+    switch(a){
+      case 'dg-mod-sw': B = dgModBozza(); B.on = !B.on; dgTutto(); var sw = g('dg-mod-sw'); if(sw) try { sw.focus(); } catch(e){} break;
+      case 'dg-mod-add':
+        B = dgModBozza(); if(B.med.length >= DG_MOD_MED_MAX) break;
+        var vuoto = { email:'' }; DG_MOD_MED.forEach(function(c){ vuoto[c[0]] = ''; });
+        B.med.push(vuoto); dgTutto();
+        var ni = g('dg-mod-m-' + (B.med.length - 1) + '-email'); if(ni) try { ni.focus(); } catch(e){}
+        break;
+      case 'dg-mod-del': B = dgModBozza(); B.med.splice(i, 1); dgTutto(); break;
+      case 'dg-mod-salva': dgModSalva(); break;
+      case 'dg-mod-ricontrolla':
+        preStato(true).then(function(){ if(S.sec === 'diana' && GD.tab === 'moduli') dgDisegna(); });
+        dgDisegna();
+        break;
     }
   }
 
@@ -7909,6 +9202,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(openPopId && !el.closest('.pop') && a !== 'acct' && a !== 'notif' && a !== 'admin-menu' && a !== 'state-menu') closePops();
     var x, v;
     if(a.indexOf('dg-') === 0){ if(U && U.ruolo === 'admin') dgClic(a, el); return; }          // V6.7: Gestione Diana Assistant (solo admin; il cancello controlla comunque)
+    if(a.indexOf('pre-') === 0){ preClic(a, el); return; }                                       // V6.8: Precompila con AI nei moduli PDF
     switch(a){
       case 'go': closePops(); go(el.getAttribute('data-h')); break;
       case 'home': go('oggi'); break;
@@ -7934,6 +9228,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       case 'imp-salva': salvaImp(); break;
       case 'imp-esci': impEsci(); break;
       case 'imp-attiva': impAttiva(); break;
+      case 'notif-continua': notifContinua(); break;                               // V6.8.1: «Continua» nella finestra prima del permesso
       case 'imp-disattiva': impDisattiva(); break;
       case 'imp-guida': impGuida(); break;
       case 'imp-prova': impProva(); break;
@@ -8044,6 +9339,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); if(avvisiAperti()) return; closePops(); openModal('m-search'); g('s-input').focus(); return; }       // V6.7.2 revisione: con la finestra degli avvisi aperta la ricerca non si apre sopra
     if(avvisoTab(e)) return;
     if(e.key === 'Escape'){
+      if(PRE.aperto && !openPopId && !$$('.modal-bg').some(function(m){ return !m.hidden; })){ preChiudi(); return; }       // V6.8
       if(openPopId){ var an = popAnchor; closePops(); if(an && an.focus) an.focus(); return; }
       closeModals(); return;
     }
@@ -8059,6 +9355,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var t = e.target, act = t.getAttribute && t.getAttribute('data-act');
     if(t.id === 'tcag-rq-tipo'){ S.rq.tipo = t.value; renderRichieste(); }
     else if(t.id === 'tcag-dg-file' || t.id === 'tcag-dg-dir'){ if(U && U.ruolo === 'admin') dgScelti(t); }
+    else if(act && act.indexOf('pre-') === 0){ preCambio(t, act); }                             // V6.8: Precompila con AI (spunte, scelte, file)
     else if(act === 'open-local' && t.files && t.files[0]){
       var f = t.files[0]; t.value = '';
       apriCompilazione(f.name, null, f);
@@ -8074,6 +9371,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     else if(t.id === 'tcag-dn-t'){ var idn = S.sub; if(idn){ noteStato(idn).bozza = t.value; var bn = g('dn-add'); if(bn) bn.disabled = !t.value.trim() || noteStato(idn).inv; } }
     else if(t.id === 'tcag-chiudi-nota'){ var bc = g('chiudi-ok'); if(bc) bc.disabled = !t.value.trim(); }
     else if(t.id && t.id.indexOf('tcag-dg-') === 0){ if(U && U.ruolo === 'admin') dgInput(t); }
+    else if(t.id && t.id.indexOf('tcag-pre-') === 0 || (t.getAttribute && /^pre-/.test(t.getAttribute('data-act') || ''))){ preInput(t); }       // V6.8
   }
   var legato = false;
   function legaEventi(){
@@ -8083,6 +9381,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     r.addEventListener('input', onInput);
     r.addEventListener('submit', function(e){ if(e.target.id === 'tcag-f-lead') inviaLead(e); });
     dgLega();                          // V6.7: trascinamento di file e cartelle nella Gestione Diana Assistant
+    preLega();                         // V6.8: trascinamento di un documento sopra «Precompila con AI»
     // V6.6: una foto di copertina che non si carica sparisce e torna il segnaposto col codice (l'evento error non risale: si ascolta in cattura)
     r.addEventListener('error', function(e){
       var t = e.target;
@@ -8232,6 +9531,6 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
 </script>
 
 
-<script src="assets/app.8e81ecd243.js" defer></script>
+<script src="assets/app.db3997d48d.js" defer></script>
 </body>
 </html>

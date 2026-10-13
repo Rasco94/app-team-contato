@@ -1,5 +1,5 @@
 /*
- * Guscio app Team Contato - logica - V1.1.0 (09/10/2026)
+ * Guscio app Team Contato - logica - V1.2.0 (13/10/2026)
  *
  * Questo file NON contiene le funzioni dell'Area Agenti: quelle stanno nel Code Block
  * (incollato dentro index.html dal programma di costruzione). Qui c'e' solo cio' che serve a
@@ -8,6 +8,12 @@
  * Nessun dato riservato e nessun segreto: la chiave VAPID e' pubblica.
  *
  * CHANGELOG
+ * V1.2.0 (13/10/2026) - app 1.3.0, Code Block Area Agenti V6.8.1: (1) il banner «Attiva notifiche» e la voce del menu account passano da window.TC_NOTIF_PRIMA (finestra del Code Block
+ *   «Nel messaggio che appare tocca Consenti»); senza il gancio (Code Block vecchio) chiamano attivaNotifiche come prima; attivaNotifiche() NON cambia (il Code Block la chiama dopo la sua finestra);
+ *   (2) guidaSblocco: iPhone = togli l'app dalla Home e rimettila (passi di iOS 26, «Apri come app web» acceso) invece di «Apri Impostazioni e cerca Team Contato» (dopo «Non consentire» l'app sparisce da
+ *   Impostazioni > Notifiche: segnalazioni di utenti, NON documentazione Apple); computer con l'app installata = menu ⋮ della finestra dell'app (la finestra non ha la barra dell'indirizzo);
+ *   (3) il toast di «negato» su iPhone non manda piu' alle impostazioni del telefono; (4) il banner si toglie prima della finestra del Code Block e non si rimette mentre e' aperta (prima la copriva: z-index 6000
+ *   contro 2000, «Continua» irraggiungibile). Non testato su iPhone / Android / Chrome-Edge veri.
  * V1.0.0 (09/10/2026) - prima versione.
  * V1.0.1 (09/10/2026) - revisione: guida iPhone per iOS 26 (Condividi e' dentro il menu ...), passo 'Apri in Safari' solo se serve,
  *   niente ricarica automatica se c'e' una nota non salvata, badge uguale a push (campanella del telefono), uscita: il
@@ -251,6 +257,8 @@
   }
   function aggiornaSchede() {
     if (!D.body) return;
+    var fcb = q('#tcag-m-sheet');                       // finestra del Code Block aperta (es. «tocca Consenti»): il banner non si mette sopra
+    if (fcb && !fcb.hidden && schedaTipo === '') return;
     var sess = leggiSessione();
     if (sessionePrec && !sess && sessionePrec.scade - Date.now() > 120000) disiscriviQuestoDispositivo();
     sessionePrec = sess ? { s: sess.s, scade: sess.scade } : null;
@@ -274,7 +282,7 @@
     if (CFG.push.attivo && sess && perm === 'default' && !recente('tc_notif_no', 7) && Date.now() - primaVistaSessione > 2500) {
       mostraScheda('notifiche', 'Attiva le notifiche su questo dispositivo',
         n > 0 ? 'Le ricevi già su ' + n + (n === 1 ? ' dispositivo' : ' dispositivi') + ': attivale anche qui, così arrivano insieme.' : 'Ricevi subito le nuove richieste, anche con l’app chiusa.',
-        'Attiva notifiche', function () { attivaNotifiche(); }, function () { ls('tc_notif_no', String(Date.now())); });
+        'Attiva notifiche', function () { attivaConPrima(); }, function () { ls('tc_notif_no', String(Date.now())); });
       return;
     }
     if (CFG.push.attivo && sess && perm === 'denied' && !recente('tc_notif_no', 7) && Date.now() - primaVistaSessione > 2500) {
@@ -286,15 +294,25 @@
   }
   function guidaSblocco() {
     if (IOS) {
-      apriFoglio('Sblocca le notifiche', 'Su iPhone si fa dalle Impostazioni del telefono.',
-        passo(1, SVG_APP, 'Apri <b>Impostazioni</b> e cerca <b>Team Contato</b>') +
-        passo(2, SVG_APP, 'Tocca <b>Notifiche</b> e attiva <b>Consenti notifiche</b>') +
-        passo(3, SVG_APP, 'Torna nell’app: il banner sparisce da solo'));
+      // dopo «Non consentire» la web app sparisce da Impostazioni > Notifiche: l'unico rimedio e' toglierla dalla Home e rimetterla (segnalazioni di utenti, NON documentazione Apple). Passi di iOS 26.
+      apriFoglio('Sblocca le notifiche', 'Su iPhone, dopo «Non consentire», l’app va tolta dalla Home e rimessa.',
+        passo(1, SVG_APP, 'Togli l’app dalla <b>Home</b>: tieni premuta l’icona e rimuovila') +
+        passo(2, SVG_SAFARI, 'Apri <b>Safari</b> e vai su <b>' + (location.hostname || 'agenti.teamcontatoremax.com') + '</b>') +
+        passo(3, SVG_PUNTINI, 'Tocca <b>⋯</b> in basso a destra, poi <b>Condividi</b>.<br><small>iOS 18 o precedenti: tocca subito <b>Condividi</b>.</small>') +
+        passo(4, SVG_AGGIUNGI, 'Scegli <b>Aggiungi alla schermata Home</b>, lascia acceso «Apri come app web», poi <b>Aggiungi</b>') +
+        passo(5, SVG_APP, 'Apri l’app dalla nuova icona, tocca <b>Attiva notifiche</b> e poi <b>Consenti</b>'));
     } else if (ANDROID) {
       apriFoglio('Sblocca le notifiche', 'Si fa dalle impostazioni dell’app.',
         passo(1, SVG_PUNTINI_V, 'Tieni premuta l’icona <b>Team Contato</b>, poi tocca <b>Info app</b> (la «i»)') +
         passo(2, SVG_APP, 'Tocca <b>Notifiche</b> e attiva <b>Consenti</b>') +
         passo(3, SVG_APP, 'Torna nell’app e ricaricala'));
+    } else if (STANDALONE) {
+      // computer con l'app installata: la finestra dell'app non ha la barra dell'indirizzo (non testato su Chrome / Edge veri: il nome della voce cambia da browser a browser)
+      apriFoglio('Sblocca le notifiche', 'Si fa dalla finestra dell’app.',
+        passo(1, SVG_PUNTINI_V, 'Clicca il menu <b>⋮</b> in alto a destra della finestra dell’app') +
+        passo(2, SVG_MONITOR, 'Clicca <b>Impostazioni app</b> (o <b>Informazioni app</b>)') +
+        passo(3, SVG_APP, 'Vicino a <b>Notifiche</b> scegli <b>Consenti</b>, poi riapri l’app') +
+        passo(4, SVG_MONITOR_FRECCIA, 'Non trovi la voce? Apri il sito nel browser: clic sul lucchetto o sui cursori a sinistra dell’indirizzo, poi <b>Notifiche</b> e <b>Consenti</b>'));
     } else {
       apriFoglio('Sblocca le notifiche', 'Si fa dalla barra dell’indirizzo del browser.',
         passo(1, SVG_MONITOR, 'Clicca l’icona a sinistra dell’indirizzo (il lucchetto o i cursori)') +
@@ -403,13 +421,21 @@
     if (!sess) { toast('Accedi prima, poi attiva le notifiche.'); return Promise.resolve(false); }
     var permesso = Notification.requestPermission();
     return Promise.resolve(permesso).then(function (p) {
-      if (p !== 'granted') { aggiornaVoce(); aggiornaSchede(); toast(p === 'denied' ? 'Notifiche bloccate: si cambiano nelle impostazioni del telefono o del browser.' : 'Notifiche non attivate.'); return false; }
+      if (p !== 'granted') { aggiornaVoce(); aggiornaSchede(); toast(p === 'denied' ? (IOS ? 'Notifiche bloccate: toglila dalla Home e rimettila (tocca «Come si sblocca»).' : 'Notifiche bloccate: si cambiano nelle impostazioni del telefono o del browser.') : 'Notifiche non attivate.', IOS && p === 'denied' ? 6000 : undefined); return false; }
       toast('Attivo le notifiche…', 40000);
       return iscriviInCoda(sess).then(function (j) {
         if (!j.ok) { toast(j.status === 401 ? 'Sessione scaduta: accedi di nuovo.' : 'Non riesco a registrare le notifiche (' + (j.error || 'errore') + ').', 5200); return false; }
         ls('tc_notif_no', null); nascondiScheda(); aggiornaVoce(); toast('Notifiche attive su questo dispositivo.'); aggiornaStatoDispositivi(true); return true;
       });
     }).catch(function (e) { toast('Notifiche non attivate: ' + (e && e.message ? e.message : 'errore'), 5200); aggiornaVoce(); return false; });
+  }
+  // V1.2.0: prima della domanda di sistema il Code Block (V6.8.1 in poi) mostra la sua finestra «Nel messaggio che appare tocca Consenti» (window.TC_NOTIF_PRIMA).
+  // «Continua» richiama attivaNotifiche: gesto dell'utente, requestPermission parte subito. Senza il gancio (Code Block vecchio) si chiama attivaNotifiche direttamente.
+  // La scheda in basso (banner) sta SOPRA la finestra del Code Block (z-index 6000 contro 2000) e ne coprirebbe il pulsante «Continua» (visto nella prova K2): prima di aprirla si toglie.
+  function attivaConPrima() {
+    nascondiScheda(true);
+    if (typeof window.TC_NOTIF_PRIMA === 'function') { try { window.TC_NOTIF_PRIMA(attivaNotifiche); return; } catch (x) { /* ripiego sotto */ } }
+    attivaNotifiche();
   }
   function disattivaNotifiche() {
     var sess = leggiSessione();
@@ -451,7 +477,7 @@
   }
   D.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('[data-tc="notifiche"]');
-    if (t) { e.preventDefault(); e.stopPropagation(); var s = statoNotifiche(); if (s === 'attive') disattivaNotifiche(); else if (s === 'ios-fuori-home') guidaInstallazione(); else attivaNotifiche(); return; }
+    if (t) { e.preventDefault(); e.stopPropagation(); var s = statoNotifiche(); if (s === 'attive') disattivaNotifiche(); else if (s === 'ios-fuori-home') guidaInstallazione(); else attivaConPrima(); return; }
     // Esci: questo dispositivo smette SEMPRE di ricevere le notifiche di quella persona.
     // Il server si avvisa solo se la sessione e' ancora valida; altrimenti ci pensa l'errore 410 del servizio push.
     var out = e.target.closest && e.target.closest('[data-act="logout"]');
