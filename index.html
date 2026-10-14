@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.3.2 (build 97a04a00)
+  Guscio app Team Contato - V1.3.3 (build a20dc159)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.8.3 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.8.4 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.3.2', build: '97a04a00', blocco: 'V6.8.3' };
+window.TC_APP = { versione: '1.3.3', build: 'a20dc159', blocco: 'V6.8.4' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1567,7 +1567,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.8.3';
+  var VERSIONE = 'V6.8.4';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2597,9 +2597,20 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'strumenti' && sub === 'assistente' && !eraChat){ AI.segui = true; chatApri(); }     // V6.6: cronologia dal cancello (prima la copia sul dispositivo)
     renderCorrente();
     if(sec === 'strumenti' && sub === 'assistente' && !eraChat) avvisoIngresso();          // V6.7.2: una volta per sessione, all'ingresso nella chat
-    if(cambiata || isPhone()) window.scrollTo(0, 0);
+    if((cambiata || isPhone()) && !(RIDIS_AUTO && campoDiTesto(document.activeElement))) window.scrollTo(0, 0);       // V6.8.4: cambio automatico (rotazione) con un campo di testo a fuoco: la pagina non salta in cima
   }
-  function ridisegna(){ if(!appEl.hidden) renderCorrente(); }
+  /* V6.8.4: un giro AUTOMATICO (contatori ogni minuto, notifica push, caricamento in sottofondo, rotazione) non deve distruggere un campo di testo mentre l'agente ci scrive:
+     renderAuto() alza RIDIS_AUTO per la durata del ridisegno, e le schede che hanno campi di testo (oggi la scheda della richiesta) lo leggono per saltare il ridisegno
+     SOLO se un campo di testo ha il fuoco. Le azioni dell'agente (salva, rimanda, assegna...) chiamano renderCorrente() e ridisegnano sempre. */
+  var RIDIS_AUTO = false;
+  function campoDiTesto(e){
+    return !!e && (e.tagName === 'TEXTAREA' || e.tagName === 'SELECT' || (e.tagName === 'INPUT' && !/^(checkbox|radio|button|submit|reset|file|image|range|color)$/i.test(e.type || 'text')));
+  }
+  function renderAuto(fn){
+    var prima = RIDIS_AUTO; RIDIS_AUTO = true;
+    try { (fn || renderCorrente)(); } finally { RIDIS_AUTO = prima; }
+  }
+  function ridisegna(){ if(!appEl.hidden) renderAuto(); }
   function renderCorrente(){
     var f = { oggi:renderOggi, richieste:renderRichieste, immobili:renderImmobili, documenti:renderDocumenti, admin:renderAdmin, altro:renderAltro, strumenti:renderStrumenti, impostazioni:renderImpostazioni, campagne:renderCampagne, diana:renderDiana }[S.sec];
     if(f) f();
@@ -2801,7 +2812,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     }));
     put(g('rq-imm-chip'), S.rq.imm ? H`<div class="chips" style="margin-bottom:12px"><button class="chip" type="button" data-act="rq-imm-off" aria-pressed="true">Immobile ${S.rq.imm} ${ic('x', 12)}</button></div>` : '');
     renderLista();
-    renderDettaglio(true);
+    renderDettaglio(!RIDIS_AUTO);          // V6.8.4: un giro automatico (contatori, push) NON riscrive la scheda se l'agente sta scrivendo; le azioni e la navigazione ridisegnano sempre
     rqAltezza(); setTimeout(rqAltezza, 300);
   }
   function renderLista(){
@@ -2821,8 +2832,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var id = S.sub, x = id ? trova(id) : null;
     if(!RQ.ok){ wrap.classList.remove('has-detail'); return; }
     wrap.classList.toggle('has-detail', phone && !!id);
-    // non si riscrive la scheda mentre l'agente sta scrivendo una nota
-    if(!forza && Dt.getAttribute('data-id') === id && Dt.contains(document.activeElement)) return;
+    // non si riscrive la scheda mentre l'agente sta scrivendo una nota (V6.8.4: vale per i giri automatici; solo se il fuoco e' su un campo di testo, non su un pulsante)
+    if(!forza && Dt.getAttribute('data-id') === id && Dt.contains(document.activeElement) && campoDiTesto(document.activeElement)) return;
     Dt.setAttribute('data-id', id || '');
     if(!id){ put(Dt, H`<div class="empty">Seleziona una richiesta dalla lista.</div>`); return; }
     if(!x){
@@ -3698,13 +3709,21 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       return disegna();
     });
   }
+  /* V6.8.4: la tastiera su schermo (e la barra degli indirizzi) cambia l'ALTEZZA della finestra, non la larghezza. Il foglio si scala sulla larghezza (e sulla densita'
+     dei pixel): se non cambiano, 'resize' NON ridisegna (prima ricreava tutti gli <input> e il campo col fuoco moriva: la tastiera si chiudeva e i tasti non avevano
+     piu' un destinatario). cvServeRidisegno() confronta con l'ultima larghezza DAVVERO disegnata (DOC.larg, scritta da disegna() a disegno finito). */
+  function cvLarg(){ var f = g('cv-foglio'); return f ? f.clientWidth - 2 : 0; }
+  function cvServeRidisegno(){
+    var l = cvLarg();
+    return !!DOC.pdf && l > 0 && (DOC.larg !== l || DOC.dpr !== (window.devicePixelRatio || 1) || DOC.pagDis !== DOC.pagina);
+  }
   function disegna(){
     var doc = DOC.pdf; if(!doc) return Promise.resolve();
     var pg = DOC.pagina, tela = g('cv-tela'); if(!tela) return Promise.resolve();
     g('pg-n').textContent = pg;
     g('pg-prec').disabled = pg <= 1; g('pg-succ').disabled = pg >= doc.numPages;
     return doc.getPage(pg).then(function(p){
-      var disp = g('cv-foglio').clientWidth - 2, base = p.getViewport({ scale:1 });
+      var disp = cvLarg(), base = p.getViewport({ scale:1 });
       var scala = Math.max(1, Math.min(2.2, disp / base.width));
       var vista = p.getViewport({ scale: scala });
       var canvas = g('cv-canvas'), strato = g('cv-campi'), dpr = window.devicePixelRatio || 1;
@@ -3715,7 +3734,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       // annotationMode 0: le caselle non le disegna pdf.js, le mettiamo noi come input veri
       return p.render({ canvasContext: ctx, viewport: vista, annotationMode: 0 }).promise
         .then(function(){ return p.getAnnotations(); })
-        .then(function(ann){ campi(ann, vista, strato); });
+        .then(function(ann){ campi(ann, vista, strato); DOC.larg = disp; DOC.dpr = dpr; DOC.pagDis = pg; });       // V6.8.4: ricordati a disegno finito (il confronto di cvServeRidisegno)
     });
   }
   /* V6.8: (1) le caselle da spuntare del PDF misurano 4-5 pt (circa 10 px a scala 2,2): per toccarle col dito ognuna ha un'AREA DI TOCCO di 22 px
@@ -3724,7 +3743,32 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      (2) un campo messo dalla precompilazione AI e da controllare ha la classe .ai-g (giallo) finche' l'agente non lo tocca. */
   var CV_TOCCO = 22;
   var CV_GIALLO = 'Da controllare: scritto dall’AI e non verificato. Guardalo prima di farlo firmare.';
+  /* V6.8.4: se un ridisegno VERO (rotazione, pannello laterale, cambio pagina, valori applicati) avviene mentre un campo ha il fuoco, i campi si ricreano ma il fuoco torna
+     sul campo con lo stesso nome (e, fra campi omonimi, lo stesso indice) con la stessa selezione. La pagina non salta: si scorre solo se il campo e' fuori dalla parte visibile. */
+  function cvFuocoSalva(strato){
+    var a = document.activeElement;
+    if(!a || a.tagName !== 'INPUT' || !strato.contains(a)) return null;
+    var nome = a.getAttribute('aria-label') || '', tutti = strato.querySelectorAll('input'), idx = 0, k = 0, i, sel = null;
+    for(i = 0; i < tutti.length; i++){
+      if(tutti[i].getAttribute('aria-label') !== nome) continue;
+      if(tutti[i] === a) idx = k;
+      k++;
+    }
+    if(a.type === 'text'){ try { sel = [a.selectionStart, a.selectionEnd, a.selectionDirection || 'none']; } catch(e){} }
+    return { nome:nome, idx:idx, sel:sel };
+  }
+  function cvFuocoRimetti(strato, f){
+    if(!f) return;
+    var tutti = strato.querySelectorAll('input'), uguali = [], i;
+    for(i = 0; i < tutti.length; i++) if(tutti[i].getAttribute('aria-label') === f.nome) uguali.push(tutti[i]);
+    var n = uguali[f.idx]; if(!n) return;
+    try { n.focus({ preventScroll:true }); } catch(e){ try { n.focus(); } catch(e2){} }
+    if(f.sel && n.setSelectionRange){ try { n.setSelectionRange(f.sel[0], f.sel[1], f.sel[2]); } catch(e){} }
+    var rc = n.getBoundingClientRect(), vv = window.visualViewport, alto = vv ? vv.offsetTop : 0, h = vv ? vv.height : window.innerHeight;
+    if(rc.top < alto || rc.bottom > alto + h){ try { n.scrollIntoView({ block:'center', inline:'nearest' }); } catch(e){} }
+  }
   function campi(annotazioni, vista, strato){
+    var fuoco = cvFuocoSalva(strato);                 // V6.8.4: chi ha il fuoco prima di svuotare lo strato
     strato.innerHTML = '';
     var elenco = [];
     annotazioni.forEach(function(a){
@@ -3759,6 +3803,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       el.setAttribute('aria-label', a.fieldName);
       strato.appendChild(el);
     });
+    cvFuocoRimetti(strato, fuoco);                    // V6.8.4: il fuoco (e il cursore) tornano sul campo che li aveva
   }
   function salvaCompilato(){
     if(!DOC.byte) return;
@@ -9545,12 +9590,13 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     window.addEventListener('scroll', function(){ if(openPopId && !(isPhone() && (openPopId === 'pop-state' || openPopId === 'pop-notif'))) closePops(); }, { passive:true });
     window.addEventListener('hashchange', route);
     var mq = window.matchMedia('(max-width:899px)');
-    var cambio = function(){ syncAcc(); if(!appEl.hidden) route(); };
+    var cambio = function(){ syncAcc(); if(!appEl.hidden) renderAuto(route); };       // V6.8.4: e' un cambio della finestra, non una scelta dell'agente: un campo di testo col fuoco non si ridisegna e la pagina non torna in cima
     if(mq.addEventListener) mq.addEventListener('change', cambio); else if(mq.addListener) mq.addListener(cambio);
     var attesa;
     window.addEventListener('resize', function(){
       if(!DOC.pdf || S.sec !== 'documenti' || S.sub !== 'compila') return;
-      clearTimeout(attesa); attesa = setTimeout(disegna, 250);   // se l'agente gira il telefono la pagina va ridisegnata
+      // V6.8.4: si ridisegna SOLO se la larghezza del foglio (o la densita' dei pixel) e' davvero cambiata: la tastiera su schermo cambia l'altezza e basta
+      clearTimeout(attesa); attesa = setTimeout(function(){ if(cvServeRidisegno()) disegna(); }, 250);   // se l'agente gira il telefono la pagina va ridisegnata
     });
     // contatori ogni minuto (V6.6), solo a scheda visibile; e SUBITO quando arriva una notifica push (tc:push dal guscio, o il messaggio del service worker)
     setInterval(tick, AGGIORNA_MS);
@@ -9672,7 +9718,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       else { applicaRichieste(q.v); RQ.ok = true; RQ.stato = 'ok'; RQ.err = ''; RQ.agg = Date.now(); cacheSalvaRQ(); }
     } else { RQ.err = (q.e && q.e.message) || 'Errore'; }
     r.removeAttribute('data-agg');
-    renderCorrente();
+    renderAuto();                                          // V6.8.4: i dati nuovi arrivano mentre l'agente puo' gia' scrivere
     caricaNotifiche(); caricaImp();     // quelle che nell'avvio da rete partono dopo le tre chiamate
   }
 
