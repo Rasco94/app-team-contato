@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.3.0 (build 478090c4)
+  Guscio app Team Contato - V1.3.1 (build 8029d900)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.8.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.8.2 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -48,7 +48,7 @@
   var u = navigator.userAgent, c = d.documentElement.classList;
   var ios = /iPhone|iPad|iPod/.test(u) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var sa = false;
-  try { sa = matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches || matchMedia('(display-mode: minimal-ui)').matches || navigator.standalone === true || /^android-app:/.test(d.referrer); } catch (e) {}
+  try { sa = matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: minimal-ui)').matches || navigator.standalone === true || /^android-app:/.test(d.referrer); } catch (e) {}
   c.add(ios ? 'tc-ios' : (/Android/.test(u) ? 'tc-android' : 'tc-desk'));
   if (sa) c.add('tc-standalone');
   try {
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.3.0', build: '478090c4', blocco: 'V6.8.1' };
+window.TC_APP = { versione: '1.3.1', build: '8029d900', blocco: 'V6.8.2' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -135,6 +135,11 @@ html.tc-guscio body{margin:0}
       <h2 class="tcag-login-titolo">Area Agenti</h2>
       <span class="tcag-login-filetto" aria-hidden="true"></span>
       <p class="tcag-login-testo">Riservata agli agenti del team.<br>Accedi con il tuo account Google.</p>
+      <!-- V6.8.2: «Ricorda questo dispositivo». Spuntata dal JS solo dentro l'app installata, vuota sul computer nel browser. Sta SOPRA il pulsante di Google: il pulsante accede subito. -->
+      <label class="tcag-ricorda" for="tcag-ricorda">
+        <input type="checkbox" id="tcag-ricorda">
+        <span><b>Ricorda questo dispositivo</b><span class="tcag-ricorda-nota">Resti dentro per 30 giorni.<br>Non farlo su un computer condiviso.</span></span>
+      </label>
       <div class="tcag-gsi" id="tcag-gsi"></div>
       <p class="tcag-accesso-msg" id="tcag-accesso-msg" hidden></p>
       <p class="tcag-accesso-aiuto">Se Google mostra "Accesso bloccato", il tuo account non pu&ograve; usare
@@ -370,7 +375,7 @@ html.tc-guscio body{margin:0}
       <div class="pre-top"><h2 id="tcag-pre-h" tabindex="-1">Precompila con AI</h2><button class="btn sec sm" type="button" data-act="pre-chiudi">Chiudi</button></div>
       <div class="pre-body" id="tcag-pre-body"></div>
       <input class="dg-fin" type="file" id="tcag-pre-cam" data-act="pre-cam" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
-      <input class="dg-fin" type="file" id="tcag-pre-file" data-act="pre-file" tabindex="-1" aria-hidden="true">
+      <input class="dg-fin" type="file" id="tcag-pre-file" data-act="pre-file" accept="application/pdf,.pdf,image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" tabindex="-1" aria-hidden="true">
     </aside></div>
 
     <div id="tcag-toast" role="status" aria-live="polite" hidden></div>
@@ -428,7 +433,13 @@ html.tc-guscio body{margin:0}
 #tcag .tcag-login-filetto{display:block; width:46px; height:2px; background:var(--oro); margin:16px auto 18px}
 #tcag .tcag-login-testo{margin:0 0 22px; font-size:15px; color:rgba(255,255,255,.85); line-height:1.55}
 #tcag .tcag-gsi{display:flex; justify-content:center; min-height:44px}
-#tcag .tcag-accesso-msg{margin:16px 0 0; font-size:14px; color:var(--oro)}
+#tcag .tcag-ricorda{display:flex; align-items:flex-start; gap:14px; width:100%; min-height:56px; margin:0 0 18px; padding:12px 14px; text-align:left; cursor:pointer; color:#fff; font-size:16px; line-height:1.45; border:1px solid rgba(255,255,255,.45); border-radius:10px; background:rgba(255,255,255,.07)}
+#tcag .tcag-ricorda:hover{background:rgba(255,255,255,.14)}
+#tcag .tcag-ricorda input{flex:0 0 auto; width:28px; height:28px; margin:2px 0 0; accent-color:var(--oro); cursor:pointer}
+#tcag .tcag-ricorda input:focus-visible{outline:3px solid var(--oro); outline-offset:3px}
+#tcag .tcag-ricorda b{display:block; font:700 17px/1.35 var(--sans); color:#fff}
+#tcag .tcag-ricorda-nota{display:block; margin-top:2px; font:400 16px/1.45 var(--sans); color:rgba(255,255,255,.9)}
+#tcag .tcag-accesso-msg{margin:16px 0 0; font-size:16px; line-height:1.5; color:var(--oro)}
 #tcag .tcag-accesso-msg.errore{color:#ffd2d6}
 #tcag .tcag-accesso-aiuto{margin:18px 0 0; font-size:12px; color:rgba(255,255,255,.55); line-height:1.5}
 #tcag .tcag-carico{text-align:center; padding:60px 0; color:var(--tenue); font-size:15px}
@@ -498,6 +509,7 @@ html.tc-guscio body{margin:0}
 #tcag .btn.sec:hover{border-color:var(--oro)}
 #tcag .btn.dng{background:none;color:var(--rosso)}
 #tcag .btn.sm{min-height:36px;padding:0 12px;font-size:14px}
+#tcag .btn.t16{font-size:16px}
 #tcag .btn.big{min-height:56px;padding:0 20px;font-size:17px;border-radius:10px}
 #tcag .btn:disabled,
 #tcag .btn[aria-disabled=true]{opacity:.55;cursor:not-allowed}
@@ -941,6 +953,13 @@ html.tc-guscio body{margin:0}
 #tcag .lrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bordo);flex-wrap:wrap;font-size:14px}
 #tcag .lrow:last-child{border-bottom:0}
 #tcag .lrow .g{flex:1 1 140px;min-width:0}
+#tcag .acc-ag{border-bottom:1px solid var(--bordo)}
+#tcag .acc-ag:last-child{border-bottom:0}
+#tcag .acc-ag .lrow{border-bottom:0}
+#tcag .acc-az{padding:0 0 12px}
+#tcag .acc-az .btn{width:100%;min-height:48px;padding:6px 14px;font-size:16px;line-height:1.3;white-space:normal;text-align:center}
+@media(min-width:600px){#tcag .acc-az .btn{width:auto}
+}
 #tcag .quote{background:var(--avorio);border-left:3px solid var(--oro);padding:10px 12px;border-radius:0 8px 8px 0;margin:8px 0;font-size:14px}
 #tcag .links{display:flex;flex-wrap:wrap;gap:8px}
 #tcag .acc-link{display:none;width:100%;text-align:left;padding:0;border:1px solid var(--bordo);background:#fff;border-radius:var(--raggio);box-shadow:var(--ombra);cursor:pointer}
@@ -1277,10 +1296,6 @@ html.tc-guscio body{margin:0}
 @media (max-width:899px){#tcag .as-cmd{gap:6px;padding:6px 10px;flex-wrap:nowrap}
 #tcag .as-cmd .cmd{flex:1 1 0;min-width:0;padding:2px 6px;font-size:13.5px;line-height:1.15;white-space:normal}
 }
-@media (max-width:520px){#tcag .as-cmd.as-cmd4{flex-wrap:wrap}
-#tcag .as-cmd.as-cmd4 .cmd{flex:1 1 calc(33.33% - 6px)}
-#tcag .as-cmd.as-cmd4 .cmd[data-gest]{flex:1 1 100%}
-}
 @media (min-width:900px){#tcag .nt-banner{grid-template-columns:1fr auto;align-items:center}
 #tcag .nt-banner-b .btn{flex:0 0 auto;min-width:150px}
 }
@@ -1512,14 +1527,8 @@ html.tc-guscio body{margin:0}
 #tcag .dg-mod-med-t{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
 @media (max-width:699px){#tcag .dg-mod-due{grid-template-columns:minmax(0,1fr)}
 }
-#tcag .as-testa{display:none;align-items:center;justify-content:flex-end;padding:0 10px;background:#fff;border-bottom:1px solid var(--bordo);flex:0 0 auto}
+#tcag .as-testa{display:flex;align-items:center;justify-content:flex-end;padding:0 10px;background:#fff;border-bottom:1px solid var(--bordo);flex:0 0 auto}
 #tcag .as-testa .as-nuova-top{flex:0 0 auto;min-height:44px;min-width:44px;padding:0 14px;font-size:16px;white-space:nowrap}
-@media (max-width:899px){#tcag.as-kb .as-testa{display:flex}
-}
-@media (max-width:899px) and (max-height:560px){#tcag .as-testa{display:flex}
-}
-@media (max-width:899px){#tcag.as-kb-basso .as-testa{display:none}
-}
 #tcag .imp-passi{list-style:decimal;margin:0 0 6px;padding:0 0 0 26px}
 #tcag .imp-passi li{margin:0 0 8px;font-size:16px;line-height:1.5;padding-left:2px}
 #tcag .np-testo{margin:0 0 10px;font-size:16px;line-height:1.5}
@@ -1558,7 +1567,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.8.1';
+  var VERSIONE = 'V6.8.2';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -1635,7 +1644,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function inAppInstallata(){
     try {
       if(document.documentElement.classList.contains('tc-standalone') || navigator.standalone === true) return true;
-      if(window.matchMedia && (window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: fullscreen)').matches || window.matchMedia('(display-mode: minimal-ui)').matches)) return true;
+      if(window.matchMedia && (window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: minimal-ui)').matches)) return true;
       if(/^android-app:/.test(document.referrer || '')) return true;
     } catch(e){}
     return false;
@@ -1699,17 +1708,92 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var boxGsi     = g('gsi');
   var msgAccesso = g('accesso-msg');
   var riservato  = g('riservato');
-  var sessione   = null;      // { s, scade, nome, h?, ruolo? } (il ruolo NON si salva sul dispositivo; h = impronta dell'email per la cache dati, V6.6: l'email in chiaro non si salva)
+  var ricordaEl  = g('ricorda');
+  var sessione   = null;      // { s, scade, nome, h?, ruolo?, d?, tetto?, r? } (il ruolo NON si salva sul dispositivo; h = impronta dell'email per la cache dati, V6.6: l'email in chiaro non si salva)
+                              // V6.8.2, dispositivo ricordato: d = 1, tetto = ms del 90o giorno dal primo accesso Google (lo dice lo script), r = ms dell'ultimo accesso o rinnovo (orologio di questo dispositivo)
+
+  /* =========================================================
+     RICORDA QUESTO DISPOSITIVO (V6.8.2, decisioni di Oscar 13/10/2026)
+     =========================================================
+     Senza la casella la sessione dura 12 ore, come sempre. Con la casella (accedi con ricorda:true) lo script
+     da' 30 giorni; la pagina li rinnova mentre si usa (azione dispositivo-rinnova). Dal primo accesso con Google
+     passano al massimo 90 giorni (il «tetto»): poi serve di nuovo Google. Se l'amministratore disconnette i
+     dispositivi dell'agente (o lo disattiva) lo script risponde 401 e la pagina torna all'accesso con un messaggio chiaro.
+     Rinnovo: in uso al massimo una volta ogni 24 ore; all'avvio e al ritorno in primo piano se mancano meno di 25 giorni. */
+  var MSG_SCADUTA = 'La sessione è scaduta: accedi di nuovo.';     // e' anche la frase che i moduli passano a esci() su un 401: la traduce esci()
+  var MSG_TETTO   = "Per sicurezza, ogni 90 giorni serve di nuovo l'accesso con Google. Accedi qui sopra.";
+  var MSG_REVOCA  = "Il tuo accesso è stato chiuso dall'amministratore. Per rientrare, accedi di nuovo con Google.";
+  var MSG_DISATT  = "Il tuo accesso è stato chiuso dall'amministratore. Se pensi sia un errore, scrivi all'amministrazione.";      // V6.8.2 (revisione): agente messo «non attivo» (lo script dice motivo 'disattivato')
+  var MSG_FINITO  = "L'accesso su questo dispositivo è finito. Accedi di nuovo con Google.";      // V6.8.2 (revisione): dispositivo ricordato, 401 SENZA motivo (scadenza vista dallo script, «Chiudi tutte le sessioni», cancello AI che non dice il motivo): frase neutra, non dà la colpa all'amministratore
+  var DISP_USO_MS = 24 * 36e5, DISP_SOGLIA_MS = 25 * 864e5, DISP_RIPROVA_MS = 10 * 60e3, DISP_TETTO_GG = 90;
+  var rinnovoVol = false, rinnovoNonPrima = 0, msgFinale = '';
 
   function leggiSessione(){
     try {
       var s = JSON.parse(localStorage.getItem(CHIAVE_SESSIONE) || 'null');
-      if(s && s.s && s.scade > Date.now() + 60000) return s;
+      if(s && s.s && s.scade > Date.now() + 60000){
+        if(s.d && Number(s.tetto) > 0 && Date.now() >= s.tetto){      // dispositivo ricordato oltre i 90 giorni: serve Google (il server lo direbbe al primo rinnovo; qui non si aspetta)
+          cancellaSessione(); msgFinale = MSG_TETTO; return null;
+        }
+        return s;
+      }
     } catch(e){}
     return null;
   }
-  function salvaSessione(s){
-    try { localStorage.setItem(CHIAVE_SESSIONE, JSON.stringify({ s:s.s, scade:s.scade, nome:s.nome, h:s.h || undefined })); } catch(e){}
+  // soloSeEsiste (rinnovo, impronta dell'email): se nel frattempo «Esci» in un'altra scheda ha cancellato la sessione salvata NON la si riscrive (prima il rinnovo la faceva rivivere e chi riapriva la pagina entrava senza Google). Ritorna false se non ha scritto.
+  function salvaSessione(s, soloSeEsiste){
+    var o = { s:s.s, scade:s.scade, nome:s.nome, h:s.h || undefined };
+    if(s.d){ o.d = 1; o.tetto = s.tetto; o.r = s.r; }
+    try {
+      if(soloSeEsiste && !localStorage.getItem(CHIAVE_SESSIONE)) return false;
+      localStorage.setItem(CHIAVE_SESSIONE, JSON.stringify(o));
+    } catch(e){}
+    return true;
+  }
+  // la sessione e' finita? '' = no; altrimenti la frase per la schermata di accesso
+  function sessioneFinita(){
+    if(!sessione) return '';
+    var ora = Date.now();
+    if(sessione.d && Number(sessione.tetto) > 0 && ora >= sessione.tetto) return MSG_TETTO;
+    if(sessione.scade <= ora) return MSG_SCADUTA;
+    return '';
+  }
+  // un 401 dello script: perche'? Dispositivo ricordato: tetto dei 90 giorni (lo dice l'orologio, con 10 minuti di tolleranza fra dispositivo e script; oppure lo script, con motivo 'tetto'
+  // o con la frase «troppo vecchia» sul rinnovo) altrimenti accesso chiuso dall'amministratore (disconnessione o agente disattivato). Sessione da 12 ore = come sempre. j = risposta dello script, se c'e'.
+  function motivo401(azione, j){
+    if(!sessione) return msgFinale || MSG_SCADUTA;      // piu' risposte 401 insieme: vale la frase della prima
+    // V6.8.2 (revisione): il motivo detto dallo script vale per OGNI sessione, anche da 12 ore (prima una sessione da 12 ore chiusa dall'admin diceva «scaduta» e One Tap riproponeva l'accesso da solo)
+    var mot = j && j.motivo;
+    if(mot === 'tetto') return MSG_TETTO;
+    if(mot === 'revocata') return MSG_REVOCA;
+    if(mot === 'disattivato') return MSG_DISATT;
+    if(sessione.d){
+      if(Number(sessione.tetto) > 0 && Date.now() + 10 * 60e3 >= sessione.tetto) return MSG_TETTO;
+      if(j && azione === 'dispositivo-rinnova' && /troppo vecchia|90 giorni/i.test(String(j.error || ''))) return MSG_TETTO;
+      return MSG_FINITO;      // V6.8.2 (revisione): prima qui c'era sempre «chiuso dall'amministratore», anche per una scadenza o una firma cambiata
+    }
+    return MSG_SCADUTA;
+  }
+  // rinnovo del dispositivo ricordato. quando: 'uso' (timer dei contatori) | 'avvio' | 'primo-piano'. Non lancia mai; non parte se la scheda e' nascosta o se un rinnovo e' gia' in volo.
+  function dispositivoControlla(quando){
+    if(!sessione || !sessione.d) return;
+    var fine = sessioneFinita();
+    if(fine){ esci(fine, true); return; }
+    if(rinnovoVol || appEl.hidden) return;
+    var ora = Date.now(), daUltimo = ora - (Number(sessione.r) || 0);
+    if(ora < rinnovoNonPrima || daUltimo < DISP_USO_MS) return;                                  // mai piu' di uno ogni 24 ore
+    if(quando !== 'uso' && sessione.scade - ora >= DISP_SOGLIA_MS) return;                       // avvio e primo piano: solo se mancano meno di 25 giorni
+    rinnovoVol = true;
+    chiama('dispositivo-rinnova', {}).then(function(j){
+      if(!sessione || !j.sessione) return;                                                       // nel frattempo l'agente e' uscito
+      sessione.s = j.sessione; sessione.scade = j.scade; sessione.r = Date.now();
+      if(Number(j.tetto) > 0) sessione.tetto = Number(j.tetto);
+      if(!salvaSessione(sessione, true)){ esci('', true); return; }                              // «Esci» in un'altra scheda mentre il rinnovo era in volo: non si riscrive niente, si esce
+      rinnovoNonPrima = 0;
+    }).catch(function(e){
+      // 401: chiama() ha gia' riportato all'accesso. Rete o server: si riprova fra 10 minuti. Rinnovo non previsto dallo script (400/404): fra un giorno.
+      rinnovoNonPrima = Date.now() + (e && (e.status === 400 || e.status === 404) ? DISP_USO_MS : DISP_RIPROVA_MS);
+    }).then(function(){ rinnovoVol = false; });
   }
   function cancellaSessione(){
     try { localStorage.removeItem(CHIAVE_SESSIONE); } catch(e){}
@@ -1756,7 +1840,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     .then(function(j){
       if(j && j.ok){ diagLenta(azione, Date.now() - t0); return j; }
       if(j && j.status === 401 && azione !== 'accedi'){
-        esci('La sessione è scaduta: accedi di nuovo.');
+        esci(motivo401(azione, j));         // V6.8.2: per un dispositivo ricordato la frase giusta (tetto dei 90 giorni o accesso chiuso dall'amministratore); da 12 ore: quella di sempre
       }
       var e = new Error((j && j.error) || 'risposta non valida');
       e.status = j && j.status;
@@ -1784,6 +1868,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var appPub = g('app-pub'); if(appPub) appPub.hidden = inAppInstallata() || !!window.TC_APP;      // V6.8.1: «Installa l'app del team» solo fuori dall'app. Nella pagina dell'app aperta nel browser (guscio, window.TC_APP gia' c'e') l'invito lo fa la scheda «Installa l'app» del guscio: niente doppio invito (revisione 13/10)
     caricoEl.hidden = true;
     appEl.hidden = true;
+    if(ricordaEl) ricordaEl.checked = inAppInstallata();      // V6.8.2: «Ricorda questo dispositivo» spuntata dentro l'app installata, vuota sul computer nel browser (e sul telefono nel browser: si spunta a mano)
     riservato.innerHTML = '';
     svuotaFileSalvati();              // senza sessione sul dispositivo non restano documenti
     cacheCancellaTutto();             // V6.6: ne' i dati in cache
@@ -1820,9 +1905,16 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
 
   function alToken(risposta){
     avvisoAccesso('Verifico l’accesso…');
-    chiama('accedi', { idToken: risposta.credential })
+    var dati = { idToken: risposta.credential };
+    if(ricordaEl && ricordaEl.checked) dati.ricorda = true;      // V6.8.2: senza la casella la richiesta e' quella di sempre
+    chiama('accedi', dati)
       .then(function(j){
         sessione = { s: j.sessione, scade: j.scade, nome: j.nome || j.email, ruolo: j.ruolo || 'agente', email: j.email };
+        if(j.dispositivo === true && dati.ricorda){       // lo script ha dato i 30 giorni (se non li da', la sessione e' quella da 12 ore)
+          sessione.d = 1; sessione.r = Date.now();
+          sessione.tetto = Number(j.tetto) > 0 ? Number(j.tetto) : Date.now() + DISP_TETTO_GG * 864e5;
+        }
+        msgFinale = '';
         try { sessionStorage.removeItem('tcag_uscito'); } catch(e){}
         // V6.6: l'impronta dell'email serve alla cache dei dati; di un altro utente non resta niente
         return hashEmail(j.email).then(function(h){
@@ -1836,16 +1928,34 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       });
   }
 
-  function esci(messaggio){
+  // locale = true: la fine l'ha decisa questo dispositivo (orologio), non un 401 dello script: la frase non si traduce
+  function esci(messaggio, locale){
+    if(messaggio === MSG_SCADUTA && !locale) messaggio = motivo401('', null);     // V6.8.2: i moduli che passano la frase generica (assistente, render, download, gestione) ottengono quella giusta per un dispositivo ricordato
+    if(messaggio) msgFinale = messaggio;
     cancellaSessione();
     sessione = null;
     svuotaFileSalvati();
     try { if(window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); } catch(e){}
     if(messaggio){ try { sessionStorage.setItem('tcag_msg', messaggio); } catch(e){} }
-    else { try { sessionStorage.setItem('tcag_uscito', '1'); } catch(e){} }
+    // V6.8.2: tetto dei 90 giorni, accesso chiuso dall'amministratore, «disconnetti tutti»: niente rientro automatico (One Tap) che cancellerebbe la frase; si tocca «Accedi con Google». Con la frase di sempre (12 ore) il rientro con un tocco resta.
+    if(messaggio !== MSG_SCADUTA){ try { sessionStorage.setItem('tcag_uscito', '1'); } catch(e){} }
     // la pagina torna pulita, senza pezzi riservati rimasti nel DOM. V6.6: prima si cancella la cache dei dati (al massimo 0,8 s)
     cacheCancellaTutto().then(function(){ location.reload(); });
   }
+
+  // V6.8.2 (revisione): due schede aperte sullo stesso dispositivo. «Esci» in una (o la sessione cancellata) fa uscire anche l'altra, senza scrivere niente; se l'altra scheda
+  // ha rinnovato la sessione, questa prende il gettone nuovo e la data del rinnovo (niente doppio rinnovo). Un'altra persona entrata sullo stesso dispositivo: questa scheda esce.
+  window.addEventListener('storage', function(ev){
+    if(!sessione || (ev.key !== null && ev.key !== CHIAVE_SESSIONE)) return;
+    var n = null;
+    if(ev.key !== null && ev.newValue){ try { n = JSON.parse(ev.newValue); } catch(e){} }
+    if(n && n.s && (!n.h || !sessione.h || n.h === sessione.h)){
+      sessione.s = n.s; sessione.scade = n.scade;
+      if(n.d){ sessione.d = 1; sessione.tetto = n.tetto; sessione.r = n.r; }
+      return;
+    }
+    esci('', true);
+  });
 
   function sett(p){ return p.then(function(v){ return { ok:true, v:v }; }, function(e){ return { ok:false, e:e }; }); }
 
@@ -1980,7 +2090,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(!(U && U.email)) return Promise.resolve('');
     cacheHP = hashEmail(U.email).then(function(h){
       cacheHP = null;
-      if(h && sessione && !sessione.h){ sessione.h = h; salvaSessione(sessione); }
+      if(h && sessione && !sessione.h){ sessione.h = h; salvaSessione(sessione, true); }
       return h;
     });
     return cacheHP;
@@ -3698,6 +3808,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
        - NIENTE sul dispositivo: ne' documenti ne' valori letti in nessun archivio del browser. Tutto vive in PRE.m (memoria) e sparisce
          con «Chiudi modulo», «Esci» o ricarica. Il file letto si butta appena il servizio risponde (si tiene solo se l'errore e' da riprovare).
      Il testo che arriva dal cancello e' NON fidato: sempre come testo (H``/textContent), mai HTML. */
+  var PRE_FILE_NO = 'Questo file non lo leggo. Se è un Word o un Excel, salvalo come PDF e caricalo.';   // V6.8.2: file scelto a mano che non e' PDF ne' foto (Word, Excel, testo...): si ferma nel browser, il server non lo vede
   var PRE_FOTO_MAX = 15000000, PRE_PDF_MAX = 10000000;          // byte DECIMALI: coincidono con i 15MB di Caddy per /ai/* e con i limiti del cancello 1.7.0
   var PRE_LATO_GROSSA = 4032, PRE_LATO_HEIC = 6000;             // lato lungo massimo se una foto va rifatta in JPEG (troppo pesante / HEIC)
   var PRE_T_STATO = 15000, PRE_T_PROPONI = 30000, PRE_T_LEGGI = 75000;
@@ -4089,7 +4200,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
         if(file.size > PRE_PDF_MAX){ rifiuta('PDF troppo grande (' + mb(file.size / 1000000) + ' MB, il massimo è 10 MB).'); return; }
         ok(file.slice(0, file.size, 'application/pdf')); return;
       }
-      if(!heic && !mime){ rifiuta(PRE_MSG.moduli_tipo_file); return; }
+      if(!heic && !mime){ rifiuta(PRE_FILE_NO); return; }
       if(!heic && file.size <= PRE_FOTO_MAX){ ok(file.slice(0, file.size, mime)); return; }
       var maxLato = heic && file.size <= PRE_FOTO_MAX ? PRE_LATO_HEIC : PRE_LATO_GROSSA;
       fotoDecodifica(file, function(img, w, h){
@@ -4987,6 +5098,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var DIANA_AI_RIGA = "🤖 **Stai parlando con un'intelligenza artificiale** (obbligo di trasparenza dell'AI Act europeo, art. 50, in vigore dal 2 agosto 2026).";
   function dianaHaRigaAi(t){ return String(t || '').split('\n').some(function(r){ return r.trim() === DIANA_AI_RIGA; }); }
   var DIANA_GUIDA_TITOLO = 'Come funziona';
+  /* V6.8.2: questo testo e' IDENTICO a quello approvato che il cancello serve (e che il finto cancello delle prove ripete riga per riga). Misurato (prova diana-gestione-accessi): con una frase diversa
+     in questo elenco, entrando in Gestione > Testi e uscendo compare «Hai modifiche non salvate in Gestione Diana Assistant. Esco senza salvare?» senza che l'admin abbia toccato niente.
+     NON cambiarlo da solo: va cambiato insieme al testo del cancello. */
   var DIANA_GUIDA = [
     '**Cosa fa Diana Assistant**',
     '- Ti aiuta a trovare moduli, procedure e regole dell\'agenzia.',
@@ -5242,7 +5356,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      Prima (V6.7-V6.8) bastava che visualViewport fosse piu' basso della finestra: su iPhone puo' esserlo anche senza tastiera (barre di Safari, zoom) o restare cosi'
      dopo che la tastiera si e' chiusa senza un evento «resize» (iOS non lo manda sempre): la classe as-kb restava attaccata e i comandi della chat sparivano per sempre.
      Adesso la casella che perde il fuoco la toglie subito (e di nuovo dopo 400 ms, a tastiera chiusa del tutto). */
-  var AI_KB_MIN = 100, AI_KB_BASSO = 400;      // AI_KB_BASSO: con la tastiera aperta restano meno di 400 px di schermo libero (SE, telefono girato): il pulsante «✚ Nuova chat» in testa non c'e' (ogni riga pesa)
+  var AI_KB_MIN = 100;
   /* V6.8.1 (revisione 13/10/2026): su Chrome (Android) toccare «Invia» sposta il fuoco sul pulsante: la casella perde il fuoco PRIMA che il dito si alzi.
      Se in quel momento la pagina ricalcola la tastiera (a fuoco perso vale 0), la chat scende di tutta l'altezza della tastiera e il rilascio cade fuori dal pulsante:
      il clic non parte e la domanda resta nella casella (MISURATO sulla V6.8.1: «Invia» con la tastiera aperta = 0 su 2 col mouse e col tocco; sulla V6.8 2 su 2).
@@ -5261,7 +5375,6 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var kb = r.classList.contains('chat-open') && fuoco ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
     r.style.setProperty('--as-kb', kb + 'px');
     r.classList.toggle('as-kb', kb >= AI_KB_MIN);
-    r.classList.toggle('as-kb-basso', kb >= AI_KB_MIN && vv.height < AI_KB_BASSO);          // V6.7: con la tastiera aperta il testo legale si riduce a una riga (resta leggibile dopo)
   }
   if(window.visualViewport){
     window.visualViewport.addEventListener('resize', tastieraAi);
@@ -5390,16 +5503,16 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var bl = chatBloccata() || !AI_URL, guida = H`<button class="btn sec cmd" type="button" id="tcag-as-guida" data-act="ai-guida" aria-haspopup="dialog">${dianaGuidaTitolo()}</button>`;
     // V6.7.2: solo l'admin vede «⚙ Gestione» (porta a Gestione Diana Assistant, scheda Conoscenza; Indietro riporta alla chat). Agenti e segreteria: niente.
     var gest = U && U.ruolo === 'admin' ? H`<button class="btn sec cmd" type="button" id="tcag-as-gestione" data-act="diana-vai" data-gest="1" data-h="diana/conoscenza" data-da="strumenti/assistente" aria-label="Gestione di Diana Assistant (solo amministratore)" title="Gestione di Diana Assistant">⚙ Gestione</button>` : '';
-    if(AI.srv === false) return H`<button class="btn sec cmd" type="button" id="tcag-as-svuota" data-act="ai-svuota" ${bl ? 'disabled' : ''}>Svuota schermo</button>${guida}${gest}`;
-    return H`<button class="btn sec cmd" type="button" id="tcag-as-nuova" data-act="ai-nuova" ${bl ? 'disabled' : ''}>Nuova conversazione</button>
-      <button class="btn sec cmd" type="button" id="tcag-as-svuota" data-act="ai-svuota" ${bl ? 'disabled' : ''}>Cancella cronologia</button>${guida}${gest}`;
+    // V6.8.2: «Nuova chat» (col cancello vecchio «Svuota schermo») sta SOLO nella testata (#tcag-as-nuova-top, sempre visibile): nella barra restano gli altri comandi, niente doppioni
+    if(AI.srv === false) return H`${guida}${gest}`;
+    return H`<button class="btn sec cmd" type="button" id="tcag-as-svuota" data-act="ai-svuota" ${bl ? 'disabled' : ''}>Cancella cronologia</button>${guida}${gest}`;
   }
   function confermaAi(){
     var c = g('as-conf'); if(!c) return;
     c.hidden = !AI.conferma;
     if(!AI.conferma){ c.textContent = ''; return; }
     var nuova = AI.conferma === 'nuova';
-    put(c, H`<p><b>${nuova ? 'Diana dimentica la conversazione. Va bene?' : 'Cancello i messaggi da tutti i dispositivi. Diana se li ricorda ancora.'}</b>${nuova ? '' : raw('<br>Per farlo ripartire da zero usa «Nuova conversazione».')}</p>
+    put(c, H`<p><b>${nuova ? 'Diana dimentica la conversazione. Va bene?' : 'Cancello i messaggi da tutti i dispositivi. Diana se li ricorda ancora.'}</b>${nuova ? '' : raw('<br>Per farlo ripartire da zero usa «Nuova chat».')}</p>
       <div class="as-conf-b"><button class="btn pri big" type="button" data-act="ai-conferma" data-k="${AI.conferma}" ${AI.lavoro ? 'disabled' : ''}>${nuova ? 'Sì, riparti da zero' : 'Sì, cancella'}</button>
       <button class="btn sec big" type="button" data-act="ai-annulla">No, lascia</button></div>`);
   }
@@ -5416,13 +5529,12 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(!AI_URL) limAi('Diana Assistant non è configurata.');
     put(g('as-cmd'), comandiAi());
     var nt = g('as-nuova-top');
-    if(nt){                                                      // V6.8.1: «✚ Nuova chat» (in testa quando i comandi sotto non si vedono) = stesso stato e stessa azione del comando della barra
-      var vecchio = AI.srv === false;                            // cancello vecchio: la barra ha «Svuota schermo» (solo lo schermo, senza conferma) e il pulsante in testa fa lo stesso e lo dice
+    if(nt){                                                      // V6.8.2: «✚ Nuova chat» e' sempre in testa ed e' l'UNICO pulsante per ripartire da zero (la barra dei comandi non ha piu' «Nuova conversazione»)
+      var vecchio = AI.srv === false;                            // cancello vecchio: il pulsante in testa diventa «✚ Svuota schermo» (solo lo schermo, senza conferma, come da sempre) e lo dice
       nt.disabled = chatBloccata() || !AI_URL;
       nt.setAttribute('data-act', vecchio ? 'ai-svuota' : 'ai-nuova');
       if(nt.lastChild) nt.lastChild.textContent = vecchio ? ' Svuota schermo' : ' Nuova chat';
     }
-    g('as-cmd').classList.toggle('as-cmd4', !!g('as-gestione'));             // V6.7.2: con «⚙ Gestione» (admin) i comandi sono 4: sul telefono stretto vanno su due righe
     confermaAi();
     put(g('as-sugg'), bottoniDomande());
     put(g('as-riga'), AI.msgs.length ? bottoniDomande() : '');
@@ -5766,7 +5878,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       AI.rev = Math.max(0, Math.floor(Number(j.rev)) || 0);
       AI.msgs = []; AI.cur = null; AI.remoto = false; AI.caricata = true; AI.srv = true; AI.conferma = '';
       cacheSalva('chat', { ok:true, conv:AI.conv, rev:AI.rev, in_corso:false, msgs:[] });
-      toast(sub === 'nuova' ? 'Nuova conversazione: Diana riparte da zero.' : 'Cronologia cancellata.');
+      toast(sub === 'nuova' ? 'Nuova chat: Diana riparte da zero.' : 'Cronologia cancellata.');
     }).catch(function(e){
       AI.conferma = '';
       if(e && e.http === 409) limAi(e.testoUtente || 'Sto ancora rispondendo: attendi.');
@@ -7436,7 +7548,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var DIAG_SEZIONI = ['login', 'oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin'];
   var DIAG_AZIONI = ['accedi', 'pagina', 'albero', 'oggi', 'richieste', 'richiesta-aggiorna', 'richiesta-nuova', 'richiesta-letta', 'immobili', 'amministrazione',
     'notifiche', 'notifiche-lette', 'questionario-link', 'impostazioni-leggi', 'impostazioni-salva', 'richiesta-rimanda', 'note-aggiungi', 'note-elenco',
-    'campagne', 'moduli', 'cartella', 'scarica', 'verifica', 'dispositivo-rinnova', 'codice-richiedi', 'codice-verifica'];
+    'campagne', 'moduli', 'cartella', 'scarica', 'verifica', 'dispositivo-rinnova', 'dispositivi-disconnetti', 'codice-richiedi', 'codice-verifica'];
   var DIAG_TIPI = ['js', 'promessa', 'chiamata', 'ai', 'push', 'login'];
 
   var DG = { coda:[], sosp:{}, sospEv:{}, pagina:0, timer:0, ultimoPost:0, pausaFino:0, inviando:false, attendeOnline:false, chiude:false, mem:null, jit:0, memo:null };
@@ -7730,7 +7842,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     'richiesta-nuova':'nuova richiesta', 'richiesta-letta':'richiesta letta', immobili:'immobili', amministrazione:'amministrazione', notifiche:'notifiche', 'notifiche-lette':'notifiche lette',
     'questionario-link':'link del questionario', 'impostazioni-leggi':'lettura impostazioni', 'impostazioni-salva':'salvataggio impostazioni', 'richiesta-rimanda':'Rimanda del promemoria',
     'note-aggiungi':'nuova nota', 'note-elenco':'elenco note', campagne:'campagne', moduli:'moduli', cartella:'cartella', scarica:'scarico di un file', verifica:'verifica',
-    'dispositivo-rinnova':'rinnovo dell’accesso', 'codice-richiedi':'codice di accesso', 'codice-verifica':'verifica del codice', altro:'altra azione', push:'giro delle notifiche', promemoria:'promemoria', ads:'scambio Ads' };
+    'dispositivo-rinnova':'rinnovo dell’accesso', 'dispositivi-disconnetti':'disconnessione dei dispositivi', 'codice-richiedi':'codice di accesso', 'codice-verifica':'verifica del codice', altro:'altra azione', push:'giro delle notifiche', promemoria:'promemoria', ads:'scambio Ads' };
   var DIAG_SEZ_PAROLE = { login:'Accesso', oggi:'Oggi', richieste:'Richieste', immobili:'Immobili', documenti:'Documenti', strumenti:'Strumenti AI', altro:'Altro',
     impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione' };
   function diagEt(k){ return DIAG_ET[k] || String(k || 'Altro'); }
@@ -8018,7 +8130,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
         <label class="fld">La personalità di Diana<textarea id="tcag-dg-per" rows="11" maxlength="${max}" aria-describedby="tcag-dg-per-n tcag-dg-per-aiuto" spellcheck="true">${t}</textarea></label>
         <div class="dg-riga"><span class="dg-n ${ok ? '' : 'no'}" id="tcag-dg-per-n">${dgCifra(n)} / ${dgCifra(max)}</span><span class="dg-sporco" id="tcag-dg-per-s" ${sp ? '' : 'hidden'}>Non salvato</span></div>
         <p class="dg-aiuto" id="tcag-dg-per-aiuto" ${n < DG_PER_MIN ? '' : 'hidden'}>Servono almeno ${DG_PER_MIN} caratteri.</p>
-        <p class="mut dg-nota">Vale dalla prossima domanda. Le chat già aperte possono tenere il vecchio tono: con «Nuova conversazione» parte col tono nuovo.</p>
+        <p class="mut dg-nota">Vale dalla prossima domanda. Le chat già aperte possono tenere il vecchio tono: con «Nuova chat» parte col tono nuovo.</p>
         <div class="dg-az"><button class="btn pri big" type="button" id="tcag-dg-per-salva" data-act="dg-per-salva" ${ok && sp && !GD.salvando ? '' : 'disabled'}>${GD.salvando === 'per' ? 'Salvo…' : 'Salva'}</button>
           <button class="btn sec big" type="button" id="tcag-dg-per-parti" data-act="dg-per-parti" ${d.di_partenza === true || GD.salvando ? 'disabled' : ''}>Torna a quella di partenza</button></div>
       </section>
@@ -9034,8 +9146,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
             <button class="btn sec sm" type="button" data-act="open-req" data-id="${q.id}">Apri</button></div></div>`;
       }) : vuoto('Nessuna richiesta da assegnare.');
     } else if(S.adm === 'accessi'){
-      h = H`<div class="card"><p class="mut" style="margin-top:0">Sola lettura. Si modifica nel foglio.</p>${R.dati.map(function(a){
-        return H`<div class="lrow"><span class="g"><b>${a.email}</b><br><span class="mut">${a.nome || ''}</span></span><span class="pill ${a.ruolo === 'admin' ? 's-rich' : a.ruolo === 'segreteria' ? 's-app' : 's-corso'}">${a.ruolo}</span>${a.attivo ? '' : H`<span class="pill s-chiusa">non attivo</span>`}<span class="mut">${a.ultimoAccesso ? fmt(a.ultimoAccesso) : 'mai entrato'}</span></div>`;
+      var admin = !!(U && U.ruolo === 'admin');          // V6.8.2: solo l'admin vede «Disconnetti tutti i dispositivi» (lo script lo controlla comunque)
+      h = H`<div class="card"><p class="mut" style="margin-top:0">${admin ? 'Gli agenti si modificano nel foglio. Qui puoi solo disconnetterne i dispositivi (o bloccarli se hanno perso il telefono).' : 'Sola lettura. Si modifica nel foglio.'}</p>${R.dati.map(function(a){
+        return H`<div class="acc-ag"><div class="lrow"><span class="g"><b>${a.email}</b><br><span class="mut">${a.nome || ''}</span></span><span class="pill ${a.ruolo === 'admin' ? 's-rich' : a.ruolo === 'segreteria' ? 's-app' : 's-corso'}">${a.ruolo}</span>${a.attivo ? '' : H`<span class="pill s-chiusa">non attivo</span>`}<span class="mut">${a.ultimoAccesso ? fmt(a.ultimoAccesso) : 'mai entrato'}</span></div>${admin ? H`<div class="acc-az"><button class="btn sec t16" type="button" data-act="disc" data-e="${a.email}">Disconnetti tutti i dispositivi</button></div>` : ''}</div>`;
       })}${linkPer('Foglio Accessi Portale') ? H`<p style="margin-bottom:0"><button class="btn sec sm" type="button" data-act="link" data-l="Foglio Accessi Portale">${ic('ext', 14)}Apri il foglio</button></p>` : ''}</div>`;
     } else if(S.adm === 'problemi'){
       h = problemiHTML(R.dati);
@@ -9061,6 +9174,43 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     });
   }
 
+  /* V6.8.2: «Disconnetti tutti i dispositivi» di un agente (telefono perso). Solo admin; lo script (azione dispositivi-disconnetti) controlla il ruolo e
+     alza il numero di versione delle sessioni di quell'agente: tutte le sue sessioni, anche quelle da 12 ore, danno 401 alla prossima chiamata. */
+  var discEmail = '';
+  function discNome(email){
+    var l = (ADM.accessi && ADM.accessi.dati) || [], k;
+    for(k = 0; k < l.length; k++) if(String(l[k].email).toLowerCase() === String(email).toLowerCase()) return l[k].nome || l[k].email;
+    return email;
+  }
+  function discSonoIo(email){ return !!(U && U.email && String(U.email).toLowerCase() === String(email).toLowerCase()); }
+  function disconnettiChiedi(email){
+    if(!email || !(U && U.ruolo === 'admin')) return;
+    discEmail = email;
+    var nome = discNome(email), io = discSonoIo(email);
+    /* V6.8.2 (revisione): «Disconnetti» da solo NON basta per un telefono perso: chi ha il telefono ha ancora l'account Google e rientra con «Accedi con Google». Per questo c'e' anche «Disconnetti e blocca» (l'agente passa a «non attivo»). Un admin non blocca se stesso. */
+    apriFoglio(H`<h2>Disconnettere i dispositivi di ${nome}?</h2>
+      <p><b>Disconnetti:</b> chiude tutti i suoi accessi. ${nome} può rientrare subito con Google.</p>
+      ${io ? H`<p><b>Sei tu.</b> Uscirai anche da qui.</p>` : H`<p><b>Telefono perso o rubato?</b> Usa «Disconnetti e blocca». ${nome} non rientra, nemmeno con Google, finché non rimetti Attivo = SI nel foglio.</p><p>Riattivalo solo dopo che ha tolto il telefono dal suo account Google.</p>`}
+      <div class="sheet-btns"><button class="btn ${io ? 'pri' : 'sec'} t16" type="button" data-act="disc-ok" data-e="${email}">Sì, disconnetti</button>${io ? '' : H`<button class="btn pri t16" type="button" data-act="disc-blocca" data-e="${email}">Disconnetti e blocca</button>`}<button class="btn sec t16" type="button" data-act="close-modal">No, lascia com’è</button></div>`, 'Disconnetti i dispositivi');
+  }
+  function disconnettiOk(email, btn, blocca){
+    if(!email || email !== discEmail || !(U && U.ruolo === 'admin')) return;
+    var nome = discNome(email), io = discSonoIo(email);
+    if(io) blocca = false;
+    if(btn) btn.disabled = true;
+    chiama('dispositivi-disconnetti', blocca ? { email: email, blocca: true } : { email: email }).then(function(j){
+      closeModals();
+      if(io){ esci('Hai disconnesso tutti i tuoi dispositivi. Accedi di nuovo con Google.'); return; }
+      // le notifiche del telefono perso: il cancello AI le toglie solo se e' aggiornato (1.7.1); se non lo e' lo diciamo, e la frase resta piu' a lungo
+      var pushNo = !!(j && (j.cancello === 'non-aggiornato' || j.cancello === 'non-raggiunto'));
+      toast((blocca ? 'Fatto. ' + nome + ' è bloccato: per riattivarlo metti Attivo = SI nel foglio.' : 'Fatto. ' + nome + ' dovrà accedere di nuovo.') + (pushNo ? ' Le notifiche del telefono non sono state tolte (cancello AI da aggiornare).' : ''));
+      if(blocca) caricaAdm('accessi');
+    }).catch(function(e){
+      if(btn) btn.disabled = false;
+      if(e.status !== 401){ closeModals(); toast(e.message); }
+    });
+  }
+
   /* =========================================================
      RICERCA (Ctrl+K), NOTIFICHE, ACCOUNT, STRUMENTI
      ========================================================= */
@@ -9080,7 +9230,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function apriAccount(anchor){
     g('pa-nm').textContent = (U && U.nome) || ''; g('pa-mail').textContent = (U && U.email) || '';
     g('pa-role').textContent = ruoloEt();
-    g('pa-sess').textContent = sessione ? 'Sessione valida fino alle ' + F_ORA.format(new Date(sessione.scade)) : '';
+    g('pa-sess').textContent = !sessione ? '' : sessione.d && Number(sessione.tetto) > 0 ? 'Dispositivo ricordato. Nuovo accesso con Google entro il ' + F_DATA.format(new Date(sessione.tetto)) + '.' : 'Sessione valida fino alle ' + F_ORA.format(new Date(sessione.scade));
     g('pa-adm').hidden = !staff();
     g('pa-ver').textContent = 'Area Agenti ' + VERSIONE + (OGGI.dati && OGGI.dati.versioneScript ? ' · script ' + OGGI.dati.versioneScript : '');
     openPop('pop-acct', anchor);
@@ -9271,6 +9421,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       case 'acct': apriAccount(el); break;
       case 'admin-menu': openPop('pop-admin', el); break;
       case 'adm': closePops(); S.adm = el.getAttribute('data-t'); go('admin/' + S.adm); break;
+      case 'disc': disconnettiChiedi(el.getAttribute('data-e')); break;                    // V6.8.2
+      case 'disc-ok': disconnettiOk(el.getAttribute('data-e'), el, false); break;
+      case 'disc-blocca': disconnettiOk(el.getAttribute('data-e'), el, true); break;                    // V6.8.2 (revisione): telefono perso
       case 'refresh': closePops(); ricaricaTutto(); break;
       case 'logout': closePops(); esci(''); break;
       case 'close-modal': closeModals(); break;
@@ -9402,6 +9555,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     // contatori ogni minuto (V6.6), solo a scheda visibile; e SUBITO quando arriva una notifica push (tc:push dal guscio, o il messaggio del service worker)
     setInterval(tick, AGGIORNA_MS);
     document.addEventListener('visibilitychange', function(){ if(!document.hidden && Date.now() - ultimoGiro > AGGIORNA_MS) tick(); });
+    document.addEventListener('visibilitychange', function(){ if(!document.hidden) dispositivoControlla('primo-piano'); });      // V6.8.2: ritorno in primo piano (anche se il giro dei contatori e' stato fatto da poco)
     window.addEventListener('online', function(){ if(Date.now() - ultimoGiro > AGGIORNA_MS) tick(); });
     window.addEventListener('tc:push', function(e){ allaPush(e && e.detail); });
     try {
@@ -9421,7 +9575,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(forza && OGGI.vol){ setTimeout(function(){ tick(true); }, 1200); return; }     // una lettura intera e' in volo ed e' partita PRIMA della notifica
     if(tickVol){ if(forza) tickRipeti = true; return; }
     ultimoGiro = Date.now();
-    if(sessione && sessione.scade <= Date.now()){ esci('La sessione è scaduta: accedi di nuovo.'); return; }
+    var fine = sessioneFinita();                      // V6.8.2: scaduta, oppure dispositivo ricordato oltre i 90 giorni (il messaggio cambia)
+    if(fine){ esci(fine, true); return; }
+    dispositivoControlla('uso');                      // V6.8.2: rinnovo del dispositivo ricordato, al massimo una volta ogni 24 ore
     var completo = Date.now() - ultimaAgenda >= AGENDA_MS;
     tickVol = true;
     chiama('oggi', completo ? {} : { soloContatori:true }).then(function(j){
@@ -9486,6 +9642,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       caricaNotifiche();                // senza aspettare: l'avvio non dipende dalle notifiche
       caricaImp();                      // profilo (nome e telefono nei messaggi WhatsApp): in silenzio, se fallisce si riprova aprendo Impostazioni
     }
+    setTimeout(function(){ dispositivoControlla('avvio'); }, 1500);      // V6.8.2: dispositivo ricordato con meno di 25 giorni alla scadenza: rinnovo, dopo che l'app e' aperta (non rallenta l'avvio)
   }
   // dati arrivati dalla rete -> copia sul dispositivo (cacheSalva ha la sua pausa di 2 s per risorsa)
   function salvaDaRete(html){
@@ -9525,7 +9682,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     try { msg = sessionStorage.getItem('tcag_msg'); sessionStorage.removeItem('tcag_msg'); } catch(e){}
     sessione = leggiSessione();
     if(sessione) entra();
-    else mostraLogin(msg, !!msg);
+    else { if(!msg && msgFinale){ msg = msgFinale; try { sessionStorage.setItem('tcag_uscito', '1'); } catch(e){} } mostraLogin(msg, !!msg); }      // V6.8.2: msgFinale = i 90 giorni del dispositivo ricordato sono finiti (letto da leggiSessione)
   })();
 })();
 </script>
