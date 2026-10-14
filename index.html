@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.3.1 (build 8029d900)
+  Guscio app Team Contato - V1.3.2 (build 97a04a00)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.8.2 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.8.3 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.3.1', build: '8029d900', blocco: 'V6.8.2' };
+window.TC_APP = { versione: '1.3.2', build: '97a04a00', blocco: 'V6.8.3' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -138,7 +138,7 @@ html.tc-guscio body{margin:0}
       <!-- V6.8.2: «Ricorda questo dispositivo». Spuntata dal JS solo dentro l'app installata, vuota sul computer nel browser. Sta SOPRA il pulsante di Google: il pulsante accede subito. -->
       <label class="tcag-ricorda" for="tcag-ricorda">
         <input type="checkbox" id="tcag-ricorda">
-        <span><b>Ricorda questo dispositivo</b><span class="tcag-ricorda-nota">Resti dentro per 30 giorni.<br>Non farlo su un computer condiviso.</span></span>
+        <span><b>Ricorda questo dispositivo</b><span class="tcag-ricorda-nota">Resti dentro per 30 giorni.<br>Su un computer condiviso togli la spunta.</span></span>
       </label>
       <div class="tcag-gsi" id="tcag-gsi"></div>
       <p class="tcag-accesso-msg" id="tcag-accesso-msg" hidden></p>
@@ -1567,7 +1567,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.8.2';
+  var VERSIONE = 'V6.8.3';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -1868,7 +1868,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var appPub = g('app-pub'); if(appPub) appPub.hidden = inAppInstallata() || !!window.TC_APP;      // V6.8.1: «Installa l'app del team» solo fuori dall'app. Nella pagina dell'app aperta nel browser (guscio, window.TC_APP gia' c'e') l'invito lo fa la scheda «Installa l'app» del guscio: niente doppio invito (revisione 13/10)
     caricoEl.hidden = true;
     appEl.hidden = true;
-    if(ricordaEl) ricordaEl.checked = inAppInstallata();      // V6.8.2: «Ricorda questo dispositivo» spuntata dentro l'app installata, vuota sul computer nel browser (e sul telefono nel browser: si spunta a mano)
+    if(ricordaEl) ricordaEl.checked = true;      // V6.8.3 (Oscar 14/10/2026): spuntata sempre, anche nel browser; tolta a mano = 12 ore
     riservato.innerHTML = '';
     svuotaFileSalvati();              // senza sessione sul dispositivo non restano documenti
     cacheCancellaTutto();             // V6.6: ne' i dati in cache
