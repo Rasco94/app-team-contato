@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.3.3 (build a20dc159)
+  Guscio app Team Contato - V1.3.4 (build 016659c0)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.8.4 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.8.5 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.3.3', build: 'a20dc159', blocco: 'V6.8.4' };
+window.TC_APP = { versione: '1.3.4', build: '016659c0', blocco: 'V6.8.5' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1532,6 +1532,21 @@ html.tc-guscio body{margin:0}
 #tcag .imp-passi{list-style:decimal;margin:0 0 6px;padding:0 0 0 26px}
 #tcag .imp-passi li{margin:0 0 8px;font-size:16px;line-height:1.5;padding-left:2px}
 #tcag .np-testo{margin:0 0 10px;font-size:16px;line-height:1.5}
+#tcag .mc-bar{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;margin:14px 0;padding:12px 14px;background:var(--avorio);border:1px solid var(--bordo);border-radius:8px}
+#tcag .mc-st{flex:1 1 240px;min-width:0;font-size:16px;line-height:1.45}
+#tcag .mc-bar .btn{flex:0 0 auto;min-width:140px;min-height:48px}
+#tcag .mc-ok{color:var(--verde)}
+#tcag .mc-no{color:#b3121f}
+#tcag .mc-r{border-top:1px solid var(--bordo)}
+#tcag .mc-r.mod{background:#fffaf0}
+#tcag .mc-l{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;min-height:56px;padding:8px 4px;cursor:pointer}
+#tcag .mc-l input{width:28px;height:28px;flex:0 0 28px;margin:0;accent-color:var(--nv);cursor:pointer}
+#tcag .mc-l input:disabled{cursor:default}
+#tcag .mc-l input:focus-visible{outline:3px solid var(--oro);outline-offset:3px}
+#tcag .mc-t{flex:1 1 180px;min-width:0;display:flex;flex-direction:column;gap:2px}
+#tcag .mc-t b{font:600 16px/1.35 var(--sans);overflow-wrap:anywhere}
+#tcag .mc-t small{font-size:14px;line-height:1.4;color:var(--tenue);overflow-wrap:anywhere}
+#tcag .mc-l .pill{flex:0 0 auto}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1567,7 +1582,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.8.4';
+  var VERSIONE = 'V6.8.5';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2022,7 +2037,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      h = primi 16 esadecimali di SHA-256(email in minuscolo): l'email in chiaro NON si salva.
      Risorse: pagina, oggi, richieste, immobili7:miei, immobili7:tutti (V6.7: chiave nuova, cosi' un elenco salvato con le bozze non si legge piu'), diana, notifiche, chat, copertine.
      NON si salvano: impostazioni, campagne, diagnostica, amministrazione, note del diario, file dei documenti
-     (hanno il loro deposito "tcag"). I prezzi riservati non arrivano mai alla pagina (prezzo:null): non c'e' niente da togliere.
+     (hanno il loro deposito "tcag"). V6.8.5: NON si salvano nemmeno l'elenco dei documenti (azione albero) e la scelta dei moduli compilabili (campo compilabili):
+     arrivano sempre dalla rete, quindi dopo il Salva di Amministrazione > Moduli compilabili la scelta non puo' restare vecchia in questa cache (la risorsa «albero» non esiste fra quelle di sopra). I prezzi riservati non arrivano mai alla pagina (prezzo:null): non c'e' niente da togliere.
      Scadenza 24 ore o, se prima, la scadenza della sessione (campo sc, revisione 09/10). Si cancella tutto: Esci, 401, accesso senza sessione, utente diverso, versione diversa.
      Se IndexedDB manca o si rompe, la pagina funziona come nella V6.5 (ogni funzione risolve "niente").
      DIVERSO DAL CONTRATTO (piu' prudente): anche la versione della pagina (VERSIONE) deve coincidere, non solo il formato v. */
@@ -2189,6 +2205,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var RQ = { stato:'idle', ok:false, lista:[], conteggi:null, troncato:false, totale:0, attive:true, err:'', agg:0, vol:null, srv:null };
   var IM = { stato:'idle', ok:false, lista:[], ambito:'miei', richiesto:'miei', err:'', agg:0, vol:null, daCache:false };
   var ADM = { assegna: ris(), accessi: ris(), log: ris(), problemi: ris() };
+  // V6.8.5: la scheda «Moduli compilabili» e' SOLO dell'admin (non ha un suo ADM[...]: usa l'albero dei Documenti, DOC.albero, e la scelta DOC.comp)
+  var ADM_SCHEDE = ['assegna', 'accessi', 'log', 'problemi'];
+  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli']) : ADM_SCHEDE; }
   var S = {
     sec:'oggi', sub:'', oggiF:'',
     rq:{ f:'tutte', q:'', tipo:'', imm:'' }, im:{ f:'pubblicato', q:'', n:0 },
@@ -2444,7 +2463,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     else if(s === 'richieste') caricaRichieste();
     else if(s === 'immobili') caricaImmobili();
     else if(s === 'documenti') caricaAlbero(true);
-    else if(s === 'admin') caricaAdm(S.adm);
+    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
     else if(s === 'impostazioni') caricaImp();
     else if(s === 'campagne') caricaCamp();
     else if(s === 'diana') dgRiprova();
@@ -2566,7 +2585,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       foglioUscitaImp();
       return;
     }
-    if(sec === 'admin'){ if(['assegna', 'accessi', 'log', 'problemi'].indexOf(sub) < 0) sub = S.adm; S.adm = sub; }
+    if(sec === 'admin'){ if(admSchede().indexOf(sub) < 0) sub = admSchede().indexOf(S.adm) < 0 ? 'assegna' : S.adm; S.adm = sub; }       // V6.8.5: «moduli» solo per l'admin (la segreteria che scrive #admin/moduli resta dov'era)
     if(sec === 'richieste' && sub && !RE_ID.test(sub)) sub = '';
     if(sec === 'documenti' && sub === 'compila' && !DOC.compile) sub = '';
     if(sec === 'strumenti' && STR_SUB.indexOf(sub) < 0) sub = '';
@@ -2588,7 +2607,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'immobili' && IM.stato === 'idle') caricaImmobili();
     if(sec === 'immobili') caricaCopertine();            // V6.6: foto di copertina dal sito pubblico (una volta ogni 30 minuti al massimo)
     if(sec === 'documenti' && DOC.albero.stato === 'idle') caricaAlbero(false);
-    if(sec === 'admin' && (ADM[S.adm].stato === 'idle' || (S.adm === 'problemi' && ADM.problemi.ok && Date.now() - ADM.problemi.agg > 60000))) caricaAdm(S.adm);
+    if(sec === 'admin' && S.adm === 'moduli'){ if(DOC.albero.stato === 'idle') caricaAlbero(false); }       // V6.8.5: l'albero dei Documenti (con la scelta dei moduli compilabili)
+    else if(sec === 'admin' && (ADM[S.adm].stato === 'idle' || (S.adm === 'problemi' && ADM.problemi.ok && Date.now() - ADM.problemi.agg > 60000))) caricaAdm(S.adm);
     if(sec === 'impostazioni' && (IMP.stato === 'idle' || (IMP.stato === 'err' && !IMP.ok))) caricaImp();
     if(sec === 'campagne' && !CAMP.vol && (CAMP.stato === 'idle' || (CAMP.stato === 'err' && !CAMP.ok) || Date.now() - CAMP.agg > CAMP_RIAPRI_MS)) caricaCamp();
     if(sec === 'diana') dgApri(sub);
@@ -3336,6 +3356,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      (IndexedDB, al massimo 25, rinnovato se su Drive cambia la data).
      La cartella Drive resta PRIVATA: nella pagina non c'e' ne' l'ID ne' alcuna chiave. */
   var DOC = { albero: ris(), nodi:{}, figli:{}, radice:null, cont:{}, salvati:{}, path:[], q:'', f:'tutto', evid:null,
+              comp:null,      // V6.8.5: la scelta dell'admin { titolo senza data: true|false } dentro la risposta di 'albero'; null = lo script e' vecchio (niente campo): vale solo il nome del file
               compile:null, pagina:1, pdf:null, byte:null, vals:{}, libPronte:null, nomeFile:'modulo' };
   var CDN = 'https://cdnjs.cloudflare.com/ajax/libs/';
   var LIB_PDFJS = CDN + 'pdf.js/3.11.174/pdf.min.js';
@@ -3482,6 +3503,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     return conRis(DOC.albero, function(){
       return chiama('albero', fresco ? { fresco:true } : {}).then(function(j){
         DOC.nodi = {}; DOC.figli = {}; DOC.cont = {}; DOC.radice = j.radice;
+        DOC.comp = compPulita(j.compilabili);            // V6.8.5: sempre FRESCA (lo script la legge a ogni chiamata, fuori dalla cache dell'albero); non si salva sul dispositivo
         (j.voci || []).forEach(function(v){
           DOC.nodi[v.id] = v;
           (DOC.figli[v.padre] = DOC.figli[v.padre] || []).push(v);
@@ -3523,7 +3545,32 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     return nomi.join(' > ');
   }
   var cartellaCorrente = function(){ return DOC.path.length ? DOC.path[DOC.path.length - 1] : DOC.radice; };
-  var compilabile = function(v){ return !v.cartella && v.mime === 'application/pdf' && /COMPILABILE/i.test(v.nome); };
+  /* V6.8.5: «Compilabile» lo decide l'ADMIN con una casella (Amministrazione > Moduli compilabili), non piu' la parola COMPILABILE nel nome del file (i nomi sono «titolo + data», senza sigle).
+     La scelta e' legata al TITOLO senza data (chiaveTitolo): la versione nuova del modulo, con un'altra data, ha la stessa chiave e la stessa scelta.
+     Lo script manda la mappa { chiave: true|false } nella risposta di 'albero' (DOC.comp). Chiave NON in mappa = vale il nome (COMPILABILE nel nome = si puo' compilare), come nella V6.8.4:
+     cosi' i file di oggi non perdono «Compila» e la pagina funziona anche con lo script V29.10.0 (senza il campo); l'ordine di pubblicazione e' indifferente. */
+  var RE_DATA_FINE = /(?:\s+-\s+|\s*_\s*|\s+)(?:\d{2}([-.])\d{2}\1\d{4}|\d{4}-\d{2}-\d{2})$/;      // « - 14-10-2026», «_14.10.2026», «_2026-10-14» in fondo al nome
+  function titoloBase(nome){
+    var t = String(nome == null ? '' : nome), prima;
+    if(t.normalize) t = t.normalize('NFC');                                                                  // «ä» scritto da un Mac (NFD) = «ä» (NFC)
+    t = t.replace(/[‘’ʼ´`]/g, "'").replace(/[‐-―−]/g, '-').replace(/ /g, ' ');   // apostrofi e lineette tipografiche = quelli dritti
+    t = t.replace(/\.pdf$/i, '').trim();
+    do { prima = t; t = t.replace(/\s*\(\d{1,3}\)$/, '').replace(/[\s_-]*COMPILABILE$/i, '').replace(RE_DATA_FINE, ''); } while(t !== prima);   // in fondo, in qualunque ordine: «(1)» delle copie di Drive, «... - COMPILABILE», «... - 14-10-2026»
+    return t.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function chiaveTitolo(nome){ return titoloBase(nome).toLowerCase(); }
+  function compPulita(m){
+    if(!m || typeof m !== 'object' || Array.isArray(m)) return null;
+    var out = {};
+    Object.keys(m).forEach(function(k){ if(typeof m[k] === 'boolean') out[k] = m[k]; });
+    return out;
+  }
+  function compMappa(chiave){ return DOC.comp && Object.prototype.hasOwnProperty.call(DOC.comp, chiave) ? DOC.comp[chiave] : null; }        // true | false | null (= nessuna scelta salvata)
+  var compilabile = function(v){
+    if(v.cartella || v.mime !== 'application/pdf') return false;
+    var m = compMappa(chiaveTitolo(v.nome));
+    return m !== null ? m : /COMPILABILE/i.test(v.nome);
+  };
   var nomePulito = function(n){ return n.replace(/\.pdf$/i, '').replace(/[\s_-]*COMPILABILE$/i, '').replace(/_/g, ' ').trim(); };
   var troppoGrande = function(v){ return Number(v.dimensione) > LIMITE_MB * 1048576; };
   var inDispositivo = function(v){ return Object.prototype.hasOwnProperty.call(DOC.salvati, v.id) && DOC.salvati[v.id] === (v.modificato || null); };
@@ -3697,6 +3744,19 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     DOC.pdf = null; DOC.byte = null; DOC.vals = {}; DOC.compile = null;
     preReset();                                     // V6.8: documenti letti e valori proposti si perdono col modulo (mai sul dispositivo)
   }
+  /* V6.8.5: un PDF senza nessun campo da compilare (modulo piatto, scansione) prima si apriva come una pagina vuota, senza dire niente: ora lo dice.
+     Si contano i campi (Widget con un nome) di TUTTE le pagine, ma ci si ferma al primo trovato: un modulo vero costa una sola pagina. Non lancia mai e non blocca il disegno. */
+  function cvHaCampi(doc, i){
+    if(i > doc.numPages) return Promise.resolve(false);
+    return doc.getPage(i).then(function(p){ return p.getAnnotations(); }).then(function(a){
+      return a.some(function(x){ return x.subtype === 'Widget' && x.fieldName; }) ? true : cvHaCampi(doc, i + 1);
+    });
+  }
+  function cvSenzaCampi(doc){
+    return cvHaCampi(doc, 1).then(function(ha){
+      if(DOC.pdf === doc && !ha) cvMsg('Questo PDF non ha campi da compilare.');
+    }).catch(function(){});
+  }
   function mostraPdf(buf){
     DOC.byte = buf;
     // pdf.js consuma il buffer che gli passi: gliene diamo una copia
@@ -3706,7 +3766,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       g('cv-vuoto').hidden = true; g('cv-tela').hidden = false;
       g('comp-salva').disabled = false;
       preControlla();                                 // V6.8: interruttore, servizio e mappa di QUESTO PDF (sha256)
-      return disegna();
+      return disegna().then(function(){ cvSenzaCampi(d); });       // V6.8.5: nessun campo = lo dice
     });
   }
   /* V6.8.4: la tastiera su schermo (e la barra degli indirizzi) cambia l'ALTEZZA della finestra, non la larghezza. Il foglio si scala sulla larghezza (e sulla densita'
@@ -7593,7 +7653,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var DIAG_SEZIONI = ['login', 'oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin'];
   var DIAG_AZIONI = ['accedi', 'pagina', 'albero', 'oggi', 'richieste', 'richiesta-aggiorna', 'richiesta-nuova', 'richiesta-letta', 'immobili', 'amministrazione',
     'notifiche', 'notifiche-lette', 'questionario-link', 'impostazioni-leggi', 'impostazioni-salva', 'richiesta-rimanda', 'note-aggiungi', 'note-elenco',
-    'campagne', 'moduli', 'cartella', 'scarica', 'verifica', 'dispositivo-rinnova', 'dispositivi-disconnetti', 'codice-richiedi', 'codice-verifica'];
+    'campagne', 'moduli', 'cartella', 'scarica', 'verifica', 'dispositivo-rinnova', 'dispositivi-disconnetti', 'moduli-comp-salva', 'codice-richiedi', 'codice-verifica'];       // V6.8.5: + moduli-comp-salva (stessa lista dello script V29.11.0)
   var DIAG_TIPI = ['js', 'promessa', 'chiamata', 'ai', 'push', 'login'];
 
   var DG = { coda:[], sosp:{}, sospEv:{}, pagina:0, timer:0, ultimoPost:0, pausaFino:0, inviando:false, attendeOnline:false, chiude:false, mem:null, jit:0, memo:null };
@@ -9168,6 +9228,150 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
         break;
     }
   }
+  /* =========================================================
+     AMMINISTRAZIONE > MODULI COMPILABILI  (V6.8.5, SOLO ADMIN)
+     =========================================================
+     Decisione di Oscar (14/10/2026): chi puo' compilare un PDF non lo decide piu' la parola COMPILABILE nel nome del file, lo decide l'admin con una casella.
+     Una riga per TITOLO (chiaveTitolo: titolo in minuscolo, senza data e senza COMPILABILE), non per file: quando esce la versione nuova del modulo, con un'altra data,
+     la riga e la scelta sono le stesse. Se due file hanno la stessa chiave (la versione vecchia e la nuova, IT e EN...) stanno nella stessa riga.
+     La casella mostra lo stato EFFETTIVO di oggi: la scelta salvata, e se non c'e' ancora quella del nome (COMPILABILE nel nome = spuntata). In alto i PDF «da decidere»
+     (nessuna scelta salvata e il nome non dice COMPILABILE). «Salva» manda a 'moduli-comp-salva' la mappa COMPLETA di tutte le chiavi mostrate (sostituisce quella vecchia):
+     con UN Salva i moduli spuntati dal nome diventano una scelta esplicita. Le modifiche stanno in MC.mod finche' non si salva ("Non salvato").
+     Solo l'admin vede la scheda (segreteria e agenti no) e lo script controlla il ruolo lato server. I dati sono quelli dell'albero dei Documenti (DOC.nodi) e DOC.comp:
+     niente di tutto questo finisce sul dispositivo (la cache locale non contiene ne' l'albero ne' la mappa), quindi dopo il Salva la mappa non puo' restare vecchia. */
+  var MC = { mod:{}, salvando:false, esito:null };      // mod = SOLO le modifiche dell'admin non ancora salvate { chiave: bool }; esito = { ok, testo } dell'ultimo Salva
+  var MC_MAX_VOCI = 500, MC_MAX_CHIAVE = 200;           // come lo script (moduli-comp-salva)
+  var mcHa = function(o, k){ return Object.prototype.hasOwnProperty.call(o, k); };
+
+  // una riga per titolo: { k, titolo, files, cartella, inMappa, dalNome, base, daDecidere }
+  function mcRighe(){
+    var per = {}, righe = [], saltati = 0;
+    Object.keys(DOC.nodi).forEach(function(id){
+      var v = DOC.nodi[id];
+      if(v.cartella || v.mime !== 'application/pdf') return;
+      var k = chiaveTitolo(v.nome);
+      if(!k || k.length > MC_MAX_CHIAVE || k === '__proto__'){ saltati++; return; }        // il nome non da' un titolo salvabile (vuoto, troppo lungo, «__proto__»): segue il nome del file e basta
+      if(!mcHa(per, k)){ per[k] = { k:k, files:[] }; righe.push(per[k]); }
+      per[k].files.push(v);
+    });
+    righe.forEach(function(r){
+      // il file piu' RECENTE per primo: la riga sta nella sua cartella e prende il suo titolo (la versione vecchia, magari in _DA_ELIMINARE, e' solo un nome in piu')
+      r.files.sort(function(a, b){ return String(b.modificato || '').localeCompare(String(a.modificato || '')) || percorsoDi(a).localeCompare(percorsoDi(b), 'it') || a.nome.localeCompare(b.nome, 'it'); });
+      r.cartella = percorsoDi(r.files[0]);
+      r.titolo = titoloBase(r.files[0].nome) || r.files[0].nome;
+      r.dalNome = r.files.some(function(f){ return /COMPILABILE/i.test(f.nome); });
+      r.inMappa = compMappa(r.k) !== null;
+      r.base = r.inMappa ? compMappa(r.k) : r.dalNome;               // lo stato effettivo di oggi, senza le modifiche non salvate
+      r.daDecidere = !r.inMappa && !r.dalNome;
+    });
+    righe.sort(function(a, b){ return a.titolo.localeCompare(b.titolo, 'it') || (a.k < b.k ? -1 : 1); });
+    righe.saltati = saltati;
+    return righe;
+  }
+  var mcStato = function(r){ return mcHa(MC.mod, r.k) ? MC.mod[r.k] : r.base; };
+  // la mappa che il Salva manda: TUTTE le chiavi mostrate, con lo stato che si vede nella casella
+  function mcVoci(righe){
+    var o = {};
+    righe.forEach(function(r){ o[r.k] = mcStato(r); });
+    return o;
+  }
+  // c'e' qualcosa da salvare? (modifiche, scelte ancora affidate al nome, scelte di file che non ci sono piu')
+  function mcDifferenze(voci){
+    var salvata = DOC.comp || {}, nuove = 0, cambiate = 0, orfane = 0;
+    Object.keys(voci).forEach(function(k){
+      if(!mcHa(salvata, k)) nuove++;
+      else if(salvata[k] !== voci[k]) cambiate++;
+    });
+    Object.keys(salvata).forEach(function(k){ if(!mcHa(voci, k)) orfane++; });
+    return { nuove:nuove, cambiate:cambiate, orfane:orfane, tot:nuove + cambiate + orfane };
+  }
+  function mcRigaHTML(r, fermo){
+    var mod = mcHa(MC.mod, r.k), stato = mcStato(r);
+    var nomi = r.files.map(function(f){
+      var p = percorsoDi(f);
+      return H`<small>${f.nome}${p !== r.cartella ? H` · in ${p || 'cartella principale'}` : ''}</small>`;
+    });
+    return H`<div class="mc-r ${mod ? 'mod' : ''}"><label class="mc-l"><input type="checkbox" data-act="mc-casella" data-k="${r.k}" ${stato ? 'checked' : ''} ${fermo ? 'disabled' : ''}>
+        <span class="mc-t"><b>${r.titolo}</b>${nomi}</span>
+        ${mod ? H`<span class="pill s-rich">Non salvato</span>` : r.daDecidere ? H`<span class="pill s-chiusa">Da decidere</span>` : !r.inMappa ? H`<span class="pill s-chiusa">Dal nome</span>` : ''}</label></div>`;
+  }
+  function mcBarra(dif, fermo, vecchio){
+    var nMod = Object.keys(MC.mod).length, testo;
+    if(MC.salvando) testo = H`<b>Salvo…</b>`;
+    else if(MC.esito) testo = H`<b class="${MC.esito.ok ? 'mc-ok' : 'mc-no'}">${MC.esito.ok ? '' : 'Non salvato. '}${MC.esito.testo}</b>`;
+    else if(vecchio) testo = H`<b>Non posso salvare: lo script va aggiornato.</b>`;
+    else if(nMod) testo = H`<span class="pill s-rich">Non salvato</span> <b>Hai cambiato ${nMod} ${nMod === 1 ? 'modulo' : 'moduli'}.</b> Premi «Salva».`;
+    else if(dif.nuove) testo = H`<b>Per ${dif.nuove} ${dif.nuove === 1 ? 'modulo' : 'moduli'} vale ancora il nome del file.</b> Premi «Salva» per fissare la scelta.`;
+    else if(dif.tot) testo = H`<b>Ci sono scelte da sistemare.</b> Premi «Salva».`;
+    else testo = H`<b>Tutto salvato.</b>`;
+    return H`<div class="mc-bar"><div class="mc-st" id="tcag-mc-st" role="status" aria-live="polite">${testo}</div>
+      <button class="btn pri t16" type="button" data-act="mc-salva" ${fermo || vecchio || !dif.tot ? 'disabled' : ''}>${MC.salvando ? 'Salvo…' : 'Salva'}</button></div>`;
+  }
+  function renderModuliComp(box){
+    if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
+    var A = DOC.albero;
+    if(gate(box, A, 'i documenti', 4)) return;
+    var righe = mcRighe(), voci = mcVoci(righe), dif = mcDifferenze(voci), fermo = MC.salvando;
+    var vecchio = DOC.comp === null;                     // lo script non manda il campo «compilabili»: e' ancora la V29.10.0 o piu' vecchio
+    var daDec = righe.filter(function(r){ return r.daDecidere; });
+    var gruppi = {}, nomiGr = [];
+    righe.forEach(function(r){
+      if(r.daDecidere) return;
+      if(!mcHa(gruppi, r.cartella)){ gruppi[r.cartella] = []; nomiGr.push(r.cartella); }
+      gruppi[r.cartella].push(r);
+    });
+    nomiGr.sort(function(a, b){ return a.localeCompare(b, 'it'); });
+    var nSi = righe.filter(mcStato).length;
+    put(box, H`${staleBar(A)}<div class="narrow mc" style="max-width:900px">
+      <div class="card">
+        <p style="margin-top:0">Scegli i PDF che gli agenti possono compilare: avranno il pulsante «Compila».</p>
+        <p class="mut">La scelta vale per il <b>titolo</b> del modulo. Quando carichi una versione nuova, con un’altra data, la scelta resta quella.</p>
+        ${vecchio ? H`<div class="avviso" role="alert">Lo script (Apps Script) non è ancora aggiornato alla V29.11.0. Puoi guardare l’elenco, ma non salvare la scelta. Per ora «Compila» compare solo sui nomi con la parola COMPILABILE.</div>` : ''}
+        ${mcBarra(dif, fermo, vecchio)}
+        <p class="mut" style="margin-bottom:0">${righe.length ? H`${nSi} ${nSi === 1 ? 'modulo' : 'moduli'} da compilare su ${righe.length} ${righe.length === 1 ? 'titolo' : 'titoli'} PDF.` : 'Non ci sono PDF.'}${dif.orfane && !vecchio ? H` ${dif.orfane} ${dif.orfane === 1 ? 'scelta di un file che non c’è più si toglie' : 'scelte di file che non ci sono più si tolgono'} con «Salva».` : ''}${righe.saltati ? H` ${righe.saltati} PDF con un nome senza titolo ${righe.saltati === 1 ? 'segue' : 'seguono'} il nome del file.` : ''}</p>
+      </div>
+      ${daDec.length ? H`<div class="card mc-grp" style="margin-top:14px"><div class="sec-h">Da decidere (${daDec.length})</div>
+        <p class="mut" style="margin-top:0">Questi PDF non hanno ancora una scelta e nel nome non c’è COMPILABILE. Spunta quelli che si compilano.</p>
+        ${daDec.map(function(r){ return mcRigaHTML(r, fermo); })}</div>` : ''}
+      ${nomiGr.map(function(n){
+        return H`<div class="card mc-grp" style="margin-top:14px"><div class="sec-h">${n || 'Cartella principale'}</div>${gruppi[n].map(function(r){ return mcRigaHTML(r, fermo); })}</div>`;
+      })}
+      ${righe.length > 8 ? H`<div style="margin-top:14px">${mcBarra(dif, fermo, vecchio)}</div>` : ''}
+    </div>`);
+  }
+  // un clic su una casella: si ricorda solo la modifica rispetto allo stato di oggi (se la si rimette com'era, non e' piu' una modifica)
+  function mcCasella(el){
+    if(!(U && U.ruolo === 'admin') || MC.salvando) return;
+    var k = el.getAttribute('data-k'), r = mcRighe().filter(function(x){ return x.k === k; })[0];
+    if(!r) return;
+    MC.esito = null;
+    if(el.checked === r.base) delete MC.mod[k]; else MC.mod[k] = el.checked;
+    renderCorrente();
+    var nuovo = $$('input[data-act=mc-casella]').filter(function(i){ return i.getAttribute('data-k') === k; })[0];
+    if(nuovo){ try { nuovo.focus({ preventScroll:true }); } catch(e){} }       // il ridisegno ricrea la casella: il fuoco (tastiera) torna li'
+  }
+  function mcSalva(){
+    if(!(U && U.ruolo === 'admin') || MC.salvando || DOC.comp === null || !DOC.albero.ok) return;
+    var righe = mcRighe(), voci = mcVoci(righe), n = Object.keys(voci).length;
+    if(!mcDifferenze(voci).tot) return;
+    if(n > MC_MAX_VOCI){ MC.esito = { ok:false, testo:'I titoli sono ' + n + ': se ne possono salvare al massimo ' + MC_MAX_VOCI + '.' }; renderCorrente(); return; }
+    MC.salvando = true; MC.esito = null; renderCorrente();
+    chiama('moduli-comp-salva', { voci: voci }).then(function(j){
+      MC.salvando = false;
+      DOC.comp = compPulita(j.compilabili) || voci;                // la mappa che lo script ha salvato davvero
+      MC.mod = {};
+      var si = Object.keys(DOC.comp).filter(function(k){ return DOC.comp[k]; }).length;
+      MC.esito = { ok:true, testo:'Salvato. Ora si compilano ' + si + ' ' + (si === 1 ? 'modulo' : 'moduli') + '.' };
+      toast('Moduli compilabili salvati');
+      renderCorrente();
+    }).catch(function(e){
+      MC.salvando = false;
+      if(e.status === 401) return;                                  // la sessione e' finita: ci pensa chiama()
+      var m = String(e.message || '');
+      MC.esito = { ok:false, testo: e.status === 403 ? 'Solo l’amministratore può salvare.' : (e.status === 400 && /azione/i.test(m)) ? 'Lo script va aggiornato alla V29.11.0.' : m || 'Riprova tra poco.' };
+      renderCorrente();
+    });
+  }
 
   /* =========================================================
      AMMINISTRAZIONE  (solo segreteria e admin: azioni 'richieste' con assegnatoA, 'amministrazione')
@@ -9176,10 +9380,13 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   function renderAdmin(){
     dgRiquadro('adm-diana', 'admin');                 // V6.7.2: Gestione Diana Assistant (solo admin)
     var da = (RQ.conteggi && RQ.conteggi.daAssegnare) != null ? RQ.conteggi.daAssegnare : (ADM.assegna.dati ? ADM.assegna.dati.length : 0);
-    put(g('adm-tabs'), [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']].map(function(t){
+    var schede = [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']];
+    if(U && U.ruolo === 'admin') schede.push(['moduli', 'Moduli compilabili']);                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
+    put(g('adm-tabs'), schede.map(function(t){
       return H`<button class="chip" type="button" data-act="adm" data-t="${t[0]}" aria-pressed="${String(S.adm === t[0])}">${t[1]}</button>`;
     }));
     var R = ADM[S.adm], b = g('adm-body'), h;
+    if(S.adm === 'moduli'){ renderModuliComp(b); return; }                                         // V6.8.5: scheda dell'admin (04e9d)
     if(gate(b, R, 'i dati di amministrazione', 3)) return;
     if(S.adm === 'assegna'){
       h = R.dati.length ? R.dati.map(function(q){
@@ -9467,6 +9674,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       case 'admin-menu': openPop('pop-admin', el); break;
       case 'adm': closePops(); S.adm = el.getAttribute('data-t'); go('admin/' + S.adm); break;
       case 'disc': disconnettiChiedi(el.getAttribute('data-e')); break;                    // V6.8.2
+      case 'mc-salva': mcSalva(); break;                                                   // V6.8.5: Salva i moduli compilabili (solo admin)
       case 'disc-ok': disconnettiOk(el.getAttribute('data-e'), el, false); break;
       case 'disc-blocca': disconnettiOk(el.getAttribute('data-e'), el, true); break;                    // V6.8.2 (revisione): telefono perso
       case 'refresh': closePops(); ricaricaTutto(); break;
@@ -9554,6 +9762,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(t.id === 'tcag-rq-tipo'){ S.rq.tipo = t.value; renderRichieste(); }
     else if(t.id === 'tcag-dg-file' || t.id === 'tcag-dg-dir'){ if(U && U.ruolo === 'admin') dgScelti(t); }
     else if(act && act.indexOf('pre-') === 0){ preCambio(t, act); }                             // V6.8: Precompila con AI (spunte, scelte, file)
+    else if(act === 'mc-casella'){ mcCasella(t); }                                              // V6.8.5: casella «Compilabile» (solo admin)
     else if(act === 'open-local' && t.files && t.files[0]){
       var f = t.files[0]; t.value = '';
       apriCompilazione(f.name, null, f);
