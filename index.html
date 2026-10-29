@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.3.4 (build 016659c0)
+  Guscio app Team Contato - V1.4.0 (build fc7dc4ba)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.8.5 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.11.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.3.4', build: '016659c0', blocco: 'V6.8.5' };
+window.TC_APP = { versione: '1.4.0', build: 'fc7dc4ba', blocco: 'V6.11.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1547,6 +1547,65 @@ html.tc-guscio body{margin:0}
 #tcag .mc-t b{font:600 16px/1.35 var(--sans);overflow-wrap:anywhere}
 #tcag .mc-t small{font-size:14px;line-height:1.4;color:var(--tenue);overflow-wrap:anywhere}
 #tcag .mc-l .pill{flex:0 0 auto}
+#tcag .vw{margin-top:8px}
+#tcag .vw-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 0}
+#tcag .vw-bar .btn,
+#tcag .vw-bar input{min-height:44px;min-width:44px}
+#tcag .vw-ttl{font-weight:700;overflow-wrap:anywhere}
+#tcag .vw-zoom{min-width:56px;text-align:center;font-weight:700}
+#tcag .vw-scroll{height:calc(100vh - 200px);min-height:320px;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;background:#525659;border-radius:var(--raggio)}
+#tcag .vw:fullscreen{background:#fff;padding:8px}
+#tcag .vw:fullscreen .vw-scroll{height:calc(100vh - 90px)}
+#tcag .vw-pages{display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px}
+#tcag .vw-page{position:relative;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+#tcag .vw-page canvas{display:block}
+#tcag .vw-ph{position:absolute;top:8px;left:8px;color:#888;font-size:14px}
+#tcag .vw-img{padding:12px;text-align:center}
+#tcag .vw-media{display:block;max-width:100%;margin:12px auto}
+#tcag .vw-text{margin:0;padding:16px;background:#fff;white-space:pre-wrap;overflow-wrap:anywhere;font-family:monospace}
+#tcag .vw-err,
+#tcag .vw-load{background:#fff;margin:12px;padding:16px;border-radius:8px}
+@media (max-width:899px){#tcag .vw-scroll{height:calc(100vh - 260px)}
+}
+@supports (height:100dvh){#tcag .vw-scroll{height:calc(100dvh - 200px)}
+#tcag .vw:fullscreen .vw-scroll{height:calc(100dvh - 90px)}
+@media (max-width:899px){#tcag .vw-scroll{height:calc(100dvh - 260px)}
+}
+}
+#tcag .vw-pages[hidden]{display:none}
+#tcag .vw-pages.vw-book{flex-direction:row;justify-content:center;align-items:center;min-height:100%}
+#tcag .vw-pages.vw-book>.vw-page{display:none}
+#tcag .vw-pages.vw-book>.vw-page.vw-on{display:block}
+#tcag .vw.vw-m-book{position:relative}
+#tcag .vw.vw-m-book .vw-scroll{background:#1f1f1f;touch-action:pan-y}
+#tcag .vw-turn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;min-width:44px;min-height:44px;font-size:28px;border:0;border-radius:22px;background:rgba(0,0,0,.6);color:#fff}
+#tcag .vw-turn.vw-prev{left:4px}
+#tcag .vw-turn.vw-next{right:4px}
+#tcag .vw-turn:disabled{opacity:.3}
+#tcag .vw-mode[aria-pressed="true"]{background:#0a2a5e;color:#fff}
+#tcag .vw.vw-m-read [data-vact="zoom-out"],
+#tcag .vw.vw-m-read [data-vact="zoom-in"],
+#tcag .vw.vw-m-read .vw-zoom,
+#tcag .vw.vw-m-read [data-vact="fit-width"],
+#tcag .vw.vw-m-read [data-vact="fit-page"]{display:none}
+#tcag .vw-hl{position:absolute;z-index:1;background:rgba(255,213,0,.45);pointer-events:none}
+#tcag .vw-read{min-height:100%;padding:16px;overflow-x:hidden}
+#tcag .vw-read-bar,
+#tcag .vw-read-note{max-width:70ch;margin:0 auto}
+#tcag .vw-read-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:0 0 12px}
+#tcag .vw-read-bar .btn{min-height:44px;min-width:44px}
+#tcag .vw-read-note{font-size:16px;margin-bottom:12px}
+#tcag .vw-read-body{max-width:70ch;margin:0 auto;line-height:1.6;overflow-wrap:anywhere;white-space:normal}
+#tcag .vw-read-body p{margin:0 0 1em}
+#tcag .vw-read-pg{display:block;margin:24px 0 8px;font-size:14px;font-weight:700;border-top:1px solid currentColor}
+#tcag .vw-th-light{background:#fff;color:#1b1b22}
+#tcag .vw-th-sepia{background:#f4ecd8;color:#3b2f1e}
+#tcag .vw-th-dark{background:#1b1b22;color:#e6e6e6}
+#tcag .vw-read mark{background:#ffd54f;color:#1b1b22}
+#tcag .vw-find{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:0 0 8px}
+#tcag .vw-find input{min-height:44px;flex:1 1 200px;font-size:16px;padding:0 10px;border:1px solid var(--bordo);border-radius:8px}
+#tcag .vw-find .btn{min-height:44px;min-width:44px}
+#tcag .vw-find-n{font-size:14px;color:var(--tenue)}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1582,7 +1641,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.8.5';
+  var VERSIONE = 'V6.11.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2207,7 +2266,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var ADM = { assegna: ris(), accessi: ris(), log: ris(), problemi: ris() };
   // V6.8.5: la scheda «Moduli compilabili» e' SOLO dell'admin (non ha un suo ADM[...]: usa l'albero dei Documenti, DOC.albero, e la scelta DOC.comp)
   var ADM_SCHEDE = ['assegna', 'accessi', 'log', 'problemi'];
-  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli']) : ADM_SCHEDE; }
+  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli', 'avvisi']) : ADM_SCHEDE; }
   var S = {
     sec:'oggi', sub:'', oggiF:'',
     rq:{ f:'tutte', q:'', tipo:'', imm:'' }, im:{ f:'pubblicato', q:'', n:0 },
@@ -2463,7 +2522,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     else if(s === 'richieste') caricaRichieste();
     else if(s === 'immobili') caricaImmobili();
     else if(s === 'documenti') caricaAlbero(true);
-    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
+    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else if(S.adm === 'avvisi') caricaAvvisi(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
     else if(s === 'impostazioni') caricaImp();
     else if(s === 'campagne') caricaCamp();
     else if(s === 'diana') dgRiprova();
@@ -2588,6 +2647,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'admin'){ if(admSchede().indexOf(sub) < 0) sub = admSchede().indexOf(S.adm) < 0 ? 'assegna' : S.adm; S.adm = sub; }       // V6.8.5: «moduli» solo per l'admin (la segreteria che scrive #admin/moduli resta dov'era)
     if(sec === 'richieste' && sub && !RE_ID.test(sub)) sub = '';
     if(sec === 'documenti' && sub === 'compila' && !DOC.compile) sub = '';
+    if(sec === 'documenti' && sub === 'vedi' && !DOC.view) sub = '';          // V6.10.0: no viewer without a document
     if(sec === 'strumenti' && STR_SUB.indexOf(sub) < 0) sub = '';
     if(S.sec === 'diana' && sec !== 'diana' && dgSporco() && !window.confirm('Hai modifiche non salvate in Gestione Diana Assistant. Esco senza salvare?')){
       try { history.replaceState(null, '', '#diana' + (GD.tab ? '/' + GD.tab : '')); } catch(e){}
@@ -2597,10 +2657,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(avvisiAperti() && !(sec === 'strumenti' && sub === 'assistente')) closeModals();    // V6.7.2: lasciata la chat (Indietro del telefono, link): la finestra degli avvisi si chiude
     var cambiata = sec !== S.sec, eraChat = S.sec === 'strumenti' && S.sub === 'assistente';
     S.sec = sec; S.sub = sub;
+    if(DOC.view && !(sec === 'documenti' && sub === 'vedi')) viewClose();   // V6.10.0: leaving the viewer (back arrow, phone back, other section) frees memory
     $$('section.sec').forEach(function(s){ s.hidden = s.id !== 'tcag-s-' + sec; });
     preSync();                                            // V6.8: il pannello «Precompila con AI» esiste solo mentre si compila un modulo
     r.setAttribute('data-sec', sec);
-    r.classList.toggle('detail-open', isPhone() && ((sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'strumenti' && (sub === 'assistente' || sub === 'render'))));
+    r.classList.toggle('detail-open', isPhone() && ((sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'documenti' && sub === 'vedi') || (sec === 'strumenti' && (sub === 'assistente' || sub === 'render'))));
     r.classList.toggle('chat-open', isPhone() && sec === 'strumenti' && sub === 'assistente');
     if(typeof tastieraAi === 'function') tastieraAi();                                  // V6.8.1: lasciata la chat non resta la classe as-kb
     // i dati si chiedono solo la prima volta che si apre la sezione
@@ -2608,6 +2669,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'immobili') caricaCopertine();            // V6.6: foto di copertina dal sito pubblico (una volta ogni 30 minuti al massimo)
     if(sec === 'documenti' && DOC.albero.stato === 'idle') caricaAlbero(false);
     if(sec === 'admin' && S.adm === 'moduli'){ if(DOC.albero.stato === 'idle') caricaAlbero(false); }       // V6.8.5: l'albero dei Documenti (con la scelta dei moduli compilabili)
+    else if(sec === 'admin' && S.adm === 'avvisi'){ if(AVV.stato === 'idle') caricaAvvisi(false); }       // V6.9: «Avvisi» ha il suo stato (AVV), non ADM
     else if(sec === 'admin' && (ADM[S.adm].stato === 'idle' || (S.adm === 'problemi' && ADM.problemi.ok && Date.now() - ADM.problemi.agg > 60000))) caricaAdm(S.adm);
     if(sec === 'impostazioni' && (IMP.stato === 'idle' || (IMP.stato === 'err' && !IMP.ok))) caricaImp();
     if(sec === 'campagne' && !CAMP.vol && (CAMP.stato === 'idle' || (CAMP.stato === 'err' && !CAMP.ok) || Date.now() - CAMP.agg > CAMP_RIAPRI_MS)) caricaCamp();
@@ -2655,9 +2717,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'impostazioni') g('imp-gear').setAttribute('aria-current', 'page'); else g('imp-gear').removeAttribute('aria-current');
     var da = staff() ? contatoriVista().daAssegnare : null, ba = g('b-assegna');
     ba.textContent = da || 0; ba.hidden = !da;
-    var titoli = { oggi:'Oggi', richieste: sub ? sub + ' | Scheda richiesta' : 'Richieste', immobili:'Immobili', documenti: sub === 'compila' ? 'Compila modulo' : 'Documenti', strumenti: STR_TITOLI[sub] || 'Strumenti AI', altro:'Altro', impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione', diana:'Gestione Diana Assistant' };
+    var titoli = { oggi:'Oggi', richieste: sub ? sub + ' | Scheda richiesta' : 'Richieste', immobili:'Immobili', documenti: sub === 'compila' ? 'Compila modulo' : sub === 'vedi' ? 'Visualizza' : 'Documenti', strumenti: STR_TITOLI[sub] || 'Strumenti AI', altro:'Altro', impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione', diana:'Gestione Diana Assistant' };
     g('ptitle').textContent = titoli[sec];
-    var back = (sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || sec === 'strumenti' || sec === 'admin' || sec === 'impostazioni' || sec === 'campagne' || sec === 'diana';
+    var back = (sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'documenti' && sub === 'vedi') || sec === 'strumenti' || sec === 'admin' || sec === 'impostazioni' || sec === 'campagne' || sec === 'diana';
     g('ph-back').hidden = !back; g('ph-logo').hidden = back;
   }
   function indietro(){
@@ -3610,18 +3672,21 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       <div class="nm"><b>${comp ? nomePulito(v.nome) : v.nome}${comp ? H`<span class="tag-c">COMPILABILE</span>` : ''}</b><small>${meta}</small></div>
       <div class="acts">${salvato ? H`<span class="saved" title="Salvato sul dispositivo">${ic('device', 14)}sul dispositivo</span>` : ''}
         ${grande ? H`<span class="toobig">Troppo grande per la pagina (oltre ${LIMITE_MB} MB): chiedilo in ufficio.</span>` :
-          H`${comp ? H`<button class="btn pri sm" type="button" data-act="compila" data-id="${v.id}">Compila</button>` : ''}<button class="btn sec sm" type="button" data-act="scarica" data-id="${v.id}">${ic('download', 14)}Scarica</button>`}</div></div>`;
+          H`${comp ? H`<button class="btn pri sm" type="button" data-act="compila" data-id="${v.id}">Compila</button>` : ''}${viewKind(v) ? H`<button class="btn sec sm" type="button" data-act="visualizza" data-id="${v.id}">Visualizza</button>` : ''}<button class="btn sec sm" type="button" data-act="scarica" data-id="${v.id}">${ic('download', 14)}Scarica</button>`}</div></div>`;
   }
   function renderDocumenti(){
     var main = g('doc-main'), grid = g('doc-grid'), cc = contCompilazione();
     var comp = S.sub === 'compila' && DOC.compile;
-    grid.classList.toggle('compiling', !!comp);
-    g('doc-tools').hidden = !!comp;
-    main.hidden = !!comp; cc.hidden = !comp;
+    var vc = viewContainer(), vedi = S.sub === 'vedi' && !!DOC.view;     // V6.10.0: the in-app viewer takes the place of the list
+    grid.classList.toggle('compiling', !!comp || vedi);
+    g('doc-tools').hidden = !!comp || vedi;
+    main.hidden = !!comp || vedi; cc.hidden = !comp; vc.hidden = !vedi;
     if(comp){
       if(!cc.getAttribute('data-id') || cc.getAttribute('data-id') !== DOC.compile.chiave) avviaCompilazione(cc);
       return;
     }
+    // V6.10.0: the viewer draws itself once per document (data-id check inside viewRender)
+    if(vedi){ viewRender(vc); return; }
     var qEl = g('doc-q'); if(qEl !== document.activeElement) qEl.value = DOC.q;
     put(g('doc-chips'), [['tutto', 'Tutto'], ['fill', 'Solo moduli da compilare'], ['saved', 'Salvati sul dispositivo']].map(function(c){
       return H`<button class="chip" type="button" data-act="doc-f" data-k="${c[0]}" aria-pressed="${String(DOC.f === c[0])}">${c[1]}</button>`;
@@ -4733,6 +4798,1120 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     preStrumentiT = Date.now();
     preStato(false).then(function(){ if(S.sec === 'strumenti') preRitoccaStrumenti(); });
   }
+// Area Agenti V6.10.0, V6.11.0 modes: in-app document viewer (route documenti/vedi)
+var VIEW_ZOOM_MIN = 0.5, VIEW_ZOOM_MAX = 4, VIEW_ZOOM_STEP = 0.25;
+var VIEW_KEY_ZOOM = 'tcag-view-zoom', VIEW_KEY_PAGE = 'tcag-view-page:';
+// most pixels of one page canvas (memory on phones)
+var VIEW_MAX_PX = 8388608;
+DOC.view = null;
+
+// private state of the viewer: one document at a time
+var VW = viewStatoVuoto(0);
+
+function viewStatoVuoto(seq){
+  return {
+    seq: seq, kind: null, id: '', pdf: null, url: null, obs: null, zoom: 1, total: 0, page: 1,
+    baseW: 0, baseH: 0, scroll: null, pagesEl: null, stage: null, img: null, media: null,
+    ready: false, tasks: {}, ptrs: {}, pinch: null, rafP: 0, sizes: {},
+    mode: 'pages', spread: 1, text: null, textJob: null, textScan: false, readEl: null, find: null, swipe: null
+  };
+}
+
+// tells which viewer a file needs; null = cannot be shown in the app
+function viewKind(v){
+  if(!v || v.cartella) return null;
+  var m = String(v.mime || '').toLowerCase();
+  if(m === 'application/pdf' || /^application\/vnd\.google-apps\.(document|spreadsheet|presentation|drawing)$/.test(m)) return 'pdf';
+  if(/^image\/(jpeg|png|gif|webp)$/.test(m)) return 'image';
+  if(/^video\/(mp4|webm)$/.test(m)) return 'video';
+  if(/^audio\/(mpeg|mp4|x-m4a|wav)$/.test(m)) return 'audio';
+  if(m === 'text/plain' || m === 'text/csv') return 'text';
+  return null;
+}
+
+// zoom kept inside the allowed range; anything that is not a finite number becomes 1
+function viewZoomClamp(z){ if(typeof z !== 'number' || !isFinite(z)) return 1; return Math.min(VIEW_ZOOM_MAX, Math.max(VIEW_ZOOM_MIN, z)); }
+// one remembered zoom per kind of file: a PDF zoom does not open a photo at a huge size
+function viewZoomKey(kind){ return kind === 'pdf' ? VIEW_KEY_ZOOM : VIEW_KEY_ZOOM + ':' + kind; }
+
+function viewOpen(v){
+  if(!viewKind(v) || troppoGrande(v)){
+    toast('Questo file non si può visualizzare: scaricalo.');
+    return;
+  }
+  if(DOC.view) viewClose();
+  DOC.view = { node: v, key: v.id + '|' + (v.modificato || '') };
+  go('documenti/vedi');
+}
+
+// errors must never vanish silently: they go to the diagnostics when they are ready
+function viewSegnala(cosa, e){
+  try { if(DIAG_PRONTO) diagJs({ message: 'visore ' + cosa + ': ' + (e && e.message), lineno: 0, colno: 0 }); }
+  catch(x){ /* the diagnostics must not break the viewer */ }
+}
+function viewPasso(cosa, fn){
+  try { fn(); } catch(e){ viewSegnala(cosa, e); }
+}
+
+function viewContainer(){
+  var c = g('doc-view');
+  if(c) return c;
+  c = document.createElement('div');
+  c.id = 'tcag-doc-view'; c.className = 'vw'; c.hidden = true;
+  g('doc-grid').appendChild(c);
+  c.addEventListener('click', function(e){
+    var t = e.target.closest ? e.target.closest('[data-vact]') : null;
+    if(!t || !c.contains(t) || !DOC.view) return;
+    var a = t.getAttribute('data-vact');
+    if(a === 'zoom-out') viewSetZoom(VW.zoom - VIEW_ZOOM_STEP);
+    else if(a === 'zoom-in') viewSetZoom(VW.zoom + VIEW_ZOOM_STEP);
+    else if(a === 'fit-width') viewSetZoom(viewFitZ(false));
+    else if(a === 'fit-page') viewSetZoom(viewFitZ(true));
+    else if(a === 'fullscreen') viewFullscreen(c);
+    else viewModeAction(a, t);
+  });
+  c.addEventListener('change', function(e){
+    var inp = e.target;
+    if(!inp || inp.id !== 'tcag-vw-goto' || !VW.pagesEl) return;
+    var n = parseInt(inp.value, 10);
+    if(n >= 1 && n <= VW.total) viewGoto(n);
+    else inp.value = String(VW.page);
+  });
+  document.addEventListener('keydown', function(e){
+    if(S.sec !== 'documenti' || S.sub !== 'vedi' || !DOC.view || campoDiTesto(e.target) || e.ctrlKey || e.metaKey) return;
+    if(viewModeKey(e)) return;
+    if(e.key === '+' || e.key === '='){ e.preventDefault(); viewSetZoom(VW.zoom + VIEW_ZOOM_STEP); }
+    else if(e.key === '-' || e.key === '_'){ e.preventDefault(); viewSetZoom(VW.zoom - VIEW_ZOOM_STEP); }
+  });
+  return c;
+}
+
+function viewRender(cont){
+  var node = DOC.view.node, key = DOC.view.key;
+  if(cont.getAttribute('data-id') === key) return;
+  viewRilascia();
+  cont.setAttribute('data-id', key);
+  var kind = viewKind(node);
+  VW.kind = kind; VW.id = node.id;
+  var seq = VW.seq;
+  put(cont, H`<div class="vw-bar"><button class="btn sec sm" type="button" data-act="back">${ic('arrow-left', 14)}Documenti</button><span class="vw-ttl">${node.nome}</span>${kind === 'pdf' ? H`<span class="vw-pg">Pagina <b id="tcag-vw-pg">1</b> / <span id="tcag-vw-tot">…</span></span><input id="tcag-vw-goto" type="number" inputmode="numeric" min="1" aria-label="Vai a pagina" placeholder="Vai a pagina"><span class="vw-modes" role="group" aria-label="Modalità"><button class="btn sec sm vw-mode" type="button" data-vact="mode-pages" aria-pressed="true">Pagine</button><button class="btn sec sm vw-mode" type="button" data-vact="mode-book" aria-pressed="false">Libro</button><button class="btn sec sm vw-mode" type="button" data-vact="mode-read" aria-pressed="false">Lettura</button></span><button class="btn sec sm" type="button" data-vact="search" aria-label="Cerca nel testo">${ic('search', 16)}</button>` : ''}${kind === 'pdf' || kind === 'image' || kind === 'text' ? H`<button type="button" data-vact="zoom-out" aria-label="Riduci lo zoom">−</button><span class="vw-zoom" id="tcag-vw-zoom">100%</span><button type="button" data-vact="zoom-in" aria-label="Aumenta lo zoom">+</button>` : ''}${kind === 'pdf' || kind === 'image' ? H`<button class="btn sec sm" type="button" data-vact="fit-width">Adatta larghezza</button><button class="btn sec sm" type="button" data-vact="fit-page">Pagina intera</button>` : ''}<button id="tcag-vw-fs" class="btn sec sm" type="button" data-vact="fullscreen" aria-label="Schermo intero">Schermo intero</button><button class="btn pri sm" type="button" data-act="scarica" data-id="${node.id}">${ic('download', 14)}Scarica</button></div><div class="vw-scroll"><div class="vw-load"><span id="tcag-vw-txt">Carico il file…</span><div class="cv-prog"><i id="tcag-vw-bar"></i></div></div></div>`);
+  g('vw-fs').hidden = !(cont.requestFullscreen && document.fullscreenEnabled);
+  VW.scroll = $('.vw-scroll', cont);
+  viewEventi(VW.scroll);
+  Promise.all([kind === 'pdf' ? librerie() : null, ottieniFile(node, function(pc){ if(VW.seq === seq) viewProgresso(pc); })])
+    .then(function(x){
+      if(VW.seq !== seq || !DOC.view) return;
+      return viewShow(kind, x[1], seq);
+    })
+    .catch(function(e){
+      if(VW.seq !== seq || (e && e.status === 401)) return;      // 401: the login takes care of it
+      viewError(e && e.message ? e.message : 'errore');
+    });
+}
+
+function viewProgresso(pc){
+  var t = g('vw-txt'), b = g('vw-bar');
+  if(t) t.textContent = 'Carico il file… ' + pc + '%';
+  if(b) b.style.width = pc + '%';
+}
+
+function viewShow(kind, voce, seq){
+  if(kind === 'pdf') return viewPdf(voce.dati, seq);
+  if(kind === 'image') return viewImage(voce, seq);
+  if(kind === 'text') return viewText(voce.dati);
+  return viewMedia(kind, voce, seq);
+}
+
+// listeners of the scroll box: scroll, pinch, Ctrl+wheel (one set per mounted box)
+function viewEventi(s){
+  s.addEventListener('scroll', function(){
+    if(VW.rafP || !VW.pagesEl) return;
+    VW.rafP = requestAnimationFrame(function(){ VW.rafP = 0; if(VW.pagesEl){ if(VW.mode === 'pages') viewPaginaCorrente(); else viewModeScroll(); } });
+  }, { passive: true });
+  s.addEventListener('pointerdown', function(e){
+    if(e.pointerType !== 'touch' || !VW.ready || !VW.stage || (VW.kind !== 'pdf' && VW.kind !== 'image')) return;
+    VW.ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+    if(Object.keys(VW.ptrs).length !== 2) return;
+    var p = viewDuePunti(), sr = VW.stage.getBoundingClientRect();
+    VW.pinch = { d0: viewDist(), r: 1 };
+    VW.stage.style.transformOrigin = ((p[0].x + p[1].x) / 2 - sr.left) + 'px ' + ((p[0].y + p[1].y) / 2 - sr.top) + 'px';
+  });
+  s.addEventListener('pointermove', function(e){
+    if(!VW.ptrs[e.pointerId]) return;
+    VW.ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+    if(!VW.pinch || Object.keys(VW.ptrs).length !== 2) return;
+    VW.pinch.r = viewDist() / VW.pinch.d0;
+    VW.stage.style.transform = 'scale(' + VW.pinch.r + ')';
+  });
+  var fine = function(e){
+    if(!VW.ptrs[e.pointerId]) return;
+    delete VW.ptrs[e.pointerId];
+    if(!VW.pinch || Object.keys(VW.ptrs).length >= 2) return;
+    var r = VW.pinch.r; VW.pinch = null;
+    if(VW.stage) VW.stage.style.transform = '';
+    if(Math.abs(r - 1) > 0.01) viewSetZoom(VW.zoom * r);
+  };
+  s.addEventListener('pointerup', fine);
+  s.addEventListener('pointercancel', fine);
+  s.addEventListener('pointerleave', fine);
+  s.addEventListener('wheel', function(e){
+    if(!e.ctrlKey || !VW.ready) return;
+    e.preventDefault();
+    viewSetZoom(VW.zoom + (e.deltaY < 0 ? VIEW_ZOOM_STEP : -VIEW_ZOOM_STEP));
+  }, { passive: false });
+  viewSwipeEvents(s);
+}
+
+function viewDuePunti(){
+  var k = Object.keys(VW.ptrs);
+  return [VW.ptrs[k[0]], VW.ptrs[k[1]]];
+}
+function viewDist(){
+  var p = viewDuePunti();
+  return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y) || 1;
+}
+
+function viewPdf(buf, seq){
+  return window.pdfjsLib.getDocument({ data: buf.slice(0) }).promise.then(function(doc){
+    if(VW.seq !== seq){ doc.destroy(); return; }
+    VW.pdf = doc; VW.total = doc.numPages;
+    return doc.getPage(1).then(function(p){
+      if(VW.seq !== seq) return;
+      var base = p.getViewport({ scale: 1 });
+      VW.baseW = base.width; VW.baseH = base.height;
+      var pe = document.createElement('div');
+      pe.className = 'vw-pages';
+      for(var n = 1; n <= VW.total; n++){
+        var d = document.createElement('div');
+        d.className = 'vw-page'; d.setAttribute('data-n', String(n));
+        var ph = document.createElement('span');
+        ph.className = 'vw-ph'; ph.textContent = 'Pagina ' + n;
+        d.appendChild(ph); pe.appendChild(d);
+      }
+      VW.scroll.textContent = '';
+      VW.scroll.appendChild(pe);
+      VW.pagesEl = pe; VW.stage = pe; VW.ready = true;
+      VW.zoom = viewZoomSalvato() || viewFitZ(false);
+      pdfMisure(VW.zoom);
+      VW.page = viewPaginaSalvata(VW.id);
+      g('vw-tot').textContent = String(VW.total);
+      viewLabel();
+      viewObserve();
+      viewGoto(VW.page);
+      viewModeStart();
+    });
+  });
+}
+
+// the size of every page placeholder follows the zoom
+function pdfMisure(z){
+  // a page drawn before has its own size; the others use the size of page 1
+  Array.prototype.forEach.call(VW.pagesEl.children, function(el, i){
+    var sz = VW.sizes[i + 1];
+    el.style.width = Math.round((sz ? sz.w : VW.baseW) * z) + 'px';
+    el.style.height = Math.round((sz ? sz.h : VW.baseH) * z) + 'px';
+  });
+}
+
+function viewPagina(n){
+  return VW.pagesEl ? VW.pagesEl.children[n - 1] : null;
+}
+
+// draws one page: the canvas stays small on high-density screens
+function pdfPagina(n){
+  var doc = VW.pdf, el = viewPagina(n), seq = VW.seq;
+  if(!doc || !el || VW.tasks[n]) return;
+  var tk = { off: false, cancel: function(){ tk.off = true; } };
+  VW.tasks[n] = tk;
+  doc.getPage(n).then(function(p){
+    if(tk.off || VW.seq !== seq) return;
+    var b1 = p.getViewport({ scale: 1 });
+    VW.sizes[n] = { w: b1.width, h: b1.height };
+    var css = p.getViewport({ scale: VW.zoom });
+    var k = VW.zoom * (window.devicePixelRatio || 1);
+    var vp = p.getViewport({ scale: k });
+    if(vp.width * vp.height > VIEW_MAX_PX){
+      k = k * Math.sqrt(VIEW_MAX_PX / (vp.width * vp.height));
+      vp = p.getViewport({ scale: k });
+    }
+    var cv = document.createElement('canvas');
+    cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height);
+    cv.style.width = css.width + 'px'; cv.style.height = css.height + 'px';
+    el.style.width = css.width + 'px'; el.style.height = css.height + 'px';
+    el.appendChild(cv);
+    var task = p.render({ canvasContext: cv.getContext('2d'), viewport: vp });
+    VW.tasks[n] = task;
+    return task.promise;
+  }).catch(function(e){
+    if(e && e.name === 'RenderingCancelledException') return;      // the cancel we asked for
+    if(VW.seq === seq) viewError(e && e.message ? e.message : 'errore di disegno');
+  });
+}
+
+// a page that leaves the window (and its margin) gives its canvas back
+function pdfLibera(n){
+  var t = VW.tasks[n];
+  if(!t) return;
+  delete VW.tasks[n];
+  t.cancel();
+  var el = viewPagina(n);
+  if(!el) return;
+  var cv = el.querySelector('canvas');
+  if(cv){ cv.width = 0; el.removeChild(cv); }
+}
+
+function viewTasksCancel(){
+  Object.keys(VW.tasks).forEach(function(k){ VW.tasks[k].cancel(); });
+  VW.tasks = {};
+  if(VW.pagesEl) Array.prototype.forEach.call(VW.pagesEl.querySelectorAll('canvas'), function(cv){
+    cv.width = 0; cv.parentNode.removeChild(cv);
+  });
+}
+
+function viewObserve(){
+  if(VW.obs){ VW.obs.disconnect(); VW.obs = null; }
+  if(!window.IntersectionObserver || !VW.pagesEl) return;
+  VW.obs = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var n = Number(e.target.getAttribute('data-n'));
+      if(e.isIntersecting) pdfPagina(n); else pdfLibera(n);
+    });
+  }, { root: VW.scroll, rootMargin: Math.round(VW.baseH * VW.zoom) + 'px 0px' });
+  Array.prototype.forEach.call(VW.pagesEl.children, function(el){ VW.obs.observe(el); });
+}
+
+function viewPaginaCorrente(){
+  var sr = VW.scroll.getBoundingClientRect(), mid = sr.top + sr.height / 2;
+  var kids = VW.pagesEl.children, n = kids.length;
+  for(var i = 0; i < kids.length; i++){
+    if(kids[i].getBoundingClientRect().bottom >= mid){ n = i + 1; break; }
+  }
+  viewPaginaSegna(n);
+}
+
+function viewPaginaSegna(n){
+  if(n === VW.page) return;
+  VW.page = n;
+  var b = g('vw-pg'); if(b) b.textContent = String(n);
+  try { localStorage.setItem(VIEW_KEY_PAGE + VW.id, String(n)); }
+  catch(e){ /* no memory on this device: the viewer works anyway */ }
+}
+
+function viewPaginaSalvata(id){
+  try {
+    var n = parseInt(localStorage.getItem(VIEW_KEY_PAGE + id), 10);
+    if(n >= 1 && n <= VW.total) return n;
+  } catch(e){ /* no memory on this device: start from page 1 */ }
+  return 1;
+}
+
+function viewZoomSalvato(){
+  try {
+    var z = parseFloat(localStorage.getItem(viewZoomKey(VW.kind)));
+    if(isFinite(z) && z >= VIEW_ZOOM_MIN && z <= VIEW_ZOOM_MAX) return z;
+  } catch(e){ /* no memory on this device: the default zoom */ }
+  return null;
+}
+
+function viewGoto(n){
+  if(VW.mode !== 'pages'){ viewModeGoto(n); return; }
+  var el = viewPagina(n), s = VW.scroll;
+  if(!el || !s) return;
+  s.scrollTop += el.getBoundingClientRect().top - s.getBoundingClientRect().top;
+}
+
+// zoom that fits the width (or the whole page) in the box
+function viewFitZ(intera){
+  var s = VW.scroll;
+  var z = (s.clientWidth - 24) / VW.baseW;
+  if(intera) z = Math.min(z, (s.clientHeight - 24) / VW.baseH);
+  return viewZoomClamp(z);
+}
+
+function viewSetZoom(z){
+  if(!VW.ready) return;
+  if(VW.kind === 'pdf' && VW.mode === 'read') return;
+  z = viewZoomClamp(z);
+  VW.zoom = z;
+  if(VW.kind === 'pdf') pdfZoom(z);
+  else if(VW.kind === 'image') imgZoom(z);
+  else txtZoom(z);
+  viewLabel();
+  try { localStorage.setItem(viewZoomKey(VW.kind), String(z)); }
+  catch(e){ /* no memory on this device: the zoom is not remembered */ }
+}
+
+// keeps the page under the top edge of the box, and the same fraction of it on screen
+function pdfZoom(z){
+  if(VW.mode === 'book'){ bookLayout(); return; }
+  var s = VW.scroll, sr = s.getBoundingClientRect(), kids = VW.pagesEl.children, a = 0, frac = 0;
+  for(var i = 0; i < kids.length; i++){
+    if(kids[i].getBoundingClientRect().bottom > sr.top){ a = i; break; }
+  }
+  var el = kids[a];
+  if(el){
+    var r0 = el.getBoundingClientRect();
+    frac = Math.min(1, Math.max(0, (sr.top - r0.top) / (r0.height || 1)));
+  }
+  viewTasksCancel();
+  pdfMisure(z);
+  var nel = kids[a];
+  if(nel){
+    var r1 = nel.getBoundingClientRect(), sr1 = s.getBoundingClientRect();
+    s.scrollTop += (r1.top - sr1.top) + frac * r1.height;
+  }
+  viewObserve();
+}
+
+function imgZoom(z){
+  if(VW.img) VW.img.style.width = Math.round(VW.baseW * z) + 'px';
+}
+
+function txtZoom(z){
+  if(VW.stage) VW.stage.style.fontSize = Math.round(16 * z) + 'px';
+}
+
+function viewLabel(){
+  var z = g('vw-zoom'); if(z) z.textContent = Math.round(VW.zoom * 100) + '%';
+  var p = g('vw-pg'); if(p) p.textContent = String(VW.page);
+}
+
+function viewImage(voce, seq){
+  VW.url = URL.createObjectURL(new Blob([voce.dati], { type: voce.mime }));
+  var box = document.createElement('div');
+  box.className = 'vw-img';
+  var img = document.createElement('img');
+  img.alt = voce.nome;
+  img.addEventListener('load', function(){
+    if(VW.seq !== seq) return;
+    VW.baseW = img.naturalWidth; VW.baseH = img.naturalHeight;
+    VW.zoom = viewZoomSalvato() || viewFitZ(true);
+    imgZoom(VW.zoom);
+    VW.ready = true;
+    viewLabel();
+  });
+  img.addEventListener('error', function(){ if(VW.seq === seq) viewError('immagine non leggibile'); });
+  VW.scroll.textContent = '';
+  box.appendChild(img);
+  VW.scroll.appendChild(box);
+  VW.img = img; VW.stage = box;
+  img.src = VW.url;
+}
+
+function viewText(buf){
+  var testo = new TextDecoder('utf-8').decode(new Uint8Array(buf));
+  var pre = document.createElement('pre');
+  pre.className = 'vw-text';
+  pre.textContent = testo;
+  VW.scroll.textContent = '';
+  VW.scroll.appendChild(pre);
+  VW.stage = pre; VW.ready = true;
+  VW.zoom = viewZoomSalvato() || 1;
+  txtZoom(VW.zoom);
+  viewLabel();
+}
+
+function viewMedia(kind, voce, seq){
+  VW.url = URL.createObjectURL(new Blob([voce.dati], { type: voce.mime }));
+  var el = document.createElement(kind === 'video' ? 'video' : 'audio');
+  el.controls = true;
+  el.className = 'vw-media';
+  el.addEventListener('error', function(){ if(VW.seq === seq) viewError('formato non supportato dal browser'); });
+  VW.media = el;
+  VW.scroll.textContent = '';
+  VW.scroll.appendChild(el);
+  el.src = VW.url;
+}
+
+// a message in plain words with the download button: never an empty, silent view
+function viewError(msg){
+  if(!VW.scroll || !DOC.view) return;
+  viewTasksCancel();
+  if(VW.obs){ VW.obs.disconnect(); VW.obs = null; }
+  VW.ready = false; VW.pagesEl = null; VW.stage = null;
+  put(VW.scroll, H`<div class="vw-err" role="alert"><p>Non riesco ad aprire il file (${msg}). Puoi scaricarlo.</p><button class="btn pri sm" type="button" data-act="scarica" data-id="${DOC.view.node.id}">Scarica</button></div>`);
+}
+
+function viewFullscreen(cont){
+  var p = document.fullscreenElement ? document.exitFullscreen() : cont.requestFullscreen();
+  Promise.resolve(p).catch(function(e){ toast('Schermo intero non disponibile: ' + e.message); });
+}
+
+// frees everything the open document holds; it never throws
+function viewRilascia(){
+  viewPasso('modalita', viewModeRelease);
+  var seq = VW.seq + 1, o = VW.obs, pdf = VW.pdf, url = VW.url, med = VW.media, fs = document.fullscreenElement;
+  viewPasso('osservatore', function(){ if(o) o.disconnect(); });
+  viewPasso('disegno', viewTasksCancel);
+  viewPasso('pdf', function(){ if(pdf) Promise.resolve(pdf.destroy()).catch(function(e){ viewSegnala('pdf', e); }); });
+  viewPasso('file', function(){ if(url) URL.revokeObjectURL(url); });
+  viewPasso('media', function(){ if(med){ med.pause(); med.removeAttribute('src'); } });
+  viewPasso('schermo', function(){ if(fs) Promise.resolve(document.exitFullscreen()).catch(function(e){ viewSegnala('schermo', e); }); });
+  VW = viewStatoVuoto(seq);
+}
+
+function viewClose(){
+  viewRilascia();
+  var c = g('doc-view');
+  viewPasso('contenitore', function(){
+    if(c){ c.textContent = ''; c.removeAttribute('data-id'); c.hidden = true; }
+  });
+  DOC.view = null;
+}
+// Area Agenti V6.11.0: PDF viewer modes (Pages, Book, Reading) and text search
+var VIEW_KEY_MODE = 'tcag-view-mode', READ_KEY_SIZE = 'tcag-read-size', READ_KEY_THEME = 'tcag-read-theme';
+// the window listeners of the Book mode are installed once for the whole page
+var viewResizeOn = false;
+
+// pure functions: checked by prova-visore.cjs, which counts the braces of each body
+// the paragraphs of one page; items are in reading order
+function buildReadingParagraphs(items){
+  var righe = [], cur = null;
+  (items || []).forEach(function(it){
+    if(!cur) cur = { testo: '', y: it.transform[5], h: Math.max(1, Math.abs(it.transform[3])) };
+    cur.testo += String(it.str || '');
+    if(it.hasEOL){ righe.push(cur); cur = null; }
+  });
+  if(cur) righe.push(cur);
+  var par = [], y0 = 0, h0 = 1, primo = true;
+  righe.forEach(function(r){
+    var t = r.testo.replace(/\s+/g, ' ').trim();
+    if(!t) return;
+    if(primo || Math.abs(y0 - r.y) > 1.6 * h0) par.push(t);
+    else if(/[A-Za-z\u00C0-\u024F]-$/.test(par[par.length - 1])) par[par.length - 1] = par[par.length - 1].slice(0, -1) + t;
+    else par[par.length - 1] += ' ' + t;
+    primo = false; y0 = r.y; h0 = r.h;
+  });
+  return par;
+}
+
+// text for search: no accents, lower case, single spaces, no trim
+function normalizeForSearch(s){
+  return String(s == null ? '' : s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ');
+}
+
+// the same text, char by char, with the index of the raw char each one comes from
+function normalizeWithMap(s){
+  var src = String(s == null ? '' : s), text = '', map = [];
+  for(var i = 0; i < src.length; i++){
+    var parti = src.charAt(i).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    for(var k = 0; k < parti.length; k++){
+      var c = parti.charAt(k);
+      if(/\s/.test(c)){
+        if(text.charAt(text.length - 1) === ' ') continue;
+        c = ' ';
+      }
+      text += c;
+      map.push(i);
+    }
+  }
+  return { text: text, map: map };
+}
+
+// every occurrence of the query; pages[0] is page 1
+function findMatches(pages, query){
+  var q = normalizeForSearch(query).trim(), out = [];
+  if(q.length < 2) return out;
+  (pages || []).forEach(function(items, p){
+    (items || []).forEach(function(str, i){
+      var t = normalizeForSearch(str), k = t.indexOf(q);
+      while(k >= 0){
+        out.push({ page: p + 1, item: i, start: k });
+        k = t.indexOf(q, k + q.length);
+      }
+    });
+  });
+  return out;
+}
+
+/* ---------- Pages / Book / Reading: the mode ---------- */
+
+function viewModeSaved(){
+  try {
+    var m = localStorage.getItem(VIEW_KEY_MODE);
+    if(m === 'book' || m === 'read') return m;
+  } catch(e){ /* no memory on this device: Pages */ }
+  return 'pages';
+}
+
+function viewPaintModo(mode){
+  var c = g('doc-view');
+  if(!c) return;
+  Array.prototype.forEach.call(c.querySelectorAll('[data-vact^="mode-"]'), function(b){
+    b.setAttribute('aria-pressed', String(b.getAttribute('data-vact') === 'mode-' + mode));
+  });
+}
+
+// leaves the old mode: the page number stays the same
+function viewModeLeave(vecchia){
+  var c = g('doc-view');
+  if(vecchia === 'book'){
+    if(VW.pagesEl){
+      VW.pagesEl.classList.remove('vw-book');
+      Array.prototype.forEach.call(VW.pagesEl.children, function(el){ el.classList.remove('vw-on'); });
+    }
+    if(c) Array.prototype.forEach.call(c.querySelectorAll('.vw-turn'), function(b){ if(b.parentNode) b.parentNode.removeChild(b); });
+  } else if(vecchia === 'read'){
+    if(VW.readEl && VW.readEl.parentNode) VW.readEl.parentNode.removeChild(VW.readEl);
+    VW.readEl = null;
+    if(VW.pagesEl) VW.pagesEl.hidden = false;
+  }
+}
+
+function viewSetMode(mode){
+  if(VW.kind !== 'pdf' || !VW.pagesEl) return;
+  if(mode !== 'pages' && mode !== 'book' && mode !== 'read') return;
+  var c = g('doc-view');
+  if(!c) return;
+  try { localStorage.setItem(VIEW_KEY_MODE, mode); }
+  catch(e){ /* no memory on this device: the mode works anyway */ }
+  findSciogli(c);
+  viewModeLeave(VW.mode);
+  VW.mode = mode;
+  viewPaintModo(mode);
+  c.classList.remove('vw-m-pages', 'vw-m-book', 'vw-m-read');
+  c.classList.add('vw-m-' + mode);
+  if(mode === 'pages'){
+    VW.zoom = viewZoomSalvato() || viewFitZ(false);
+    viewTasksCancel();
+    pdfMisure(VW.zoom);
+    viewObserve();
+    viewGoto(VW.page);
+  } else if(mode === 'book'){
+    if(VW.obs){ VW.obs.disconnect(); VW.obs = null; }
+    viewTasksCancel();
+    VW.pagesEl.classList.add('vw-book');
+    VW.scroll.scrollTop = 0;
+    bookButtons(c);
+    bookFit();
+    bookShow(VW.page);
+  } else {
+    if(VW.obs){ VW.obs.disconnect(); VW.obs = null; }
+    viewTasksCancel();
+    VW.pagesEl.hidden = true;
+    readEnter();
+  }
+  viewLabel();
+}
+
+// called when a PDF is shown: the saved mode starts
+function viewModeStart(){
+  if(VW.kind !== 'pdf' || !VW.pagesEl) return;
+  var c = g('doc-view');
+  if(!c) return;
+  c.classList.remove('vw-m-pages', 'vw-m-book', 'vw-m-read');
+  c.classList.add('vw-m-pages');
+  viewPaintModo('pages');
+  var salvata = viewModeSaved();
+  if(salvata !== 'pages') viewSetMode(salvata);
+  if(!viewResizeOn){
+    viewResizeOn = true;
+    var ridisegna = function(){
+      if(DOC.view && VW.mode === 'book' && VW.scroll){ bookFit(); bookLayout(); }
+    };
+    window.addEventListener('resize', ridisegna);
+    window.addEventListener('orientationchange', ridisegna);
+  }
+}
+
+// the buttons of the toolbar and of the reading view, and the keys of the Book mode
+function viewModeAction(a, el){
+  viewPasso('modalita', function(){
+    if(a === 'mode-pages') viewSetMode('pages');
+    else if(a === 'mode-book') viewSetMode('book');
+    else if(a === 'mode-read') viewSetMode('read');
+    else if(a === 'search') findOpen();
+    else if(a === 'find-next') findStep(1);
+    else if(a === 'find-prev') findStep(-1);
+    else if(a === 'find-close') findClose();
+    else if(a === 'book-prev') bookTurn(-1);
+    else if(a === 'book-next') bookTurn(1);
+    else if(a === 'read-smaller') readSize(-2);
+    else if(a === 'read-bigger') readSize(2);
+    else if(a === 'theme-light') readTheme('light');
+    else if(a === 'theme-sepia') readTheme('sepia');
+    else if(a === 'theme-dark') readTheme('dark');
+  });
+}
+
+// Escape closes the search; in Book the arrows, Page Up/Down and space turn the page
+function viewModeKey(e){
+  if(!DOC.view || VW.kind !== 'pdf') return false;
+  var k = e.key;
+  if(k === 'Escape' && VW.find){ findClose(); return true; }
+  if(VW.mode !== 'book') return false;
+  var dir = 0;
+  if(k === 'ArrowRight' || k === 'PageDown' || k === ' ') dir = 1;
+  else if(k === 'ArrowLeft' || k === 'PageUp') dir = -1;
+  if(!dir) return false;
+  e.preventDefault();
+  bookTurn(dir);
+  return true;
+}
+
+// Reading: the scroll finds the page under the top of the box
+function viewModeScroll(){
+  if(VW.mode !== 'read' || !VW.scroll) return;
+  var top = VW.scroll.getBoundingClientRect().top + 40, n = 0;
+  Array.prototype.forEach.call(VW.scroll.querySelectorAll('.vw-read-pg'), function(el){
+    if(el.getBoundingClientRect().top <= top) n = Number(el.getAttribute('data-n'));
+  });
+  if(n) viewPaginaSegna(n);
+}
+
+// go to a page in Book or Reading (Pages uses viewGoto)
+function viewModeGoto(n){
+  if(VW.mode === 'book') bookShow(n);
+  else if(VW.mode === 'read'){
+    var el = VW.scroll && VW.scroll.querySelector('.vw-read-pg[data-n="' + n + '"]');
+    if(el) readScrollTo(el);
+    viewPaginaSegna(n);
+  }
+}
+
+// left and right swipe with one finger, Book only
+function viewSwipeEvents(s){
+  s.addEventListener('pointerdown', function(e){
+    if(e.pointerType !== 'touch' || VW.mode !== 'book') return;
+    if(Object.keys(VW.ptrs).length >= 2 || VW.pinch){ VW.swipe = null; return; }
+    VW.swipe = { id: e.pointerId, x: e.clientX, y: e.clientY };
+  });
+  s.addEventListener('pointerup', function(e){
+    var sw = VW.swipe;
+    if(!sw || sw.id !== e.pointerId) return;
+    VW.swipe = null;
+    if(VW.pinch) return;
+    var dx = e.clientX - sw.x, dy = e.clientY - sw.y;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) bookTurn(dx < 0 ? 1 : -1);
+  });
+  s.addEventListener('pointercancel', function(e){
+    if(VW.swipe && VW.swipe.id === e.pointerId) VW.swipe = null;
+  });
+}
+
+// the mode is left, its memory of the page stays: release cleans up and never throws
+function viewModeRelease(){
+  viewPasso('ricerca', function(){ findClose(); });
+  viewPasso('pulsanti', function(){
+    var c = g('doc-view');
+    if(!c) return;
+    Array.prototype.forEach.call(c.querySelectorAll('.vw-turn'), function(b){ if(b.parentNode) b.parentNode.removeChild(b); });
+    c.classList.remove('vw-m-pages', 'vw-m-book', 'vw-m-read');
+  });
+  viewPasso('lettura', function(){
+    if(VW.readEl && VW.readEl.parentNode) VW.readEl.parentNode.removeChild(VW.readEl);
+  });
+  VW.readEl = null;
+  VW.text = null;
+  VW.textJob = null;
+}
+
+/* ---------- Book ---------- */
+
+// the zoom that fits one page (or two) in the box; not remembered
+function bookFit(){
+  var s = VW.scroll;
+  VW.spread = (window.innerWidth >= 900 && window.innerWidth > window.innerHeight) ? 2 : 1;
+  VW.zoom = viewZoomClamp(Math.min((s.clientHeight - 24) / VW.baseH, (s.clientWidth - 24 - 12 * (VW.spread - 1)) / (VW.baseW * VW.spread)));
+}
+
+function bookBtn(classe, azione, aiuto, testo){
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'vw-turn ' + classe;
+  b.setAttribute('data-vact', azione);
+  b.setAttribute('aria-label', aiuto);
+  b.textContent = testo;
+  return b;
+}
+
+function bookButtons(c){
+  if(c.querySelector('.vw-turn')) return;
+  c.appendChild(bookBtn('vw-prev', 'book-prev', 'Pagina precedente', '‹'));
+  c.appendChild(bookBtn('vw-next', 'book-next', 'Pagina successiva', '›'));
+}
+
+// shows the spread that holds page n, and keeps the pages around it drawn
+function bookShow(n){
+  if(VW.mode !== 'book' || !VW.pagesEl) return;
+  var spread = VW.spread || 1;
+  var f = spread === 2 && n % 2 === 0 ? n - 1 : n;
+  f = Math.max(1, Math.min(VW.total, f));
+  var mostrate = [f];
+  if(spread === 2 && f + 1 <= VW.total) mostrate.push(f + 1);
+  Array.prototype.forEach.call(VW.pagesEl.children, function(el, i){
+    el.classList.toggle('vw-on', mostrate.indexOf(i + 1) >= 0);
+  });
+  var tieni = {}, ultima = Math.min(VW.total, f + spread + 1);
+  for(var k = f; k <= ultima; k++){
+    tieni[k] = true;
+    pdfPagina(k);
+  }
+  Object.keys(VW.tasks).forEach(function(chiave){
+    if(!tieni[chiave]) pdfLibera(Number(chiave));
+  });
+  viewPaginaSegna(f);
+  var c = g('doc-view');
+  if(c){
+    var prev = c.querySelector('.vw-prev'), next = c.querySelector('.vw-next');
+    if(prev) prev.disabled = f <= 1;
+    if(next) next.disabled = f + spread > VW.total;
+  }
+}
+
+function bookTurn(dir){
+  if(VW.mode !== 'book' || !VW.pagesEl) return;
+  bookShow(Math.max(1, Math.min(VW.total, VW.page + dir * (VW.spread || 1))));
+}
+
+// after zoom or resize in Book: the same spread, with the new size
+function bookLayout(){
+  viewTasksCancel();
+  pdfMisure(VW.zoom);
+  bookShow(VW.page);
+}
+
+/* ---------- Reading: the text ---------- */
+
+function readSizeSaved(){
+  try {
+    var v = parseInt(localStorage.getItem(READ_KEY_SIZE), 10);
+    if(v >= 16 && v <= 40 && v % 2 === 0) return v;
+  } catch(e){ /* no memory on this device: the default size */ }
+  return 20;
+}
+
+function readThemeSaved(){
+  try {
+    var t = localStorage.getItem(READ_KEY_THEME);
+    if(t === 'light' || t === 'sepia' || t === 'dark') return t;
+  } catch(e){ /* no memory on this device: the default theme */ }
+  return 'light';
+}
+
+function viewStale(){
+  var e = new Error('stale');
+  e.stale = true;
+  return e;
+}
+
+// the text of every page, read one page at a time; resolves to VW.text
+function viewTextLoad(onProgress){
+  if(VW.textJob) return VW.textJob;
+  var seq = VW.seq, doc = VW.pdf, total = VW.total, pagine = [], job = Promise.resolve();
+  var pagina = function(n){
+    return doc.getPage(n).then(function(p){ return p.getTextContent(); }).then(function(tc){
+      pagine[n - 1] = tc.items.map(function(it){
+        return { str: String(it.str || ''), hasEOL: !!it.hasEOL, transform: it.transform || [1, 0, 0, 1, 0, 0], width: it.width || 0 };
+      });
+      if(onProgress) onProgress(Math.round(n * 100 / total));
+    });
+  };
+  var attesa = function(n){
+    return function(){
+      if(VW.seq !== seq) throw viewStale();
+      return pagina(n);
+    };
+  };
+  for(var n = 1; n <= total; n++) job = job.then(attesa(n));
+  VW.textJob = job.then(function(){
+    var caratteri = 0;
+    VW.text = pagine;
+    pagine.forEach(function(items){ items.forEach(function(it){ caratteri += it.str.trim().length; }); });
+    VW.textScan = caratteri < 20;
+  }, function(e){
+    VW.textJob = null;
+    throw e;
+  });
+  return VW.textJob;
+}
+
+function readBtn(azione, testo, aiuto){
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'btn sec sm';
+  b.setAttribute('data-vact', azione);
+  b.setAttribute('aria-label', aiuto);
+  b.textContent = testo;
+  return b;
+}
+
+function readTema(tema, testo, scelto){
+  var b = readBtn('theme-' + tema, testo, testo);
+  b.setAttribute('aria-pressed', String(tema === scelto));
+  return b;
+}
+
+// the reading view: bar, note, and the text (drawn when the text is ready)
+function readEnter(){
+  if(!VW.scroll || !VW.pdf) return;
+  var seq = VW.seq, tema = readThemeSaved();
+  var el = document.createElement('div');
+  el.className = 'vw-read vw-th-' + tema;
+  var bar = document.createElement('div');
+  bar.className = 'vw-read-bar';
+  bar.appendChild(readBtn('read-smaller', 'A−', 'Testo più piccolo'));
+  bar.appendChild(readBtn('read-bigger', 'A+', 'Testo più grande'));
+  bar.appendChild(readTema('light', 'Chiaro', tema));
+  bar.appendChild(readTema('sepia', 'Seppia', tema));
+  bar.appendChild(readTema('dark', 'Scuro', tema));
+  var nota = document.createElement('p');
+  nota.className = 'vw-read-note';
+  nota.textContent = 'In lettura tabelle e impaginazione non si vedono: per quelle usa Pagine.';
+  var body = document.createElement('div');
+  body.className = 'vw-read-body';
+  body.style.fontSize = readSizeSaved() + 'px';
+  body.textContent = 'Preparo il testo… 0%';
+  el.appendChild(bar);
+  el.appendChild(nota);
+  el.appendChild(body);
+  VW.readEl = el;
+  VW.scroll.appendChild(el);
+  viewTextLoad(function(pc){
+    if(VW.seq === seq) body.textContent = 'Preparo il testo… ' + pc + '%';
+  }).then(function(){
+    if(VW.seq === seq && VW.mode === 'read') readRender();
+  }).catch(function(e){
+    if(e && e.stale) return;
+    if(VW.seq !== seq) return;
+    body.textContent = 'Non riesco a leggere il testo di questo PDF (' + (e && e.message ? e.message : 'errore') + '). Le viste Pagine e Libro funzionano.';
+    viewSegnala('testo', e);
+  });
+}
+
+// the text, one paragraph after the other, with a «Pagina N» mark for each page
+function readRender(){
+  var body = VW.readEl && VW.readEl.querySelector('.vw-read-body');
+  if(!body || !VW.text) return;
+  body.textContent = '';
+  if(VW.textScan){
+    var avviso = document.createElement('p');
+    avviso.textContent = 'Questo PDF è una scansione: non contiene testo da mostrare in modalità lettura. Usa la vista Pagine.';
+    body.appendChild(avviso);
+    body.appendChild(readBtn('mode-pages', 'Torna a Pagine', 'Torna a Pagine'));
+    return;
+  }
+  VW.text.forEach(function(items, i){
+    var n = i + 1, segnaposto = document.createElement('div');
+    segnaposto.className = 'vw-read-pg';
+    segnaposto.setAttribute('data-n', String(n));
+    segnaposto.textContent = 'Pagina ' + n;
+    body.appendChild(segnaposto);
+    buildReadingParagraphs(items).forEach(function(testo){
+      var p = document.createElement('p');
+      p.setAttribute('data-n', String(n));
+      p.textContent = testo;
+      body.appendChild(p);
+    });
+  });
+  var seg = body.querySelector('.vw-read-pg[data-n="' + VW.page + '"]');
+  if(seg) readScrollTo(seg);
+}
+
+function readScrollTo(el){
+  VW.scroll.scrollTop += el.getBoundingClientRect().top - VW.scroll.getBoundingClientRect().top;
+}
+
+function readSize(delta){
+  var v = Math.max(16, Math.min(40, readSizeSaved() + delta));
+  try { localStorage.setItem(READ_KEY_SIZE, String(v)); }
+  catch(e){ /* no memory on this device: the size works for this time only */ }
+  var body = VW.readEl && VW.readEl.querySelector('.vw-read-body');
+  if(body) body.style.fontSize = v + 'px';
+}
+
+function readTheme(tema){
+  if(tema !== 'light' && tema !== 'sepia' && tema !== 'dark') return;
+  try { localStorage.setItem(READ_KEY_THEME, tema); }
+  catch(e){ /* no memory on this device: the theme works for this time only */ }
+  if(!VW.readEl) return;
+  VW.readEl.classList.remove('vw-th-light', 'vw-th-sepia', 'vw-th-dark');
+  VW.readEl.classList.add('vw-th-' + tema);
+  Array.prototype.forEach.call(VW.readEl.querySelectorAll('[data-vact^="theme-"]'), function(b){
+    b.setAttribute('aria-pressed', String(b.getAttribute('data-vact') === 'theme-' + tema));
+  });
+}
+
+/* ---------- Cerca nel testo ---------- */
+
+// takes off the highlights and the marks of the search; the results stay
+function findSciogli(c){
+  Array.prototype.forEach.call(c.querySelectorAll('.vw-hl'), function(h){
+    if(h.parentNode) h.parentNode.removeChild(h);
+  });
+  Array.prototype.forEach.call(c.querySelectorAll('mark'), function(m){
+    var p = m.parentNode;
+    if(!p) return;
+    p.replaceChild(document.createTextNode(m.textContent), m);
+    p.normalize();
+  });
+}
+
+function findOpen(){
+  if(VW.kind !== 'pdf' || !DOC.view) return;
+  var c = g('doc-view');
+  if(!c) return;
+  if(VW.find){ VW.find.input.focus(); return; }
+  var el = document.createElement('div');
+  el.className = 'vw-find';
+  el.setAttribute('role', 'search');
+  var input = document.createElement('input');
+  input.type = 'search';
+  input.setAttribute('aria-label', 'Cerca nel testo');
+  input.placeholder = 'Cerca nel testo';
+  var out = document.createElement('span');
+  out.className = 'vw-find-n';
+  out.setAttribute('aria-live', 'polite');
+  el.appendChild(input);
+  el.appendChild(readBtn('find-prev', '‹', 'Risultato precedente'));
+  el.appendChild(readBtn('find-next', '›', 'Risultato successivo'));
+  el.appendChild(out);
+  el.appendChild(readBtn('find-close', '×', 'Chiudi la ricerca'));
+  var bar = c.querySelector('.vw-bar');
+  if(bar) c.insertBefore(el, bar.nextSibling);
+  else c.appendChild(el);
+  VW.find = { el: el, input: input, out: out, hits: [], idx: -1, q: '' };
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      if(!VW.find) return;
+      if(input.value !== VW.find.q) findRun();
+      else findStep(e.shiftKey ? -1 : 1);
+    } else if(e.key === 'Escape'){
+      findClose();
+    }
+  });
+  input.focus();
+}
+
+// runs the search on the whole text (reading it first if needed)
+function findRun(){
+  var f = VW.find;
+  if(!f) return;
+  f.q = f.input.value;
+  var seq = VW.seq;
+  f.out.textContent = 'Preparo il testo… 0%';
+  viewTextLoad(function(pc){
+    if(VW.find === f) f.out.textContent = 'Preparo il testo… ' + pc + '%';
+  }).then(function(){
+    if(VW.seq !== seq || VW.find !== f) return;
+    if(VW.textScan){
+      f.out.textContent = 'Questo PDF non contiene testo in cui cercare.';
+      return;
+    }
+    f.hits = findMatches(VW.text.map(function(items){ return items.map(function(it){ return it.str; }); }), f.q);
+    f.idx = -1;
+    if(!f.hits.length){
+      f.out.textContent = 'Nessun risultato';
+      return;
+    }
+    f.idx = 0;
+    findShow();
+  }).catch(function(e){
+    if(e && e.stale) return;
+    if(VW.find !== f) return;
+    f.out.textContent = 'Non riesco a cercare nel testo (' + (e && e.message ? e.message : 'errore') + ').';
+    viewSegnala('cerca', e);
+  });
+}
+
+// next or previous result, round and round
+function findStep(dir){
+  var f = VW.find;
+  if(!f || !f.hits.length) return;
+  f.idx = (f.idx + dir + f.hits.length) % f.hits.length;
+  findShow();
+}
+
+// shows the current result in the mode in use
+function findShow(){
+  var f = VW.find, c = g('doc-view');
+  if(!f || !f.hits.length || !c) return;
+  var hit = f.hits[f.idx];
+  findSciogli(c);
+  f.out.textContent = (f.idx + 1) + ' di ' + f.hits.length;
+  if(VW.mode === 'read'){ findLettura(hit, f); return; }
+  if(VW.mode === 'book') bookShow(hit.page);
+  else viewGoto(hit.page);
+  findEvidenzia(hit, f);
+}
+
+// Pages and Book: a rectangle in percent of the page, from the text position at scale 1
+function findEvidenzia(hit, f){
+  var pdf = VW.pdf, seq = VW.seq;
+  if(!pdf || !VW.text) return;
+  pdf.getPage(hit.page).then(function(p){
+    if(VW.seq !== seq || VW.find !== f || VW.mode === 'read') return;
+    var box = viewPagina(hit.page), riga = VW.text[hit.page - 1];
+    var it = riga ? riga[hit.item] : null;
+    if(!box || !it) return;
+    var vp = p.getViewport({ scale: 1 });
+    var x = it.transform[4], y = it.transform[5], h = Math.max(1, Math.abs(it.transform[3]));
+    var r = vp.convertToViewportRectangle([x, y, x + it.width, y + h]);
+    var d = document.createElement('div');
+    d.className = 'vw-hl';
+    d.style.left = (Math.min(r[0], r[2]) / vp.width * 100) + '%';
+    d.style.top = (Math.min(r[1], r[3]) / vp.height * 100) + '%';
+    d.style.width = (Math.abs(r[2] - r[0]) / vp.width * 100) + '%';
+    d.style.height = (Math.abs(r[3] - r[1]) / vp.height * 100) + '%';
+    box.appendChild(d);
+  }).catch(function(e){ viewSegnala('cerca', e); });
+}
+
+// Reading: the k-th occurrence on the page of the result, else the first one, else the page mark
+function findLettura(hit, f){
+  var body = VW.readEl && VW.readEl.querySelector('.vw-read-body');
+  if(!body) return;
+  var k = 0;
+  for(var i = 0; i < f.idx; i++){
+    if(f.hits[i].page === hit.page) k++;
+  }
+  var ps = Array.prototype.slice.call(body.querySelectorAll('p[data-n="' + hit.page + '"]'));
+  var ok = findInParagrafi(ps, f.q, k) || (k > 0 && findInParagrafi(ps, f.q, 0));
+  if(!ok){
+    var seg = body.querySelector('.vw-read-pg[data-n="' + hit.page + '"]');
+    if(seg) readScrollTo(seg);
+  }
+}
+
+// true when it marks the k-th occurrence (0-based) of the query in these paragraphs
+function findInParagrafi(ps, query, k){
+  var q = normalizeForSearch(query).trim(), conta = 0;
+  if(q.length < 2) return false;
+  for(var j = 0; j < ps.length; j++){
+    var node = ps[j].firstChild;
+    if(!node || node.nodeType !== 3) continue;
+    var m = normalizeWithMap(node.nodeValue), pos = m.text.indexOf(q);
+    while(pos >= 0){
+      if(conta === k){
+        findMarca(node, m.map, pos, q.length);
+        return true;
+      }
+      conta++;
+      pos = m.text.indexOf(q, pos + q.length);
+    }
+  }
+  return false;
+}
+
+// wraps the matched text of one text node in a mark
+function findMarca(node, map, pos, len){
+  var a = map[pos], b = map[pos + len - 1] + 1;
+  var mid = node.splitText(a);
+  mid.splitText(b - a);
+  var mark = document.createElement('mark');
+  mid.parentNode.replaceChild(mark, mid);
+  mark.appendChild(mid);
+  mark.scrollIntoView({ block: 'center' });
+}
+
+// closes the search: highlights, marks, the bar and the state
+function findClose(){
+  var f = VW.find, c = g('doc-view');
+  if(c) findSciogli(c);
+  if(f && f.el && f.el.parentNode) f.el.parentNode.removeChild(f.el);
+  VW.find = null;
+}
   /* =========================================================
      SCHEDA RICHIESTA (come MyClass)  —  CONTRATTO-V6.1 par. 8.3, 8.5, 8.6, 6 + CONTRATTO-V6.2 par. 8.2-8.4
      =========================================================
@@ -7653,7 +8832,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var DIAG_SEZIONI = ['login', 'oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin'];
   var DIAG_AZIONI = ['accedi', 'pagina', 'albero', 'oggi', 'richieste', 'richiesta-aggiorna', 'richiesta-nuova', 'richiesta-letta', 'immobili', 'amministrazione',
     'notifiche', 'notifiche-lette', 'questionario-link', 'impostazioni-leggi', 'impostazioni-salva', 'richiesta-rimanda', 'note-aggiungi', 'note-elenco',
-    'campagne', 'moduli', 'cartella', 'scarica', 'verifica', 'dispositivo-rinnova', 'dispositivi-disconnetti', 'moduli-comp-salva', 'codice-richiedi', 'codice-verifica'];       // V6.8.5: + moduli-comp-salva (stessa lista dello script V29.11.0)
+    'campagne', 'moduli', 'cartella', 'scarica', 'verifica', 'dispositivo-rinnova', 'dispositivi-disconnetti', 'moduli-comp-salva', 'codice-richiedi', 'codice-verifica', 'avvisi-invia', 'avvisi-elenco', 'avvisi-ritira'];       // V6.8.5: + moduli-comp-salva (stessa lista dello script V29.11.0)
   var DIAG_TIPI = ['js', 'promessa', 'chiamata', 'ai', 'push', 'login'];
 
   var DG = { coda:[], sosp:{}, sospEv:{}, pagina:0, timer:0, ultimoPost:0, pausaFino:0, inviando:false, attendeOnline:false, chiude:false, mem:null, jit:0, memo:null };
@@ -7947,7 +9126,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     'richiesta-nuova':'nuova richiesta', 'richiesta-letta':'richiesta letta', immobili:'immobili', amministrazione:'amministrazione', notifiche:'notifiche', 'notifiche-lette':'notifiche lette',
     'questionario-link':'link del questionario', 'impostazioni-leggi':'lettura impostazioni', 'impostazioni-salva':'salvataggio impostazioni', 'richiesta-rimanda':'Rimanda del promemoria',
     'note-aggiungi':'nuova nota', 'note-elenco':'elenco note', campagne:'campagne', moduli:'moduli', cartella:'cartella', scarica:'scarico di un file', verifica:'verifica',
-    'dispositivo-rinnova':'rinnovo dell’accesso', 'dispositivi-disconnetti':'disconnessione dei dispositivi', 'codice-richiedi':'codice di accesso', 'codice-verifica':'verifica del codice', altro:'altra azione', push:'giro delle notifiche', promemoria:'promemoria', ads:'scambio Ads' };
+    'dispositivo-rinnova':'rinnovo dell’accesso', 'dispositivi-disconnetti':'disconnessione dei dispositivi', 'codice-richiedi':'codice di accesso', 'codice-verifica':'verifica del codice', 'avvisi-invia':'invio di un avviso', 'avvisi-elenco':'elenco degli avvisi', 'avvisi-ritira':'ritiro di un avviso', altro:'altra azione', push:'giro delle notifiche', promemoria:'promemoria', ads:'scambio Ads' };
   var DIAG_SEZ_PAROLE = { login:'Accesso', oggi:'Oggi', richieste:'Richieste', immobili:'Immobili', documenti:'Documenti', strumenti:'Strumenti AI', altro:'Altro',
     impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione' };
   function diagEt(k){ return DIAG_ET[k] || String(k || 'Altro'); }
@@ -9374,6 +10553,103 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   }
 
   /* =========================================================
+     AVVISI DELL'ADMIN  (solo admin: azioni 'avvisi-invia', 'avvisi-elenco', 'avvisi-ritira')
+     =========================================================
+     Scheda «Avvisi» in Amministrazione. Lo script controlla il ruolo a ogni chiamata:
+     qui si nasconde solo la scheda agli altri ruoli. */
+  var AVV = { stato:'idle', dati:[], errore:'', esito:null, ritira:null };      // stato: idle, carico, ok, errore
+  function caricaAvvisi(forza){
+    // admin only: the page state for this tab lives in AVV, not in ADM
+    if(!(U && U.ruolo === 'admin')) return Promise.resolve();
+    if(!forza && AVV.stato === 'ok') return Promise.resolve();
+    AVV.stato = 'carico';
+    return chiama('avvisi-elenco', {}).then(function(j){
+      AVV.dati = j.avvisi || []; AVV.stato = 'ok'; AVV.errore = '';
+    }).catch(function(e){
+      if(e && e.status === 401){ AVV.stato = 'idle'; return; }           // session gone: chiama() handles it, next visit retries
+      AVV.stato = 'errore'; AVV.errore = (e && e.message) || 'Errore';
+    }).then(function(){
+      if(S.sec === 'admin' && S.adm === 'avvisi') renderCorrente();
+    });
+  }
+  function avvisiListaHTML(){
+    if(AVV.stato === 'errore') return erroreBox('gli avvisi', AVV.errore);
+    if(AVV.stato === 'carico' && !AVV.dati.length) return skel(2);
+    if(!AVV.dati.length) return vuoto('Nessun avviso inviato.');
+    return AVV.dati.map(function(a){
+      return H`<div class="card rq" style="cursor:default"><div class="rq-top"><span class="rq-time">${a.data ? fmt(a.data) : ''}</span><span class="pill ${a.attiva ? 's-corso' : 's-chiusa'}">${a.attiva ? 'Attivo' : 'Ritirato'}</span></div>
+        <div class="rq-nm">${a.titolo}</div><div class="rq-msg" style="white-space:normal">${a.testo}</div>
+        <div class="rq-as">A chi: ${a.perChi}${a.link ? ' · ' + a.link : ''}</div>
+        ${a.attiva ? H`<div class="rq-act"><button class="btn sec sm" type="button" data-act="avv-ritira-chiedi" data-r="${a.riga}">Ritira</button></div>` : ''}</div>`;
+    });
+  }
+  function renderAvvisi(box){
+    if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
+    if(AVV.stato === 'idle') caricaAvvisi(false);
+    var lista = box.querySelector('#tcag-avv-lista');
+    // the form is drawn once: a redraw from a background tick must not wipe what the admin is typing
+    if(!lista){
+      put(box, H`<div class="narrow" style="max-width:900px">
+        <div class="card">
+          <p style="margin-top:0">Scrivi un avviso per gli agenti: arriva sulla campanella di chi lo riceve.</p>
+          <p><label for="tcag-avv-titolo"><b>Titolo</b></label><br><input id="tcag-avv-titolo" type="text" maxlength="80" style="width:100%;min-height:44px;font:16px var(--sans)"></p>
+          <p><label for="tcag-avv-testo"><b>Testo</b></label><br><textarea id="tcag-avv-testo" maxlength="300" rows="4" style="width:100%;font:16px var(--sans)"></textarea></p>
+          <p><label for="tcag-avv-link"><b>Link</b> (facoltativo)</label><br><input id="tcag-avv-link" type="text" placeholder="#documenti oppure https://…" style="width:100%;min-height:44px;font:16px var(--sans)"></p>
+          <p><label for="tcag-avv-per"><b>A chi</b></label><br><select id="tcag-avv-per" style="min-height:44px;font:16px var(--sans)"><option value="Tutti" selected>Tutti</option><option value="Solo agenti">Solo agenti</option><option value="Solo segreteria">Solo segreteria</option>${agentiOpzioni('')}</select></p>
+          <p style="margin-bottom:0"><button class="btn pri t16" type="button" data-act="avv-invia">Invia</button></p>
+        </div>
+        <div id="tcag-avv-lista"></div>
+      </div>`);
+      lista = box.querySelector('#tcag-avv-lista');
+    }
+    put(lista, H`${AVV.esito ? H`<p role="status" class="mut">${AVV.esito.testo}</p>` : ''}<div class="sec-h">Ultimi avvisi</div>${avvisiListaHTML()}`);
+  }
+  function avvisiInvia(btn){
+    if(!(U && U.ruolo === 'admin')) return;
+    var titolo = (g('tcag-avv-titolo').value || '').trim(), testo = (g('tcag-avv-testo').value || '').trim();
+    var link = (g('tcag-avv-link').value || '').trim(), perChi = g('tcag-avv-per').value;
+    if(!titolo){ toast('Scrivi il titolo'); return; }
+    if(btn) btn.disabled = true;
+    chiama('avvisi-invia', { titolo: titolo, testo: testo, link: link, perChi: perChi }).then(function(){
+      g('tcag-avv-titolo').value = ''; g('tcag-avv-testo').value = ''; g('tcag-avv-link').value = '';
+      AVV.esito = { ok:true, testo:'Avviso inviato.' };
+      if(btn) btn.disabled = false;
+      toast('Avviso inviato');
+      return caricaAvvisi(true);
+    }).catch(function(e){
+      if(btn) btn.disabled = false;
+      if(e && e.status === 401) return;
+      AVV.esito = { ok:false, testo:'Non inviato. ' + ((e && e.message) || 'Riprova tra poco.') };
+      toast((e && e.message) || 'Riprova tra poco.');
+      if(S.sec === 'admin' && S.adm === 'avvisi') renderCorrente();
+    });
+  }
+  function avvisiRitiraChiedi(riga){
+    if(!(U && U.ruolo === 'admin')) return;
+    var a = AVV.dati.filter(function(x){ return x.riga === riga; })[0];
+    if(!a) return;
+    AVV.ritira = { riga: a.riga, titolo: a.titolo };
+    apriFoglio(H`<h2>Ritirare l’avviso «${a.titolo}»?</h2>
+      <p>Sparisce dalla campanella di tutti. Le notifiche già arrivate sui telefoni restano.</p>
+      <div class="sheet-btns"><button class="btn pri t16" type="button" data-act="avv-ritira" data-r="${a.riga}">Sì, ritira</button><button class="btn sec t16" type="button" data-act="close-modal">No, lascia com’è</button></div>`, 'Ritira l’avviso');
+  }
+  function avvisiRitira(riga, btn){
+    if(!(U && U.ruolo === 'admin') || !AVV.ritira || AVV.ritira.riga !== riga) return;
+    if(btn) btn.disabled = true;
+    chiama('avvisi-ritira', { riga: riga, titolo: AVV.ritira.titolo }).then(function(){
+      AVV.ritira = null;
+      closeModals(); toast('Avviso ritirato');
+      caricaAvvisi(true);
+    }).catch(function(e){
+      if(btn) btn.disabled = false;
+      if(e && e.status === 401) return;
+      AVV.ritira = null;
+      closeModals(); toast((e && e.message) || 'Riprova tra poco.');
+      caricaAvvisi(true);
+    });
+  }
+
+  /* =========================================================
      AMMINISTRAZIONE  (solo segreteria e admin: azioni 'richieste' con assegnatoA, 'amministrazione')
      ========================================================= */
   var EVENTI_LOG = { aperta:'ha aperto la richiesta', stato:'ha cambiato lo stato di', nota:'ha aggiornato la nota di', contatto:'ha registrato un contatto su', assegnata:'ha assegnato', creata:'ha creato' };
@@ -9381,12 +10657,13 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     dgRiquadro('adm-diana', 'admin');                 // V6.7.2: Gestione Diana Assistant (solo admin)
     var da = (RQ.conteggi && RQ.conteggi.daAssegnare) != null ? RQ.conteggi.daAssegnare : (ADM.assegna.dati ? ADM.assegna.dati.length : 0);
     var schede = [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']];
-    if(U && U.ruolo === 'admin') schede.push(['moduli', 'Moduli compilabili']);                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
+    if(U && U.ruolo === 'admin'){ schede.push(['moduli', 'Moduli compilabili']); schede.push(['avvisi', 'Avvisi']); }                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
     put(g('adm-tabs'), schede.map(function(t){
       return H`<button class="chip" type="button" data-act="adm" data-t="${t[0]}" aria-pressed="${String(S.adm === t[0])}">${t[1]}</button>`;
     }));
     var R = ADM[S.adm], b = g('adm-body'), h;
-    if(S.adm === 'moduli'){ renderModuliComp(b); return; }                                         // V6.8.5: scheda dell'admin (04e9d)
+    if(S.adm === 'moduli'){ renderModuliComp(b); return; }
+    if(S.adm === 'avvisi'){ renderAvvisi(b); return; }                                         // V6.8.5: scheda dell'admin (04e9d)
     if(gate(b, R, 'i dati di amministrazione', 3)) return;
     if(S.adm === 'assegna'){
       h = R.dati.length ? R.dati.map(function(q){
@@ -9675,6 +10952,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       case 'adm': closePops(); S.adm = el.getAttribute('data-t'); go('admin/' + S.adm); break;
       case 'disc': disconnettiChiedi(el.getAttribute('data-e')); break;                    // V6.8.2
       case 'mc-salva': mcSalva(); break;                                                   // V6.8.5: Salva i moduli compilabili (solo admin)
+      case 'avv-invia': avvisiInvia(el); break;
+      case 'avv-ritira-chiedi': avvisiRitiraChiedi(Number(el.getAttribute('data-r'))); break;
+      case 'avv-ritira': avvisiRitira(Number(el.getAttribute('data-r')), el); break;
       case 'disc-ok': disconnettiOk(el.getAttribute('data-e'), el, false); break;
       case 'disc-blocca': disconnettiOk(el.getAttribute('data-e'), el, true); break;                    // V6.8.2 (revisione): telefono perso
       case 'refresh': closePops(); ricaricaTutto(); break;
@@ -9722,6 +11002,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       case 'doc-f': DOC.f = el.getAttribute('data-k'); renderDocumenti(); break;
       case 'doc-reset': DOC.f = 'tutto'; DOC.q = ''; renderDocumenti(); break;
       case 'compila': v = nodoDa(id); if(v) apriCompilazione(nomePulito(v.nome), v); break;
+      case 'visualizza': v = nodoDa(id); if(v) viewOpen(v); break;          // V6.10.0: opens the in-app viewer
       case 'comp-riprendi': go('documenti/compila'); break;
       case 'comp-chiudi':
         if(Object.keys(DOC.vals).length && !window.confirm('I campi che hai scritto andranno persi. Chiudere il modulo?')) break;

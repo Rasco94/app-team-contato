@@ -3,4 +3,4 @@
 Questo repository contiene SOLO i file pubblicati su https://agenti.teamcontatoremax.com (GitHub Pages). E' generato: non si modifica a mano.
 Non contiene dati, password o chiavi. I sorgenti stanno in un repository privato.
 
-Versione app: 1.3.4
+Versione app: 1.4.0
