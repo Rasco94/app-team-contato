@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build fc7dc4ba)
+  Guscio app Team Contato - V1.4.0 (build e5582463)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.11.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.12.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'fc7dc4ba', blocco: 'V6.11.0' };
+window.TC_APP = { versione: '1.4.0', build: 'e5582463', blocco: 'V6.12.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1606,6 +1606,9 @@ html.tc-guscio body{margin:0}
 #tcag .vw-find input{min-height:44px;flex:1 1 200px;font-size:16px;padding:0 10px;border:1px solid var(--bordo);border-radius:8px}
 #tcag .vw-find .btn{min-height:44px;min-width:44px}
 #tcag .vw-find-n{font-size:14px;color:var(--tenue)}
+#tcag .ren-tieni{display:flex;align-items:center;gap:12px;min-height:56px;font-size:16px;margin-top:12px;cursor:pointer}
+#tcag .ren-tieni input{width:24px;height:24px;flex:none;margin:0}
+#tcag .ren-tieni + .ren-nota{font-size:16px}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1641,7 +1644,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.11.0';
+  var VERSIONE = 'V6.12.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -7188,6 +7191,7 @@ function findClose(){
      qui dentro non c'e' nessun indirizzo, solo il percorso /ai/render): "Authorization: Bearer <sessione del portale>".
        GET  stili            elenco stili, varianti, limiti, dicitura, stato del servizio
        POST genera           { foto (base64), stile, descrizione, variante } -> 202 { id, stato, posizione }
+                     (con tieni_arredo solo se /stili ha opzioni.tieni_arredo: cancello 1.8.0)
        GET  lavoro/<id>      stato: in_coda | attesa_gpu | caricamento | in_corso | fatto | errore (ogni 3 s)
        GET  immagine/<id>    il JPEG finito, GIA' con la dicitura AI stampata dal cancello (obbligo AI Act)
      La foto si ridimensiona NEL BROWSER (lato lungo 1344 px, JPEG): il canvas butta via EXIF e posizione GPS.
@@ -7203,13 +7207,13 @@ function findClose(){
   var REN_ERR_POLL_MAX = 6;                                   // controlli falliti di fila prima di fermarsi
   var REN_STORICO_MAX = 6;
   var REN_DICITURA = "Simulazione generata con intelligenza artificiale. Non rappresenta lo stato attuale dell'immobile; arredi e finiture sono indicativi e non inclusi nella vendita.";
-  var REN_SUGG = ['pavimento in parquet di rovere', 'travi di legno a vista', 'parete in pietra naturale', 'grande finestra con luce calda',
-                  'camino in pietra', 'cucina con isola in legno', 'pareti bianche', 'arredi moderni e sobri'];
+  var REN_SUGG = ['rifai tutto l’arredo', 'divano grigio chiaro', 'tavolo in legno chiaro', 'pavimento in gres effetto legno',
+                  'pareti bianche', 'lampade a sospensione', 'tende chiare', 'piante verdi'];
   var REN_ORDINI = /^\s*(togli|togliere|metti|mettere|aggiungi|aggiungere|rimuovi|rimuovere|cambia|cambiare|elimina|eliminare|sposta|spostare|fai|fare|rendi|rendere|sostituisci|sostituire|costruisci|costruire|abbatti|abbattere)\b/i;
   var REN = {
     carico:'idle', errStili:'', stili:[], varianti:[], limiti:{ descrizione_max:300 }, serv:null, dicitura:'',
     foto:null, fotoOcc:false, fotoMsg:'',
-    stile:'', descr:'', variante:'',
+    stile:'', descr:'', variante:'', optTieni:false, tieni:false,
     fase:'form',            // form | invio | lavoro | errore | fatto
     lav:null, err:null, ris:null, storico:[], seq:0,
     timer:0, tick:0, t0:0, tentErr:0, pronto:false, ultimoImp:null, errT:0
@@ -7299,14 +7303,15 @@ function findClose(){
             <section class="card ren-passo" aria-labelledby="tcag-ren-h2">
               <h2 id="tcag-ren-h2"><span class="ren-n" aria-hidden="true">2</span>Lo stile</h2>
               <div id="tcag-ren-stili" class="ren-stili" role="group" aria-labelledby="tcag-ren-h2"><div class="skel skel-card"></div></div>
+              <label class="ren-tieni" id="tcag-ren-tieni-l" hidden><input type="checkbox" id="tcag-ren-tieni"><span>Tieni i mobili, cambia solo le finiture</span></label><p class="ren-nota" id="tcag-ren-tieni-n" hidden>Senza spunta l’AI rifà anche l’arredamento.</p>
             </section>
             <section class="card ren-passo" aria-labelledby="tcag-ren-h3">
               <h2 id="tcag-ren-h3"><span class="ren-n" aria-hidden="true">3</span>Cosa vuoi ottenere</h2>
-              <p class="ren-aiuto"><b>Descrivi come sarà alla fine</b>, non dare ordini. Scrivi «pavimento in legno chiaro», non «cambia il pavimento»: l’AI non esegue istruzioni.</p>
+              <p class="ren-aiuto"><b>Descrivi come vuoi la stanza</b>: arredi, colori, materiali. Per esempio «rifai tutto l’arredo, divano grigio chiaro, tavolo in legno chiaro».</p>
               <label class="fld big" for="tcag-ren-d"><span class="sr">Descrizione in italiano</span>
-                <textarea id="tcag-ren-d" rows="4" maxlength="300" placeholder="Es. pavimento in legno chiaro, grande finestra sul lago, pareti bianche" autocomplete="off"></textarea></label>
+                <textarea id="tcag-ren-d" rows="4" maxlength="300" placeholder="Es. rifai tutto l’arredo, divano grigio chiaro, pareti bianche" autocomplete="off"></textarea></label>
               <div class="ren-riga"><span id="tcag-ren-conta" class="ren-nota">0 / 300</span></div>
-              <p id="tcag-ren-ordini" class="ren-nota ren-ordini" role="note" hidden>Sembra un ordine. Meglio descrivere il risultato: per esempio «pavimento in legno chiaro».</p>
+              <p id="tcag-ren-ordini" class="ren-nota ren-ordini" role="note" hidden>Va bene anche così: «cambia», «metti», «rifai» li tolgo io. «Togli» e «rimuovi» invece non funzionano: l’AI non sa togliere gli oggetti.</p>
               <p class="ren-sugg-t" id="tcag-ren-sugg-t">Tocca per aggiungere:</p>
               <div id="tcag-ren-sugg" class="ren-sugg" role="group" aria-labelledby="tcag-ren-sugg-t"></div>
             </section>
@@ -7336,6 +7341,7 @@ function findClose(){
     });
     var d = g('ren-d');
     d.addEventListener('input', function(){ REN.descr = d.value; aggiornaDescr(); aggiornaGenera(); });
+    g('ren-tieni').addEventListener('change', function(ev){ REN.tieni = !!ev.target.checked; });
     // trascinare la foto sulla pagina (computer)
     var f1 = g('ren-form');
     ['dragenter', 'dragover'].forEach(function(n){ f1.addEventListener(n, function(ev){ if(renOccupato()) return; ev.preventDefault(); f1.classList.add('trascina'); }); });
@@ -7367,10 +7373,12 @@ function findClose(){
       REN.limiti = { descrizione_max: +li.descrizione_max > 0 && +li.descrizione_max <= 1000 ? Math.round(+li.descrizione_max) : 300 };
       REN.serv = j && j.servizio && typeof j.servizio === 'object' ? { attivo: j.servizio.attivo !== false, in_coda: +j.servizio.in_coda || 0, attesa: +j.servizio.attesa_stimata_s || 0 } : { attivo:true, in_coda:0, attesa:0 };
       REN.dicitura = typeof j.dicitura === 'string' && j.dicitura.length > 20 && j.dicitura.length <= 400 ? j.dicitura : REN_DICITURA;
+      REN.optTieni = !!(j && j.opzioni && j.opzioni.tieni_arredo === true);
+      if(!REN.optTieni) REN.tieni = false;
       if(REN.stile && !REN.stili.some(function(s){ return s.id === REN.stile; })) REN.stile = '';
       if(!REN.variante || !REN.varianti.some(function(v){ return v.id === REN.variante; })) REN.variante = REN.varianti.length ? REN.varianti[0].id : '';
       REN.carico = 'ok'; REN.pronto = true;
-      disegnaStili(); disegnaVarianti(); disegnaSugg();
+      disegnaStili(); disegnaTieni(); disegnaVarianti(); disegnaSugg();
       var d = g('ren-d'); if(d) d.maxLength = REN.limiti.descrizione_max;
       aggiornaRender();
     }).catch(function(e){
@@ -7385,6 +7393,12 @@ function findClose(){
     put(el, REN.stili.map(function(s){
       return H`<button class="ren-stile" type="button" aria-pressed="${s.id === REN.stile ? 'true' : 'false'}" data-act="ren-stile" data-id="${s.id}"><span class="rs-n">${s.nome}</span>${s.aiuto ? H`<span class="rs-a">${s.aiuto}</span>` : ''}</button>`;
     }));
+  }
+  function disegnaTieni(){
+    if(!g('ren-tieni-l')) return;
+    g('ren-tieni-l').hidden = !REN.optTieni;
+    g('ren-tieni-n').hidden = !REN.optTieni;
+    g('ren-tieni').checked = !!REN.tieni;
   }
   function disegnaVarianti(){
     var el = g('ren-var'); if(!el) return;
@@ -7516,6 +7530,7 @@ function findClose(){
     // stile e qualità non si cambiano mentre si lavora
     $$('#tcag-ren-stili button, #tcag-ren-var button, #tcag-ren-sugg button').forEach(function(x){ x.disabled = occ; });
     g('ren-d').disabled = occ;
+    var tc = g('ren-tieni'); if(tc) tc.disabled = occ;
   }
   function aggiornaRender(){
     var av = g('ren-stato'); if(!av) return;
@@ -7557,7 +7572,7 @@ function findClose(){
   }
   function renGenera(imp){
     if(renOccupato()) return;                                   // niente doppio invio (doppio tocco, Invio ripetuto)
-    imp = imp || { foto:REN.foto && REN.foto.blob, w:REN.foto && REN.foto.w, h:REN.foto && REN.foto.h, stile:REN.stile, descr:REN.descr, variante:REN.variante };
+    imp = imp || { foto:REN.foto && REN.foto.blob, w:REN.foto && REN.foto.w, h:REN.foto && REN.foto.h, stile:REN.stile, descr:REN.descr, variante:REN.variante, tieni: REN.optTieni && REN.tieni };
     if(!imp.foto || !imp.stile || !REN.pronto) return;
     var seq = ++REN.seq;
     REN.ultimoImp = imp; REN.err = null; REN.ris = null; REN.lav = null; REN.tentErr = 0;
@@ -7565,7 +7580,9 @@ function findClose(){
     aggiornaRender(); renVaiAllOut();
     renBase64(imp.foto).then(function(b64){
       if(seq !== REN.seq) return;
-      return renChiama('/genera', { metodo:'POST', corpo: JSON.stringify({ foto:b64, stile:imp.stile, descrizione:String(imp.descr || '').trim(), variante:imp.variante || '' }) }, REN_T_INVIO)
+      var corpo = { foto:b64, stile:imp.stile, descrizione:String(imp.descr || '').trim(), variante:imp.variante || '' };
+      if(REN.optTieni) Object.assign(corpo, { tieni_arredo: !!imp.tieni });
+      return renChiama('/genera', { metodo:'POST', corpo: JSON.stringify(corpo) }, REN_T_INVIO)
         .then(function(j){
           if(seq !== REN.seq) return;
           if(!j || typeof j.id !== 'string' || !/^[A-Za-z0-9_-]{8,64}$/.test(j.id)) throw renErrore('Qualcosa non ha funzionato. Riprova.', 500);
@@ -7768,7 +7785,7 @@ function findClose(){
     } else {
       h = H`<div class="card ren-vuoto"><h2>Qui vedrai il risultato</h2><p class="ren-aiuto">Scegli la foto e lo stile, poi premi «Genera il render». Ci vogliono circa un minuto e un quarto.</p>
         <h3 class="ren-cons-t">Per un risultato migliore</h3>
-        <ul class="ren-cons"><li>Inquadra tutta la stanza, con pareti e soffitto.</li><li>Luce accesa, foto ferma e a fuoco.</li><li>Niente persone e niente documenti dei clienti nella foto.</li><li>Descrivi il risultato («pavimento in legno chiaro»), non dare ordini.</li><li>È una simulazione: arredi e finiture sono indicativi.</li></ul></div>`;
+        <ul class="ren-cons"><li>Inquadra tutta la stanza, con pareti e soffitto.</li><li>Luce accesa, foto ferma e a fuoco.</li><li>Niente persone e niente documenti dei clienti nella foto.</li><li>Scegli lo stile e scrivi cosa vuoi: arredi, colori, materiali.</li><li>È una simulazione: arredi e finiture sono indicativi.</li></ul></div>`;
     }
     var storico = REN.storico.length ? H`<div class="card ren-storico"><h2>I tuoi render di oggi</h2><p class="ren-nota">Restano solo finché tieni aperta l’app.</p><div class="ren-sto-l">${REN.storico.map(function(v, i){
       return H`<button class="ren-sto${REN.ris === v ? ' on' : ''}" type="button" data-act="ren-storico" data-i="${i}" aria-label="Apri il render delle ${v.ora}${v.stile ? ', ' + v.stile : ''}"><img src="${v.dopo}" alt="" loading="lazy"><span class="ren-sto-n">${v.stile || 'Render'}</span><span class="ren-sto-o">${v.ora}</span></button>`;
