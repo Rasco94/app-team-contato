@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build e5582463)
+  Guscio app Team Contato - V1.4.0 (build d4b6c917)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.12.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.13.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'e5582463', blocco: 'V6.12.0' };
+window.TC_APP = { versione: '1.4.0', build: 'd4b6c917', blocco: 'V6.13.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -173,7 +173,7 @@ html.tc-guscio body{margin:0}
         <button class="ib" type="button" data-act="notif" title="Notifiche" aria-label="Notifiche" aria-haspopup="true" aria-expanded="false"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#tci-bell"/></svg><span class="bdg abs" id="tcag-b-notif" hidden>0</span></button>
         <button class="ib imp" type="button" id="tcag-imp-gear" data-act="go" data-h="impostazioni" title="Impostazioni" aria-label="Impostazioni"><svg class="i" width="20" height="20" aria-hidden="true"><use href="#tci-gear"/></svg></button>
         <button class="acct" type="button" data-act="acct" aria-haspopup="true" aria-expanded="false" aria-label="Account"><span class="avatar" id="tcag-av1">?</span><span class="nm" id="tcag-acct-nm"></span><span class="role" id="tcag-acct-role"></span></button>
-        <button class="ib" type="button" id="tcag-gear" data-act="admin-menu" hidden title="Amministrazione" aria-label="Amministrazione" aria-haspopup="menu" aria-expanded="false"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#tci-shield"/></svg></button>
+        <button class="ib adm" type="button" id="tcag-gear" data-act="go" data-h="admin" hidden title="Amministrazione" aria-label="Amministrazione"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#tci-shield"/></svg><span class="adm-l">Amministrazione</span><span class="bdg abs" id="tcag-b-assegna" hidden>0</span></button>
         <button class="out" type="button" data-act="logout" title="Esci" aria-label="Esci"><svg class="i" width="16" height="16" aria-hidden="true"><use href="#tci-logout"/></svg><span>Esci</span></button>
       </div>
       <div class="dl" aria-live="polite"><i></i><span></span></div>
@@ -271,7 +271,6 @@ html.tc-guscio body{margin:0}
           <div class="sec-head"><div><div class="sub">Informazioni e strumenti di supporto</div><h1 class="sec-t" id="tcag-t-altro">Altro</h1></div></div>
           <button class="acc-link" type="button" data-act="go" data-h="strumenti" style="margin-bottom:12px"><span><svg class="i" width="20" height="20"><use href="#tci-sparkles"/></svg>Strumenti AI<svg class="i" width="18" height="18" style="margin-left:auto"><use href="#tci-right"/></svg></span></button>
           <button class="acc-link sempre" type="button" id="tcag-camp-link" data-act="go" data-h="campagne" style="margin-bottom:12px"><span><svg class="i" width="22" height="22" aria-hidden="true"><use href="#tci-chart"/></svg><span class="acc-txt"><span class="acc-t">Campagne Google</span><span class="acc-s">Quante richieste arrivano dalle pubblicità</span></span><svg class="i" width="18" height="18" style="margin-left:auto" aria-hidden="true"><use href="#tci-right"/></svg></span></button>
-          <button class="acc-link sempre" type="button" id="tcag-diana-link" data-act="go" data-h="diana" style="margin-bottom:12px" hidden><span><svg class="i" width="22" height="22" aria-hidden="true"><use href="#tci-chat-spark"/></svg><span class="acc-txt"><span class="acc-t">Gestione Diana Assistant</span><span class="acc-s">Personalità, documenti, interruttori e testi (solo amministratore)</span></span><svg class="i" width="18" height="18" style="margin-left:auto" aria-hidden="true"><use href="#tci-right"/></svg></span></button>
           <div class="altro-grid" id="tcag-altro-grid">
             <div class="card cookie-box" id="tcag-cookie-box" hidden><h2>Privacy e cookie</h2><p class="mut" style="margin:0 0 12px">Scegli quali cookie accettare sul sito.</p><button class="btn pri big" type="button" data-act="cookie-pref"><svg class="i" width="20" height="20" aria-hidden="true"><use href="#tci-shield"/></svg>Preferenze cookie</button></div>
           </div>
@@ -281,7 +280,6 @@ html.tc-guscio body{margin:0}
       <section id="tcag-s-impostazioni" class="sec" hidden aria-labelledby="tcag-t-imp">
         <div class="wrap">
           <div class="sec-head"><div><div class="sub">Valgono solo per te, su tutti i tuoi dispositivi</div><h1 class="sec-t" id="tcag-t-imp">Impostazioni</h1></div></div>
-          <div id="tcag-imp-diana" hidden></div>
           <div id="tcag-imp-body"></div>
         </div>
       </section>
@@ -331,16 +329,9 @@ html.tc-guscio body{margin:0}
       <button class="it" type="button" data-act="refresh"><svg class="i" width="16" height="16"><use href="#tci-clock"/></svg>Aggiorna dati</button>
       <div class="only-phone-flex" id="tcag-pa-adm" style="flex-direction:column" hidden><hr>
         <div class="info" style="padding-bottom:0"><b>Amministrazione</b></div>
-        <button class="it" type="button" data-act="adm" data-t="assegna"><svg class="i" width="16" height="16"><use href="#tci-user"/></svg>Da assegnare</button>
-        <button class="it" type="button" data-act="adm" data-t="accessi"><svg class="i" width="16" height="16"><use href="#tci-key"/></svg>Accessi Portale</button>
-        <button class="it" type="button" data-act="adm" data-t="log"><svg class="i" width="16" height="16"><use href="#tci-list"/></svg>Log accessi ai lead</button><hr></div>
+        <button class="it" type="button" data-act="go" data-h="admin"><svg class="i" width="16" height="16"><use href="#tci-shield"/></svg>Amministrazione</button><hr></div>
       <button class="it only-phone-flex" type="button" data-act="logout" style="color:var(--rosso)"><svg class="i" width="16" height="16"><use href="#tci-logout"/></svg>Esci</button>
       <div class="ver" id="tcag-pa-ver"></div>
-    </div>
-    <div class="pop" id="tcag-pop-admin" role="menu" aria-label="Amministrazione" hidden style="width:288px">
-      <button class="it" role="menuitem" type="button" data-act="adm" data-t="assegna"><svg class="i" width="16" height="16"><use href="#tci-user"/></svg>Da assegnare<span class="bdg" id="tcag-b-assegna" hidden>0</span></button>
-      <button class="it" role="menuitem" type="button" data-act="adm" data-t="accessi"><svg class="i" width="16" height="16"><use href="#tci-key"/></svg>Accessi Portale</button>
-      <button class="it" role="menuitem" type="button" data-act="adm" data-t="log"><svg class="i" width="16" height="16"><use href="#tci-list"/></svg>Log accessi ai lead</button>
     </div>
     <div class="pop" id="tcag-pop-notif" role="dialog" aria-label="Notifiche" hidden style="width:380px"></div>
     <div class="pop" id="tcag-pop-state" role="menu" aria-label="Cambia stato" hidden style="width:260px"></div>
@@ -1609,6 +1600,11 @@ html.tc-guscio body{margin:0}
 #tcag .ren-tieni{display:flex;align-items:center;gap:12px;min-height:56px;font-size:16px;margin-top:12px;cursor:pointer}
 #tcag .ren-tieni input{width:24px;height:24px;flex:none;margin:0}
 #tcag .ren-tieni + .ren-nota{font-size:16px}
+#tcag .ib.adm{width:auto;padding:0 10px;gap:6px;font:500 14px var(--sans)}
+#tcag .ib.adm .adm-l{white-space:nowrap}
+@media (max-width:1099px){#tcag .ib.adm{width:40px;padding:0}
+#tcag .ib.adm .adm-l{display:none}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1644,7 +1640,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.12.0';
+  var VERSIONE = 'V6.13.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2715,9 +2711,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       g('av1').textContent = U.iniziali || iniziali(U.nome); g('av2').textContent = U.iniziali || iniziali(U.nome);
       g('acct-nm').textContent = U.nome || ''; g('acct-role').textContent = '(' + ruoloEt() + ')';
     }
-    g('gear').hidden = !staff();
+    g('gear').hidden = !(U && U.ruolo === 'admin');   // V6.13.0: the shield is admin-only
     g('imp-gear').classList.toggle('on', sec === 'impostazioni');
     if(sec === 'impostazioni') g('imp-gear').setAttribute('aria-current', 'page'); else g('imp-gear').removeAttribute('aria-current');
+    g('gear').classList.toggle('on', sec === 'admin');
+    if(sec === 'admin') g('gear').setAttribute('aria-current', 'page'); else g('gear').removeAttribute('aria-current');
     var da = staff() ? contatoriVista().daAssegnare : null, ba = g('b-assegna');
     ba.textContent = da || 0; ba.hidden = !da;
     var titoli = { oggi:'Oggi', richieste: sub ? sub + ' | Scheda richiesta' : 'Richieste', immobili:'Immobili', documenti: sub === 'compila' ? 'Compila modulo' : sub === 'vedi' ? 'Visualizza' : 'Documenti', strumenti: STR_TITOLI[sub] || 'Strumenti AI', altro:'Altro', impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione', diana:'Gestione Diana Assistant' };
@@ -7925,7 +7923,6 @@ function findClose(){
   function renderAltro(){
     cercaCookie();
     g('cookie-box').hidden = !COOKIE.el;
-    g('diana-link').hidden = !(U && U.ruolo === 'admin');         // V6.7: Gestione Diana Assistant solo per l'admin
   }
   function cookiePref(){
     cercaCookie();                               // la pillola nasce e sparisce con le scelte: si cerca sempre al momento del clic
@@ -8169,7 +8166,6 @@ function findClose(){
     return H`<button class="sw" type="button" role="switch" aria-checked="${String(!!on)}" data-act="imp-toggle" data-k="${k}" ${spento ? 'disabled' : ''}><span class="sw-t">${testo}</span><span class="sw-st">${on ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button>`;
   }
   function renderImpostazioni(forza){
-    dgRiquadro('imp-diana', 'impostazioni');          // V6.7.2: Gestione Diana Assistant (solo admin), anche se le impostazioni non si caricano
     var box = g('imp-body');
     if(!IMP.ok){ if(gate(box, IMP, 'le impostazioni', 3)) return; }
     if(!IMP.bozza) return;
@@ -10324,8 +10320,8 @@ function findClose(){
     var sv = st.servizio && typeof st.servizio === 'object' ? st.servizio : {}, tipi = Array.isArray(sv.tipi) ? sv.tipi : [];
     var vis = sv.visione === 'libera' ? 'libera' : (sv.visione === 'occupata' ? 'occupata (un render usa la scheda video: si legge senza AI)' : (sv.visione === 'spenta' ? 'spenta' : 'non indicata'));
     return H`<ul class="dg-elenco">
-        <li>Servizio di lettura: ${dgSiNo(sv.raggiungibile === true, 'Raggiungibile', 'Non raggiungibile')}</li>
-        <li>Versione del servizio: <b>${typeof sv.versione === 'string' ? sv.versione : 'non indicata'}</b></li>
+        <li>Servizio di lettura documenti (moduli-ai): ${dgSiNo(sv.raggiungibile === true, 'Raggiungibile', 'Non raggiungibile')}</li>
+        <li>Versione del servizio di lettura (moduli-ai): <b>${typeof sv.versione === 'string' ? sv.versione : 'non indicata'}</b></li>
         <li>Aiuto dell’AI per i casi dubbi: <b>${vis}</b></li>
         <li>Documenti che sa leggere: <b>${tipi.length ? tipi.map(function(t){ return PRE_TIPO_NOME[t] || t; }).join(', ') : 'non indicati'}</b></li>
         <li>Interruttore sul server: ${dgSiNo(st.attivo === true, 'Acceso', 'Spento')}</li></ul>
@@ -10777,7 +10773,7 @@ function findClose(){
     g('pa-nm').textContent = (U && U.nome) || ''; g('pa-mail').textContent = (U && U.email) || '';
     g('pa-role').textContent = ruoloEt();
     g('pa-sess').textContent = !sessione ? '' : sessione.d && Number(sessione.tetto) > 0 ? 'Dispositivo ricordato. Nuovo accesso con Google entro il ' + F_DATA.format(new Date(sessione.tetto)) + '.' : 'Sessione valida fino alle ' + F_ORA.format(new Date(sessione.scade));
-    g('pa-adm').hidden = !staff();
+    g('pa-adm').hidden = !(U && U.ruolo === 'admin');
     g('pa-ver').textContent = 'Area Agenti ' + VERSIONE + (OGGI.dati && OGGI.dati.versioneScript ? ' · script ' + OGGI.dati.versioneScript : '');
     openPop('pop-acct', anchor);
   }
@@ -10895,7 +10891,7 @@ function findClose(){
     if(!el){ if(openPopId && !e.target.closest('.pop')) closePops(); return; }
     var a = el.getAttribute('data-act'), id = el.getAttribute('data-id');
     if(el.tagName === 'SELECT' || el.tagName === 'INPUT') return;
-    if(openPopId && !el.closest('.pop') && a !== 'acct' && a !== 'notif' && a !== 'admin-menu' && a !== 'state-menu') closePops();
+    if(openPopId && !el.closest('.pop') && a !== 'acct' && a !== 'notif' && a !== 'state-menu') closePops();
     var x, v;
     if(a.indexOf('dg-') === 0){ if(U && U.ruolo === 'admin') dgClic(a, el); return; }          // V6.7: Gestione Diana Assistant (solo admin; il cancello controlla comunque)
     if(a.indexOf('pre-') === 0){ preClic(a, el); return; }                                       // V6.8: Precompila con AI nei moduli PDF
@@ -10965,7 +10961,6 @@ function findClose(){
       case 'cookie-pref': cookiePref(); break;
       case 'camp-agg': caricaCamp(); break;
       case 'acct': apriAccount(el); break;
-      case 'admin-menu': openPop('pop-admin', el); break;
       case 'adm': closePops(); S.adm = el.getAttribute('data-t'); go('admin/' + S.adm); break;
       case 'disc': disconnettiChiedi(el.getAttribute('data-e')); break;                    // V6.8.2
       case 'mc-salva': mcSalva(); break;                                                   // V6.8.5: Salva i moduli compilabili (solo admin)
