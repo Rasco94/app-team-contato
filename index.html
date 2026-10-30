@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 5f5e413d)
+  Guscio app Team Contato - V1.4.0 (build eec6b7a8)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.14.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.15.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '5f5e413d', blocco: 'V6.14.0' };
+window.TC_APP = { versione: '1.4.0', build: 'eec6b7a8', blocco: 'V6.15.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -262,6 +262,7 @@ html.tc-guscio body{margin:0}
           <div id="tcag-str-hub" class="hub"></div>
           <div id="tcag-str-precompila" class="str-page" hidden></div>
           <div id="tcag-str-render" class="str-page" hidden></div>
+          <div id="tcag-str-bp" class="str-page" hidden></div>
           <div id="tcag-str-assistente" class="str-page" hidden></div>
         </div>
       </section>
@@ -1617,6 +1618,36 @@ html.tc-guscio body{margin:0}
 #tcag .bpa-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 @media (max-width:640px){#tcag .bpa-riga{grid-template-columns:1fr}
 }
+#tcag .hub-bp{text-align:left;width:100%;min-height:44px}
+#tcag .bp-pagina{display:flex;flex-direction:column;gap:16px;max-width:900px}
+#tcag .bp-pagina button,
+#tcag .bp-pagina .btn,
+#tcag .hub-bp{min-height:44px}
+#tcag .bp-pagina input,
+#tcag .bp-pagina select,
+#tcag .bp-pagina textarea{font-size:16px;min-height:44px}
+#tcag .bp-blocco{border:1px solid var(--bordo);border-radius:12px;padding:16px}
+#tcag .bp-titolo{font-size:18px;font-weight:600}
+#tcag .bp-lista{display:flex;flex-direction:column;gap:8px}
+#tcag .bp-riga{display:flex;align-items:center;gap:12px;min-height:44px;padding:12px;width:100%;text-align:left}
+#tcag .bp-stato{font:600 14px var(--sans)}
+#tcag .bp-stato-ok{color:var(--verde)}
+#tcag .bp-stato-err{color:var(--rosso)}
+#tcag .bp-doc{display:flex;flex-direction:column;gap:8px}
+#tcag .bp-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .bp-manca{border:1px solid var(--bordo);border-radius:12px;padding:16px}
+#tcag .bp-campo{display:block}
+#tcag .bp-unita-righe{display:flex;flex-direction:column;gap:8px}
+#tcag .bp-unita-riga{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:center}
+#tcag .bp-ver{font-weight:600}
+#tcag .bp-azioni{display:flex;flex-wrap:wrap;gap:8px}
+#tcag .bp-err{color:var(--rosso);min-height:0}
+#tcag .bp-nota{color:var(--tenue);font-size:14px}
+#tcag .bp-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+@media (max-width:639px){#tcag .bp-unita-riga{grid-template-columns:1fr}
+#tcag .bp-riga{flex-direction:column;align-items:flex-start}
+#tcag .bp-azioni>*{width:100%}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1652,7 +1683,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.14.0';
+  var VERSIONE = 'V6.15.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2627,8 +2658,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var NAV = [['oggi', 'Oggi', 'calendar'], ['richieste', 'Richieste', 'inbox'], ['immobili', 'Immobili', 'home'],
              ['documenti', 'Documenti', 'folder'], ['strumenti', 'Strumenti AI', 'sparkles'], ['altro', 'Altro', 'more']];
   var SECS = ['oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin', 'diana'];
-  var STR_SUB = ['precompila', 'render', 'assistente'];
-  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant' };
+  var STR_SUB = ['precompila', 'render', 'assistente', 'bp'];
+  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant', bp:'Business plan' };
   var RE_ID = /^(RC|OM|CG|VA|TE)-\d{4,6}$/;
   function buildNav(){
     put(g('mainnav'), NAV.map(function(n){
@@ -6372,9 +6403,11 @@ function findClose(){
       tr.textContent = rOff ? 'In manutenzione' : 'Attivo'; tr.classList.toggle('ok', !rOff);
     }
     ritocchiHubDiana();
+    ritocchiHubBp();
     preStrumenti();                       // V6.8: il riquadro Precompila dice «Attivo» quando l'admin accende lo strumento
     if(sub === 'assistente') renderAssistente();
     if(sub === 'render') renderRender();
+    if(sub === 'bp') renderBp();
   }
 
   /* ---------- DIANA ASSISTANT: nome, testo legale, guida, benvenuto, domande, interruttori (V6.7, CONTRATTO-V6.7 par. 6.2 e 9.1) ----------
@@ -6445,6 +6478,7 @@ function findClose(){
       nome: dianaStr(j.nome, 40) || DIANA_NOME,
       assistente: { attivo: as.attivo !== false, messaggio: dianaStr(as.messaggio, 300) },
       render: { attivo: rn.attivo !== false, messaggio: dianaStr(rn.messaggio, 300) },
+      bp: { attivo: (j.bp && j.bp.attivo) === true, messaggio: dianaStr(j.bp && j.bp.messaggio, 300) },
       benvenuto: { titolo: dianaStr(be.titolo, 60) || DIANA_BENV.titolo, testo: dianaStr(be.testo, 300) || DIANA_BENV.testo },
       domande: dom,
       testi: { avviso_legale: dianaStr(te.avviso_legale, 1200) || DIANA_LEGALE, guida_titolo: dianaStr(te.guida_titolo, 60) || DIANA_GUIDA_TITOLO, guida: dianaStr(te.guida, 4000) || DIANA_GUIDA },
@@ -6513,6 +6547,20 @@ function findClose(){
     var nm = $('.hub-t', t), so = $('.soon', t), off = dianaAssistenteSpento();
     if(nm && nm.textContent !== dianaNome()) nm.textContent = dianaNome();
     if(so){ so.textContent = off ? 'In manutenzione' : 'Attivo'; so.classList.toggle('ok', !off); }
+  }
+  // V6.15.0: the Business plan card in the hub (added here when the reserved page does not have it)
+  function ritocchiHubBp(){
+    var hub = g('str-hub'); if(!hub) return;
+    var t = $('#tcag-str-hub [data-h="strumenti/bp"]');
+    if(!t){
+      var d = document.createElement('div');
+      put(d, H`<button class="hub-tile hub-bp" type="button" data-act="go" data-h="strumenti/bp"><span class="hub-t">Business plan</span><span class="hub-d">Pratiche, documenti e versioni del business plan</span><span class="soon">In arrivo</span></button>`);
+      t = d.firstChild;
+      if(t) hub.appendChild(t);
+    }
+    if(!t) return;
+    var so = $('.soon', t), on = !!(DI.dati && DI.dati.bp && DI.dati.bp.attivo === true);
+    if(so){ so.textContent = on ? 'Attivo' : 'In arrivo'; so.classList.toggle('ok', on); }
   }
 
   /* ---------- il testo dell'AI: mini-renderer sicuro (solo nodi DOM) ---------- */
@@ -7886,6 +7934,506 @@ function findClose(){
     aggiornaRender();
     clearInterval(REN.tick); REN.tick = setInterval(renTick, 1000);
     renPoll(REN.seq);
+  }
+  /* =========================================================
+     BUSINESS PLAN FOR AGENTS (V6.15.0, epic T-MVUQGFOX, part 1)
+     =========================================================
+     Page #strumenti/bp. Talks to the AI gateway: the origin comes from AI_URL, never written here,
+     and only the practice routes under /ai/bp/ are used. Authorization: Bearer <portal session>.
+     State lives in memory only (var BP): nothing is kept on the device.
+     Server text is data: it is written only with H`` / put() or textContent. */
+  var BP_MAX_FILE = 31457280;
+  var BP_TIPI = ['application/pdf', 'image/jpeg', 'image/png'];
+  var BP_POLL_MS = 5000;
+  var BP_POLL_MAX = 360;
+  var BP_T_API = 30000;
+  var BP_T_CARICA = 180000;
+  var BP = { lista:ris(), aperta:'', vista:ris(), modulo:null, carico:null, poll:0, pollN:0, msg:null };
+  var bpModVol = null, bpModFatto = false;
+
+  // a tab that comes back to the front resumes polling only if this page shows a practice that still has work
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden && S.sec === 'strumenti' && S.sub === 'bp' && BP.aperta && bpServeGiro()) bpAvviaGiro();
+  });
+
+  function bpBase(){
+    try { return new URL(AI_URL).origin + '/ai/bp/'; } catch(e){ return ''; }
+  }
+  function bpTestoStato(st){
+    if(!st) return 'Non riesco a collegarmi. Controlla la connessione.';
+    if(st === 503) return 'Il Business plan è spento o non raggiungibile. Riprova più tardi.';
+    if(st === 429) return 'Troppe richieste: aspetta un momento e riprova.';
+    if(st === 413) return 'Il file è troppo grande (massimo 30 MB).';
+    if(st === 415) return 'Salva come PDF, JPG o PNG.';
+    if(st === 403) return 'Non hai il permesso di usare il Business plan.';
+    if(st === 404) return 'La pratica non c’è più.';
+    return 'Qualcosa non ha funzionato. Riprova.';
+  }
+  // one call to the gateway: resolves with the JSON (or { blob } when opz.come is 'blob'), rejects with { http, codice, testo, manca? }
+  function bpApi(metodo, percorso, corpo, opz){
+    opz = opz || {};
+    var base = bpBase();
+    if(!base) return Promise.reject({ http:0, codice:'', testo:'Lo strumento non è configurato.' });
+    var ctl = window.AbortController ? new AbortController() : null, scaduto = false;
+    var tm = setTimeout(function(){ scaduto = true; if(ctl) ctl.abort(); }, opz.tempo || BP_T_API);
+    var h = { 'Authorization':'Bearer ' + (sessione ? sessione.s : '') }, body = undefined;
+    if(corpo instanceof Blob){ body = corpo; h['Content-Type'] = opz.tipo || 'application/octet-stream'; }
+    else if(corpo !== null && corpo !== undefined){ body = JSON.stringify(corpo); h['Content-Type'] = 'application/json'; }
+    return fetch(base + percorso, { method:metodo, headers:h, body:body, signal:ctl ? ctl.signal : undefined, cache:'no-store' })
+      .then(function(risp){
+        if(risp.status === 401){
+          esci('La sessione è scaduta: accedi di nuovo.');
+          throw { http:401, codice:'', testo:'La sessione è scaduta: accedi di nuovo.' };
+        }
+        if(risp.ok){
+          if(opz.come === 'blob') return risp.blob().then(function(b){ return { blob:b }; });
+          return risp.json();
+        }
+        return risp.json().catch(function(){ return null; }).then(function(j){
+          var det = j && j.detail && typeof j.detail === 'object' ? j.detail : {};
+          var e = { http:risp.status, codice: typeof det.codice === 'string' ? det.codice.slice(0, 60) : '', testo: dianaStr(det.messaggio, 600) || bpTestoStato(risp.status) };
+          if(Array.isArray(det.manca)) e.manca = det.manca;
+          throw e;
+        });
+      })
+      .then(function(v){ clearTimeout(tm); return v; }, function(e){
+        clearTimeout(tm);
+        if(e && e.http !== undefined) throw e;
+        throw { http:0, codice: scaduto ? 'timeout' : 'rete', testo: scaduto ? 'Il servizio ci mette troppo. Riprova.' : 'Non riesco a collegarmi. Controlla la connessione.' };
+      });
+  }
+  function bpSpento(){ return !DI.dati || !DI.dati.bp || DI.dati.bp.attivo !== true; }
+  // Italian number: 250.000 -> 250000, 1,5 -> 1.5, 1.234,56 -> 1234.56; anything else -> null
+  function bpNumero(t){
+    var s = String(t == null ? '' : t).replace(/\s/g, '').replace(/€/g, '');
+    if(!s) return null;
+    if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) s = s.replace(/\./g, '').replace(',', '.');
+    else if(/^\d+(,\d+)?$/.test(s)) s = s.replace(',', '.');
+    else if(!/^\d+(\.\d+)?$/.test(s)) return null;
+    var n = Number(s);
+    return isFinite(n) ? n : null;
+  }
+  function bpConta(x){ return Array.isArray(x) ? x.length : (typeof x === 'number' ? x : 0); }
+  function bpChiusa(){ return !!(BP.vista.dati && BP.vista.dati.stato === 'chiusa'); }
+  function bpListaVecchia(){ BP.lista.stato = 'idle'; BP.lista.ok = false; }
+  function bpAvvisa(testo){
+    BP.msg = { tipo:'err', testo: BP.msg && BP.msg.tipo === 'err' && BP.msg.testo ? BP.msg.testo + ' ' + testo : testo };
+  }
+
+  /* ---------- loading ---------- */
+  function bpCaricaLista(forza){
+    if(BP.lista.vol) return BP.lista.vol;
+    if(BP.lista.ok && !forza) return Promise.resolve();
+    BP.lista.stato = 'car';
+    BP.lista.vol = bpApi('GET', 'pratica', null).then(function(j){
+      BP.lista.dati = j; BP.lista.ok = true; BP.lista.stato = 'ok'; BP.lista.err = ''; BP.lista.agg = Date.now();
+    }, function(e){
+      BP.lista.stato = BP.lista.ok ? 'ok' : 'err'; BP.lista.err = e.testo || 'Errore';
+    }).then(function(){ BP.lista.vol = null; renderBp(true); });
+    return BP.lista.vol;
+  }
+  function bpCaricaVista(forza){
+    if(!BP.aperta) return Promise.resolve();
+    if(BP.vista.vol) return BP.vista.vol;
+    if(BP.vista.ok && !forza) return Promise.resolve();
+    var id = BP.aperta;
+    BP.vista.stato = BP.vista.ok ? 'ok' : 'car';
+    BP.vista.vol = bpApi('GET', 'pratica/' + encodeURIComponent(id), null).then(function(j){
+      if(BP.aperta !== id) return;
+      BP.vista.dati = j; BP.vista.ok = true; BP.vista.stato = 'ok'; BP.vista.err = ''; BP.vista.agg = Date.now();
+    }, function(e){
+      if(BP.aperta !== id) return;
+      BP.vista.stato = 'err'; BP.vista.err = e.testo || 'Errore';
+    }).then(function(){ if(BP.aperta === id) BP.vista.vol = null; renderBp(true); });
+    return BP.vista.vol;
+  }
+  function bpCaricaModulo(){
+    if(BP.modulo || bpModFatto || bpModVol) return;
+    bpModVol = bpApi('GET', 'modulo', null).then(function(j){
+      var m = {};
+      (j && Array.isArray(j.passi) ? j.passi : []).forEach(function(p){
+        (p && Array.isArray(p.campi) ? p.campi : []).forEach(function(c){
+          if(c && typeof c.campo === 'string') m[c.campo] = c;
+        });
+      });
+      BP.modulo = m;
+    }, function(){ BP.modulo = null; })
+      .then(function(){ bpModVol = null; bpModFatto = true; renderBp(true); });
+  }
+
+  /* ---------- page ---------- */
+  function renderBp(forza){
+    var host = g('str-bp');
+    if(!host) return;
+    if(!forza){
+      var a = document.activeElement;
+      if(a && host.contains(a) && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)) return;
+    }
+    if(!DI.ok) dianaCarica(false);
+    if(bpSpento()){
+      bpFermaGiro();
+      put(host, H`<div class="bp-pagina"><p class="bp-nota">${(DI.dati && DI.dati.bp && DI.dati.bp.messaggio) || 'Il Business plan è in arrivo.'}</p></div>`);
+      return;
+    }
+    if(BP.aperta) bpDisegnaPratica(host); else bpDisegnaElenco(host);
+  }
+  function bpRiga(p){
+    return H`<button class="bp-riga" type="button" data-act="bp-apri" data-id="${p.id}"><span class="bp-riga-t">${p.etichetta || ''}</span><span class="bp-stato">${p.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</span><span class="bp-nota">${bpConta(p.documenti)} documenti · ${bpConta(p.versioni)} versioni</span><span class="bp-nota">${fmt(p.aggiornata)}</span></button>`;
+  }
+  function bpDisegnaElenco(host){
+    var L = BP.lista, cosa;
+    if(L.stato === 'idle') bpCaricaLista(false);
+    if(!L.ok){
+      cosa = L.stato === 'err'
+        ? H`<div class="err" role="alert"><span>${L.err}</span><button class="btn sec sm" type="button" data-act="bp-riprova">Riprova</button></div>`
+        : H`<div class="bp-stato">Carico le pratiche…</div>`;
+    } else {
+      var lista = L.dati && Array.isArray(L.dati.pratiche) ? L.dati.pratiche : [];
+      cosa = lista.length ? H`<div class="bp-lista">${lista.map(bpRiga)}</div>` : H`<p class="bp-nota">Non hai ancora pratiche.</p>`;
+    }
+    put(host, H`<div class="bp-pagina"><div class="bp-blocco"><div class="bp-titolo"><h2>Le mie pratiche</h2><button class="btn pri" type="button" data-act="bp-nuova">Nuova pratica</button></div>${cosa}</div></div>`);
+  }
+  function bpDisegnaPratica(host){
+    var V = BP.vista;
+    if(V.stato === 'idle') bpCaricaVista(false);
+    if(BP.modulo === null) bpCaricaModulo();
+    if(!V.ok){
+      put(host, H`<div class="bp-pagina"><p><button class="btn sec" type="button" data-act="bp-elenco">‹ Le mie pratiche</button></p>${V.stato === 'err'
+        ? H`<div class="err" role="alert"><span>${V.err}</span><button class="btn sec sm" type="button" data-act="bp-riprova">Riprova</button></div>`
+        : H`<div class="bp-stato">Carico la pratica…</div>`}</div>`);
+      return;
+    }
+    var v = V.dati || {}, manca = BP.msg && Array.isArray(BP.msg.manca) ? BP.msg.manca : [];
+    put(host, H`<div class="bp-pagina">
+      <p><button class="btn sec" type="button" data-act="bp-elenco">‹ Le mie pratiche</button></p>
+      <h2>${v.etichetta || ''}</h2>
+      <p class="bp-stato">${v.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</p>
+      ${V.stato === 'err' ? H`<p class="bp-err" role="alert">${V.err}</p>` : ''}
+      ${BP.msg ? H`<p class="${BP.msg.tipo === 'err' ? 'bp-err' : 'bp-nota'}" role="${BP.msg.tipo === 'err' ? 'alert' : 'status'}">${BP.msg.testo}</p>` : ''}
+      ${manca.length ? H`<ul class="bp-nota">${manca.map(function(x){ return H`<li>${typeof x === 'string' ? x : (x && (x.domanda || x.campo)) || ''}</li>`; })}</ul>` : ''}
+      ${BP.carico ? H`<p class="bp-nota">${BP.carico}</p>` : ''}
+      ${bpDisegnaDocumenti(v)}
+      ${bpDisegnaManca(v)}
+      ${bpDisegnaVersioni(v)}
+      ${v.stato === 'aperta' ? H`<div class="bp-azioni"><button class="btn sec" type="button" data-act="bp-chiudi-chiedi">Chiudi la pratica</button></div>` : ''}
+      <div class="bp-azioni"><button class="btn sec" type="button" data-act="bp-elimina-chiedi">Elimina la pratica</button></div>
+    </div>`);
+    var fi = g('bp-file');
+    if(fi) fi.addEventListener('change', function(){
+      var lista = fi.files ? Array.prototype.slice.call(fi.files) : [];
+      fi.value = '';
+      if(lista.length) bpCaricaFile(lista);
+    });
+  }
+
+  /* ---------- documents ---------- */
+  function bpDisegnaDocumenti(v){
+    var aperta = v.stato === 'aperta', docs = Array.isArray(v.documenti) ? v.documenti : [], scheda = v.scheda || {};
+    return H`<section class="bp-blocco" aria-label="Documenti"><h3>Documenti</h3>
+      ${aperta ? H`<div class="bp-azioni"><button class="btn pri" type="button" data-act="bp-carica">Carica documenti</button><input type="file" id="tcag-bp-file" class="bp-file" accept="application/pdf,image/jpeg,image/png" multiple tabindex="-1" aria-hidden="true"></div>` : ''}
+      ${docs.length ? docs.map(function(d){ return bpDocHTML(d, scheda, aperta); }) : H`<p class="bp-nota">Nessun documento.</p>`}
+    </section>`;
+  }
+  function bpDocHTML(d, scheda, aperta){
+    var usa = d.usa !== false, manca = Array.isArray(scheda.manca) ? scheda.manca : [];
+    var serveForn = manca.some(function(x){ return x && x.campo === 'fornitore:' + d.id; });
+    var stato = d.stato === 'in_lettura' ? 'Sto leggendo…' : d.stato === 'letto' ? 'Letto' : d.stato === 'errore' ? 'Errore' : '';
+    return H`<div class="bp-doc">
+      <div class="bp-doc-t"><b>${d.nome || 'Documento'}</b> ${stato ? H`<span class="bp-stato">${stato}</span>` : ''}</div>
+      ${d.categoria ? H`<p class="bp-nota">${d.categoria}${d.sottocategoria ? ' · ' + d.sottocategoria : ''}</p>` : ''}
+      ${d.riassunto ? H`<p class="bp-riass">${d.riassunto}</p>` : ''}
+      ${aperta ? H`<div class="bp-azioni"><button class="btn sec sm" type="button" data-act="bp-usa" data-id="${d.id}" data-usa="${usa ? '0' : '1'}">${usa ? 'Escludi' : 'Includi'}</button></div>` : ''}
+      ${aperta && serveForn ? H`<div class="bp-campo"><label class="fld">Impresa<input type="text" data-bp-fornitore maxlength="120"></label><div class="bp-azioni"><button class="btn sec sm" type="button" data-act="bp-fornitore" data-id="${d.id}">Salva impresa</button></div></div>` : ''}
+    </div>`;
+  }
+  function bpScegliFile(){
+    var f = g('bp-file');
+    if(f) f.click();
+  }
+  function bpCaricaUno(f){
+    return bpApi('POST', 'pratica/' + encodeURIComponent(BP.aperta) + '/documenti', f, { tempo: 180000, tipo: f.type });
+  }
+  // files are sent one at a time, in order; a full practice stops the queue
+  function bpCaricaFile(lista){
+    if(!BP.aperta || bpChiusa()) return;
+    var da = [], id = BP.aperta;
+    BP.msg = null;
+    lista.forEach(function(f){
+      if(BP_TIPI.indexOf(f.type) < 0){ bpAvvisa(f.name + ': Salva come PDF, JPG o PNG.'); return; }
+      if(f.size > BP_MAX_FILE){ bpAvvisa(f.name + ': il file supera 30 MB.'); return; }
+      da.push(f);
+    });
+    if(!da.length){ renderBp(true); return; }
+    var fermo = false, catena = Promise.resolve();
+    da.forEach(function(f, i){
+      catena = catena.then(function(){
+        if(fermo || BP.aperta !== id) return;
+        BP.carico = 'Carico ' + (i + 1) + ' di ' + da.length + ': ' + f.name;
+        renderBp(true);
+        return bpCaricaUno(f).then(function(){ return null; }, function(e){
+          bpAvvisa(f.name + ': ' + (e.testo || 'errore'));
+          if(e.codice === 'bp_troppi_documenti') fermo = true;
+        });
+      });
+    });
+    catena.then(function(){
+      BP.carico = null;
+      bpCaricaVista(true);
+      if(bpServeGiro()) bpAvviaGiro();
+    });
+  }
+  function bpCorreggi(did, corpo){
+    return bpApi('POST', 'pratica/' + encodeURIComponent(BP.aperta) + '/documenti/' + encodeURIComponent(did) + '/correggi', corpo).then(function(j){
+      BP.vista.dati = j; BP.msg = null; renderBp(true);
+    }, function(e){
+      BP.msg = { tipo:'err', testo: e.testo || 'Errore' }; renderBp(true);
+    });
+  }
+  function bpUsa(did, usa){
+    if(!BP.aperta || bpChiusa()) return;
+    bpCorreggi(did, { usa: usa });
+  }
+  function bpFornitore(el){
+    if(!BP.aperta || bpChiusa()) return;
+    var box = el.closest('.bp-doc'), inp = box ? box.querySelector('[data-bp-fornitore]') : null;
+    var v = inp ? inp.value.trim() : '';
+    if(v.length < 1 || v.length > 120 || /[<>]/.test(v)){ BP.msg = { tipo:'err', testo:'Scrivi da 1 a 120 caratteri, senza < e >.' }; renderBp(true); return; }
+    bpCorreggi(el.getAttribute('data-id'), { fornitore: v });
+  }
+
+  /* ---------- what is missing ---------- */
+  function bpDisegnaManca(v){
+    var scheda = v.scheda || {}, manca = Array.isArray(scheda.manca) ? scheda.manca : [], ho = Array.isArray(scheda.ho) ? scheda.ho : [];
+    var aperta = v.stato === 'aperta';
+    return H`<section class="bp-blocco" aria-label="Cosa manca"><h3>Cosa manca</h3>
+      ${manca.length ? manca.map(function(x){ return bpMancaHTML(x, aperta); }) : H`<p class="bp-nota">Non manca niente.</p>`}
+      <h3>Cosa c’è</h3>
+      ${ho.length ? H`<ul>${ho.map(function(x){ return H`<li>${x && x.frase ? x.frase : ''}</li>`; })}</ul>` : H`<p class="bp-nota">Ancora niente.</p>`}
+    </section>`;
+  }
+  function bpMancaHTML(x, aperta){
+    var campo = x && x.campo ? String(x.campo) : '';
+    var d = campo && BP.modulo && Object.prototype.hasOwnProperty.call(BP.modulo, campo) ? BP.modulo[campo] : null;
+    var doc = x && typeof x.documento === 'string' ? x.documento : '';
+    var dentro = aperta && d ? bpCampoHTML(campo, d) : '';
+    return H`<div class="bp-manca" data-campo="${campo}"><p><b>${x && (x.domanda || x.campo) || ''}</b></p>${doc ? H`<p class="bp-nota">Documento suggerito: ${doc}</p>` : ''}${dentro}${aperta && !d ? H`<div class="bp-azioni"><button class="btn sec sm" type="button" data-act="bp-carica">Carica il documento</button></div>` : ''}</div>`;
+  }
+  function bpUnitaRiga(){
+    return H`<div class="bp-unita-riga"><label class="fld">Unità<input type="text" data-bp-u="etichetta" maxlength="80"></label><label class="fld">Mq commerciali<input type="text" data-bp-u="mq" inputmode="decimal"></label><label class="fld">Prezzo al mq (€)<input type="text" data-bp-u="prezzo" inputmode="decimal"></label><button class="btn sec sm" type="button" data-act="bp-unita-togli">Togli</button></div>`;
+  }
+  function bpCampoHTML(campo, d){
+    var dentro = '';
+    if(campo === 'vendita.unita')
+      dentro = H`<div class="bp-unita-righe" data-bp-v>${bpUnitaRiga()}${bpUnitaRiga()}</div><div class="bp-azioni"><button class="btn sec sm" type="button" data-act="bp-unita-aggiungi">Aggiungi unità</button></div>`;
+    else if(campo === 'lavori.opere_edili')
+      dentro = H`<label class="fld">Importo in euro<input type="text" data-bp-v inputmode="decimal"></label>`;
+    else if(d.valori && Array.isArray(d.valori) && d.valori.length)
+      dentro = H`<label class="fld">Risposta<select data-bp-v><option value="">Scegli…</option>${d.valori.map(function(x, i){ return H`<option value="${i}">${x}</option>`; })}</select></label>`;
+    else if(d.tipo === 'boolean')
+      dentro = H`<label class="fld">Risposta<select data-bp-v><option value="">Scegli…</option><option value="si">Sì</option><option value="no">No</option></select></label>`;
+    else if(d.tipo === 'number' || d.tipo === 'integer')
+      dentro = H`<label class="fld">Numero<input type="text" data-bp-v inputmode="decimal"></label>`;
+    else if(d.tipo === 'string')
+      dentro = H`<label class="fld">Risposta<input type="text" data-bp-v maxlength="500"></label>`;
+    if(!dentro) return '';
+    return H`<div class="bp-campo">${dentro}<p class="bp-err" role="alert"></p><div class="bp-azioni"><button class="btn pri sm" type="button" data-act="bp-rispondi" data-campo="${campo}">Rispondi</button></div></div>`;
+  }
+  function bpUnitaAggiungi(el){
+    var box = el.closest('.bp-manca'), righe = box ? box.querySelector('.bp-unita-righe') : null;
+    if(!righe) return;
+    var div = document.createElement('div');
+    put(div, bpUnitaRiga());
+    if(div.firstChild) righe.appendChild(div.firstChild);
+  }
+  function bpUnitaTogli(el){
+    var riga = el.closest('.bp-unita-riga'), righe = riga ? riga.parentNode : null;
+    if(!righe || righe.querySelectorAll('.bp-unita-riga').length < 2) return;
+    righe.removeChild(riga);
+  }
+  function bpRispondi(el){
+    if(!BP.aperta || bpChiusa()) return;
+    var campo = el.getAttribute('data-campo'), box = el.closest('.bp-manca');
+    if(!box) return;
+    var err = box.querySelector('.bp-err'), d = BP.modulo && Object.prototype.hasOwnProperty.call(BP.modulo, campo) ? BP.modulo[campo] : null;
+    var valore = null, ok = true, msg = '';
+    function no(t){ ok = false; msg = t; }
+    if(campo === 'vendita.unita'){
+      valore = [];
+      Array.prototype.slice.call(box.querySelectorAll('.bp-unita-riga')).forEach(function(rg){
+        var et = rg.querySelector('[data-bp-u="etichetta"]').value.trim();
+        var mq = bpNumero(rg.querySelector('[data-bp-u="mq"]').value);
+        var pr = bpNumero(rg.querySelector('[data-bp-u="prezzo"]').value);
+        if(et.length < 1 || et.length > 80) no('Ogni unità ha bisogno di un’etichetta (1-80 caratteri).');
+        else if(!(mq > 0) || !(pr > 0)) no('Mq e prezzo al mq devono essere numeri maggiori di zero.');
+        valore.push({ etichetta: et, mq_commerciali: mq, prezzo_mq: pr });
+      });
+      if(!valore.length) no('Aggiungi almeno una unità.');
+    } else if(campo === 'lavori.opere_edili'){
+      var imp = box.querySelector('[data-bp-v]');
+      valore = bpNumero(imp ? imp.value : '');
+      if(!(valore > 0)) no('Scrivi un importo maggiore di zero.');
+    } else if(!d){
+      no('Campo non riconosciuto.');
+    } else {
+      var inp = box.querySelector('[data-bp-v]'), testo = inp ? inp.value : '';
+      if(d.valori && Array.isArray(d.valori) && d.valori.length){
+        var k = inp && inp.value !== '' ? +inp.value : -1;
+        if(k >= 0 && k < d.valori.length) valore = d.valori[k]; else no('Scegli una risposta.');
+      } else if(d.tipo === 'boolean'){
+        if(testo === 'si') valore = true; else if(testo === 'no') valore = false; else no('Scegli sì o no.');
+      } else if(d.tipo === 'number' || d.tipo === 'integer'){
+        var n = bpNumero(testo);
+        if(n === null) no('Scrivi un numero (per esempio 1.234,50).');
+        else if(d.tipo === 'integer' && Math.floor(n) !== n) no('Scrivi un numero intero.');
+        else if((d.min != null && n < d.min) || (d.max != null && n > d.max)) no('Il numero è fuori dai limiti.');
+        else valore = n;
+      } else if(d.tipo === 'string'){
+        var t = testo.trim();
+        if(t.length < 1 || t.length > 500) no('Scrivi da 1 a 500 caratteri.'); else valore = t;
+      } else no('Rispondi nel documento.');
+    }
+    if(!ok){ if(err) err.textContent = msg; return; }
+    bpApi('POST', 'pratica/' + encodeURIComponent(BP.aperta) + '/dati', { campo: campo, valore: valore, forza: false }).then(function(j){
+      BP.vista.dati = j; BP.msg = null; renderBp(true);
+    }, function(e){
+      BP.msg = { tipo:'err', testo: e.testo || 'Errore', manca: e.manca }; renderBp(true);
+    });
+  }
+
+  /* ---------- versions ---------- */
+  function bpDisegnaVersioni(v){
+    var aperta = v.stato === 'aperta', vers = Array.isArray(v.versioni) ? v.versioni.slice().reverse() : [];
+    var n = (Array.isArray(v.versioni) ? v.versioni.length : 0) + 1, scheda = v.scheda || {};
+    var pronta = !!scheda.pronta_v1, inCorso = !!v.in_corso;
+    return H`<section class="bp-blocco" aria-label="Versioni"><h3>Versioni</h3>
+      ${aperta ? H`<div class="bp-azioni"><button class="btn pri" type="button" data-act="bp-versione" ${(!pronta || inCorso) ? 'disabled' : ''}>Crea la versione ${n}</button></div>` : ''}
+      ${inCorso ? H`<p class="bp-stato">Sto creando la versione…</p>` : ''}
+      ${vers.length ? vers.map(bpVerHTML) : H`<p class="bp-nota">Nessuna versione.</p>`}
+    </section>`;
+  }
+  function bpVerHTML(x){
+    var cambi = Array.isArray(x.cambiato) ? x.cambiato.map(function(c){ return typeof c === 'string' ? c : (c && c.campo) || ''; }).filter(Boolean) : [];
+    return H`<div class="bp-ver"><h4>Versione ${x.n}</h4><p class="bp-nota">${fmt(x.data)}</p><p>Affidabilità: ${x.affidabilita || '-'}</p>${x.riepilogo ? H`<p>${x.riepilogo}</p>` : ''}${cambi.length ? H`<p class="bp-nota">Cosa è cambiato: ${cambi.join(', ')}</p>` : ''}<div class="bp-azioni"><button class="btn pri sm" type="button" data-act="bp-pdf" data-n="${x.n}">Scarica PDF</button>${x.word === true ? H`<button class="btn sec sm" type="button" data-act="bp-word" data-n="${x.n}">Scarica Word</button>` : ''}</div></div>`;
+  }
+  function bpVersione(){
+    if(!BP.aperta || bpChiusa()) return;
+    BP.msg = { tipo:'info', testo:'Sto creando la versione…' };
+    bpApi('POST', 'pratica/' + encodeURIComponent(BP.aperta) + '/versione', null).then(function(){
+      bpCaricaVista(true);
+      bpAvviaGiro();
+    }, function(e){
+      BP.msg = { tipo:'err', testo: e.testo || 'Errore', manca: e.manca }; renderBp(true);
+    });
+  }
+  function bpScarica(n, tipo){
+    if(!BP.aperta) return;
+    bpApi('GET', 'pratica/' + encodeURIComponent(BP.aperta) + '/versioni/' + n + '/' + tipo, null, { come: 'blob', tempo: 120000 }).then(function(r){
+      var u = URL.createObjectURL(r.blob), a = document.createElement('a');
+      a.href = u; a.download = 'business-plan-v' + n + (tipo === 'pdf' ? '.pdf' : '.docx');
+      a.style.display = 'none';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(u); }, 10000);
+    }, function(e){ toast(e.testo || 'Errore'); });
+  }
+
+  /* ---------- close and delete ---------- */
+  function bpChiudiChiedi(){
+    apriFoglio(H`<h2>Chiudi la pratica</h2><p>Dopo la chiusura la pratica resta in sola lettura.</p><label class="bp-check"><input type="checkbox" id="tcag-bp-tieni"> Tieni gli originali (PDF e foto)</label><div class="sheet-btns"><button class="btn pri" type="button" data-act="bp-chiudi">Chiudi la pratica</button><button class="btn sec" type="button" data-act="close-modal">Annulla</button></div>`, 'Chiudi la pratica');
+  }
+  function bpChiudi(){
+    if(!BP.aperta) return;
+    var c = g('bp-tieni'), tieni = !!(c && c.checked);
+    bpApi('POST', 'pratica/' + encodeURIComponent(BP.aperta) + '/chiudi', { tieni_originali: tieni }).then(function(j){
+      closeModals();
+      BP.vista = ris(); BP.vista.dati = j; BP.vista.ok = true; BP.vista.stato = 'ok';
+      renderBp(true);
+      toast('Pratica chiusa.');
+    }, function(e){ toast(e.testo || 'Errore'); });
+  }
+  function bpEliminaChiedi(){
+    apriFoglio(H`<h2>Eliminare la pratica?</h2><p>Documenti e versioni si cancellano per sempre.</p><div class="sheet-btns"><button class="btn pri" type="button" data-act="bp-elimina">Elimina</button><button class="btn sec" type="button" data-act="close-modal">Annulla</button></div>`, 'Elimina la pratica');
+  }
+  function bpElimina(){
+    if(!BP.aperta) return;
+    bpApi('POST', 'pratica/' + encodeURIComponent(BP.aperta) + '/elimina', { conferma: true }).then(function(){
+      closeModals();
+      BP.aperta = ''; BP.vista = ris(); BP.msg = null;
+      bpListaVecchia();
+      bpFermaGiro();
+      renderBp(true);
+      toast('Pratica eliminata.');
+    }, function(e){ toast(e.testo || 'Errore'); });
+  }
+
+  /* ---------- navigation ---------- */
+  function bpNuova(){
+    apriFoglio(H`<h2>Nuova pratica</h2><label class="fld">Etichetta<input type="text" id="tcag-bp-etichetta" maxlength="80" autocomplete="off"></label><p class="bp-nota">Non scrivere nomi o dati del cliente</p><p class="bp-err" id="tcag-bp-etichetta-err" role="alert"></p><div class="sheet-btns"><button class="btn pri" type="button" data-act="bp-crea">Crea</button><button class="btn sec" type="button" data-act="close-modal">Annulla</button></div>`, 'Nuova pratica');
+  }
+  function bpCrea(){
+    var i = g('bp-etichetta'), e = g('bp-etichetta-err');
+    var v = i ? i.value.trim() : '';
+    if(v.length < 1 || v.length > 80 || /[<>]/.test(v)){
+      if(e) e.textContent = 'Scrivi da 1 a 80 caratteri, senza < e >.';
+      return;
+    }
+    if(e) e.textContent = '';
+    bpApi('POST', 'pratica', { etichetta: v }).then(function(j){
+      closeModals();
+      BP.aperta = String(j.id);
+      BP.vista = ris(); BP.vista.dati = j; BP.vista.ok = true; BP.vista.stato = 'ok';
+      bpListaVecchia();
+      renderBp(true);
+    }).catch(function(x){
+      var er = g('bp-etichetta-err');
+      if(er) er.textContent = (x && x.testo) || 'Errore';
+    });
+  }
+  function bpApri(id){
+    BP.aperta = String(id); BP.vista = ris(); BP.msg = null;
+    renderBp(true);
+    bpCaricaVista(true);
+    if(bpServeGiro()) bpAvviaGiro();
+  }
+  function bpElenco(){
+    BP.aperta = ''; BP.vista = ris(); BP.msg = null;
+    bpFermaGiro();
+    bpListaVecchia();
+    renderBp(true);
+  }
+  function bpRiprova(){
+    if(BP.aperta){
+      bpCaricaVista(true);
+      if(bpServeGiro()) bpAvviaGiro();
+    } else bpCaricaLista(true);
+  }
+
+  /* ---------- automatic refresh while a document is read or a version is built ---------- */
+  function bpServeGiro(){
+    var v = BP.vista.dati;
+    if(!v) return false;
+    if(v.in_corso === true) return true;
+    return (Array.isArray(v.documenti) ? v.documenti : []).some(function(d){ return d && d.stato === 'in_lettura'; });
+  }
+  function bpAvviaGiro(){
+    if(BP.poll) return;
+    BP.pollN = 0;
+    BP.poll = setTimeout(bpGiro, BP_POLL_MS);
+  }
+  function bpFermaGiro(){
+    if(BP.poll) clearTimeout(BP.poll);
+    BP.poll = 0;
+  }
+  function bpGiro(){
+    BP.poll = 0;
+    if(S.sec !== 'strumenti' || S.sub !== 'bp' || !BP.aperta || document.hidden) return;
+    if(++BP.pollN > BP_POLL_MAX){
+      BP.msg = { tipo:'info', testo:'Aggiornamento automatico fermo: tocca «Riprova».' };
+      renderBp(true);
+      return;
+    }
+    Promise.resolve(bpCaricaVista(true)).then(function(){
+      if(bpServeGiro() && !BP.poll) BP.poll = setTimeout(bpGiro, BP_POLL_MS);
+    });
   }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
@@ -11122,6 +11670,24 @@ function findClose(){
       case 'bpa-toggle': if(U && U.ruolo === 'admin') bpaToggle(); break;
       case 'bpa-salva': if(U && U.ruolo === 'admin') bpaSalva(el); break;
       case 'bpa-riprova': if(U && U.ruolo === 'admin') bpaRiprova(); break;
+      case 'bp-nuova': bpNuova(); break;
+      case 'bp-crea': bpCrea(); break;
+      case 'bp-apri': bpApri(el.getAttribute('data-id')); break;
+      case 'bp-elenco': bpElenco(); break;
+      case 'bp-carica': bpScegliFile(); break;
+      case 'bp-usa': bpUsa(el.getAttribute('data-id'), el.getAttribute('data-usa') === '1'); break;
+      case 'bp-fornitore': bpFornitore(el); break;
+      case 'bp-rispondi': bpRispondi(el); break;
+      case 'bp-unita-aggiungi': bpUnitaAggiungi(el); break;
+      case 'bp-unita-togli': bpUnitaTogli(el); break;
+      case 'bp-versione': bpVersione(); break;
+      case 'bp-pdf': bpScarica(+el.getAttribute('data-n'), 'pdf'); break;
+      case 'bp-word': bpScarica(+el.getAttribute('data-n'), 'docx'); break;
+      case 'bp-chiudi-chiedi': bpChiudiChiedi(); break;
+      case 'bp-chiudi': bpChiudi(); break;
+      case 'bp-elimina-chiedi': bpEliminaChiedi(); break;
+      case 'bp-elimina': bpElimina(); break;
+      case 'bp-riprova': bpRiprova(); break;
       case 'disc-ok': disconnettiOk(el.getAttribute('data-e'), el, false); break;
       case 'disc-blocca': disconnettiOk(el.getAttribute('data-e'), el, true); break;                    // V6.8.2 (revisione): telefono perso
       case 'refresh': closePops(); ricaricaTutto(); break;
