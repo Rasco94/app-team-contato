@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build eec6b7a8)
+  Guscio app Team Contato - V1.4.0 (build 2f2b1abe)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.15.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.16.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'eec6b7a8', blocco: 'V6.15.0' };
+window.TC_APP = { versione: '1.4.0', build: '2f2b1abe', blocco: 'V6.16.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -886,7 +886,7 @@ html.tc-guscio body{margin:0}
 #tcag .as-logwrap{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
 #tcag .as-nuovi{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;min-height:48px;padding:0 20px;border-radius:99px;box-shadow:0 4px 16px rgba(10,42,94,.35);white-space:nowrap}
 #tcag .as-log{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:16px max(16px,calc((100% - 1000px) / 2));display:flex;flex-direction:column;gap:12px;background:var(--avorio)}
-#tcag .as-m{max-width:min(78%,760px);padding:10px 14px;border-radius:14px;font-size:16px;line-height:1.5;overflow-wrap:anywhere}
+#tcag .as-m{max-width:min(78%,760px);padding:10px 14px;border-radius:14px;font-size:var(--as-fs,16px);line-height:1.5;overflow-wrap:anywhere}
 #tcag .as-m.as-v{content-visibility:auto;contain-intrinsic-size:auto 160px}
 #tcag .as-m.u{align-self:flex-end;background:var(--nv);color:#fff;white-space:pre-wrap;border-bottom-right-radius:4px}
 #tcag .as-m.a{align-self:flex-start;background:#fff;border:1px solid var(--bordo);border-bottom-left-radius:4px}
@@ -899,7 +899,7 @@ html.tc-guscio body{margin:0}
 #tcag .as-m.a ul{list-style:disc}
 #tcag .as-m.a ol{list-style:decimal}
 #tcag .as-m.a li{margin:0 0 4px}
-#tcag .as-m.a code{background:#f1efe8;border-radius:4px;padding:1px 5px;font:14px ui-monospace,Consolas,monospace}
+#tcag .as-m.a code{background:#f1efe8;border-radius:4px;padding:1px 5px;font:.9em ui-monospace,Consolas,monospace}
 #tcag .as-m.a a{color:#2038c8;text-decoration:underline;overflow-wrap:anywhere}
 #tcag .as-m.a .host{color:var(--tenue);font-size:13px}
 #tcag .as-m .stop{display:block;margin-top:6px;color:var(--tenue);font-style:italic;font-size:14px}
@@ -912,14 +912,14 @@ html.tc-guscio body{margin:0}
 #tcag .as-m .riprova{margin-top:8px}
 #tcag .as-vuoto{margin:auto;max-width:520px;text-align:center;color:var(--tenue);font-size:16px;display:grid;gap:10px;justify-items:stretch;padding:8px 0}
 #tcag .as-vuoto h2{font:600 22px var(--serif);color:var(--nv);margin:0 0 4px}
-#tcag .as-sugg-b{display:flex;align-items:center;justify-content:flex-start;min-height:48px;padding:10px 16px;border:1px solid var(--bordo);border-radius:12px;background:#fff;color:var(--nv);font:600 16px/1.3 var(--sans);text-align:left;cursor:pointer;width:100%}
+#tcag .as-sugg-b{display:flex;align-items:center;justify-content:flex-start;min-height:48px;padding:10px 16px;border:1px solid var(--bordo);border-radius:12px;background:#fff;color:var(--nv);font:600 var(--as-fs,16px)/1.3 var(--sans);text-align:left;cursor:pointer;width:100%}
 #tcag .as-sugg-b:hover{border-color:var(--oro)}
 #tcag .as-sugg-b:disabled{opacity:.5;cursor:not-allowed}
 #tcag .as-riga{display:none;gap:8px;overflow-x:auto;padding:8px 12px 0;background:#fff;scrollbar-width:none;flex:0 0 auto}
 #tcag .as-riga::-webkit-scrollbar{display:none}
 #tcag .as-riga .as-sugg-b{width:auto;flex:0 0 auto;white-space:nowrap;border-radius:99px;min-height:48px}
 #tcag .as-form{display:flex;gap:10px;padding:12px;border-top:1px solid var(--bordo);background:#fff;align-items:flex-end;flex:0 0 auto}
-#tcag .as-form textarea{flex:1 1 auto;min-width:0;min-height:48px;max-height:132px;border:1px solid var(--bordo);border-radius:12px;padding:12px 14px;font:16px/1.4 var(--sans);resize:none;background:#fff;color:var(--testo);box-shadow:none;display:block}
+#tcag .as-form textarea{flex:1 1 auto;min-width:0;min-height:48px;max-height:132px;border:1px solid var(--bordo);border-radius:12px;padding:12px 14px;font:var(--as-fs,16px)/1.4 var(--sans);resize:none;background:#fff;color:var(--testo);box-shadow:none;display:block}
 #tcag .as-form .btn{min-height:48px;min-width:96px;flex:0 0 auto;white-space:nowrap}
 #tcag .as-nota{margin:0;padding:0 14px 10px;font-size:12px;color:var(--tenue);background:#fff;flex:0 0 auto}
 #tcag .as-lim{margin:0;padding:6px 14px 0;font-size:13px;color:#8f0f1b;background:#fff;flex:0 0 auto}
@@ -1648,6 +1648,29 @@ html.tc-guscio body{margin:0}
 #tcag .bp-riga{flex-direction:column;align-items:flex-start}
 #tcag .bp-azioni>*{width:100%}
 }
+#tcag .as-wrap{--as-fs:17px}
+#tcag .as-wrap.as-fs-s{--as-fs:15px}
+#tcag .as-wrap.as-fs-m{--as-fs:17px}
+#tcag .as-wrap.as-fs-l{--as-fs:20px}
+#tcag.as-full .as-main{position:fixed;inset:0;bottom:var(--as-kb,0px);z-index:1100;height:auto;min-height:0;border-radius:0;border:0;box-shadow:none}
+#tcag.as-full .fab{display:none!important}
+#tcag.chat-open #tcag-as-full{display:none}
+@media (min-width:1100px){#tcag .as-wrap.as-noside{grid-template-columns:minmax(0,1fr)}
+#tcag .as-noside .as-side{display:none}
+}
+@media (max-width:1099px){#tcag #tcag-as-side-on{display:none}
+}
+@media (max-width:899px){#tcag .as-form textarea{font-size:max(16px,var(--as-fs,16px))}
+}
+#tcag .as-tbtn{flex:0 0 auto;min-height:44px;min-width:44px;padding:0 12px;font-size:16px;white-space:nowrap;margin-right:8px}
+#tcag .as-fs-w{position:relative;display:inline-flex}
+#tcag .as-fs-menu{position:absolute;right:0;top:calc(100% + 4px);z-index:5;display:flex;flex-direction:column;gap:2px;min-width:140px;max-width:calc(100vw - 24px);padding:6px;background:#fff;border:1px solid var(--bordo);border-radius:10px;box-shadow:0 10px 30px rgba(10,42,94,.22)}
+#tcag .as-fs-o{min-height:44px;padding:0 12px;border-radius:8px;text-align:left;font:600 16px var(--sans);color:var(--nv)}
+#tcag .as-fs-o[aria-pressed="true"]{background:var(--avorio);box-shadow:inset 3px 0 0 var(--oro)}
+#tcag .as-side-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}
+#tcag .as-side-h h2{margin:0}
+#tcag .as-side-x{flex:0 0 auto;min-width:44px;min-height:44px;border-radius:8px;font-size:18px;color:var(--tenue)}
+#tcag .as-side-x:hover{background:var(--avorio);color:var(--nv)}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1683,7 +1706,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.15.0';
+  var VERSIONE = 'V6.16.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2705,6 +2728,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     r.setAttribute('data-sec', sec);
     r.classList.toggle('detail-open', isPhone() && ((sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'documenti' && sub === 'vedi') || (sec === 'strumenti' && (sub === 'assistente' || sub === 'render'))));
     r.classList.toggle('chat-open', isPhone() && sec === 'strumenti' && sub === 'assistente');
+    if(!(sec === 'strumenti' && sub === 'assistente') && r.classList.contains('as-full') && typeof aiSchermoIntero === 'function') aiSchermoIntero(false);   // V6.16.0: leaving the chat page ends full screen
     if(typeof tastieraAi === 'function') tastieraAi();                                  // V6.8.1: lasciata la chat non resta la classe as-kb
     // i dati si chiedono solo la prima volta che si apre la sezione
     if(sec === 'immobili' && IM.stato === 'idle') caricaImmobili();
@@ -6729,14 +6753,58 @@ function findClose(){
   r.addEventListener('pointerdown', function(e){ var t = e.target; if(t && t.closest && t.closest('.as-main')) toccoInizio(); }, true);
   document.addEventListener('click', toccoFine, true);
   document.addEventListener('pointercancel', toccoFine, true);
+  // V6.16.0: chat text size, full screen inside the window, hideable suggestions (only these two preferences stay on the device)
+  var AI_FS_KEY = 'tcag-as-size';
+  var AI_SIDE_KEY = 'tcag-as-side';
+  function aiMisuraLeggi(){
+    try { var m = localStorage.getItem(AI_FS_KEY); return m === 's' || m === 'l' ? m : 'm'; }
+    catch(e){ return 'm'; }
+  }
+  function aiSuggerimentiLeggi(){
+    try { return localStorage.getItem(AI_SIDE_KEY) !== '0'; }
+    catch(e){ return true; }
+  }
+  // m = 's' (Piccolo) | 'm' (Medio) | 'l' (Grande): the class sits on .as-wrap, so the suggestions in the aside get the size too
+  function aiMisura(m){
+    if(m !== 's' && m !== 'l') m = 'm';
+    var w = g('as-wrap');
+    if(w) ['s', 'm', 'l'].forEach(function(k){ w.classList.toggle('as-fs-' + k, k === m); });
+    $$('#tcag-as-fs-menu [data-m]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-m') === m)); });
+    try { localStorage.setItem(AI_FS_KEY, m); }
+    catch(e){ /* no memory on this device: the choice lasts until reload */ }
+  }
+  // vis = false hides the suggestions column (wide screens) and shows the «Suggerimenti» button in the header
+  function aiSuggerimenti(vis){
+    vis = vis !== false;
+    var w = g('as-wrap'); if(w) w.classList.toggle('as-noside', !vis);
+    var on = g('as-side-on'); if(on) on.hidden = vis;
+    try { localStorage.setItem(AI_SIDE_KEY, vis ? '1' : '0'); }
+    catch(e){ /* no memory on this device: the choice lasts until reload */ }
+  }
+  // full screen inside the window: the card covers the page, the page itself is not touched
+  function aiSchermoIntero(on){
+    on = !!on;
+    r.classList.toggle('as-full', on);
+    var b = g('as-full');
+    if(b){ b.textContent = on ? 'Riduci' : '⛶ Schermo intero'; b.setAttribute('aria-pressed', String(on)); }
+    if(AI.segui) scorriFondo();
+  }
+  // the Aa menu: opens it (no argument = toggle), closes it with false
+  function aiMenuMisura(open){
+    var m = g('as-fs-menu'), b = g('as-fs');
+    if(!m) return;
+    if(open === undefined) open = m.hidden;
+    m.hidden = !open;
+    if(b) b.setAttribute('aria-expanded', String(open));
+  }
   function renderAssistente(){
     var box = g('str-assistente');
     tastieraAi();
     if(!box.getAttribute('data-ok')){
       box.setAttribute('data-ok', '1');
-      put(box, H`<div class="as-wrap">
-        <div class="card as-main">
-          <div class="as-testa" id="tcag-as-testa"><button class="btn sec as-nuova-top" type="button" id="tcag-as-nuova-top" data-act="ai-nuova"><span aria-hidden="true">✚</span> Nuova chat</button></div>
+      put(box, H`<div class="as-wrap" id="tcag-as-wrap">
+        <div class="card as-main" id="tcag-as-main">
+          <div class="as-testa" id="tcag-as-testa"><button class="btn sec as-tbtn" type="button" id="tcag-as-side-on" data-act="ai-side-on" hidden>Suggerimenti</button><span class="as-fs-w"><button class="btn sec as-tbtn" type="button" id="tcag-as-fs" data-act="ai-fs-menu" aria-haspopup="true" aria-expanded="false" aria-controls="tcag-as-fs-menu" aria-label="Misura del testo">Aa</button><div class="as-fs-menu" id="tcag-as-fs-menu" role="group" aria-label="Misura del testo" hidden><button type="button" class="as-fs-o" data-act="ai-fs" data-m="s" aria-pressed="false">Piccolo</button><button type="button" class="as-fs-o" data-act="ai-fs" data-m="m" aria-pressed="false">Medio</button><button type="button" class="as-fs-o" data-act="ai-fs" data-m="l" aria-pressed="false">Grande</button></div></span><button class="btn sec as-tbtn" type="button" id="tcag-as-full" data-act="ai-full" aria-pressed="false">⛶ Schermo intero</button><button class="btn sec as-nuova-top" type="button" id="tcag-as-nuova-top" data-act="ai-nuova"><span aria-hidden="true">✚</span> Nuova chat</button></div>
           <div class="as-manut" id="tcag-as-manut" role="alert" hidden></div>
           <div class="as-cmd" id="tcag-as-cmd" role="group" aria-label="Comandi della chat"></div>
           <div class="as-conf" id="tcag-as-conf" role="alertdialog" aria-label="Conferma" hidden></div>
@@ -6751,8 +6819,9 @@ function findClose(){
           <div class="as-ai" id="tcag-as-ai" role="note" aria-label="Avviso su Diana Assistant"><span class="as-ai-t" id="tcag-as-ai-t">🤖 Diana è un'intelligenza artificiale</span><span class="as-ai-s" aria-hidden="true"> · </span><button class="as-ai-b" type="button" id="tcag-as-avvisi" data-act="ai-avvisi" aria-haspopup="dialog">Avvisi</button></div>
           <span class="sr" id="tcag-as-sr" role="status" aria-live="polite"></span>
         </div>
-        <aside class="card as-side"><h2>Domande suggerite</h2><div id="tcag-as-sugg"></div></aside>
+        <aside class="card as-side"><div class="as-side-h"><h2>Domande suggerite</h2><button class="as-side-x" type="button" data-act="ai-side-off" aria-label="Nascondi le domande suggerite">✕</button></div><div id="tcag-as-sugg"></div></aside>
       </div>`);
+      aiMisura(aiMisuraLeggi()); aiSuggerimenti(aiSuggerimentiLeggi());
       var q = g('as-q');
       q.addEventListener('focus', tastieraAi);                                              // V6.8.1: la tastiera conta solo a casella a fuoco
       q.addEventListener('blur', function(){ tastieraAi(); setTimeout(tastieraAi, 400); });
@@ -11639,6 +11708,11 @@ function findClose(){
       case 'ai-nuovi': seguiOra(); break;                                          // V6.7: «Nuovi messaggi ↓»                                    // V6.7: «Come funziona»
       case 'ai-svuota': chiediComandoChat('cancella'); break;                      // V6.6: Cancella cronologia (con conferma); col cancello vecchio svuota solo lo schermo
       case 'ai-nuova': chiediComandoChat('nuova'); break;
+      case 'ai-fs-menu': aiMenuMisura(); break;                                       // V6.16.0
+      case 'ai-fs': aiMisura(el.getAttribute('data-m')); aiMenuMisura(false); break;   // V6.16.0
+      case 'ai-full': aiSchermoIntero(!r.classList.contains('as-full')); break;       // V6.16.0
+      case 'ai-side-off': aiSuggerimenti(false); break;                               // V6.16.0
+      case 'ai-side-on': aiSuggerimenti(true); break;                                 // V6.16.0
       case 'ai-conferma': comandoChat(el.getAttribute('data-k') === 'nuova' ? 'nuova' : 'cancella'); break;
       case 'ai-annulla': AI.conferma = ''; aggiornaFormAi(); break;
       case 'ai-copia': copiaRispostaChat(+el.getAttribute('data-i')); break;
@@ -11759,6 +11833,9 @@ function findClose(){
     if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); if(avvisiAperti()) return; closePops(); openModal('m-search'); g('s-input').focus(); return; }       // V6.7.2 revisione: con la finestra degli avvisi aperta la ricerca non si apre sopra
     if(avvisoTab(e)) return;
     if(e.key === 'Escape'){
+      var fsm = g('as-fs-menu');
+      if(fsm && !fsm.hidden && !openPopId && !$$('.modal-bg').some(function(m){ return !m.hidden; })){ aiMenuMisura(false); var fsb = g('as-fs'); if(fsb && fsb.focus) fsb.focus(); return; }   // V6.16.0
+      if(r.classList.contains('as-full') && !openPopId && !$$('.modal-bg').some(function(m){ return !m.hidden; })){ aiSchermoIntero(false); return; }   // V6.16.0
       if(PRE.aperto && !openPopId && !$$('.modal-bg').some(function(m){ return !m.hidden; })){ preChiudi(); return; }       // V6.8
       if(openPopId){ var an = popAnchor; closePops(); if(an && an.focus) an.focus(); return; }
       closeModals(); return;
