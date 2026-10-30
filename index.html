@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build d4b6c917)
+  Guscio app Team Contato - V1.4.0 (build 5f5e413d)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.13.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.14.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'd4b6c917', blocco: 'V6.13.0' };
+window.TC_APP = { versione: '1.4.0', build: '5f5e413d', blocco: 'V6.14.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1605,6 +1605,18 @@ html.tc-guscio body{margin:0}
 @media (max-width:1099px){#tcag .ib.adm{width:40px;padding:0}
 #tcag .ib.adm .adm-l{display:none}
 }
+#tcag .bpa-imp{margin-bottom:16px}
+#tcag .bpa-imp input,
+#tcag .bpa-filtro{display:block;min-height:44px;font-size:16px;margin:6px 0 12px;padding:0 10px;border:1px solid var(--bordo);border-radius:8px;background:#fff;max-width:100%}
+#tcag .bpa-avviso{margin:8px 0;font-size:15px;color:var(--oro-t)}
+#tcag .bpa-msg{margin:8px 0 12px;font-size:16px}
+#tcag .bpa-msg.err{color:#8f0f1b}
+#tcag .bpa-msg.ok{color:var(--verde)}
+#tcag .bpa-riga{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.3fr) auto auto auto minmax(0,1fr);gap:8px 14px;align-items:center;width:100%;min-height:44px;padding:10px 12px;margin-bottom:8px;text-align:left;cursor:pointer;background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio);font-size:15px}
+#tcag .bpa-riga:hover{border-color:var(--oro)}
+#tcag .bpa-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width:640px){#tcag .bpa-riga{grid-template-columns:1fr}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1640,7 +1652,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.13.0';
+  var VERSIONE = 'V6.14.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2265,7 +2277,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var ADM = { assegna: ris(), accessi: ris(), log: ris(), problemi: ris() };
   // V6.8.5: la scheda «Moduli compilabili» e' SOLO dell'admin (non ha un suo ADM[...]: usa l'albero dei Documenti, DOC.albero, e la scelta DOC.comp)
   var ADM_SCHEDE = ['assegna', 'accessi', 'log', 'problemi'];
-  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli', 'avvisi']) : ADM_SCHEDE; }
+  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli', 'avvisi', 'bp']) : ADM_SCHEDE; }
   var S = {
     sec:'oggi', sub:'', oggiF:'',
     rq:{ f:'tutte', q:'', tipo:'', imm:'' }, im:{ f:'pubblicato', q:'', n:0 },
@@ -2521,7 +2533,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     else if(s === 'richieste') caricaRichieste();
     else if(s === 'immobili') caricaImmobili();
     else if(s === 'documenti') caricaAlbero(true);
-    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else if(S.adm === 'avvisi') caricaAvvisi(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
+    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else if(S.adm === 'avvisi') caricaAvvisi(true); else if(S.adm === 'bp') bpAdmCarica(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
     else if(s === 'impostazioni') caricaImp();
     else if(s === 'campagne') caricaCamp();
     else if(s === 'diana') dgRiprova();
@@ -2669,6 +2681,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'documenti' && DOC.albero.stato === 'idle') caricaAlbero(false);
     if(sec === 'admin' && S.adm === 'moduli'){ if(DOC.albero.stato === 'idle') caricaAlbero(false); }       // V6.8.5: l'albero dei Documenti (con la scelta dei moduli compilabili)
     else if(sec === 'admin' && S.adm === 'avvisi'){ if(AVV.stato === 'idle') caricaAvvisi(false); }       // V6.9: «Avvisi» ha il suo stato (AVV), non ADM
+    else if(sec === 'admin' && S.adm === 'bp'){ bpAdmCarica(false); }       // V6.14.0: Business plan has its own state (BPA), ADM.bp does not exist
     else if(sec === 'admin' && (ADM[S.adm].stato === 'idle' || (S.adm === 'problemi' && ADM.problemi.ok && Date.now() - ADM.problemi.agg > 60000))) caricaAdm(S.adm);
     if(sec === 'impostazioni' && (IMP.stato === 'idle' || (IMP.stato === 'err' && !IMP.ok))) caricaImp();
     if(sec === 'campagne' && !CAMP.vol && (CAMP.stato === 'idle' || (CAMP.stato === 'err' && !CAMP.ok) || Date.now() - CAMP.agg > CAMP_RIAPRI_MS)) caricaCamp();
@@ -10661,6 +10674,142 @@ function findClose(){
       caricaAvvisi(true);
     });
   }
+/* BUSINESS PLAN (admin only): switch, all practices, read-only practice. The gate re-checks the admin role on every /ai/admin/* call. */
+  var BPA = { imp:'idle', lista:ris(), aperta:'', vista:ris(), bozza:null, salvando:false, msg:null, filtro:'' };   // filtro = email of the selected owner, '' = Tutti
+  function bpAdmCarica(forza){
+    if(!(U && U.ruolo === 'admin')) return Promise.resolve();
+    if(GD.imp.stato === 'idle' || (forza && !GD.imp.ok)) dgCarica('imp');
+    if(!forza && (BPA.lista.vol || (BPA.lista.ok && Date.now() - BPA.lista.agg < 60000))) return Promise.resolve();
+    return conRis(BPA.lista, function(){
+      return dgApi('GET', 'bp/pratiche').then(function(j){
+        BPA.lista.dati = Array.isArray(j.pratiche) ? j.pratiche : [];
+      }, function(e){ throw new Error(dgTesto(e)); });
+    });
+  }
+  // la bozza nasce dalle impostazioni del server; resta in memoria (niente localStorage)
+  function bpaBozza(){
+    if(BPA.bozza === null){
+      var bp = dgImpDati().bp || {};
+      BPA.bozza = { attivo: bp.attivo === true, messaggio: typeof bp.messaggio === 'string' ? bp.messaggio : '' };
+    }
+    return BPA.bozza;
+  }
+  function renderBpAdmin(box){
+    if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
+    if(!box.querySelector('#tcag-bpa-imp')) put(box, H`<div class="narrow" style="max-width:900px"><section class="card bpa-imp" id="tcag-bpa-imp"></section><div id="tcag-bpa-corpo"></div></div>`);
+    var corpo = box.querySelector('#tcag-bpa-corpo'), imp = box.querySelector('#tcag-bpa-imp');
+    // PARTE (a): interruttore e messaggio. Non si ridisegna mentre l'admin scrive nel campo del messaggio
+    if(document.activeElement !== g('bpa-msg')){
+      var dati = dgImpDati(), b = null, cosa;
+      if(!GD.imp.ok) cosa = GD.imp.stato === 'err' ? erroreBox('le impostazioni', GD.imp.err) : skel(1);
+      else if(!dati.bp) cosa = H`<p class="mut">Il server non è ancora aggiornato per questa funzione (serve il cancello AI 1.10.0).</p>`;
+      else {
+        b = bpaBozza();
+        cosa = H`<button class="sw" type="button" role="switch" aria-checked="${String(b.attivo)}" data-act="bpa-toggle"><span class="sw-t">Business plan per gli agenti</span><span class="sw-st">${b.attivo ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button>
+          ${b.attivo ? '' : H`<p class="bpa-avviso">Spento: gli agenti vedono «in arrivo»</p>`}
+          <label for="tcag-bpa-msg">Messaggio per gli agenti (facoltativo)</label>
+          <input id="tcag-bpa-msg" type="text" maxlength="300" value="${b.messaggio}">
+          ${BPA.msg ? H`<p class="bpa-msg ${BPA.msg.t}" role="${BPA.msg.t === 'err' ? 'alert' : 'status'}">${BPA.msg.testo}</p>` : ''}
+          <button class="btn pri t16" type="button" data-act="bpa-salva" ${BPA.salvando ? 'disabled' : ''}>Salva</button>`;
+      }
+      put(imp, H`<h2>Business plan per gli agenti</h2>${cosa}`);
+      var mi = g('bpa-msg');
+      if(mi) mi.oninput = function(){ bpaBozza().messaggio = this.value; };
+    }
+    // PARTE (b): elenco di tutte le pratiche
+    if(BPA.aperta === ''){
+      var lista = BPA.lista.dati || [], proprietari = [], cosaB;
+      lista.forEach(function(p){ if(p.proprietario && proprietari.indexOf(p.proprietario) < 0) proprietari.push(p.proprietario); });
+      if(!BPA.lista.ok) cosaB = BPA.lista.stato === 'err' ? erroreBox('le pratiche', BPA.lista.err) : skel(2);
+      else if(!lista.length) cosaB = vuoto('Nessuna pratica.');
+      else {
+        var filtrata = BPA.filtro ? lista.filter(function(p){ return p.proprietario === BPA.filtro; }) : lista;
+        var opzioni = [H`<option value="" ${BPA.filtro ? '' : 'selected'}>Tutti</option>`].concat(proprietari.map(function(o){
+          return H`<option value="${o}" ${o === BPA.filtro ? 'selected' : ''}>${o}</option>`;
+        }));
+        cosaB = H`<label for="tcag-bpa-filtro">Agente</label> <select id="tcag-bpa-filtro" class="bpa-filtro">${opzioni}</select>
+          ${filtrata.length ? filtrata.map(function(p){
+            return H`<button class="bpa-riga" type="button" data-act="bpa-apri" data-id="${p.id}"><span>${p.etichetta || ''}</span><span class="mut">${p.proprietario || ''}</span><span class="pill ${p.stato === 'chiusa' ? 's-chiusa' : 's-corso'}">${p.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</span><span>${p.documenti || 0} documenti</span><span>${p.versioni || 0} versioni</span><span class="mut">${fmt(p.aggiornata)}</span></button>`;
+          }) : vuoto('Nessuna pratica per questo agente.')}`;
+      }
+      put(corpo, H`<div class="sec-h">Tutte le pratiche</div>${cosaB}`);
+      var fl = g('bpa-filtro');
+      if(fl) fl.onchange = function(){ BPA.filtro = this.value; renderCorrente(); };
+    } else {
+      // PARTE (c): una pratica in sola lettura
+      var v = BPA.vista.dati || {}, cosaC;
+      if(!BPA.vista.ok) cosaC = BPA.vista.stato === 'err' ? H`<div class="err" role="alert"><span>Non riesco ad aprire la pratica. ${BPA.vista.err}</span><button class="btn sec sm" type="button" data-act="bpa-riprova">Riprova</button></div>` : skel(2);
+      else {
+        var scheda = v.scheda || {};
+        cosaC = H`<h2>${v.etichetta || ''}</h2>
+          <p><span class="pill ${v.stato === 'chiusa' ? 's-chiusa' : 's-corso'}">${v.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</span> <span class="mut">${v.proprietario || ''}</span></p>
+          <p class="mut">Creata ${fmt(v.creata)} · Aggiornata ${fmt(v.aggiornata)}</p>
+          <div class="sec-h">Documenti</div>
+          ${(v.documenti || []).length ? (v.documenti || []).map(function(d){
+            return H`<div class="lrow"><span class="g"><b>${d.categoria || 'Da leggere'}</b> <span class="mut">${d.sottocategoria || ''}</span><br><span class="bpa-riass">${d.riassunto || ''}</span></span>${d.stato ? H`<span class="pill s-corso">${d.stato}</span>` : ''}${d.usa === false ? H`<span class="pill s-chiusa">escluso</span>` : ''}</div>`;
+          }) : H`<p class="mut">Nessun documento.</p>`}
+          <div class="sec-h">Cosa c’è / cosa manca</div>
+          ${!(scheda.ho || []).length && !(scheda.manca || []).length ? H`<p class="mut">Niente da mostrare.</p>` : ''}
+          ${(scheda.ho || []).map(function(x){
+            return H`<div class="lrow"><span class="g"><b>${x.campo || ''}</b><br><span class="mut">${x.frase || ''}</span></span></div>`;
+          })}
+          ${(scheda.manca || []).map(function(x){
+            return H`<div class="lrow"><span class="g"><b>${x.campo || ''}</b><br><span class="mut">${x.domanda || ''}</span></span></div>`;
+          })}
+          <div class="sec-h">Versioni</div>
+          ${(v.versioni || []).length ? (v.versioni || []).map(function(x){
+            return H`<div class="lrow"><span class="g"><b>Versione ${x.n != null ? x.n : '?'}</b> <span class="mut">${fmt(x.data)}</span><br><span class="mut">Affidabilità: ${x.affidabilita || ''}</span><br>${x.riepilogo || ''}</span></div>`;
+          }) : H`<p class="mut">Nessuna versione.</p>`}`;
+      }
+      put(corpo, H`<button class="btn sec t16" type="button" data-act="bpa-chiudi">Torna all’elenco</button>${cosaC}`);
+    }
+  }
+  function bpaApri(id){
+    if(!(U && U.ruolo === 'admin') || !id) return;
+    BPA.aperta = id; BPA.vista = ris();
+    conRis(BPA.vista, function(){
+      return dgApi('GET', 'bp/pratiche/' + encodeURIComponent(id)).then(function(j){
+        if(BPA.aperta === id) BPA.vista.dati = j;
+      }, function(e){ throw new Error(dgTesto(e)); });
+    });
+  }
+  function bpaChiudi(){
+    BPA.aperta = ''; BPA.vista = ris();
+    bpAdmCarica(false);
+    renderCorrente();
+  }
+  function bpaToggle(){
+    var b = bpaBozza();
+    b.attivo = !b.attivo; BPA.msg = null;
+    renderCorrente();
+  }
+  function bpaSalva(btn){
+    if(!(U && U.ruolo === 'admin') || BPA.salvando) return;
+    var b = bpaBozza();
+    var mi = g('bpa-msg');
+    var m = String(mi ? mi.value : (b.messaggio || '')).trim();
+    if(/[<>]/.test(m)){ BPA.msg = { t:'err', testo:'Il messaggio non può contenere i caratteri < e >.' }; renderCorrente(); return; }
+    if(m.length > 300){ BPA.msg = { t:'err', testo:'Massimo 300 caratteri.' }; renderCorrente(); return; }
+    BPA.salvando = true; renderCorrente();
+    return dgApi('POST', 'impostazioni', { bp: { attivo: b.attivo, messaggio: m }, base: dgImpDati().versione }).then(function(j){
+      if(j && j.versione != null){
+        var nuovo = {};
+        Object.keys(dgImpDati()).forEach(function(k){ nuovo[k] = dgImpDati()[k]; });
+        Object.keys(j).forEach(function(k){ nuovo[k] = j[k]; });
+        GD.imp.dati = nuovo; GD.imp.agg = Date.now(); dgImpArrivata();
+      } else return dgCarica('imp', true);
+    }).then(function(){ BPA.bozza = null; BPA.msg = { t:'ok', testo:'Salvato.' }; })
+      .catch(function(e){
+        BPA.msg = { t:'err', testo: dgTesto(e) };
+        if(e.http === 409){ BPA.bozza = null; return dgCarica('imp', true); }
+      }).then(function(){
+        BPA.salvando = false;
+        if(S.sec === 'admin' && S.adm === 'bp') renderCorrente();
+      });
+  }
+  function bpaRiprova(){
+    if(BPA.aperta) bpaApri(BPA.aperta); else bpAdmCarica(true);
+  }
 
   /* =========================================================
      AMMINISTRAZIONE  (solo segreteria e admin: azioni 'richieste' con assegnatoA, 'amministrazione')
@@ -10670,12 +10819,13 @@ function findClose(){
     dgRiquadro('adm-diana', 'admin');                 // V6.7.2: Gestione Diana Assistant (solo admin)
     var da = (RQ.conteggi && RQ.conteggi.daAssegnare) != null ? RQ.conteggi.daAssegnare : (ADM.assegna.dati ? ADM.assegna.dati.length : 0);
     var schede = [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']];
-    if(U && U.ruolo === 'admin'){ schede.push(['moduli', 'Moduli compilabili']); schede.push(['avvisi', 'Avvisi']); }                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
+    if(U && U.ruolo === 'admin'){ schede.push(['moduli', 'Moduli compilabili']); schede.push(['avvisi', 'Avvisi']); schede.push(['bp', 'Business plan']); }                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
     put(g('adm-tabs'), schede.map(function(t){
       return H`<button class="chip" type="button" data-act="adm" data-t="${t[0]}" aria-pressed="${String(S.adm === t[0])}">${t[1]}</button>`;
     }));
     var R = ADM[S.adm], b = g('adm-body'), h;
     if(S.adm === 'moduli'){ renderModuliComp(b); return; }
+    if(S.adm === 'bp'){ renderBpAdmin(b); return; }       // V6.14.0
     if(S.adm === 'avvisi'){ renderAvvisi(b); return; }                                         // V6.8.5: scheda dell'admin (04e9d)
     if(gate(b, R, 'i dati di amministrazione', 3)) return;
     if(S.adm === 'assegna'){
@@ -10967,6 +11117,11 @@ function findClose(){
       case 'avv-invia': avvisiInvia(el); break;
       case 'avv-ritira-chiedi': avvisiRitiraChiedi(Number(el.getAttribute('data-r'))); break;
       case 'avv-ritira': avvisiRitira(Number(el.getAttribute('data-r')), el); break;
+      case 'bpa-apri': if(U && U.ruolo === 'admin') bpaApri(el.getAttribute('data-id')); break;
+      case 'bpa-chiudi': if(U && U.ruolo === 'admin') bpaChiudi(); break;
+      case 'bpa-toggle': if(U && U.ruolo === 'admin') bpaToggle(); break;
+      case 'bpa-salva': if(U && U.ruolo === 'admin') bpaSalva(el); break;
+      case 'bpa-riprova': if(U && U.ruolo === 'admin') bpaRiprova(); break;
       case 'disc-ok': disconnettiOk(el.getAttribute('data-e'), el, false); break;
       case 'disc-blocca': disconnettiOk(el.getAttribute('data-e'), el, true); break;                    // V6.8.2 (revisione): telefono perso
       case 'refresh': closePops(); ricaricaTutto(); break;
