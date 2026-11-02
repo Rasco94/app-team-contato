@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 00c27eed)
+  Guscio app Team Contato - V1.4.0 (build ff950247)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.16.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.17.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '00c27eed', blocco: 'V6.16.1' };
+window.TC_APP = { versione: '1.4.0', build: 'ff950247', blocco: 'V6.17.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -118,6 +118,7 @@ html.tc-guscio body{margin:0}
       <symbol id="tci-home-brush" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8"/><path d="M5 9.5V20a1 1 0 0 0 1 1h5"/><path d="M14.5 21l-.5-3.5 6.2-6.2a1.4 1.4 0 0 1 2 2L16 19.5z"/></symbol>
       <symbol id="tci-chat-spark" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M12.5 7.5l1.1 2.9 2.9 1.1-2.9 1.1-1.1 2.9-1.1-2.9-2.9-1.1 2.9-1.1z"/></symbol>
       <symbol id="tci-bp-chart" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 18v-3M12 18v-5M16 18v-7"/></symbol>
+      <symbol id="tci-study" viewBox="0 0 24 24"><path d="M2 7c3-1.5 6-1.5 10 1 4-2.5 7-2.5 10-1v13c-3-1.5-6-1.5-10 1-4-2.5-7-2.5-10-1z"/><path d="M12 8v13"/><path d="M17 1.5a2.5 2.5 0 0 0-1.5 4.5V7h3V6A2.5 2.5 0 0 0 17 1.5z"/></symbol>
       <symbol id="tci-contact" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3M15 9h3M15 13h3"/></symbol>
       <symbol id="tci-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
       <symbol id="tci-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
@@ -264,6 +265,7 @@ html.tc-guscio body{margin:0}
           <div id="tcag-str-precompila" class="str-page" hidden></div>
           <div id="tcag-str-render" class="str-page" hidden></div>
           <div id="tcag-str-bp" class="str-page" hidden></div>
+          <div id="tcag-str-studio" class="str-page" hidden></div>
           <div id="tcag-str-assistente" class="str-page" hidden></div>
         </div>
       </section>
@@ -1672,6 +1674,81 @@ html.tc-guscio body{margin:0}
 #tcag .as-side-h h2{margin:0}
 #tcag .as-side-x{flex:0 0 auto;min-width:44px;min-height:44px;border-radius:8px;font-size:18px;color:var(--tenue)}
 #tcag .as-side-x:hover{background:var(--avorio);color:var(--nv)}
+#tcag .st-pagina{display:flex;flex-direction:column;gap:16px;max-width:1200px}
+#tcag .st-avviso{margin:0;padding:12px 14px;border:1px solid #ecd68a;border-radius:10px;background:#fff8e1;color:#6b5314;font-size:16px;line-height:1.5}
+#tcag .st-arg{padding:12px 14px;border:1px solid var(--bordo);border-radius:12px;background:#fff}
+#tcag .st-arg h2{font:600 18px var(--serif);color:var(--nv);margin:0 0 8px}
+#tcag .st-arg-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px 14px}
+#tcag .st-arg-c{display:flex;align-items:center;gap:10px;min-height:44px;font-size:16px;cursor:pointer}
+#tcag .st-arg-c input{width:24px;height:24px;flex:0 0 24px;margin:0;accent-color:var(--nv)}
+#tcag .st-tabs{display:flex;gap:8px;flex-wrap:wrap}
+#tcag .st-tab{min-height:44px;padding:0 16px;border:1px solid var(--bordo);border-radius:99px;background:#fff;color:var(--nv);font:600 16px var(--sans);cursor:pointer}
+#tcag .st-tab[aria-selected="true"]{background:var(--nv);color:#fff;border-color:var(--nv)}
+#tcag .st-griglia{display:block}
+#tcag .st-pan{display:none}
+#tcag .st-pan.st-on{display:block}
+@media (min-width:1100px){#tcag .st-griglia{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+#tcag .st-pan.st-pan-chat{display:block}
+#tcag .st-pan.st-dx{display:block}
+#tcag .st-tab-chat{display:none}
+}
+#tcag .st-log{display:flex;flex-direction:column;gap:10px;min-height:240px;max-height:60vh;overflow-y:auto;padding:12px;border:1px solid var(--bordo);border-radius:12px;background:var(--avorio)}
+#tcag .st-m{max-width:88%;padding:10px 14px;border-radius:14px;font-size:16px;line-height:1.5;overflow-wrap:anywhere}
+#tcag .st-m-u{align-self:flex-end;background:var(--nv);color:#fff;white-space:pre-wrap}
+#tcag .st-m-a{align-self:flex-start;background:#fff;border:1px solid var(--bordo)}
+#tcag .st-m-a p{margin:0 0 8px}
+#tcag .st-m-a ul,
+#tcag .st-m-a ol{margin:0 0 8px;padding-left:22px}
+#tcag .st-m-a ul{list-style:disc}
+#tcag .st-m-a ol{list-style:decimal}
+#tcag .st-m-a li{margin:0 0 4px}
+#tcag .st-fonti{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+#tcag .st-chip{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:99px;background:#e6ecf5;color:var(--nv);font-size:16px}
+#tcag .st-form{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+#tcag .st-form textarea,
+#tcag .st-form select{min-height:44px;padding:8px 10px;border:1px solid var(--bordo);border-radius:8px;background:#fff;font-size:16px;color:var(--testo)}
+#tcag .st-form textarea{flex:1 1 260px;min-width:0}
+#tcag .st-form label{display:flex;flex-direction:column;gap:4px;font-size:16px;color:var(--tenue)}
+#tcag .st-lav{display:flex;flex-direction:column;gap:12px}
+#tcag .st-lav h3{font:600 20px var(--serif);color:var(--nv);margin:0}
+#tcag .st-b{padding:12px 14px;border:1px solid var(--bordo);border-radius:12px;background:#fff;font-size:16px;line-height:1.5}
+#tcag .st-b-def{border-left:4px solid var(--nv)}
+#tcag .st-b-ese{background:var(--avorio);border-left:4px solid var(--oro)}
+#tcag .st-b-ric{background:#e3f1ea;border-color:#b9dccb}
+#tcag ul.st-b,
+#tcag ol.st-b{margin:0;padding-left:22px}
+#tcag ul.st-b-punti_chiave,
+#tcag ul.st-b-causa_effetto{list-style:disc}
+#tcag ol.st-b{list-style:decimal}
+#tcag .st-err{margin:0 0 6px;list-style:none}
+#tcag .st-no{color:#8f0f1b;font-weight:600}
+#tcag .st-si{color:var(--verde);font-weight:600}
+#tcag .st-test-riga{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--bordo);border-radius:12px;background:#fff;font-size:16px}
+#tcag .st-tentativi{display:flex;flex-direction:column;gap:4px;font-size:16px;color:var(--tenue)}
+#tcag .st-q{padding:12px 14px;margin:0;border:1px solid var(--bordo);border-radius:12px;background:#fff;display:flex;flex-direction:column;gap:6px;font-size:16px}
+#tcag .st-opz{display:flex;align-items:center;gap:10px;min-height:44px;font-size:16px;cursor:pointer}
+#tcag .st-opz input{width:24px;height:24px;flex:0 0 24px;margin:0;accent-color:var(--nv)}
+#tcag .st-tempo{position:sticky;top:0;margin:0;padding:10px 14px;background:var(--nv);color:#fff;border-radius:10px;font:700 18px var(--sans);text-align:center}
+#tcag .st-ris{display:flex;flex-direction:column;gap:10px;font-size:16px}
+#tcag .st-ok{border-left:4px solid var(--verde)}
+#tcag .st-ko{border-left:4px solid var(--rosso)}
+#tcag .st-cit{margin:0;font-size:16px;color:var(--tenue);font-style:italic}
+#tcag .st-stampa{background:#fff}
+@media print{#tcag.st-stampa *{visibility:hidden}
+#tcag.st-stampa .st-pan-lav,
+#tcag.st-stampa .st-pan-lav *{visibility:visible}
+#tcag.st-stampa .st-pan-lav{display:block!important;position:absolute;left:0;top:0;width:100%}
+}
+#tcag .stua-imp{margin:0 0 12px;font-size:16px;color:var(--testo)}
+#tcag .stua-riga{display:flex;flex-wrap:wrap;gap:10px;align-items:center;min-height:44px;padding:10px 12px;border:1px solid var(--bordo);border-radius:10px;background:#fff;font-size:16px}
+#tcag .stua-stato{font:600 14px var(--sans);color:var(--tenue)}
+#tcag .stua-car{color:var(--nv)}
+#tcag .stua-agg{color:var(--oro-t)}
+#tcag .stua-non{color:var(--tenue)}
+#tcag .stua-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+#tcag .stua-bar .btn{min-height:44px}
+#tcag .stua-msg{margin:8px 0;font-size:16px;color:var(--verde)}
+#tcag .stua-err{margin:8px 0;font-size:16px;color:#8f0f1b}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1707,7 +1784,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.16.1';
+  var VERSIONE = 'V6.17.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2332,7 +2409,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var ADM = { assegna: ris(), accessi: ris(), log: ris(), problemi: ris() };
   // V6.8.5: la scheda «Moduli compilabili» e' SOLO dell'admin (non ha un suo ADM[...]: usa l'albero dei Documenti, DOC.albero, e la scelta DOC.comp)
   var ADM_SCHEDE = ['assegna', 'accessi', 'log', 'problemi'];
-  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli', 'avvisi', 'bp']) : ADM_SCHEDE; }
+  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli', 'avvisi', 'bp', 'studio']) : ADM_SCHEDE; }
   var S = {
     sec:'oggi', sub:'', oggiF:'',
     rq:{ f:'tutte', q:'', tipo:'', imm:'' }, im:{ f:'pubblicato', q:'', n:0 },
@@ -2588,7 +2665,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     else if(s === 'richieste') caricaRichieste();
     else if(s === 'immobili') caricaImmobili();
     else if(s === 'documenti') caricaAlbero(true);
-    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else if(S.adm === 'avvisi') caricaAvvisi(true); else if(S.adm === 'bp') bpAdmCarica(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
+    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else if(S.adm === 'avvisi') caricaAvvisi(true); else if(S.adm === 'bp') bpAdmCarica(true); else if(S.adm === 'studio') stuaApri(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
     else if(s === 'impostazioni') caricaImp();
     else if(s === 'campagne') caricaCamp();
     else if(s === 'diana') dgRiprova();
@@ -2682,8 +2759,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var NAV = [['oggi', 'Oggi', 'calendar'], ['richieste', 'Richieste', 'inbox'], ['immobili', 'Immobili', 'home'],
              ['documenti', 'Documenti', 'folder'], ['strumenti', 'Strumenti AI', 'sparkles'], ['altro', 'Altro', 'more']];
   var SECS = ['oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin', 'diana'];
-  var STR_SUB = ['precompila', 'render', 'assistente', 'bp'];
-  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant', bp:'Business plan' };
+  var STR_SUB = ['precompila', 'render', 'assistente', 'bp', 'studio'];
+  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant', bp:'Business plan', studio:'Study Assistant' };
   var RE_ID = /^(RC|OM|CG|VA|TE)-\d{4,6}$/;
   function buildNav(){
     put(g('mainnav'), NAV.map(function(n){
@@ -2737,6 +2814,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'documenti' && DOC.albero.stato === 'idle') caricaAlbero(false);
     if(sec === 'admin' && S.adm === 'moduli'){ if(DOC.albero.stato === 'idle') caricaAlbero(false); }       // V6.8.5: l'albero dei Documenti (con la scelta dei moduli compilabili)
     else if(sec === 'admin' && S.adm === 'avvisi'){ if(AVV.stato === 'idle') caricaAvvisi(false); }       // V6.9: «Avvisi» ha il suo stato (AVV), non ADM
+    else if(sec === 'admin' && S.adm === 'studio'){ stuaApri(false); }
     else if(sec === 'admin' && S.adm === 'bp'){ bpAdmCarica(false); }       // V6.14.0: Business plan has its own state (BPA), ADM.bp does not exist
     else if(sec === 'admin' && (ADM[S.adm].stato === 'idle' || (S.adm === 'problemi' && ADM.problemi.ok && Date.now() - ADM.problemi.agg > 60000))) caricaAdm(S.adm);
     if(sec === 'impostazioni' && (IMP.stato === 'idle' || (IMP.stato === 'err' && !IMP.ok))) caricaImp();
@@ -6429,10 +6507,12 @@ function findClose(){
     }
     ritocchiHubDiana();
     ritocchiHubBp();
+    ritocchiHubStudio();
     preStrumenti();                       // V6.8: il riquadro Precompila dice «Attivo» quando l'admin accende lo strumento
     if(sub === 'assistente') renderAssistente();
     if(sub === 'render') renderRender();
     if(sub === 'bp') renderBp();
+    if(sub === 'studio') renderStudio();
   }
 
   /* ---------- DIANA ASSISTANT: nome, testo legale, guida, benvenuto, domande, interruttori (V6.7, CONTRATTO-V6.7 par. 6.2 e 9.1) ----------
@@ -6504,6 +6584,7 @@ function findClose(){
       assistente: { attivo: as.attivo !== false, messaggio: dianaStr(as.messaggio, 300) },
       render: { attivo: rn.attivo !== false, messaggio: dianaStr(rn.messaggio, 300) },
       bp: { attivo: (j.bp && j.bp.attivo) === true, messaggio: dianaStr(j.bp && j.bp.messaggio, 300) },
+      studio: { attivo: (j.studio && j.studio.attivo) === true, messaggio: dianaStr(j.studio && j.studio.messaggio, 300) },
       benvenuto: { titolo: dianaStr(be.titolo, 60) || DIANA_BENV.titolo, testo: dianaStr(be.testo, 300) || DIANA_BENV.testo },
       domande: dom,
       testi: { avviso_legale: dianaStr(te.avviso_legale, 1200) || DIANA_LEGALE, guida_titolo: dianaStr(te.guida_titolo, 60) || DIANA_GUIDA_TITOLO, guida: dianaStr(te.guida, 4000) || DIANA_GUIDA },
@@ -6596,6 +6677,13 @@ function findClose(){
     var t = hubTileCodice('strumenti/bp', 'Business plan', 'Pratiche, documenti e versioni del business plan', 'tci-bp-chart', 'hub-bp');
     if(!t) return;
     var so = $('.soon', t), on = !!(DI.dati && DI.dati.bp && DI.dati.bp.attivo === true);
+    if(so){ so.textContent = on ? 'Attivo' : 'In arrivo'; so.classList.toggle('ok', on); }
+  }
+  // V6.17.0: the Study Assistant card in the hub (same rules as the Business plan card)
+  function ritocchiHubStudio(){
+    var t = hubTileCodice('strumenti/studio', 'Study Assistant', 'Studia i materiali dell’agenzia con spiegazioni, lavagna e test', 'tci-study', 'hub-studio');
+    if(!t) return;
+    var so = $('.soon', t), on = !!(DI.dati && DI.dati.studio && DI.dati.studio.attivo === true);
     if(so){ so.textContent = on ? 'Attivo' : 'In arrivo'; so.classList.toggle('ok', on); }
   }
 
@@ -8515,6 +8603,637 @@ function findClose(){
     Promise.resolve(bpCaricaVista(true)).then(function(){
       if(bpServeGiro() && !BP.poll) BP.poll = setTimeout(bpGiro, BP_POLL_MS);
     });
+  }
+  /* =========================================================
+     STUDY ASSISTANT FOR AGENTS (V6.17.0, epic T-MVXP2UWS, part 1)
+     =========================================================
+     Page #strumenti/studio. Talks to the AI gateway: the origin comes from AI_URL, never written here,
+     and only the study routes under /ai/studio/ are used. Authorization: Bearer <portal session>.
+     State lives in memory only (var ST): nothing is kept on the device.
+     Server text is data: it is written only with H`` / put(), textContent or renderSicuro().
+     Needs (other parts): host div id="tcag-str-studio" in 02-html, 'studio' in STR_SUB and STR_TITOLI
+     (04b-stato.js), symbol tci-study in 02-html. Without them the page does not open. */
+  var ST_T_API = 30000;
+  var ST_T_LUNGO = 300000;
+  var ST_POLL_MS = 5000;
+  var ST_POLL_MAX = 120;
+  var ST_MAX_ARG = 10;
+  var ST_SENZA_TEMPO = 600;
+  var ST_STORIA = 10;
+  var ST = { stato:ris(), scelti:[], chat:[], lavagna:null, test:ris(), aperto:null, risposte:{}, esito:null, tab:'chat', inCorso:false, ctl:null, poll:0, pollN:0, conto:0, fine:0, inizio:0, chiedi:'', lavVol:false, lavCoda:null };
+  var stDettaglio = null;     // the test open in the page: { test:meta, domande:[...] }
+  var stLavMsg = '';          // message of the board when there is no board
+  var stMsgTest = '';         // message of the test list (create or delete failed)
+  var stArgVer = -1;          // version of the material list last drawn
+
+  // a tab that comes back to the front resumes the test polling only if the Test tab is open
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden && S.sec === 'strumenti' && S.sub === 'studio' && ST.tab === 'test') stAvviaGiro();
+  });
+
+  function stTestoStato(st){
+    if(st === 503) return 'Lo Study Assistant è in manutenzione. Riprova più tardi.';
+    if(st === 429) return 'Troppe richieste: aspetta un momento e riprova.';
+    if(st === 403) return 'Non hai il permesso di usare lo Study Assistant.';
+    if(st === 404) return 'Materiale o test non trovato.';
+    if(st === 413) return 'Il messaggio è troppo lungo.';
+    return 'Qualcosa non ha funzionato. Riprova.';
+  }
+  // one call to the gateway: resolves with the JSON (or the raw Response when opz.come is 'flusso'), rejects with { http, codice, testo }
+  function stApi(metodo, percorso, corpo, opz){
+    opz = opz || {};
+    var base = '';
+    try { base = new URL(AI_URL).origin + '/ai/studio/'; } catch(e){ base = ''; }
+    if(!base) return Promise.reject({ http:0, codice:'', testo:'Lo strumento non è configurato.' });
+    var ctl = opz.ctl || (window.AbortController ? new AbortController() : null), scaduto = false;
+    var tm = setTimeout(function(){ scaduto = true; if(ctl) ctl.abort(); }, opz.tempo || ST_T_API);
+    var h = { 'Authorization':'Bearer ' + (sessione ? sessione.s : '') }, body = undefined;
+    if(corpo !== null && corpo !== undefined){ body = JSON.stringify(corpo); h['Content-Type'] = 'application/json'; }
+    var flusso = opz.come === 'flusso';
+    return fetch(base + percorso, { method:metodo, headers:h, body:body, signal: ctl ? ctl.signal : undefined, cache:'no-store' })
+      .then(function(risp){
+        if(risp.status === 401){
+          esci('La sessione è scaduta: accedi di nuovo.');
+          throw { http:401, codice:'', testo:'La sessione è scaduta: accedi di nuovo.' };
+        }
+        if(risp.ok){
+          if(flusso) return risp;
+          return risp.json();
+        }
+        return risp.json().catch(function(){ return null; }).then(function(j){
+          var det = j && j.detail && typeof j.detail === 'object' ? j.detail : {};
+          throw { http:risp.status, codice: typeof det.codice === 'string' ? det.codice.slice(0, 60) : '', testo: dianaStr(det.messaggio, 600) || stTestoStato(risp.status) };
+        });
+      })
+      .then(function(v){ if(!flusso) clearTimeout(tm); return v; }, function(e){
+        clearTimeout(tm);
+        if(e && e.http !== undefined) throw e;
+        throw { http:0, codice: scaduto ? 'timeout' : 'rete', testo: scaduto ? 'Il servizio ci mette troppo. Riprova.' : 'Non riesco a collegarmi. Controlla la connessione.' };
+      });
+  }
+
+  function stCaricaStato(){
+    return stApi('GET', 'stato', null).then(function(j){
+      ST.stato.dati = j;
+      var ids = j && Array.isArray(j.materiali) ? j.materiali.map(function(m){ return m.id; }) : [];
+      ST.scelti = ST.scelti.filter(function(id){ return ids.indexOf(id) >= 0; });
+    }, function(e){ throw new Error((e && e.testo) || 'Errore'); });
+  }
+
+  function stVal(id){
+    var el = g(id);
+    return el ? el.value : '';
+  }
+  function stAvviso(testo){
+    var a = g('st-avviso'); if(!a) return;
+    a.textContent = testo || '';
+    a.hidden = !testo;
+  }
+
+  /* ---------- page ---------- */
+  function renderStudio(){
+    var host = g('str-studio');
+    if(!host) return;
+    if(!DI.ok) dianaCarica(false);
+    if(!DI.dati || !DI.dati.studio || DI.dati.studio.attivo !== true){
+      put(host, H`<div class="st-pagina"><p class="st-avviso">${(DI.dati && DI.dati.studio && DI.dati.studio.messaggio) || 'Lo Study Assistant è in arrivo.'}</p></div>`);
+      return;
+    }
+    if(!ST.stato.ok){
+      if(ST.stato.stato === 'err'){
+        put(host, H`<div class="st-pagina"><p class="st-avviso" role="alert">${ST.stato.err}</p><button class="btn sec" type="button" data-act="stu-ricarica">Riprova</button></div>`);
+        return;
+      }
+      if(ST.stato.stato === 'idle') conRis(ST.stato, stCaricaStato, false);
+      put(host, H`<div class="st-pagina"><div class="skel skel-card"></div></div>`);
+      return;
+    }
+    var S0 = ST.stato.dati || {};
+    if(S0.attivo === false || S0.configurato === false){
+      put(host, H`<div class="st-pagina"><p class="st-avviso">${S0.messaggio || 'Lo Study Assistant è in arrivo.'}</p></div>`);
+      return;
+    }
+    if(!g('st-pagina')){
+      put(host, H`<div class="st-pagina" id="tcag-st-pagina">
+        <section class="st-arg" id="tcag-st-arg" aria-label="Argomenti"><h2>Argomenti</h2><div class="st-arg-l" id="tcag-st-arg-l"></div></section>
+        <p class="st-avviso" id="tcag-st-avviso" role="alert" hidden></p>
+        <div class="st-tabs" id="tcag-st-schede" role="tablist">
+          <button class="st-tab st-tab-chat" type="button" role="tab" id="tcag-st-tab-chat" data-act="stu-tab" data-k="chat" aria-selected="true">Chat</button>
+          <button class="st-tab" type="button" role="tab" id="tcag-st-tab-lavagna" data-act="stu-tab" data-k="lavagna" aria-selected="false">Lavagna</button>
+          <button class="st-tab" type="button" role="tab" id="tcag-st-tab-test" data-act="stu-tab" data-k="test" aria-selected="false">Test</button>
+        </div>
+        <div class="st-griglia" id="tcag-st-griglia">
+          <div class="st-pan st-pan-chat" id="tcag-st-chat">
+            <div class="st-log" id="tcag-st-log" role="log" aria-live="polite"></div>
+            <div class="st-form">
+              <textarea id="tcag-st-domanda" maxlength="1000" rows="2" aria-label="La tua domanda sullo studio" placeholder="Scrivi la tua domanda..."></textarea>
+              <button class="btn pri" type="button" id="tcag-st-invia" data-act="stu-invia">Invia</button>
+              <button class="btn sec" type="button" id="tcag-st-ferma" data-act="stu-ferma" hidden>Ferma</button>
+              <button class="btn sec" type="button" id="tcag-st-nuova" data-act="stu-nuova">Nuova conversazione</button>
+            </div>
+          </div>
+          <div class="st-pan st-pan-lav" id="tcag-st-lav"></div>
+          <div class="st-pan st-pan-test" id="tcag-st-test">
+            <div class="st-form" id="tcag-st-crea">
+              <label>Tipo<select id="tcag-st-tipo"><option value="scelta">Scelta multipla</option><option value="vero_falso">Vero o falso</option></select></label>
+              <label>Difficoltà<select id="tcag-st-diff"><option value="facile">Facile</option><option value="medio">Medio</option><option value="difficile">Difficile</option><option value="misto">Misto</option></select></label>
+              <label>Domande<select id="tcag-st-n"><option value="5">5</option><option value="10" selected>10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option></select></label>
+              <label>Tempo<select id="tcag-st-tempo-sel"><option value="600">Nessuno</option><option value="5">5 min</option><option value="10">10 min</option><option value="15" selected>15 min</option><option value="20">20 min</option><option value="30">30 min</option></select></label>
+              <button class="btn pri" type="button" data-act="stu-crea">Crea test</button>
+            </div>
+            <div id="tcag-st-elenco"></div>
+            <div id="tcag-st-svolgi" hidden></div>
+          </div>
+        </div>
+      </div>`);
+      stArgVer = -1;
+      stDisegnaLog();
+      stDisegnaLavagna();
+      stDisegnaElenco();
+      stDisegnaTest();
+    }
+    if(stArgVer !== ST.stato.agg){ stArgVer = ST.stato.agg; stDisegnaArgomenti(); }
+    stAggiornaSchede();
+    stBottoni();
+    if(ST.test.stato === 'idle') stCaricaTest();
+  }
+
+  function stDisegnaArgomenti(){
+    var box = g('st-arg-l'); if(!box) return;
+    var mat = ST.stato.dati && Array.isArray(ST.stato.dati.materiali) ? ST.stato.dati.materiali : [];
+    if(!mat.length){ put(box, H`<p class="st-avviso">Non ci sono ancora materiali di studio.</p>`); return; }
+    put(box, mat.map(function(m){
+      var on = ST.scelti.indexOf(m.id) >= 0;
+      return H`<label class="st-arg-c"><input type="checkbox" data-act="stu-arg" data-id="${m.id}" ${on ? 'checked' : ''}> <span>${m.titolo || ''}</span></label>`;
+    }));
+  }
+  function stAggiornaSchede(){
+    var chat = g('st-chat'), lav = g('st-lav'), tst = g('st-test');
+    if(!chat || !lav || !tst) return;
+    chat.classList.toggle('st-on', ST.tab === 'chat');
+    lav.classList.toggle('st-on', ST.tab === 'lavagna');
+    tst.classList.toggle('st-on', ST.tab === 'test');
+    lav.classList.toggle('st-dx', ST.tab !== 'test');
+    tst.classList.toggle('st-dx', ST.tab === 'test');
+    ['chat', 'lavagna', 'test'].forEach(function(k){
+      var b = g('st-tab-' + k);
+      if(b) b.setAttribute('aria-selected', String(ST.tab === k));
+    });
+  }
+  function stTab(k){
+    if(['chat', 'lavagna', 'test'].indexOf(k) < 0) return;
+    ST.tab = k;
+    stAggiornaSchede();
+    if(k === 'test'){ stCaricaTest(); stAvviaGiro(); }
+  }
+  function stArgomento(el){
+    var id = el.getAttribute('data-id') || '';
+    var k = ST.scelti.indexOf(id);
+    if(el.checked){
+      if(k >= 0) return;
+      if(ST.scelti.length >= ST_MAX_ARG){
+        el.checked = false;
+        stAvviso('Puoi scegliere al massimo 10 argomenti.');
+        return;
+      }
+      ST.scelti.push(id);
+      stAvviso('');
+    } else if(k >= 0){
+      ST.scelti.splice(k, 1);
+    }
+  }
+  function stBottoni(){
+    var busy = !!ST.ctl;
+    var inv = g('st-invia'), fer = g('st-ferma'), nuo = g('st-nuova');
+    if(inv) inv.disabled = busy;
+    if(fer) fer.hidden = !busy;
+    if(nuo) nuo.disabled = busy;
+  }
+
+  /* ---------- 3) CHAT ---------- */
+  function stBolla(m){
+    var d = document.createElement('div');
+    d.className = 'st-m ' + (m.r === 'u' ? 'st-m-u' : 'st-m-a');
+    if(m.r === 'u') d.textContent = m.t;
+    else stScriviBolla(d, m);
+    return d;
+  }
+  // the answer text goes only through renderSicuro (DOM nodes); the old content is removed child by child
+  function stScriviBolla(d, m){
+    while(d.firstChild) d.removeChild(d.firstChild);
+    if(m.t) d.appendChild(renderSicuro(m.t));
+    if(m.fermata){ var f = document.createElement('p'); f.textContent = '(fermata)'; d.appendChild(f); }
+    if(m.err){
+      var e = document.createElement('p'); e.textContent = m.err; d.appendChild(e);
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'btn sec sm'; b.setAttribute('data-act', 'stu-riprova'); b.textContent = 'Riprova';
+      d.appendChild(b);
+    }
+    if(m.fonti && m.fonti.length){
+      var box = document.createElement('div'); box.className = 'st-fonti';
+      m.fonti.forEach(function(x){
+        var c = document.createElement('span'); c.className = 'st-chip'; c.textContent = x.titolo + ' · parte ' + x.parte;
+        box.appendChild(c);
+      });
+      d.appendChild(box);
+    }
+  }
+  function stDisegnaLog(){
+    var log = g('st-log'); if(!log) return;
+    log.textContent = '';
+    if(!ST.chat.length){ put(log, H`<p class="st-avviso">Scrivi una domanda sugli argomenti scelti.</p>`); return; }
+    ST.chat.forEach(function(m){ log.appendChild(stBolla(m)); });
+  }
+  function stRidisegnaUltima(m){
+    var log = g('st-log'); if(!log) return;
+    var ultima = log.lastChild;
+    if(!ultima || !ultima.classList || !ultima.classList.contains('st-m-a')){ stDisegnaLog(); return; }
+    var vicino = log.scrollHeight - log.scrollTop - log.clientHeight < 80;
+    stScriviBolla(ultima, m);
+    if(vicino) log.scrollTop = log.scrollHeight;
+  }
+  function stMsgCorrente(){
+    for(var i = ST.chat.length - 1; i >= 0; i--) if(ST.chat[i].r === 'a') return ST.chat[i];
+    return null;
+  }
+  function stUltimaDomanda(){
+    for(var i = ST.chat.length - 1; i >= 0; i--) if(ST.chat[i].r === 'u') return ST.chat[i].t;
+    return '';
+  }
+  // earlier turns of the chat that have text and no error, the last ST_STORIA ones
+  function stStoria(){
+    var out = [];
+    ST.chat.forEach(function(m){
+      if(m.t && !m.err) out.push({ ruolo: m.r === 'u' ? 'utente' : 'assistente', testo: m.t.slice(0, 4000) });
+    });
+    return out.slice(-ST_STORIA);
+  }
+  function stFonti(x){
+    if(!Array.isArray(x)) return [];
+    var out = [];
+    x.slice(0, 20).forEach(function(f){
+      if(!f || typeof f !== 'object') return;
+      var titolo = dianaStr(f.titolo, 120);
+      if(titolo) out.push({ titolo: titolo, parte: dianaInt(f.parte, 1, 9999, 0) });
+    });
+    return out;
+  }
+  function stRiga(o){
+    var m = stMsgCorrente();
+    if(!m || !o || typeof o !== 'object') return;
+    if(o.t === 'testo'){
+      if(typeof o.testo === 'string') m.t += o.testo;
+      stRidisegnaUltima(m);
+    } else if(o.t === 'fine'){
+      m.fonti = stFonti(o.fonti);
+      stRidisegnaUltima(m);
+      if(m.t) stLavagna(stUltimaDomanda(), m.t);
+    } else if(o.t === 'errore'){
+      m.err = dianaStr(o.messaggio, 300) || 'Qualcosa non ha funzionato. Riprova.';
+      stRidisegnaUltima(m);
+    }
+  }
+  function stRighe(righe){
+    righe.forEach(function(riga){
+      if(!riga || !riga.trim()) return;
+      var o;
+      try { o = JSON.parse(riga); } catch(e){ return; }      // a broken line is skipped, as the contract says
+      stRiga(o);
+    });
+  }
+  // reads the NDJSON stream piece by piece; the last incomplete line waits for the next piece
+  function stLeggiFlusso(risp){
+    if(!risp.body || !risp.body.getReader) return Promise.reject({ http:0, codice:'', testo:'Il browser non riesce a leggere la risposta.' });
+    var rd = risp.body.getReader(), dec = new TextDecoder('utf-8'), resto = '';
+    function giro(){
+      return rd.read().then(function(x){
+        if(x.done){ resto += dec.decode(); stRighe(resto.split('\n')); resto = ''; return; }
+        resto += dec.decode(x.value, { stream:true });
+        var pezzi = resto.split('\n');
+        resto = pezzi.pop();
+        stRighe(pezzi);
+        return giro();
+      });
+    }
+    return giro();
+  }
+  function stManda(testo){
+    if(ST.ctl) return false;
+    testo = String(testo == null ? '' : testo).trim();
+    if(!ST.scelti.length){ stAvviso('Scegli almeno un argomento.'); return false; }
+    if(!testo){ stAvviso('Scrivi una domanda.'); return false; }
+    if(testo.length > 1000){ stAvviso('La domanda è troppo lunga: massimo 1000 caratteri.'); return false; }
+    stAvviso('');
+    var storia = stStoria();
+    ST.chat.push({ r:'u', t:testo });
+    var m = { r:'a', t:'', err:'', fermata:false, fonti:[] };
+    ST.chat.push(m);
+    ST.ctl = window.AbortController ? new AbortController() : null;
+    stDisegnaLog();
+    stBottoni();
+    var log = g('st-log'); if(log) log.scrollTop = log.scrollHeight;
+    stApi('POST', 'chat', { materiali: ST.scelti.slice(), domanda: testo, storia: storia }, { come:'flusso', tempo: ST_T_LUNGO, ctl: ST.ctl })
+      .then(function(risp){ return stLeggiFlusso(risp); })
+      .catch(function(e){
+        if(ST.ctl && ST.ctl.signal.aborted) m.fermata = true;
+        else m.err = (e && e.testo) || 'Non riesco a collegarmi. Controlla la connessione.';
+      })
+      .then(function(){
+        ST.ctl = null;
+        stDisegnaLog();
+        stBottoni();
+      });
+    return true;
+  }
+  function stInviaDaForm(){
+    var q = g('st-domanda'); if(!q) return;
+    if(stManda(q.value)) q.value = '';
+  }
+  function stFerma(){
+    if(ST.ctl) ST.ctl.abort();
+  }
+  // the last answer goes, the last question is sent again
+  function stRiprova(){
+    if(ST.ctl) return;
+    var domanda = stUltimaDomanda();
+    if(!domanda) return;
+    while(ST.chat.length && ST.chat[ST.chat.length - 1].r === 'a') ST.chat.pop();
+    if(ST.chat.length && ST.chat[ST.chat.length - 1].r === 'u') ST.chat.pop();
+    stManda(domanda);
+  }
+  function stNuova(){
+    if(ST.ctl) return;
+    ST.chat = [];
+    ST.lavagna = null;
+    stLavMsg = '';
+    stDisegnaLog();
+    stDisegnaLavagna();
+  }
+
+  /* ---------- 4) LAVAGNA ---------- */
+  function stLavagna(domanda, risposta){
+    if(ST.lavVol){ ST.lavCoda = { domanda: domanda, risposta: risposta }; return; }
+    ST.lavVol = true;
+    stLavMsg = '';
+    stApi('POST', 'lavagna', { materiali: ST.scelti.slice(), domanda: domanda, risposta: String(risposta).slice(0, 8000) }, { tempo: ST_T_LUNGO })
+      .then(function(j){ ST.lavagna = j && j.lavagna ? j.lavagna : null; })
+      .catch(function(e){
+        ST.lavagna = null;
+        stLavMsg = e && e.codice === 'studio_lavagna_vuota' ? 'Lavagna non disponibile per questa risposta.' : ((e && e.testo) || 'Errore');
+      })
+      .then(function(){
+        ST.lavVol = false;
+        if(ST.lavCoda){ var c = ST.lavCoda; ST.lavCoda = null; stLavagna(c.domanda, c.risposta); }
+        stDisegnaLavagna();
+      });
+  }
+  function stDisegnaLavagna(){
+    var box = g('st-lav'); if(!box) return;
+    var L = ST.lavagna;
+    if(!L){
+      put(box, H`<p class="st-avviso">${stLavMsg || 'La lavagna compare qui dopo una risposta della chat.'}</p>`);
+      return;
+    }
+    var blocchi = (Array.isArray(L.blocchi) ? L.blocchi : []).map(function(b){ return stBlocco(b); }).join('');
+    put(box, H`<div class="st-lav"><h3>${L.titolo || 'Lavagna'}</h3>${raw(blocchi)}<button class="btn sec" type="button" data-act="stu-stampa">Stampa la lavagna</button></div>`);
+  }
+  // Self-contained on purpose: the test runs it with new Function, so it uses no outer name. Every text is escaped here.
+  function stBlocco(b){
+    var esc = function(s){
+      return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    };
+    var t = function(x){ return esc(String(x == null ? '' : x).slice(0, 300)); };
+    var tipi = ['definizione', 'punti_chiave', 'passaggi', 'causa_effetto', 'esempio', 'errori_comuni', 'da_ricordare'];
+    if(!b || typeof b !== 'object' || tipi.indexOf(b.tipo) < 0) return '';
+    var voci = Array.isArray(b.voci) ? b.voci : [];
+    var cl = 'st-b st-b-' + b.tipo;
+    if(b.tipo === 'definizione') return '<div class="' + cl + ' st-b-def"><b>' + t(b.termine) + '</b> ' + t(b.testo) + '</div>';
+    if(b.tipo === 'punti_chiave') return '<ul class="' + cl + '">' + voci.map(function(v){ return '<li>' + t(v) + '</li>'; }).join('') + '</ul>';
+    if(b.tipo === 'causa_effetto') return '<ul class="' + cl + '">' + voci.map(function(v){ return '<li>' + t(String(v).split('->').join('→')) + '</li>'; }).join('') + '</ul>';
+    if(b.tipo === 'passaggi') return '<ol class="' + cl + '">' + voci.map(function(v){ return '<li>' + t(v) + '</li>'; }).join('') + '</ol>';
+    if(b.tipo === 'esempio') return '<div class="' + cl + ' st-b-ese">' + t(b.testo) + '</div>';
+    if(b.tipo === 'errori_comuni') return '<ul class="' + cl + '">' + voci.map(function(v){
+      var s = String(v == null ? '' : v), i1 = s.indexOf('→'), i2 = s.indexOf('->');
+      var k = i1 < 0 ? i2 : (i2 < 0 ? i1 : Math.min(i1, i2));
+      var sba = k < 0 ? s : s.slice(0, k), giu = k < 0 ? '' : s.slice(k + (s.charAt(k) === '→' ? 1 : 2));
+      return '<li class="st-err"><span class="st-no">✗ ' + t(sba.trim()) + '</span> <span class="st-si">✓ ' + t(giu.trim()) + '</span></li>';
+    }).join('') + '</ul>';
+    if(b.tipo === 'da_ricordare') return '<div class="' + cl + ' st-b-ric">' + (b.testo ? t(b.testo) : voci.map(function(v){ return t(v); }).join(' · ')) + '</div>';
+    return '';
+  }
+
+  /* ---------- 5) TEST ---------- */
+  function stDisegnaTest(){
+    var aperto = !!ST.aperto;
+    var crea = g('st-crea'), el = g('st-elenco'), sv = g('st-svolgi');
+    if(crea) crea.hidden = aperto;
+    if(el) el.hidden = aperto;
+    if(sv) sv.hidden = !aperto;
+  }
+  function stCaricaTest(){
+    if(ST.test.vol) return ST.test.vol;
+    ST.test.stato = ST.test.ok ? 'ok' : 'car';
+    ST.test.vol = stApi('GET', 'test', null).then(function(j){
+      ST.test.dati = j; ST.test.ok = true; ST.test.stato = 'ok'; ST.test.err = ''; ST.test.agg = Date.now();
+    }, function(e){
+      ST.test.err = (e && e.testo) || 'Errore';
+      ST.test.stato = ST.test.ok ? 'ok' : 'err';
+    }).then(function(){
+      ST.test.vol = null;
+      stDisegnaElenco();
+    });
+    return ST.test.vol;
+  }
+  function stDisegnaElenco(){
+    var box = g('st-elenco'); if(!box) return;
+    if(!ST.test.ok && !ST.test.err){ put(box, H`<p class="st-avviso">Carico i test…</p>`); return; }
+    var msg = stMsgTest || ST.test.err || '';
+    var lista = ST.test.dati && Array.isArray(ST.test.dati.test) ? ST.test.dati.test : [];
+    var corpo = lista.length ? lista.map(function(t){ return stRigaTest(t); }) : [H`<p class="st-avviso">Non hai ancora test: creane uno qui sopra.</p>`];
+    put(box, H`${msg ? H`<p class="st-avviso" role="alert">${msg}</p>` : ''}${corpo}`);
+  }
+  function stRigaTest(t){
+    var stato = t.stato === 'in_corso' ? 'Lo sto preparando…' : t.stato === 'fallito' ? 'Non sono riuscito a preparare il test.' : 'Pronto';
+    var tipo = t.tipo === 'vero_falso' ? 'Vero o falso' : 'Scelta multipla';
+    var avviso = t.stato === 'scarso' ? 'Ho preparato ' + (t.n_validi || 0) + ' domande su ' + (t.n_chiesti || 0) + '.' : '';
+    var fai = t.stato === 'pronto' || t.stato === 'scarso';
+    var tent = Array.isArray(t.tentativi) ? t.tentativi.slice(-5) : [];
+    var elimina = '';
+    if(t.stato !== 'in_corso'){
+      elimina = ST.chiedi === t.id
+        ? H`<button class="btn dng sm" type="button" data-act="stu-elimina" data-id="${t.id}">Sì, elimina</button><button class="btn sec sm" type="button" data-act="stu-annulla">No</button>`
+        : H`<button class="btn sec sm" type="button" data-act="stu-elimina-chiedi" data-id="${t.id}">Elimina</button>`;
+    }
+    return H`<div class="st-test-riga">
+      <b>${t.titolo || 'Test'}</b>
+      <p>${tipo} · ${stato}</p>
+      ${avviso ? H`<p class="st-avviso">${avviso}</p>` : ''}
+      <div class="st-form">${fai ? H`<button class="btn pri sm" type="button" data-act="stu-apri" data-id="${t.id}">Fai il test</button>` : ''}${elimina}</div>
+      ${tent.length ? H`<ul class="st-tentativi">${tent.map(function(x){ return H`<li>${x.percentuale}% · ${fmt(x.data)}</li>`; })}</ul>` : ''}
+    </div>`;
+  }
+  function stCrea(){
+    if(!ST.scelti.length){ stAvviso('Scegli almeno un argomento.'); return; }
+    stAvviso('');
+    stMsgTest = '';
+    stApi('POST', 'test', { materiali: ST.scelti.slice(), tipo: stVal('st-tipo'), difficolta: stVal('st-diff'), n: Number(stVal('st-n')), tempo_min: Number(stVal('st-tempo-sel')) })
+      .then(function(){ return stCaricaTest(); })
+      .then(function(){ stAvviaGiro(); }, function(e){
+        stMsgTest = (e && e.testo) || 'Errore';
+        stDisegnaElenco();
+      });
+  }
+  function stElimina(id){
+    if(!id) return;
+    stApi('POST', 'test/' + encodeURIComponent(id) + '/elimina', {}).then(function(){
+      ST.chiedi = '';
+      stMsgTest = '';
+      return stCaricaTest();
+    }, function(e){
+      ST.chiedi = '';
+      stMsgTest = (e && e.testo) || 'Errore';
+      stDisegnaElenco();
+    });
+  }
+  // polling of the list while a test is being prepared (only with the Test tab open and the page visible)
+  function stInCorsoLista(){
+    var lista = ST.test.dati && Array.isArray(ST.test.dati.test) ? ST.test.dati.test : [];
+    return lista.some(function(t){ return t.stato === 'in_corso'; });
+  }
+  function stGiroServe(){
+    return !document.hidden && S.sec === 'strumenti' && S.sub === 'studio' && ST.tab === 'test' && ST.pollN < ST_POLL_MAX && stInCorsoLista();
+  }
+  function stAvviaGiro(){
+    if(ST.poll) return;
+    ST.pollN = 0;
+    stGiro();
+  }
+  function stGiro(){
+    ST.poll = 0;
+    if(!stGiroServe()) return;
+    ST.poll = setTimeout(function(){
+      ST.poll = 0;
+      if(!stGiroServe()) return;
+      ST.pollN++;
+      stCaricaTest().then(function(){ stGiro(); });
+    }, ST_POLL_MS);
+  }
+  function stApri(id){
+    if(!id || ST.inCorso) return;
+    stFermaConto();
+    ST.aperto = id; ST.esito = null; ST.risposte = {}; stDettaglio = null; stMsgTest = '';
+    stDisegnaTest();
+    stDisegnaSvolgi();
+    stApi('GET', 'test/' + encodeURIComponent(id), null).then(function(j){
+      if(ST.aperto !== id) return;
+      stDettaglio = j;
+      stAvviaConto(j);
+      stDisegnaSvolgi();
+    }, function(e){
+      if(ST.aperto !== id) return;
+      stMsgTest = (e && e.testo) || 'Errore';
+      stChiudi();
+    });
+  }
+  function stAvviaConto(j){
+    stFermaConto();
+    ST.inizio = Date.now();
+    var tempo = j && j.test ? Number(j.test.tempo_min) : 0;
+    if(tempo > 0 && tempo < ST_SENZA_TEMPO){
+      ST.fine = ST.inizio + tempo * 60000;
+      ST.conto = setInterval(stTick, 1000);
+    }
+  }
+  function stFermaConto(){
+    if(ST.conto) clearInterval(ST.conto);
+    ST.conto = 0;
+  }
+  function stTick(){
+    var rim = Math.max(0, Math.ceil((ST.fine - Date.now()) / 1000));
+    var el = g('st-tempo');
+    if(el) el.textContent = 'Tempo rimasto: ' + pad(Math.floor(rim / 60)) + ':' + pad(rim % 60);
+    if(rim <= 0){ stFermaConto(); stConsegna(); }
+  }
+  function stDomanda(d){
+    var opzioni = Array.isArray(d.opzioni) ? d.opzioni : [];
+    return H`<fieldset class="st-q"><legend><b>${d.testo || ''}</b></legend>${opzioni.map(function(o, i){
+      return H`<label class="st-opz"><input type="radio" name="tcag-st-q-${d.id}" value="${i}" data-act="stu-risposta" data-q="${d.id}" data-i="${i}" ${ST.risposte[d.id] === i ? 'checked' : ''}> <span>${o}</span></label>`;
+    })}</fieldset>`;
+  }
+  function stRisultato(j){
+    var domande = Array.isArray(j.domande) ? j.domande : [];
+    return H`<div class="st-ris"><p><b>${j.percentuale}%</b> · ${j.giuste} giuste su ${j.totale}</p>${domande.map(function(d){
+      var data = d.scelta != null && Array.isArray(d.opzioni) && d.opzioni[d.scelta] != null ? d.opzioni[d.scelta] : 'Nessuna risposta';
+      var giusta = Array.isArray(d.opzioni) && d.opzioni[d.giusta] != null ? d.opzioni[d.giusta] : '';
+      return H`<div class="st-q ${d.esatta ? 'st-ok' : 'st-ko'}"><b>${d.testo || ''}</b><p>La tua risposta: ${data}</p><p>Risposta giusta: ${giusta}</p><p>${d.spiegazione || ''}</p><p class="st-cit">dal materiale: ${d.titolo_materiale || ''} «${d.citazione || ''}»</p></div>`;
+    })}</div>`;
+  }
+  function stDisegnaSvolgi(){
+    var box = g('st-svolgi'); if(!box) return;
+    if(!ST.aperto){ box.textContent = ''; return; }
+    if(!stDettaglio){
+      put(box, H`<p class="st-avviso">Preparo il test…</p><button class="btn sec" type="button" data-act="stu-chiudi">Torna all'elenco</button>`);
+      return;
+    }
+    var meta = stDettaglio.test || {}, domande = Array.isArray(stDettaglio.domande) ? stDettaglio.domande : [];
+    var testa = H`<div class="st-form"><b>${meta.titolo || 'Test'}</b><button class="btn sec" type="button" data-act="stu-chiudi">Torna all'elenco</button></div>`;
+    if(ST.esito){ put(box, H`${testa}${stRisultato(ST.esito)}`); return; }
+    var conto = Number(meta.tempo_min) > 0 && Number(meta.tempo_min) < ST_SENZA_TEMPO ? H`<p class="st-tempo" id="tcag-st-tempo"></p>` : '';
+    var msg = stMsgTest ? H`<p class="st-avviso" role="alert">${stMsgTest}</p>` : '';
+    put(box, H`${testa}${msg}${conto}${domande.map(function(d){ return stDomanda(d); })}<div class="st-form"><button class="btn pri big" type="button" id="tcag-st-consegna" data-act="stu-consegna" ${ST.inCorso ? 'disabled' : ''}>Consegna</button></div>`);
+    if(ST.conto) stTick();
+  }
+  function stRisposta(el){
+    ST.risposte[el.getAttribute('data-q')] = Number(el.getAttribute('data-i'));
+  }
+  // second submit blocked by ST.inCorso; the result replaces the questions
+  function stConsegna(){
+    if(ST.inCorso || !ST.aperto || !stDettaglio || ST.esito) return;
+    ST.inCorso = true;
+    stFermaConto();
+    var id = ST.aperto;
+    var secondi = Math.max(0, Math.round((Date.now() - ST.inizio) / 1000));
+    stDisegnaSvolgi();
+    stApi('POST', 'test/' + encodeURIComponent(id) + '/consegna', { risposte: ST.risposte, secondi: secondi }).then(function(j){
+      if(ST.aperto === id){ ST.esito = j; stMsgTest = ''; }
+    }, function(e){
+      stMsgTest = (e && e.testo) || 'Errore';
+    }).then(function(){
+      ST.inCorso = false;
+      stDisegnaSvolgi();
+      stCaricaTest();
+    });
+  }
+  function stChiudi(){
+    if(ST.inCorso) return;
+    stFermaConto();
+    ST.aperto = null; ST.esito = null; ST.risposte = {}; stDettaglio = null;
+    stDisegnaTest();
+    stDisegnaSvolgi();
+    stDisegnaElenco();
+    stCaricaTest();
+  }
+
+  /* ---------- 6) dispatcher: one case per data-act ---------- */
+  function stAzione(a, el){
+    switch(a){
+      case 'stu-arg': stArgomento(el); break;
+      case 'stu-tab': stTab(el.getAttribute('data-k')); break;
+      case 'stu-invia': stInviaDaForm(); break;
+      case 'stu-ferma': stFerma(); break;
+      case 'stu-riprova': stRiprova(); break;
+      case 'stu-nuova': stNuova(); break;
+      case 'stu-stampa': r.classList.add('st-stampa'); window.print(); r.classList.remove('st-stampa'); break;
+      case 'stu-crea': stCrea(); break;
+      case 'stu-apri': stApri(el.getAttribute('data-id')); break;
+      case 'stu-risposta': stRisposta(el); break;
+      case 'stu-consegna': stConsegna(); break;
+      case 'stu-chiudi': stChiudi(); break;
+      case 'stu-elimina-chiedi': ST.chiedi = el.getAttribute('data-id') || ''; stDisegnaElenco(); break;
+      case 'stu-elimina': stElimina(el.getAttribute('data-id')); break;
+      case 'stu-annulla': ST.chiedi = ''; stDisegnaElenco(); break;
+      case 'stu-ricarica': conRis(ST.stato, stCaricaStato, false); break;
+      default: break;
+    }
   }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
@@ -11439,6 +12158,215 @@ function findClose(){
   function bpaRiprova(){
     if(BPA.aperta) bpaApri(BPA.aperta); else bpAdmCarica(true);
   }
+/* Study Assistant, admin only (V6.17.0). Switch and message for the agents, and the choice of the .md files of the Documents tree
+   that become study material on the gateway. Files go up one at a time with scaricaConProgresso and the raw bytes as body.
+   Nothing is kept on the device (no storage). Text from the server goes in with H`` or textContent only. The gateway checks the admin role on every call. */
+var STUA_MAX_BYTE = 2097152;
+var STUA = { mat:ris(), bozza:null, salvando:false, msg:null, mod:{}, lavoro:null, esiti:{} };   // mod = scelte non ancora salvate { chiave: bool }; esiti = errore per riga
+
+// dati della scheda: impostazioni, albero dei Documenti e elenco dei materiali sul server
+function stuaApri(forza){
+  if(!(U && U.ruolo === 'admin')) return Promise.resolve();
+  if(GD.imp.stato === 'idle' || (forza && !GD.imp.ok)) dgCarica('imp');
+  if(DOC.albero.stato === 'idle' || forza) caricaAlbero(!!forza);
+  return conRis(STUA.mat, function(){
+    return dgApi('GET', 'studio/materiali').then(function(j){
+      STUA.mat.dati = Array.isArray(j.materiali) ? j.materiali : [];
+    }, function(e){ throw new Error(dgTesto(e)); });
+  }).then(function(){
+    if(S.sec === 'admin' && S.adm === 'studio') renderCorrente();
+  });
+}
+
+// vero per i file Markdown (per nome o per tipo)
+function stuaEMd(nome, mime){
+  var n = String(nome == null ? '' : nome).toLowerCase();
+  return /\.(md|markdown)$/.test(n) || mime === 'text/markdown';
+}
+
+// una riga per titolo: il file piu' recente vince; stato 'non' | 'aggiornare' | 'caricato'
+function stuaRighe(){
+  var per = {}, out;
+  Object.keys(DOC.nodi).forEach(function(id){
+    var v = DOC.nodi[id];
+    if(v.cartella || !stuaEMd(v.nome, v.mime)) return;
+    var k = chiaveTitolo(v.nome);
+    if(!k || k.length > 200 || k === '__proto__') return;
+    if(!Object.prototype.hasOwnProperty.call(per, k)) per[k] = { k:k, files:[] };
+    per[k].files.push(v);
+  });
+  out = Object.keys(per).map(function(k){
+    var l = per[k].files.slice().sort(function(a, b){ return String(b.modificato || '').localeCompare(String(a.modificato || '')); });
+    var file = l[0], titolo = titoloBase(file.nome) || file.nome;
+    var voce = (STUA.mat.dati || []).filter(function(x){ return x && x.chiave === k; })[0] || null;
+    var stato = !voce ? 'non' : (voce.drive_id !== file.id || (voce.modificato || '') !== (file.modificato || '')) ? 'aggiornare' : 'caricato';
+    return { k:k, titolo:titolo, file:file, voce:voce, stato:stato };
+  });
+  out.sort(function(a, b){ return a.titolo.localeCompare(b.titolo, 'it'); });
+  return out;
+}
+
+// la bozza nasce dalle impostazioni del server; resta in memoria
+function stuaBozza(){
+  if(STUA.bozza === null){
+    var st = dgImpDati().studio || {};
+    STUA.bozza = { attivo: st.attivo === true, messaggio: typeof st.messaggio === 'string' ? st.messaggio : '' };
+  }
+  return STUA.bozza;
+}
+
+function stuaRigaHTML(r){
+  var mod = Object.prototype.hasOwnProperty.call(STUA.mod, r.k);
+  var spunta = mod ? !!STUA.mod[r.k] : !!r.voce;
+  var err = STUA.esiti[r.k];
+  var etic = r.stato === 'caricato' ? 'Caricato' : r.stato === 'aggiornare' ? 'Da aggiornare' : 'Non caricato';
+  var classe = r.stato === 'caricato' ? 'stua-car' : r.stato === 'aggiornare' ? 'stua-agg' : 'stua-non';
+  return H`<div class="stua-riga"><label class="lrow"><input type="checkbox" data-act="stua-casella" data-k="${r.k}" ${spunta ? 'checked' : ''} ${STUA.salvando ? 'disabled' : ''}>
+    <span class="g"><b>${r.titolo}</b><br><span class="mut">${percorsoDi(r.file)}</span></span>
+    <span class="stua-stato ${classe}">${etic}</span></label>${err ? H`<p class="stua-err" role="alert">${err}</p>` : ''}</div>`;
+}
+
+function stuaBarra(){
+  var testo = STUA.salvando && STUA.lavoro ? (STUA.lavoro.totale ? 'Carico ' + (STUA.lavoro.fatti + 1) + ' di ' + STUA.lavoro.totale + '…' : 'Salvo…') : '';
+  return H`<div class="stua-bar"><div class="stua-st" id="tcag-stua-st" role="status" aria-live="polite">${testo}</div><button class="btn pri t16" type="button" data-act="stua-salva" ${STUA.salvando ? 'disabled' : ''}>Salva</button></div>`;
+}
+
+function renderStudioAdmin(box){
+  if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
+  if(!box.querySelector('#tcag-stua-imp')) put(box, H`<div class="narrow" style="max-width:900px"><section class="card stua-imp" id="tcag-stua-imp"></section><div id="tcag-stua-corpo"></div></div>`);
+  var corpo = box.querySelector('#tcag-stua-corpo'), imp = box.querySelector('#tcag-stua-imp');
+  // PARTE (a): interruttore e messaggio. Non si ridisegna mentre l'admin scrive nel campo del messaggio
+  if(document.activeElement !== g('stua-msg')){
+    var cosa;
+    if(!GD.imp.ok) cosa = GD.imp.stato === 'err' ? erroreBox('le impostazioni', GD.imp.err) : skel(1);
+    else if(!dgImpDati().studio) cosa = H`<p class="mut">Il server non è ancora aggiornato per questa funzione (serve il cancello AI 1.11.0).</p>`;
+    else {
+      var b = stuaBozza();
+      cosa = H`<button class="sw" type="button" role="switch" aria-checked="${String(b.attivo)}" data-act="stua-toggle"><span class="sw-t">Study Assistant per gli agenti</span><span class="sw-st">${b.attivo ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button>
+        <label for="tcag-stua-msg">Messaggio per gli agenti (facoltativo)</label>
+        <input id="tcag-stua-msg" type="text" maxlength="300" value="${b.messaggio}">
+        ${STUA.msg ? H`<p class="stua-msg ${STUA.msg.t}" role="${STUA.msg.t === 'err' ? 'alert' : 'status'}">${STUA.msg.testo}</p>` : ''}
+        <button class="btn pri t16" type="button" data-act="stua-salva-imp" ${STUA.salvando ? 'disabled' : ''}>Salva</button>`;
+    }
+    put(imp, H`<h2>Study Assistant</h2>${cosa}`);
+    var mi = g('stua-msg');
+    if(mi) mi.oninput = function(){ stuaBozza().messaggio = this.value; };
+  }
+  // PARTE (b): i materiali di studio, scelti dai file .md dei Documenti
+  var righe = stuaRighe(), cosaB;
+  if(!DOC.albero.ok) cosaB = DOC.albero.stato === 'err' ? erroreBox('i Documenti', DOC.albero.err) : skel(2);
+  else if(!STUA.mat.ok) cosaB = STUA.mat.stato === 'err' ? H`<div class="err" role="alert"><span>Non riesco a leggere i materiali di studio. ${STUA.mat.err || ''}</span><button class="btn sec sm" type="button" data-act="stua-riprova">Riprova</button></div>` : skel(2);
+  else if(!righe.length) cosaB = vuoto('Nei Documenti non ci sono file .md.');
+  else cosaB = H`<div class="card rows">${righe.map(stuaRigaHTML)}</div>${stuaBarra()}`;
+  put(corpo, H`<div class="sec-h">Materiali di studio</div>${cosaB}`);
+}
+
+// Salva delle impostazioni (interruttore e messaggio), stessa logica di bpaSalva
+function stuaSalvaImp(){
+  if(!(U && U.ruolo === 'admin') || STUA.salvando) return;
+  var b = stuaBozza(), mi = g('stua-msg');
+  var m = String(mi ? mi.value : (b.messaggio || '')).trim();
+  if(/[<>]/.test(m)){ STUA.msg = { t:'err', testo:'Il messaggio non può contenere i caratteri < e >.' }; renderCorrente(); return; }
+  if(m.length > 300){ STUA.msg = { t:'err', testo:'Massimo 300 caratteri.' }; renderCorrente(); return; }
+  STUA.salvando = true; renderCorrente();
+  return dgApi('POST', 'impostazioni', { studio: { attivo: b.attivo, messaggio: m }, base: dgImpDati().versione }).then(function(j){
+    if(j && j.versione != null){
+      var nuovo = {};
+      Object.keys(dgImpDati()).forEach(function(k){ nuovo[k] = dgImpDati()[k]; });
+      Object.keys(j).forEach(function(k){ nuovo[k] = j[k]; });
+      GD.imp.dati = nuovo; GD.imp.agg = Date.now(); dgImpArrivata();
+    } else return dgCarica('imp', true);
+  }).then(function(){ STUA.bozza = null; STUA.msg = { t:'ok', testo:'Salvato.' }; })
+    .catch(function(e){
+      STUA.msg = { t:'err', testo: dgTesto(e) };
+      if(e.http === 409){ STUA.bozza = null; return dgCarica('imp', true); }
+    }).then(function(){
+      STUA.salvando = false;
+      if(S.sec === 'admin' && S.adm === 'studio') renderCorrente();
+    });
+}
+
+// carica un file .md sul gateway: il corpo sono i byte del file
+function stuaCarica(r){
+  var f = r.file;
+  if(!sessione) return Promise.reject(new Error('La sessione è scaduta: accedi di nuovo.'));
+  if(Number(f.dimensione) > STUA_MAX_BYTE) return Promise.reject(new Error('File troppo grande (massimo 2 MB).'));
+  return scaricaConProgresso(f).then(function(j){
+    var body;
+    try { body = daBase64(j.base64); } catch(e){ throw new Error('Il file non si legge.'); }
+    if(body.byteLength > STUA_MAX_BYTE) throw new Error('File troppo grande (massimo 2 MB).');
+    var modificato = /^\d{4}-\d{2}-\d{2}T/.test(String(f.modificato || '')) ? String(f.modificato) : '';
+    var url = new URL(AI_URL).origin + '/ai/admin/studio/materiali/carica?chiave=' + encodeURIComponent(r.k) +
+      '&titolo=' + encodeURIComponent(r.titolo.slice(0, 200)) + '&drive_id=' + encodeURIComponent(f.id) + '&modificato=' + encodeURIComponent(modificato);
+    var ctl = window.AbortController ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function(){ ctl.abort(); }, 120000) : 0;
+    return fetch(url, {
+      method:'POST',
+      headers:{ 'Authorization':'Bearer ' + sessione.s, 'Content-Type':'text/markdown; charset=utf-8' },
+      body: body,
+      signal: ctl ? ctl.signal : undefined
+    }).then(function(risp){
+      clearTimeout(timer);
+      if(risp.status === 401){ esci('La sessione è scaduta: accedi di nuovo.'); throw new Error('La sessione è scaduta: accedi di nuovo.'); }
+      if(risp.ok) return;
+      return risp.json().catch(function(){ return null; }).then(function(d){
+        var det = d && d.detail && typeof d.detail === 'object' ? d.detail : {};
+        throw new Error(dianaStr(det.messaggio, 300) || 'Caricamento non riuscito (HTTP ' + risp.status + ').');
+      });
+    }, function(){ clearTimeout(timer); throw new Error('Il server non risponde. Controlla la connessione.'); });
+  });
+}
+
+// toglie dal server un materiale che l'admin ha deselezionato
+function stuaElimina(r){
+  return dgApi('POST', 'studio/materiali/elimina', { id: r.voce.id }).then(null, function(e){ throw new Error(dgTesto(e)); });
+}
+
+// Salva: il lavoro e' l'elenco delle righe che si vedono, UNO ALLA VOLTA
+function stuaSalva(){
+  if(!(U && U.ruolo === 'admin') || STUA.salvando || !DOC.albero.ok || !STUA.mat.ok) return;
+  var lavori = [];
+  stuaRighe().forEach(function(r){
+    var spunta = Object.prototype.hasOwnProperty.call(STUA.mod, r.k) ? !!STUA.mod[r.k] : !!r.voce;
+    if(spunta && (r.stato === 'non' || r.stato === 'aggiornare')) lavori.push({ tipo:'carica', r:r });
+    else if(!spunta && r.voce) lavori.push({ tipo:'elimina', r:r });
+  });
+  STUA.esiti = {}; STUA.msg = null; STUA.salvando = true;
+  STUA.lavoro = { fatti:0, totale:lavori.length };
+  renderCorrente();
+  var p = Promise.resolve();
+  lavori.forEach(function(l){
+    p = p.then(function(){
+      return (l.tipo === 'carica' ? stuaCarica(l.r) : stuaElimina(l.r)).then(function(){
+        delete STUA.mod[l.r.k];
+      }, function(e){
+        STUA.esiti[l.r.k] = dianaStr(e && e.message, 300) || 'Operazione non riuscita.';
+      }).then(function(){
+        STUA.lavoro.fatti++;
+        renderCorrente();
+      });
+    });
+  });
+  return p.then(function(){
+    var ko = Object.keys(STUA.esiti).length;
+    STUA.salvando = false; STUA.lavoro = null;
+    STUA.msg = ko ? { t:'err', testo:'Alcuni file non sono stati salvati: guarda le righe in rosso.' } : { t:'ok', testo:'Salvato.' };
+    return stuaApri(true);
+  });
+}
+
+// azioni della scheda (chiamate da 04f: onClick per i pulsanti, onChange per la casella)
+function stuaAzione(a, el){
+  var admin = !!(U && U.ruolo === 'admin');
+  if(!admin) return;
+  switch(a){
+    case 'stua-toggle': stuaBozza().attivo = !stuaBozza().attivo; STUA.msg = null; renderCorrente(); break;
+    case 'stua-salva-imp': stuaSalvaImp(); break;
+    case 'stua-casella': STUA.mod[el.getAttribute('data-k')] = el.checked; break;
+    case 'stua-salva': stuaSalva(); break;
+    case 'stua-riprova': stuaApri(true); break;
+  }
+}
 
   /* =========================================================
      AMMINISTRAZIONE  (solo segreteria e admin: azioni 'richieste' con assegnatoA, 'amministrazione')
@@ -11448,12 +12376,13 @@ function findClose(){
     dgRiquadro('adm-diana', 'admin');                 // V6.7.2: Gestione Diana Assistant (solo admin)
     var da = (RQ.conteggi && RQ.conteggi.daAssegnare) != null ? RQ.conteggi.daAssegnare : (ADM.assegna.dati ? ADM.assegna.dati.length : 0);
     var schede = [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']];
-    if(U && U.ruolo === 'admin'){ schede.push(['moduli', 'Moduli compilabili']); schede.push(['avvisi', 'Avvisi']); schede.push(['bp', 'Business plan']); }                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
+    if(U && U.ruolo === 'admin'){ schede.push(['moduli', 'Moduli compilabili']); schede.push(['avvisi', 'Avvisi']); schede.push(['bp', 'Business plan']); schede.push(['studio', 'Study Assistant']); }                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
     put(g('adm-tabs'), schede.map(function(t){
       return H`<button class="chip" type="button" data-act="adm" data-t="${t[0]}" aria-pressed="${String(S.adm === t[0])}">${t[1]}</button>`;
     }));
     var R = ADM[S.adm], b = g('adm-body'), h;
     if(S.adm === 'moduli'){ renderModuliComp(b); return; }
+    if(S.adm === 'studio'){ renderStudioAdmin(b); return; }
     if(S.adm === 'bp'){ renderBpAdmin(b); return; }       // V6.14.0
     if(S.adm === 'avvisi'){ renderAvvisi(b); return; }                                         // V6.8.5: scheda dell'admin (04e9d)
     if(gate(b, R, 'i dati di amministrazione', 3)) return;
@@ -11673,6 +12602,8 @@ function findClose(){
     if(openPopId && !el.closest('.pop') && a !== 'acct' && a !== 'notif' && a !== 'state-menu') closePops();
     var x, v;
     if(a.indexOf('dg-') === 0){ if(U && U.ruolo === 'admin') dgClic(a, el); return; }          // V6.7: Gestione Diana Assistant (solo admin; il cancello controlla comunque)
+    if(a.indexOf('stu-') === 0){ stAzione(a, el); return; }
+    if(a.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(a, el); return; }
     if(a.indexOf('pre-') === 0){ preClic(a, el); return; }                                       // V6.8: Precompila con AI nei moduli PDF
     switch(a){
       case 'go': closePops(); go(el.getAttribute('data-h')); break;
@@ -11865,6 +12796,8 @@ function findClose(){
     if(t.id === 'tcag-rq-tipo'){ S.rq.tipo = t.value; renderRichieste(); }
     else if(t.id === 'tcag-dg-file' || t.id === 'tcag-dg-dir'){ if(U && U.ruolo === 'admin') dgScelti(t); }
     else if(act && act.indexOf('pre-') === 0){ preCambio(t, act); }                             // V6.8: Precompila con AI (spunte, scelte, file)
+    else if(act && act.indexOf('stu-') === 0){ stAzione(act, t); }
+    else if(act && act.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(act, t); }
     else if(act === 'mc-casella'){ mcCasella(t); }                                              // V6.8.5: casella «Compilabile» (solo admin)
     else if(act === 'open-local' && t.files && t.files[0]){
       var f = t.files[0]; t.value = '';
