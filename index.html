@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build ff950247)
+  Guscio app Team Contato - V1.4.0 (build e80eda44)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.17.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.18.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'ff950247', blocco: 'V6.17.0' };
+window.TC_APP = { versione: '1.4.0', build: 'e80eda44', blocco: 'V6.18.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -119,6 +119,7 @@ html.tc-guscio body{margin:0}
       <symbol id="tci-chat-spark" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M12.5 7.5l1.1 2.9 2.9 1.1-2.9 1.1-1.1 2.9-1.1-2.9-2.9-1.1 2.9-1.1z"/></symbol>
       <symbol id="tci-bp-chart" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 18v-3M12 18v-5M16 18v-7"/></symbol>
       <symbol id="tci-study" viewBox="0 0 24 24"><path d="M2 7c3-1.5 6-1.5 10 1 4-2.5 7-2.5 10-1v13c-3-1.5-6-1.5-10 1-4-2.5-7-2.5-10-1z"/><path d="M12 8v13"/><path d="M17 1.5a2.5 2.5 0 0 0-1.5 4.5V7h3V6A2.5 2.5 0 0 0 17 1.5z"/></symbol>
+      <symbol id="tci-brochure" viewBox="0 0 24 24"><path d="M2 5l6.5-2 7 2L22 3v16l-6.5 2-7-2L2 21z"/><path d="M8.5 3v16M15.5 5v16"/><path d="M10.5 9h3v3h-3z"/></symbol>
       <symbol id="tci-contact" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3M15 9h3M15 13h3"/></symbol>
       <symbol id="tci-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
       <symbol id="tci-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
@@ -266,6 +267,7 @@ html.tc-guscio body{margin:0}
           <div id="tcag-str-render" class="str-page" hidden></div>
           <div id="tcag-str-bp" class="str-page" hidden></div>
           <div id="tcag-str-studio" class="str-page" hidden></div>
+          <div id="tcag-str-brochure" class="str-page" hidden></div>
           <div id="tcag-str-assistente" class="str-page" hidden></div>
         </div>
       </section>
@@ -1749,6 +1751,108 @@ html.tc-guscio body{margin:0}
 #tcag .stua-bar .btn{min-height:44px}
 #tcag .stua-msg{margin:8px 0;font-size:16px;color:var(--verde)}
 #tcag .stua-err{margin:8px 0;font-size:16px;color:#8f0f1b}
+#tcag .br-pagina{display:flex;flex-direction:column;gap:16px;max-width:1200px}
+#tcag .br-pagina button{min-height:44px}
+#tcag .br-scelta{display:flex;flex-direction:column;gap:12px}
+#tcag .br-cerca{display:block;width:100%;min-height:44px;font-size:16px;padding:0 12px;border:1px solid var(--bordo);border-radius:8px;background:#fff;color:var(--testo)}
+#tcag .br-lista{display:flex;flex-direction:column;gap:8px}
+#tcag .br-riga{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:center;width:100%;min-height:44px;padding:10px 12px;text-align:left;background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio)}
+#tcag .br-riga:hover{border-color:var(--oro)}
+#tcag .br-riga-c{font:600 13px var(--sans);color:var(--oro-t);letter-spacing:.06em}
+#tcag .br-riga-t{min-width:0;overflow-wrap:anywhere;font-size:16px}
+#tcag .br-riga-z{font-size:14px;color:var(--tenue)}
+#tcag .br-comandi{display:flex;flex-direction:column;gap:12px}
+#tcag .br-gruppo{display:flex;flex-wrap:wrap;gap:8px}
+#tcag .br-lingua,
+#tcag .br-fmt{min-height:44px;padding:0 14px;border:1px solid var(--bordo);border-radius:99px;background:#fff;color:var(--nv);font:600 15px var(--sans);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+#tcag .br-lingua[aria-pressed="true"],
+#tcag .br-fmt[aria-pressed="true"],
+#tcag .br-mod[aria-pressed="true"]{background:var(--nv);color:#fff;border-color:var(--nv)}
+#tcag .br-lingua:disabled{opacity:.55;cursor:not-allowed}
+#tcag .br-manca{font-size:13px;font-weight:400}
+#tcag .br-modelli{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+#tcag .br-mod{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:44px;padding:8px;border:1px solid var(--bordo);border-radius:10px;background:#fff;color:var(--nv);font:600 14px var(--sans)}
+#tcag .br-mini{display:block;width:48px;height:68px;border:1px solid #cfc9b8;background:#fff}
+#tcag .br-mini-m1{background:linear-gradient(#7d8ba3 0 75%,#0a2a5e 75%)}
+#tcag .br-mini-m2{background:linear-gradient(90deg,#7d8ba3 0 46%,#fff 46% 54%,#7d8ba3 54%),linear-gradient(#7d8ba3 0 44%,#fff 44% 52%,#7d8ba3 52%)}
+#tcag .br-mini-m3{background:linear-gradient(90deg,#7d8ba3 0 62%,#fff 62% 68%,#0a2a5e 68%)}
+#tcag .br-mini-m4{background:linear-gradient(#fff 0 60%,#7d8ba3 60% 68%,#fff 68%)}
+#tcag .br-mini-m5{background:linear-gradient(#111a2b 0 100%)}
+#tcag .br-mini-m6{background:linear-gradient(90deg,#7d8ba3 0 70%,#0a2a5e 70%)}
+#tcag .br-mini-m7{background:linear-gradient(90deg,#7d8ba3 0 33%,#fff 33% 35%,#7d8ba3 35% 66%,#fff 66% 68%,#7d8ba3 68%),linear-gradient(#fff 0 49%,#7d8ba3 49% 51%,#fff 51%)}
+#tcag .br-mini-m8{background:linear-gradient(#fff 0 35%,#7d8ba3 35% 65%,#fff 65%)}
+#tcag .br-mini-m9{background:linear-gradient(90deg,#7d8ba3 0 40%,#fff 40% 45%,#0a2a5e 45%)}
+#tcag .br-mini-m10{background:linear-gradient(90deg,#7d8ba3 0 48%,#fff 48% 52%,#7d8ba3 52%)}
+#tcag .br-nota{font-size:15px;color:var(--tenue)}
+#tcag .br-stato{font-size:15px;color:var(--tenue)}
+#tcag .br-anteprima{width:100%;overflow:hidden}
+#tcag .br-foglio{box-sizing:border-box;display:grid;position:relative;padding:14mm;gap:8mm;background:#fff;color:#22222a;transform-origin:0 0;overflow:hidden;font-size:10pt;line-height:1.35}
+#tcag .br-foglio.br-v{width:297mm;height:420mm}
+#tcag .br-foglio.br-o{width:420mm;height:297mm}
+#tcag .br-logo{grid-area:logo;display:flex;align-items:center;gap:3mm;background:var(--nv);color:#fff;padding:3mm 4mm;border-radius:2mm;font:600 12pt var(--serif)}
+#tcag .br-logo-ico{width:14mm;height:14mm;flex:0 0 auto}
+#tcag .br-foto{grid-area:foto;display:grid;gap:3mm;min-height:0}
+#tcag .br-n1{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#tcag .br-n2{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:minmax(0,1fr)}
+#tcag .br-n3{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+#tcag .br-n3 .br-img:first-child{grid-row:span 2}
+#tcag .br-n4{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+#tcag .br-n5{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+#tcag .br-n5 .br-img:first-child{grid-row:span 2}
+#tcag .br-n6{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+#tcag .br-img{display:block;width:100%;height:100%;min-height:0;object-fit:cover}
+#tcag .br-testo{grid-area:testo;display:flex;flex-direction:column;gap:3mm;min-width:0}
+#tcag .br-titolo{font:600 26pt/1.1 var(--serif);color:var(--nv);overflow-wrap:anywhere}
+#tcag .br-prezzo{display:flex;flex-wrap:wrap;gap:3mm;align-items:baseline;font-size:14pt;color:var(--nv)}
+#tcag .br-prezzo span{font-size:10pt;color:var(--tenue)}
+#tcag .br-prezzo b{font-weight:700}
+#tcag .br-descr{white-space:pre-line;font-size:10pt;overflow-wrap:anywhere}
+#tcag .br-dati{grid-area:dati;display:grid;grid-template-columns:minmax(0,1fr);gap:2mm;min-width:0}
+#tcag .br-dato{display:flex;justify-content:space-between;gap:3mm;border-bottom:.2mm solid var(--bordo);padding-bottom:1.5mm}
+#tcag .br-dato dt{color:var(--tenue)}
+#tcag .br-dato dd{text-align:right;font-weight:600;overflow-wrap:anywhere}
+#tcag .br-qr{grid-area:qr;display:flex;flex-direction:column;align-items:center;gap:2mm;font-size:9pt;text-align:center}
+#tcag .br-qr-svg{display:block;width:38mm;height:38mm}
+#tcag .br-contatti{grid-area:contatti;display:flex;flex-wrap:wrap;align-items:baseline;gap:1mm 4mm;font-size:9pt;color:var(--tenue);min-width:0;overflow-wrap:anywhere}
+#tcag .br-contatti b{color:var(--nv)}
+#tcag .br-m1.br-v{grid-template-areas:"logo" "foto" "foto" "foto" "foto" "foto" "testo" "dati" "qr" "contatti";grid-template-columns:minmax(0,1fr);grid-template-rows:auto repeat(5,minmax(0,1fr)) repeat(4,auto)}
+#tcag .br-m1.br-o{grid-template-areas:"logo foto" "testo foto" "dati foto" "qr contatti";grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);grid-template-rows:auto auto minmax(0,1fr) auto}
+#tcag .br-m2.br-v{grid-template-areas:"logo logo" "foto foto" "testo testo" "dati qr" "contatti contatti";grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto minmax(0,2fr) auto minmax(0,1fr) auto}
+#tcag .br-m2.br-o{grid-template-areas:"logo testo" "foto foto" "foto foto" "dati qr" "contatti contatti";grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto auto}
+#tcag .br-m3.br-v{grid-template-areas:"logo logo" "foto testo" "foto dati" "foto qr" "contatti contatti";grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}
+#tcag .br-m3.br-o{grid-template-areas:"foto foto testo" "foto foto dati" "foto foto qr" "logo logo contatti";grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}
+#tcag .br-m4.br-v{grid-template-areas:"logo qr" "testo testo" "dati dati" "foto foto" "contatti contatti";grid-template-columns:minmax(0,1fr) 40mm;grid-template-rows:auto auto auto minmax(0,1fr) auto}
+#tcag .br-m4.br-o{grid-template-areas:"logo logo qr" "testo testo qr" "dati dati dati" "foto foto foto" "contatti contatti contatti";grid-template-columns:repeat(2,minmax(0,1fr)) 50mm;grid-template-rows:auto auto auto minmax(0,1fr) auto}
+#tcag .br-m5.br-v{grid-template-areas:"logo" "foto" "testo" "dati" "qr" "contatti";grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto auto auto}
+#tcag .br-m5.br-o{grid-template-areas:"logo logo testo" "foto foto testo" "foto foto dati" "qr qr contatti";grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto}
+#tcag .br-m6.br-v{grid-template-areas:"foto logo" "foto testo" "foto dati" "foto qr" "foto contatti";grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto auto}
+#tcag .br-m6.br-o{grid-template-areas:"foto foto logo" "foto foto testo" "foto foto dati" "foto foto qr" "foto foto contatti";grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr) auto auto auto auto}
+#tcag .br-m7.br-v{grid-template-areas:"foto foto" "foto foto" "logo testo" "dati qr" "contatti contatti";grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:minmax(0,2fr) minmax(0,2fr) auto auto auto}
+#tcag .br-m7.br-o{grid-template-areas:"foto foto foto" "foto foto foto" "logo testo dati" "qr qr contatti";grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr) minmax(0,1fr) auto auto}
+#tcag .br-m8.br-v{grid-template-areas:"logo logo" "foto foto" "foto foto" "testo dati" "qr contatti";grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}
+#tcag .br-m8.br-o{grid-template-areas:"foto foto foto foto" "foto foto foto foto" "logo testo testo testo" "qr dati dati contatti";grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:minmax(0,1fr) minmax(0,1fr) auto auto}
+#tcag .br-m9.br-v{grid-template-areas:"logo" "testo" "dati" "foto" "qr" "contatti";grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1.4fr) minmax(0,1fr) auto auto}
+#tcag .br-m9.br-o{grid-template-areas:"logo testo qr" "foto dati dati" "foto dati dati" "contatti contatti contatti";grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto}
+#tcag .br-m10.br-v{grid-template-areas:"logo logo" "testo foto" "testo foto" "dati foto" "qr contatti";grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}
+#tcag .br-m10.br-o{grid-template-areas:"logo logo" "foto testo" "foto dati" "foto qr" "foto contatti";grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}
+#tcag .br-m5{background:#111a2b;color:#f3ead6}
+#tcag .br-m5 .br-titolo,
+#tcag .br-m5 .br-prezzo{color:var(--oro)}
+#tcag .br-m5 .br-dato dt,
+#tcag .br-m5 .br-contatti{color:#c9bfa5}
+#tcag .br-m5 .br-contatti b{color:var(--oro)}
+#tcag .br-m6 .br-logo,
+#tcag .br-m6 .br-testo,
+#tcag .br-m6 .br-dati,
+#tcag .br-m6 .br-qr,
+#tcag .br-m6 .br-contatti{background:var(--nv);color:#fff;padding:5mm;border-radius:2mm}
+#tcag .br-m6 .br-titolo,
+#tcag .br-m6 .br-prezzo,
+#tcag .br-m6 .br-dato dt{color:#fff}
+#tcag .br-m6 .br-dato{border-color:rgba(255,255,255,.3)}
+#tcag .br-m6 .br-contatti b{color:var(--oro)}
+@media print{#tcag .br-foglio{transform:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1784,7 +1888,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.17.0';
+  var VERSIONE = 'V6.18.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2759,8 +2863,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var NAV = [['oggi', 'Oggi', 'calendar'], ['richieste', 'Richieste', 'inbox'], ['immobili', 'Immobili', 'home'],
              ['documenti', 'Documenti', 'folder'], ['strumenti', 'Strumenti AI', 'sparkles'], ['altro', 'Altro', 'more']];
   var SECS = ['oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin', 'diana'];
-  var STR_SUB = ['precompila', 'render', 'assistente', 'bp', 'studio'];
-  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant', bp:'Business plan', studio:'Study Assistant' };
+  var STR_SUB = ['precompila', 'render', 'assistente', 'bp', 'studio', 'brochure'];
+  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant', bp:'Business plan', studio:'Study Assistant', brochure:'Brochure' };
   var RE_ID = /^(RC|OM|CG|VA|TE)-\d{4,6}$/;
   function buildNav(){
     put(g('mainnav'), NAV.map(function(n){
@@ -6508,11 +6612,13 @@ function findClose(){
     ritocchiHubDiana();
     ritocchiHubBp();
     ritocchiHubStudio();
+    ritocchiHubBrochure();
     preStrumenti();                       // V6.8: il riquadro Precompila dice «Attivo» quando l'admin accende lo strumento
     if(sub === 'assistente') renderAssistente();
     if(sub === 'render') renderRender();
     if(sub === 'bp') renderBp();
     if(sub === 'studio') renderStudio();
+    if(sub === 'brochure') renderBrochure();
   }
 
   /* ---------- DIANA ASSISTANT: nome, testo legale, guida, benvenuto, domande, interruttori (V6.7, CONTRATTO-V6.7 par. 6.2 e 9.1) ----------
@@ -6585,6 +6691,7 @@ function findClose(){
       render: { attivo: rn.attivo !== false, messaggio: dianaStr(rn.messaggio, 300) },
       bp: { attivo: (j.bp && j.bp.attivo) === true, messaggio: dianaStr(j.bp && j.bp.messaggio, 300) },
       studio: { attivo: (j.studio && j.studio.attivo) === true, messaggio: dianaStr(j.studio && j.studio.messaggio, 300) },
+      brochure: { attivo: !(j.brochure && j.brochure.attivo === false), messaggio: dianaStr(j.brochure && j.brochure.messaggio, 300) },
       benvenuto: { titolo: dianaStr(be.titolo, 60) || DIANA_BENV.titolo, testo: dianaStr(be.testo, 300) || DIANA_BENV.testo },
       domande: dom,
       testi: { avviso_legale: dianaStr(te.avviso_legale, 1200) || DIANA_LEGALE, guida_titolo: dianaStr(te.guida_titolo, 60) || DIANA_GUIDA_TITOLO, guida: dianaStr(te.guida, 4000) || DIANA_GUIDA },
@@ -6685,6 +6792,14 @@ function findClose(){
     if(!t) return;
     var so = $('.soon', t), on = !!(DI.dati && DI.dati.studio && DI.dati.studio.attivo === true);
     if(so){ so.textContent = on ? 'Attivo' : 'In arrivo'; so.classList.toggle('ok', on); }
+  }
+
+  // V6.18.0: the Brochure card in the hub (on unless the admin turned it off)
+  function ritocchiHubBrochure(){
+    var t = hubTileCodice('strumenti/brochure', 'Brochure', 'Brochure A3 dell’immobile in 9 lingue, pronte da stampare', 'tci-brochure', 'hub-brochure');
+    if(!t) return;
+    var so = $('.soon', t), on = !(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false);
+    if(so){ so.textContent = on ? 'Attivo' : 'In manutenzione'; so.classList.toggle('ok', on); }
   }
 
   /* ---------- il testo dell'AI: mini-renderer sicuro (solo nodi DOM) ---------- */
@@ -9235,6 +9350,371 @@ function findClose(){
       default: break;
     }
   }
+  /* =========================================================
+     BROCHURE (V6.18.0, epic T-MVXP2YEM)
+     =========================================================
+     Page #strumenti/brochure, code only, no AI, nothing on the device.
+     The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
+     the photos of the gallery and the texts of the published sheet.
+     Every value from outside goes through H``, put(), textContent or createElementNS.
+     State lives in memory only (var BR). */
+  var BR_LINGUE = ['it', 'en', 'de', 'fr', 'es', 'ru', 'pl', 'zh', 'ja'];
+  var BR_NOMI = { it:'Italiano', en:'English', de:'Deutsch', fr:'Français', es:'Español', ru:'Русский', pl:'Polski', zh:'中文', ja:'日本語' };
+  var BR_TESTI = {
+    it: { prezzo:'Prezzo', prezzo_riservato:'Prezzo riservato', superficie:'Superficie', camere:'Camere', bagni:'Bagni', tipo:'Tipologia', contratto:'Contratto', zona:'Zona', codice:'Codice immobile', scansiona:'Scansiona per vedere l’annuncio', contatti:'Contatti', vendita:'Vendita', affitto:'Affitto' },
+    en: { prezzo:'Price', prezzo_riservato:'Price on request', superficie:'Floor area', camere:'Bedrooms', bagni:'Bathrooms', tipo:'Property type', contratto:'Contract', zona:'Area', codice:'Property code', scansiona:'Scan to view the listing', contatti:'Contacts', vendita:'For sale', affitto:'For rent' },
+    de: { prezzo:'Preis', prezzo_riservato:'Preis auf Anfrage', superficie:'Wohnfläche', camere:'Zimmer', bagni:'Badezimmer', tipo:'Objektart', contratto:'Vertrag', zona:'Lage', codice:'Objektnummer', scansiona:'Scannen, um das Inserat zu sehen', contatti:'Kontakt', vendita:'Kauf', affitto:'Miete' },
+    fr: { prezzo:'Prix', prezzo_riservato:'Prix sur demande', superficie:'Surface', camere:'Chambres', bagni:'Salles de bains', tipo:'Type de bien', contratto:'Contrat', zona:'Quartier', codice:'Référence du bien', scansiona:'Scannez pour voir l’annonce', contatti:'Contacts', vendita:'Vente', affitto:'Location' },
+    es: { prezzo:'Precio', prezzo_riservato:'Precio a consultar', superficie:'Superficie', camere:'Habitaciones', bagni:'Baños', tipo:'Tipo de inmueble', contratto:'Contrato', zona:'Zona', codice:'Referencia del inmueble', scansiona:'Escanea para ver el anuncio', contatti:'Contacto', vendita:'Venta', affitto:'Alquiler' },
+    ru: { prezzo:'Цена', prezzo_riservato:'Цена по запросу', superficie:'Площадь', camere:'Спальни', bagni:'Ванные комнаты', tipo:'Тип объекта', contratto:'Договор', zona:'Район', codice:'Код объекта', scansiona:'Отсканируйте, чтобы открыть объявление', contatti:'Контакты', vendita:'Продажа', affitto:'Аренда' },
+    pl: { prezzo:'Cena', prezzo_riservato:'Cena na zapytanie', superficie:'Powierzchnia', camere:'Sypialnie', bagni:'Łazienki', tipo:'Rodzaj nieruchomości', contratto:'Umowa', zona:'Okolica', codice:'Kod nieruchomości', scansiona:'Zeskanuj, aby zobaczyć ogłoszenie', contatti:'Kontakt', vendita:'Sprzedaż', affitto:'Wynajem' },
+    zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租' },
+    ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸' }
+  };
+  var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1 }, { n:2, nome:'Griglia classica', foto:4 }, { n:3, nome:'Magazine', foto:3 }, { n:4, nome:'Minimal', foto:1 }, { n:5, nome:'Lusso scuro', foto:2 }, { n:6, nome:'Banda laterale', foto:3 }, { n:7, nome:'Mosaico', foto:6 }, { n:8, nome:'Panorama', foto:2 }, { n:9, nome:'Scheda tecnica', foto:4 }, { n:10, nome:'Doppia colonna', foto:4 }];
+  var BR_T_API = 30000;
+  var BR_T_STAMPA = 20000;
+  var BR_MAX_LISTA = 50;
+  var BR = { codice:'', dati:ris(), lingua:'it', formato:'v', modello:1, foto:[], q:'', msg:'' };
+  var brStampando = false;
+
+  /* ---------- pure helpers (also run by the bench) ---------- */
+  function brVuoto(x){ return x == null || x === ''; }
+  function brTesto(lingua, chiave){
+    var t = Object.prototype.hasOwnProperty.call(BR_TESTI, lingua) ? BR_TESTI[lingua] : null;
+    if(t && Object.prototype.hasOwnProperty.call(t, chiave) && typeof t[chiave] === 'string' && t[chiave]) return t[chiave];
+    if(Object.prototype.hasOwnProperty.call(BR_TESTI.it, chiave)) return BR_TESTI.it[chiave];
+    return '';
+  }
+  function brContratto(lingua, valore){
+    var s = String(valore == null ? '' : valore).trim();
+    if(s.toLowerCase() === 'vendita') return brTesto(lingua, 'vendita');
+    if(s.toLowerCase() === 'affitto') return brTesto(lingua, 'affitto');
+    return s;
+  }
+  function brNumFoto(m){
+    for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].n === Number(m)) return BR_MODELLI[i].foto;
+    return 1;
+  }
+  function brFotoUrl(u){
+    if(typeof u !== 'string') return '';
+    var x;
+    try { x = new URL(u); } catch(e){ return ''; }
+    if(x.protocol !== 'https:') return '';
+    return u + (u.indexOf('?') < 0 ? '?' : '&') + 'format=2500w';
+  }
+  function brStileStampa(formato){
+    var o = formato === 'o';
+    var media = '@media print { html.tcag-br-stampa, html.tcag-br-stampa body { width: %W; height: %H; margin: 0; padding: 0; overflow: hidden } html.tcag-br-stampa body * { visibility: hidden !important } html.tcag-br-stampa #tcag-br-foglio, html.tcag-br-stampa #tcag-br-foglio * { visibility: visible !important } html.tcag-br-stampa #tcag-br-foglio { position: fixed; left: 0; top: 0; margin: 0; transform: none !important } }';
+    return (o ? '@page { size: A3 landscape; margin: 0 }' : '@page { size: A3 portrait; margin: 0 }') + '\n' + media.replace('%W', o ? '420mm' : '297mm').replace('%H', o ? '297mm' : '420mm');
+  }
+  function brLangAttr(l){
+    if(l === 'zh') return 'zh-Hans';
+    return BR_LINGUE.indexOf(l) >= 0 ? l : 'it';
+  }
+  function brFont(l){
+    if(l === 'zh') return '"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif';
+    if(l === 'ja') return '"Hiragino Sans","Yu Gothic","Meiryo","Noto Sans CJK JP",sans-serif';
+    return '';
+  }
+  function brSlug(i){
+    return i.slug || (/\/find-your-home\/([^/?#]+)/.exec(i.url || '') || [])[1] || '';
+  }
+
+  /* ---------- data ---------- */
+  function brBase(){
+    try { return new URL(AI_URL).origin + '/ai/immobili/brochure'; } catch(e){ return ''; }
+  }
+  function brTestoStato(st){
+    if(!st) return 'Non riesco a collegarmi. Controlla la connessione.';
+    if(st === 503) return 'La Brochure è spenta o non raggiungibile. Riprova più tardi.';
+    if(st === 404) return 'Non trovo i dati di questo immobile.';
+    if(st === 429) return 'Troppe richieste: aspetta un momento e riprova.';
+    if(st === 403) return 'Non hai il permesso di usare la Brochure.';
+    return 'Qualcosa non ha funzionato. Riprova.';
+  }
+  function brApi(codice, slug){
+    var base = brBase();
+    if(!base) return Promise.reject({ http:0, codice:'', testo:'Lo strumento non è configurato.' });
+    var ctl = window.AbortController ? new AbortController() : null, scaduto = false;
+    var tm = setTimeout(function(){ scaduto = true; if(ctl) ctl.abort(); }, BR_T_API);
+    var url = base + '?codice=' + encodeURIComponent(codice) + '&slug=' + encodeURIComponent(slug || '');
+    return fetch(url, { method:'GET', headers:{ 'Authorization':'Bearer ' + (sessione ? sessione.s : '') }, signal: ctl ? ctl.signal : undefined, cache:'no-store' })
+      .then(function(risp){
+        if(risp.status === 401){
+          esci('La sessione è scaduta: accedi di nuovo.');
+          throw { http:401 };
+        }
+        if(risp.ok) return risp.json();
+        return risp.json().catch(function(){ return null; }).then(function(j){
+          var det = j && j.detail && typeof j.detail === 'object' ? j.detail : {};
+          throw { http: risp.status, codice: typeof det.codice === 'string' ? det.codice.slice(0, 60) : '', testo: dianaStr(det.messaggio, 600) || brTestoStato(risp.status) };
+        });
+      })
+      .then(function(v){ clearTimeout(tm); return v; }, function(e){
+        clearTimeout(tm);
+        if(e && e.http !== undefined) throw e;
+        throw { http:0, codice: scaduto ? 'timeout' : 'rete', testo: scaduto ? 'Il servizio ci mette troppo. Riprova.' : 'Non riesco a collegarmi. Controlla la connessione.' };
+      });
+  }
+  function brImmobile(){
+    var L = IM.lista || [];
+    for(var i = 0; i < L.length; i++) if(L[i].codice === BR.codice && L[i].stato === 'pubblicato') return L[i];
+    return null;
+  }
+  function brCarica(){
+    var i = brImmobile();
+    if(!i) return Promise.resolve();
+    if(BR.dati.vol) return BR.dati.vol;
+    var codice = BR.codice, res = BR.dati;
+    res.stato = 'car';
+    res.vol = brApi(codice, brSlug(i)).then(function(j){
+      if(BR.codice !== codice) return;
+      res.dati = j; res.ok = true; res.stato = 'ok'; res.err = '';
+      res.lingue = (Array.isArray(j.lingue) ? j.lingue : []).filter(function(l){ return BR_LINGUE.indexOf(l) >= 0; });
+      BR.foto = (Array.isArray(j.foto) ? j.foto : []).map(function(u){ return brFotoUrl(u); }).filter(Boolean);
+      if(res.lingue.indexOf(BR.lingua) < 0) BR.lingua = res.lingue.length ? res.lingue[0] : 'it';
+    }, function(e){
+      if(e && e.http === 503 && e.codice === 'brochure_spenta') dianaSegnaSpento('brochure', e.testo);
+      if(BR.codice !== codice) return;
+      res.stato = 'err'; res.err = (e && e.testo) || 'Errore';
+    }).then(function(){
+      res.vol = null;
+      if(S.sec === 'strumenti' && S.sub === 'brochure') renderBrochure(true);
+    });
+    return res.vol;
+  }
+
+  /* ---------- QR as vector ---------- */
+  function brQrSvg(testo){
+    var q = QR.crea(String(testo || ''));
+    if(!q) return null;
+    var ns = 'http://www.w3.org/2000/svg', L = q.dimensione + 8;
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + L + ' ' + L);
+    svg.setAttribute('class', 'br-qr-svg');
+    svg.setAttribute('shape-rendering', 'crispEdges');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', brTesto(BR.lingua, 'scansiona'));
+    var bianco = document.createElementNS(ns, 'rect');
+    bianco.setAttribute('x', '0'); bianco.setAttribute('y', '0');
+    bianco.setAttribute('width', L); bianco.setAttribute('height', L);
+    bianco.setAttribute('fill', '#fff');
+    svg.appendChild(bianco);
+    for(var y = 0; y < q.dimensione; y++) for(var x = 0; x < q.dimensione; x++){
+      if(q.moduli[y][x] !== true) continue;
+      var m = document.createElementNS(ns, 'rect');
+      m.setAttribute('x', x + 4); m.setAttribute('y', y + 4);
+      m.setAttribute('width', 1); m.setAttribute('height', 1);
+      m.setAttribute('fill', '#000');
+      svg.appendChild(m);
+    }
+    return svg;
+  }
+
+  /* ---------- page ---------- */
+  function renderBrochure(forza){
+    var host = g('str-brochure');
+    if(!host) return;
+    if(!DI.ok) dianaCarica(false);
+    if(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false){
+      put(host, H`<div class="br-pagina"><p class="br-nota">${DI.dati.brochure.messaggio || 'La Brochure è in manutenzione: riprova più tardi.'}</p></div>`);
+      return;
+    }
+    if(!forza && document.activeElement && document.activeElement.tagName === 'INPUT' && host.contains(document.activeElement)){
+      brDisegnaLista();
+      return;
+    }
+    if(BR.codice === ''){ brDisegnaScelta(host); return; }
+    var i = brImmobile();
+    if(!i){
+      if(IM.ok){ BR.codice = ''; brDisegnaScelta(host); }
+      else put(host, H`<div class="br-pagina"><p class="br-nota">Carico gli immobili…</p></div>`);
+      return;
+    }
+    brDisegnaBrochure(host, i);
+  }
+  function brDisegnaScelta(host){
+    if(!IM.ok && !IM.vol && IM.stato !== 'err') caricaImmobili();
+    put(host, H`<div class="br-pagina"><div class="br-scelta"><h2>Scegli l’immobile</h2><input id="tcag-br-q" class="br-cerca" type="search" placeholder="Cerca per codice, titolo o zona" aria-label="Cerca l’immobile" value="${BR.q}"><div id="tcag-br-lista" class="br-lista"></div></div></div>`);
+    brDisegnaLista();
+    g('br-q').addEventListener('input', function(){ BR.q = this.value; brDisegnaLista(); });
+  }
+  function brDisegnaLista(){
+    var box = g('br-lista');
+    if(!box) return;
+    if(IM.stato === 'err'){
+      put(box, H`<div class="err" role="alert"><span>${IM.err || 'Non riesco a caricare gli immobili.'}</span><button class="btn sec sm" type="button" data-act="br-riprova">Riprova</button></div>`);
+      return;
+    }
+    if(!IM.ok){ put(box, H`<p class="br-nota">Carico gli immobili…</p>`); return; }
+    var q = BR.q.trim().toLowerCase();
+    var pub = IM.lista.filter(function(i){
+      return i.stato === 'pubblicato' && [i.codice, i.titolo, i.zona, i.citta].join(' ').toLowerCase().indexOf(q) >= 0;
+    }).slice(0, BR_MAX_LISTA);
+    if(!pub.length){ put(box, H`<p class="br-nota">Nessun immobile pubblicato con questa ricerca.</p>`); return; }
+    put(box, pub.map(function(i){
+      return H`<button class="br-riga" type="button" data-act="br-scegli" data-c="${i.codice}"><span class="br-riga-c">${i.codice}</span><span class="br-riga-t">${i.titolo || ''}</span><span class="br-riga-z">${i.zona || ''}</span></button>`;
+    }));
+  }
+  function brDisegnaBrochure(host, i){
+    var D = BR.dati;
+    if(D.stato === 'idle') brCarica();
+    if(!D.ok){
+      put(host, H`<div class="br-pagina"><p><button class="btn sec" type="button" data-act="br-cambia">‹ Cambia immobile</button></p>${D.stato === 'err'
+        ? H`<div class="err" role="alert"><span>${D.err}</span><button class="btn sec sm" type="button" data-act="br-riprova">Riprova</button></div>`
+        : H`<div class="br-stato">Carico i dati della brochure…</div>`}</div>`);
+      return;
+    }
+    var lingue = D.lingue || [];
+    var lingueBtn = BR_LINGUE.map(function(l){
+      var ok = lingue.indexOf(l) >= 0, acceso = BR.lingua === l;
+      return H`<button class="br-lingua" type="button" data-act="br-lingua" data-l="${l}" aria-pressed="${String(acceso)}"${raw(ok ? '' : ' disabled title="Traduzione mancante nel foglio"')}>${BR_NOMI[l]}${ok ? '' : H`<small class="br-manca">Traduzione mancante nel foglio</small>`}</button>`;
+    });
+    var formati = [['v', 'A3 verticale'], ['o', 'A3 orizzontale']].map(function(f){
+      return H`<button class="br-fmt" type="button" data-act="br-formato" data-f="${f[0]}" aria-pressed="${String(BR.formato === f[0])}">${f[1]}</button>`;
+    });
+    var modelli = BR_MODELLI.map(function(m){
+      return H`<button class="br-mod" type="button" data-act="br-modello" data-m="${m.n}" aria-pressed="${String(BR.modello === m.n)}"><span class="br-mini br-mini-m${m.n}" aria-hidden="true"></span>${m.n + ' ' + m.nome}</button>`;
+    });
+    put(host, H`<div class="br-pagina">
+      <p><button class="btn sec" type="button" data-act="br-cambia">‹ Cambia immobile</button></p>
+      <p id="tcag-br-msg" class="br-nota" role="status">${BR.msg}</p>
+      <div class="br-comandi">
+        <div class="br-gruppo" role="group" aria-label="Lingua">${lingueBtn}</div>
+        <div class="br-gruppo" role="group" aria-label="Formato">${formati}</div>
+        <div class="br-modelli" role="group" aria-label="Modello">${modelli}</div>
+        <button class="btn pri" type="button" data-act="br-stampa">Stampa / Salva PDF</button>
+      </div>
+      <div id="tcag-br-anteprima" class="br-anteprima">${brFoglio(i)}</div>
+    </div>`);
+    g('br-msg').hidden = !BR.msg;
+    var f = g('br-foglio');
+    if(f){
+      f.style.fontFamily = brFont(BR.lingua);
+      var box = g('br-qr');
+      var s = i.url ? brQrSvg(i.url) : null;
+      if(s) box.insertBefore(s, box.firstChild); else box.hidden = true;
+      $$('img', f).forEach(function(img){
+        var src = img.getAttribute('src');
+        img.addEventListener('error', function(){
+          BR.foto = BR.foto.filter(function(u){ return u !== src; });
+          renderBrochure(true);
+        });
+      });
+    }
+    brScala();
+  }
+  function brFoglio(i){
+    var l = BR.lingua, t = (BR.dati.dati.testi || {})[l] || {};
+    var titolo = dianaStr(t.titolo, 300) || i.titolo || '';
+    var descr = dianaStr(t.descrizione, 5000);
+    var k = Math.min(brNumFoto(BR.modello), BR.foto.length);
+    var prezzo = i.prezzoRiservato ? brTesto(l, 'prezzo_riservato') : (i.prezzo != null ? eurP(i.prezzo) : '');
+    var righe = [
+      [brTesto(l, 'tipo'), i.tipo],
+      [brTesto(l, 'contratto'), brContratto(l, i.contratto)],
+      [brTesto(l, 'superficie'), brVuoto(i.mq) ? '' : i.mq + ' m²'],
+      [brTesto(l, 'camere'), brVuoto(i.camere) ? '' : String(i.camere)],
+      [brTesto(l, 'bagni'), brVuoto(i.bagni) ? '' : String(i.bagni)],
+      [brTesto(l, 'zona'), [i.zona, i.citta && i.citta !== i.zona ? i.citta : ''].filter(Boolean).join(' · ')],
+      [brTesto(l, 'codice'), i.codice]
+    ].filter(function(x){ return !brVuoto(x[1]); });
+    return H`<div id="tcag-br-foglio" class="br-foglio br-m${BR.modello} br-${BR.formato}" lang="${brLangAttr(l)}">
+      <div class="br-logo"><svg class="br-logo-ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#tci-logo"/></svg><span>Team Contato</span></div>
+      ${k > 0 ? H`<div class="br-foto br-n${k}">${BR.foto.slice(0, k).map(function(u){ return H`<img class="br-img" src="${u}" alt="" decoding="async" referrerpolicy="no-referrer">`; })}</div>` : ''}
+      <div class="br-testo"><h1 class="br-titolo">${titolo}</h1><div class="br-prezzo"><span>${brTesto(l, 'prezzo')}</span> <b>${prezzo}</b></div><p class="br-descr">${descr}</p></div>
+      <dl class="br-dati">${righe.map(function(x){ return H`<div class="br-dato"><dt>${x[0]}</dt><dd>${x[1]}</dd></div>`; })}</dl>
+      <div id="tcag-br-qr" class="br-qr"><span>${brTesto(l, 'scansiona')}</span></div>
+      <div class="br-contatti"><b>${brTesto(l, 'contatti')}</b>${U && U.nome ? H`<span>${U.nome}</span>` : ''}${U && U.email ? H`<span>${U.email}</span>` : ''}<span>Team Contato · teamcontatoremax.com</span></div>
+    </div>`;
+  }
+  function brScala(){
+    var w = g('br-anteprima'), f = g('br-foglio');
+    if(!w || !f) return;
+    f.style.transform = '';
+    var s = Math.min(1, w.clientWidth / f.offsetWidth);
+    f.style.transform = 'scale(' + s + ')';
+    w.style.height = Math.ceil(f.offsetHeight * s) + 'px';
+  }
+
+  /* ---------- print ---------- */
+  function brStampa(){
+    var f = g('br-foglio');
+    if(!f || brStampando) return;
+    brStampando = true;
+    var st = document.getElementById('tcag-br-page');
+    if(!st){
+      st = document.createElement('style');
+      st.id = 'tcag-br-page';
+      document.head.appendChild(st);
+    }
+    st.textContent = brStileStampa(BR.formato);
+    document.documentElement.classList.add('tcag-br-stampa');
+    var imgs = Array.prototype.slice.call(f.querySelectorAll('img'));
+    var stampa = false;
+    function vai(){
+      if(stampa) return;
+      stampa = true;
+      clearTimeout(tm);
+      window.print();
+    }
+    var tm = setTimeout(function(){
+      BR.msg = 'Alcune foto non sono arrivate in 20 secondi: stampo lo stesso.';
+      var m = g('br-msg');
+      if(m){ m.textContent = BR.msg; m.hidden = false; }
+      vai();
+    }, BR_T_STAMPA);
+    var mancano = imgs.filter(function(img){ return !img.complete; }).length;
+    if(!mancano){ vai(); return; }
+    imgs.forEach(function(img){
+      if(img.complete) return;
+      var uno = function(){ mancano--; if(mancano <= 0) vai(); };
+      img.addEventListener('load', uno);
+      img.addEventListener('error', uno);
+    });
+  }
+  function brFineStampa(){
+    brStampando = false;
+    document.documentElement.classList.remove('tcag-br-stampa');
+    var st = document.getElementById('tcag-br-page');
+    if(st && st.parentNode) st.parentNode.removeChild(st);
+  }
+
+  /* ---------- clicks: one case per data-act ---------- */
+  function brAzione(a, el){
+    switch(a){
+      case 'br-scegli':
+        BR.codice = el.getAttribute('data-c') || '';
+        BR.dati = ris(); BR.foto = []; BR.msg = '';
+        break;
+      case 'br-lingua':
+        if(BR_LINGUE.indexOf(el.getAttribute('data-l')) >= 0 && !el.disabled) BR.lingua = el.getAttribute('data-l');
+        break;
+      case 'br-formato':
+        if(el.getAttribute('data-f') === 'v' || el.getAttribute('data-f') === 'o') BR.formato = el.getAttribute('data-f');
+        break;
+      case 'br-modello':
+        var m = parseInt(el.getAttribute('data-m'), 10);
+        if(m >= 1 && m <= 10) BR.modello = m;
+        break;
+      case 'br-stampa':
+        brStampa();
+        return;
+      case 'br-riprova':
+        if(BR.codice){ BR.dati = ris(); brCarica(); } else caricaImmobili();
+        break;
+      case 'br-cambia':
+        BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.msg = '';
+        break;
+      default:
+        return;
+    }
+    renderBrochure(true);
+  }
+
+  window.addEventListener('resize', function(){ if(S.sec === 'strumenti' && S.sub === 'brochure') brScala(); });
+  window.addEventListener('afterprint', brFineStampa);
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
      =========================================================
@@ -12603,6 +13083,7 @@ function stuaAzione(a, el){
     var x, v;
     if(a.indexOf('dg-') === 0){ if(U && U.ruolo === 'admin') dgClic(a, el); return; }          // V6.7: Gestione Diana Assistant (solo admin; il cancello controlla comunque)
     if(a.indexOf('stu-') === 0){ stAzione(a, el); return; }
+    if(a.indexOf('br-') === 0){ brAzione(a, el); return; }
     if(a.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(a, el); return; }
     if(a.indexOf('pre-') === 0){ preClic(a, el); return; }                                       // V6.8: Precompila con AI nei moduli PDF
     switch(a){
