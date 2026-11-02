@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build e80eda44)
+  Guscio app Team Contato - V1.4.0 (build 823822b4)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.18.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.19.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'e80eda44', blocco: 'V6.18.0' };
+window.TC_APP = { versione: '1.4.0', build: '823822b4', blocco: 'V6.19.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1853,6 +1853,63 @@ html.tc-guscio body{margin:0}
 #tcag .br-m6 .br-contatti b{color:var(--oro)}
 @media print{#tcag .br-foglio{transform:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+#tcag .br-lavoro{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media (min-width:1100px){#tcag .br-lavoro{grid-template-columns:minmax(0,1fr) 360px}
+}
+#tcag .br-riq{position:relative;overflow:hidden;min-height:0;min-width:0;cursor:grab}
+#tcag .br-riq-vuoto{background:#e9e6de}
+#tcag .br-n3 .br-riq:first-child,
+#tcag .br-n5 .br-riq:first-child{grid-row:span 2}
+#tcag .br-riq[aria-pressed="true"]{outline:1.5mm solid var(--oro);outline-offset:-1.5mm;touch-action:none;cursor:move}
+#tcag .br-riq.br-ed-sopra{outline:1.5mm dashed var(--oro);outline-offset:-1.5mm}
+#tcag .br-ed{display:flex;flex-direction:column;gap:16px;padding:16px;background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio)}
+#tcag .br-ed h3{font:600 17px var(--sans);color:var(--nv);margin:0}
+#tcag .br-ed-sez{display:flex;flex-direction:column;gap:8px}
+#tcag .br-ed-striscia{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+#tcag .br-ed-min{flex:0 0 auto;width:72px;height:56px;min-height:44px;padding:0;border:2px solid transparent;border-radius:6px;overflow:hidden;background:#eee;touch-action:pan-x;cursor:grab}
+#tcag .br-ed-min img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
+#tcag .br-ed-riga{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#tcag .br-ed-btn{min-height:44px;padding:0 14px;border:1px solid var(--bordo);border-radius:99px;background:#fff;color:var(--nv);font:600 15px var(--sans)}
+#tcag .br-ed-btn[aria-pressed="true"]{background:var(--nv);color:#fff;border-color:var(--nv)}
+#tcag .br-ed-btn:disabled{opacity:.5;cursor:not-allowed}
+#tcag .br-ed-campo{display:flex;flex-direction:column;gap:4px;font-size:15px}
+#tcag .br-ed-campo textarea{min-height:44px;font-size:16px;padding:8px;border:1px solid var(--bordo);border-radius:8px;resize:vertical}
+#tcag .br-ed-campo input[type="range"]{min-height:44px}
+#tcag .br-ed-colore{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:15px}
+#tcag .br-ed-colore input{width:44px;height:44px;padding:0;border:1px solid var(--bordo);border-radius:8px}
+#tcag .br-ed-casella{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px}
+#tcag .br-ed-casella input{width:22px;height:22px}
+#tcag .br-ed-avviso{font-size:15px;color:#8a1c1c}
+#tcag .br-foglio.br-colori{background:var(--br-sfondo);color:var(--br-testo)}
+#tcag .br-foglio.br-colori .br-titolo,
+#tcag .br-foglio.br-colori .br-prezzo,
+#tcag .br-foglio.br-colori .br-contatti b{color:var(--br-titolo)}
+#tcag .br-foglio.br-colori .br-logo{background:var(--br-fascia)}
+#tcag .br-foglio.br-colori .br-dato dt,
+#tcag .br-foglio.br-colori .br-contatti,
+#tcag .br-foglio.br-colori .br-prezzo span{color:var(--br-testo);opacity:.8}
+#tcag .br-m6.br-colori .br-logo,
+#tcag .br-m6.br-colori .br-testo,
+#tcag .br-m6.br-colori .br-dati,
+#tcag .br-m6.br-colori .br-qr,
+#tcag .br-m6.br-colori .br-contatti{background:var(--br-fascia);color:#fff}
+#tcag .br-m6.br-colori .br-titolo,
+#tcag .br-m6.br-colori .br-prezzo,
+#tcag .br-m6.br-colori .br-dato dt{color:#fff}
+#tcag .br-foglio.br-gt-s .br-titolo{font-size:20pt}
+#tcag .br-foglio.br-gt-l .br-titolo{font-size:34pt}
+#tcag .br-foglio.br-gx-s .br-descr,
+#tcag .br-foglio.br-gx-s .br-dati{font-size:9pt}
+#tcag .br-foglio.br-gx-l .br-descr,
+#tcag .br-foglio.br-gx-l .br-dati{font-size:12pt}
+#tcag .br-foglio.br-no-prezzo .br-prezzo,
+#tcag .br-foglio.br-no-descr .br-descr,
+#tcag .br-foglio.br-no-qr .br-qr,
+#tcag .br-foglio.br-no-contatti .br-contatti,
+#tcag .br-foglio.br-no-dati .br-dati{display:none}
+@media print{#tcag .br-riq[aria-pressed="true"],
+#tcag .br-riq.br-ed-sopra{outline:none}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1888,7 +1945,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.18.0';
+  var VERSIONE = 'V6.19.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -9352,6 +9409,7 @@ function findClose(){
   }
   /* =========================================================
      BROCHURE (V6.18.0, epic T-MVXP2YEM)
+     V6.19.0: the editor lives in 04e4f-brochure-editor.js; this file only wires it.
      =========================================================
      Page #strumenti/brochure, code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -9375,7 +9433,7 @@ function findClose(){
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
   var BR_MAX_LISTA = 50;
-  var BR = { codice:'', dati:ris(), lingua:'it', formato:'v', modello:1, foto:[], q:'', msg:'' };
+  var BR = { codice:'', dati:ris(), lingua:'it', formato:'v', modello:1, foto:[], q:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:-1, edPrima:null };
   var brStampando = false;
 
   /* ---------- pure helpers (also run by the bench) ---------- */
@@ -9566,6 +9624,7 @@ function findClose(){
         : H`<div class="br-stato">Carico i dati della brochure…</div>`}</div>`);
       return;
     }
+    brEdPrepara();
     var lingue = D.lingue || [];
     var lingueBtn = BR_LINGUE.map(function(l){
       var ok = lingue.indexOf(l) >= 0, acceso = BR.lingua === l;
@@ -9586,7 +9645,7 @@ function findClose(){
         <div class="br-modelli" role="group" aria-label="Modello">${modelli}</div>
         <button class="btn pri" type="button" data-act="br-stampa">Stampa / Salva PDF</button>
       </div>
-      <div id="tcag-br-anteprima" class="br-anteprima">${brFoglio(i)}</div>
+      <div class="br-lavoro"><div id="tcag-br-anteprima" class="br-anteprima">${brFoglio(i)}</div>${brEdPannello(i)}</div>
     </div>`);
     g('br-msg').hidden = !BR.msg;
     var f = g('br-foglio');
@@ -9602,14 +9661,16 @@ function findClose(){
           renderBrochure(true);
         });
       });
+      brEdApplica(f);
     }
+    brEdLega(host);
     brScala();
   }
   function brFoglio(i){
-    var l = BR.lingua, t = (BR.dati.dati.testi || {})[l] || {};
-    var titolo = dianaStr(t.titolo, 300) || i.titolo || '';
-    var descr = dianaStr(t.descrizione, 5000);
-    var k = Math.min(brNumFoto(BR.modello), BR.foto.length);
+    var l = BR.lingua, base = brEdBase(i);
+    var titolo = brEdValore('titolo', base);
+    var descr = brEdValore('descrizione', base);
+    var k = BR.mod ? BR.mod.riquadri.length : 0;
     var prezzo = i.prezzoRiservato ? brTesto(l, 'prezzo_riservato') : (i.prezzo != null ? eurP(i.prezzo) : '');
     var righe = [
       [brTesto(l, 'tipo'), i.tipo],
@@ -9620,9 +9681,9 @@ function findClose(){
       [brTesto(l, 'zona'), [i.zona, i.citta && i.citta !== i.zona ? i.citta : ''].filter(Boolean).join(' · ')],
       [brTesto(l, 'codice'), i.codice]
     ].filter(function(x){ return !brVuoto(x[1]); });
-    return H`<div id="tcag-br-foglio" class="br-foglio br-m${BR.modello} br-${BR.formato}" lang="${brLangAttr(l)}">
+    return H`<div id="tcag-br-foglio" class="br-foglio br-m${BR.modello} br-${BR.formato}${brEdClassi()}" lang="${brLangAttr(l)}">
       <div class="br-logo"><svg class="br-logo-ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#tci-logo"/></svg><span>Team Contato</span></div>
-      ${k > 0 ? H`<div class="br-foto br-n${k}">${BR.foto.slice(0, k).map(function(u){ return H`<img class="br-img" src="${u}" alt="" decoding="async" referrerpolicy="no-referrer">`; })}</div>` : ''}
+      ${k > 0 ? H`<div class="br-foto br-n${k}">${BR.mod.riquadri.map(function(r, n){ return H`<div class="br-riq${r.foto ? '' : ' br-riq-vuoto'}" role="button" tabindex="0" data-act="br-ed-riquadro" data-i="${n}" aria-pressed="${String(BR.edSel === n)}" aria-label="${'Riquadro ' + (n + 1)}">${r.foto ? H`<img class="br-img" src="${r.foto}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>`; })}</div>` : ''}
       <div class="br-testo"><h1 class="br-titolo">${titolo}</h1><div class="br-prezzo"><span>${brTesto(l, 'prezzo')}</span> <b>${prezzo}</b></div><p class="br-descr">${descr}</p></div>
       <dl class="br-dati">${righe.map(function(x){ return H`<div class="br-dato"><dt>${x[0]}</dt><dd>${x[1]}</dd></div>`; })}</dl>
       <div id="tcag-br-qr" class="br-qr"><span>${brTesto(l, 'scansiona')}</span></div>
@@ -9686,6 +9747,7 @@ function findClose(){
     switch(a){
       case 'br-scegli':
         BR.codice = el.getAttribute('data-c') || '';
+        BR.mod = null; BR.modChiave = '';
         BR.dati = ris(); BR.foto = []; BR.msg = '';
         break;
       case 'br-lingua':
@@ -9706,6 +9768,7 @@ function findClose(){
         break;
       case 'br-cambia':
         BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.msg = '';
+        BR.mod = null; BR.modChiave = '';
         break;
       default:
         return;
@@ -9715,6 +9778,544 @@ function findClose(){
 
   window.addEventListener('resize', function(){ if(S.sec === 'strumenti' && S.sub === 'brochure') brScala(); });
   window.addEventListener('afterprint', brFineStampa);
+/* BROCHURE EDITOR (V6.19.0, epic T-MVXP2Z2N)
+   =========================================================
+   Editor of the brochure, loaded after 04e4e-brochure.js (it uses its globals BR, renderBrochure, brNumFoto, brImmobile).
+   Boxes with photos: drag a photo onto a box, drag a box onto another box (they swap), or tap a box and then a photo.
+   Zoom and position inside the chosen box, six palettes and four free colours (warning under 4.5:1 contrast),
+   texts per language, sizes, hidden fields, undo and redo (50 steps), restore, and a copy saved on this device
+   for each listing, model and format.
+   Order: pure helpers first (they run also in the bench), then the editor state and the actions.
+   Text that comes from outside goes through H``, textContent or style.setProperty only. */
+  var BR_ED_MAX = 50;
+  var BR_ED_STORIA = 50;
+  var BR_ED_PREFISSO = 'tcag-br-';
+  var BR_ED = { drag:null, finoA:0 };
+  var BR_TAVOLOZZE = [
+    {id:'navy-oro', nome:'Navy e oro', sfondo:'#ffffff', testo:'#22222a', titolo:'#8a6d1f', fascia:'#0a2a5e'},
+    {id:'bianco', nome:'Bianco classico', sfondo:'#ffffff', testo:'#222222', titolo:'#111111', fascia:'#333333'},
+    {id:'grafite', nome:'Grafite', sfondo:'#2b2d31', testo:'#f2f2f2', titolo:'#ffffff', fascia:'#17181b'},
+    {id:'sabbia', nome:'Sabbia', sfondo:'#f4ecdc', testo:'#3b3428', titolo:'#7a5a1e', fascia:'#5c4a2e'},
+    {id:'salvia', nome:'Verde salvia', sfondo:'#eef2ec', testo:'#2f3a2f', titolo:'#3f5f45', fascia:'#3f5f45'},
+    {id:'notte', nome:'Notte', sfondo:'#111a2b', testo:'#f3ead6', titolo:'#c9a961', fascia:'#0a2a5e'}
+  ];
+
+  /* ---------- pure helpers (also run by the bench) ---------- */
+  function brContrasto(c1, c2){
+    var re = /^#[0-9a-f]{6}$/i;
+    if(typeof c1 !== 'string' || typeof c2 !== 'string' || !re.test(c1) || !re.test(c2)) return 0;
+    var L = [c1, c2].map(function(c){
+      var v = [0, 2, 4].map(function(i){
+        var x = parseInt(c.substr(1 + i, 2), 16) / 255;
+        return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+    });
+    var hi = Math.max(L[0], L[1]), lo = Math.min(L[0], L[1]);
+    return Math.round((hi + 0.05) / (lo + 0.05) * 10) / 10;
+  }
+  function brColoreOk(c){
+    return typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c);
+  }
+  function brScambia(lista, i, j){
+    var n = lista.slice();
+    if(i % 1 !== 0 || j % 1 !== 0 || i < 0 || j < 0 || i >= lista.length || j >= lista.length) return n;
+    var t = n[i];
+    n[i] = n[j];
+    n[j] = t;
+    return n;
+  }
+  function brChiave(codice, modello, formato){
+    return 'tcag-br-' + codice + '-' + modello + '-' + formato;
+  }
+  function brStoria(lista, voce, max){
+    var n = lista.concat([voce]);
+    return n.length > max ? n.slice(n.length - max) : n;
+  }
+  function brVociDaTogliere(voci, max){
+    if(voci.length <= max) return [];
+    var ord = voci.map(function(v, i){ return { k: v.k, t: v.t, i: i }; }).sort(function(a, b){
+      return (a.t - b.t) || (a.i - b.i);
+    });
+    return ord.slice(0, voci.length - max).map(function(v){ return v.k; });
+  }
+  function brMini(u){
+    return typeof u !== 'string' ? '' : u.replace(/format=2500w/, 'format=300w');
+  }
+  function brCopia(o){
+    return JSON.parse(JSON.stringify(o));
+  }
+  function brModBase(foto, n){
+    var riq = [];
+    for(var i = 0; i < n; i++) riq.push({ foto: typeof foto[i] === 'string' ? foto[i] : '', x: 50, y: 50, zoom: 100 });
+    return { riquadri: riq, colori: null, tavolozza: 'modello', testi: {}, grandezze: { titolo: 'm', testo: 'm' }, nascondi: { prezzo: false, descrizione: false, qr: false, contatti: false, dati: false } };
+  }
+  function brModPulito(o, foto, n){
+    var base = brModBase(foto, n);
+    if(!o || typeof o !== 'object') return base;
+    var riq = [], i, r, f, x, y, z, k;
+    for(i = 0; i < n; i++){
+      r = o.riquadri && o.riquadri[i];
+      if(!r || typeof r !== 'object'){ riq.push(base.riquadri[i]); continue; }
+      f = typeof r.foto === 'string' && foto.indexOf(r.foto) >= 0 ? r.foto : '';
+      x = Math.round(Number(r.x)); if(!isFinite(x)) x = 50; x = Math.min(100, Math.max(0, x));
+      y = Math.round(Number(r.y)); if(!isFinite(y)) y = 50; y = Math.min(100, Math.max(0, y));
+      z = Math.round(Number(r.zoom)); if(!isFinite(z)) z = 100; z = Math.min(200, Math.max(100, z));
+      riq.push({ foto: f, x: x, y: y, zoom: z });
+    }
+    var c = o.colori, colori = null;
+    if(c && typeof c === 'object' && ['sfondo', 'testo', 'titolo', 'fascia'].every(function(k){ return brColoreOk(c[k]); })){
+      colori = { sfondo: c.sfondo.toLowerCase(), testo: c.testo.toLowerCase(), titolo: c.titolo.toLowerCase(), fascia: c.fascia.toLowerCase() };
+    }
+    var tav = 'modello';
+    if(colori){
+      tav = 'libera';
+      for(k = 0; k < BR_TAVOLOZZE.length; k++) if(BR_TAVOLOZZE[k].id === o.tavolozza) tav = o.tavolozza;
+    }
+    var t = o.testi && typeof o.testi === 'object' ? o.testi : {}, testi = {};
+    Object.keys(t).forEach(function(l){
+      var v = t[l];
+      if(!/^[a-z]{2}$/.test(l) || !v || typeof v !== 'object') return;
+      var x2 = {};
+      if(typeof v.titolo === 'string') x2.titolo = v.titolo.slice(0, 300);
+      if(typeof v.descrizione === 'string') x2.descrizione = v.descrizione.slice(0, 5000);
+      testi[l] = x2;
+    });
+    var gg = o.grandezze && typeof o.grandezze === 'object' ? o.grandezze : {};
+    var nn = o.nascondi && typeof o.nascondi === 'object' ? o.nascondi : {};
+    return {
+      riquadri: riq,
+      colori: colori,
+      tavolozza: tav,
+      testi: testi,
+      grandezze: { titolo: ['s', 'm', 'l'].indexOf(gg.titolo) >= 0 ? gg.titolo : 'm', testo: ['s', 'm', 'l'].indexOf(gg.testo) >= 0 ? gg.testo : 'm' },
+      nascondi: { prezzo: nn.prezzo === true, descrizione: nn.descrizione === true, qr: nn.qr === true, contatti: nn.contatti === true, dati: nn.dati === true }
+    };
+  }
+
+  /* ---------- palettes ---------- */
+  function brEdPal(id){
+    for(var j = 0; j < BR_TAVOLOZZE.length; j++) if(BR_TAVOLOZZE[j].id === id) return BR_TAVOLOZZE[j];
+    return null;
+  }
+  function brEdColoriDa(id){
+    var p = brEdPal(id) || BR_TAVOLOZZE[0];
+    return { sfondo: p.sfondo, testo: p.testo, titolo: p.titolo, fascia: p.fascia };
+  }
+
+  /* ---------- saved copy on this device ---------- */
+  function brEdCarica(k){
+    try {
+      var x = JSON.parse(localStorage.getItem(k) || 'null');
+      return x && x.v === 1 && x.m ? x.m : null;
+    } catch(e){
+      BR.msg = 'Non riesco a leggere le modifiche salvate sul PC: uso il modello di partenza.';
+      return null;
+    }
+  }
+  function brEdSalva(){
+    try {
+      var voci = [], i, chiave, x;
+      for(i = 0; i < localStorage.length; i++){
+        chiave = localStorage.key(i);
+        if(!chiave || chiave.indexOf(BR_ED_PREFISSO) !== 0 || chiave === BR.modChiave) continue;
+        x = { k: chiave, t: 0 };
+        try { x.t = Number(JSON.parse(localStorage.getItem(chiave) || 'null').t) || 0; }
+        catch(e2){ x.t = 0; }
+        voci.push(x);
+      }
+      brVociDaTogliere(voci, BR_ED_MAX - 1).forEach(function(k){ localStorage.removeItem(k); });
+      localStorage.setItem(BR.modChiave, JSON.stringify({ v: 1, t: Date.now(), m: BR.mod }));
+    } catch(e){
+      BR.msg = 'Spazio pieno sul PC: questa versione della brochure non è stata salvata.';
+      var m = g('br-msg');
+      if(m){ m.textContent = BR.msg; m.hidden = false; }
+    }
+  }
+  function brEdTogliVoce(k){
+    try { localStorage.removeItem(k); }
+    catch(e){ BR.msg = 'Non riesco a togliere le modifiche salvate sul PC.'; }
+  }
+
+  /* ---------- state of the editor ---------- */
+  function brEdPrepara(){
+    var n = Math.min(brNumFoto(BR.modello), BR.foto.length);
+    var k = brChiave(BR.codice, BR.modello, BR.formato);
+    if(BR.modChiave !== k){
+      BR.modChiave = k;
+      BR.mod = brModPulito(brEdCarica(k), BR.foto, n);
+      BR.annulla = []; BR.ripeti = []; BR.edSel = -1; BR.edPrima = null;
+    } else {
+      BR.mod = brModPulito(BR.mod, BR.foto, n);
+    }
+    if(BR.edSel >= n) BR.edSel = -1;
+  }
+  function brEdBase(i){
+    var t = (BR.dati.dati.testi || {})[BR.lingua] || {};
+    return { titolo: dianaStr(t.titolo, 300) || i.titolo || '', descrizione: dianaStr(t.descrizione, 5000) };
+  }
+  function brEdValore(campo, base){
+    var t = BR.mod && BR.mod.testi && BR.mod.testi[BR.lingua];
+    return t && typeof t[campo] === 'string' ? t[campo] : base[campo];
+  }
+  function brEdClassi(){
+    if(!BR.mod) return '';
+    var m = BR.mod, n = m.nascondi;
+    var s = ' br-gt-' + m.grandezze.titolo + ' br-gx-' + m.grandezze.testo + (m.colori ? ' br-colori' : '');
+    if(n.prezzo) s += ' br-no-prezzo';
+    if(n.descrizione) s += ' br-no-descr';
+    if(n.qr) s += ' br-no-qr';
+    if(n.contatti) s += ' br-no-contatti';
+    if(n.dati) s += ' br-no-dati';
+    return s;
+  }
+  function brEdApplica(f){
+    if(!f || !BR.mod) return;
+    var c = BR.mod.colori;
+    if(c){
+      f.style.setProperty('--br-sfondo', c.sfondo);
+      f.style.setProperty('--br-testo', c.testo);
+      f.style.setProperty('--br-titolo', c.titolo);
+      f.style.setProperty('--br-fascia', c.fascia);
+      f.classList.add('br-colori');
+    } else {
+      f.style.removeProperty('--br-sfondo');
+      f.style.removeProperty('--br-testo');
+      f.style.removeProperty('--br-titolo');
+      f.style.removeProperty('--br-fascia');
+      f.classList.remove('br-colori');
+    }
+    $$('.br-riq', f).forEach(function(box){
+      var i = Number(box.getAttribute('data-i')), r = BR.mod.riquadri[i], img = box.querySelector('img');
+      if(!r || !img) return;
+      img.style.objectPosition = r.x + '% ' + r.y + '%';
+      img.style.transformOrigin = r.x + '% ' + r.y + '%';
+      img.style.transform = 'scale(' + (r.zoom / 100) + ')';
+    });
+    brEdAvviso();
+  }
+  function brEdAvviso(){
+    var box = g('br-ed-avviso');
+    if(!box) return;
+    var c = BR.mod && BR.mod.colori, rapporto = c ? brContrasto(c.testo, c.sfondo) : 0;
+    var basso = !!c && rapporto < 4.5;
+    box.hidden = !basso;
+    if(basso) box.textContent = 'Contrasto basso fra testo e sfondo (' + String(rapporto).replace('.', ',') + ':1): il testo può leggersi male. Puoi stampare lo stesso.';
+  }
+
+  /* ---------- history: one step per change, 50 steps ---------- */
+  function brEdInizio(){
+    if(!BR.edPrima) BR.edPrima = brCopia(BR.mod);
+  }
+  function brEdFine(){
+    if(!BR.edPrima) return;
+    if(JSON.stringify(BR.edPrima) !== JSON.stringify(BR.mod)){
+      BR.annulla = brStoria(BR.annulla, BR.edPrima, BR_ED_STORIA);
+      BR.ripeti = [];
+      brEdSalva();
+    }
+    BR.edPrima = null;
+  }
+  function brEdFuoco(el){
+    if(!el) return;
+    var host = g('str-brochure');
+    if(!host) return;
+    var sel = '[data-act="' + el.getAttribute('data-act') + '"]';
+    ['data-k', 'data-v', 'data-i'].forEach(function(a){
+      if(el.hasAttribute(a)) sel += '[' + a + '="' + el.getAttribute(a) + '"]';
+    });
+    var t = host.querySelector(sel);
+    if(t && t.focus) t.focus();
+  }
+  function brEdCambia(fn, el){
+    brEdInizio();
+    fn(BR.mod);
+    brEdFine();
+    renderBrochure(true);
+    brEdFuoco(el);
+  }
+  function brEdAnnulla(el, tipo){
+    if(tipo !== 'click') return;
+    brEdFine();
+    if(!BR.annulla.length) return;
+    BR.ripeti = brStoria(BR.ripeti, brCopia(BR.mod), BR_ED_STORIA);
+    BR.mod = BR.annulla[BR.annulla.length - 1];
+    BR.annulla = BR.annulla.slice(0, -1);
+    brEdSalva();
+    renderBrochure(true);
+  }
+  function brEdRipeti(el, tipo){
+    if(tipo !== 'click') return;
+    brEdFine();
+    if(!BR.ripeti.length) return;
+    BR.annulla = brStoria(BR.annulla, brCopia(BR.mod), BR_ED_STORIA);
+    BR.mod = BR.ripeti[BR.ripeti.length - 1];
+    BR.ripeti = BR.ripeti.slice(0, -1);
+    brEdSalva();
+    renderBrochure(true);
+  }
+  function brEdRipristina(el, tipo){
+    if(tipo !== 'click') return;
+    if(!window.confirm('Ripristino il modello? Tolgo le modifiche di questa brochure (foto, colori e testi).')) return;
+    brEdFine();
+    BR.annulla = brStoria(BR.annulla, brCopia(BR.mod), BR_ED_STORIA);
+    BR.ripeti = [];
+    BR.mod = brModBase(BR.foto, Math.min(brNumFoto(BR.modello), BR.foto.length));
+    BR.edSel = -1;
+    brEdTogliVoce(BR.modChiave);
+    renderBrochure(true);
+  }
+
+  /* ---------- actions (one case per data-act, see brEdSmista in 04f) ---------- */
+  function brEdMetti(i, n){
+    if(!BR.foto[i] || !BR.mod || !BR.mod.riquadri[n]) return;
+    BR.edSel = -1;
+    brEdCambia(function(m){ m.riquadri[n] = { foto: BR.foto[i], x: 50, y: 50, zoom: 100 }; }, null);
+  }
+  function brEdFoto(el, tipo){
+    if(tipo !== 'click' || Date.now() < BR_ED.finoA) return;
+    if(BR.edSel < 0){
+      BR.msg = 'Tocca prima un riquadro della brochure, poi la foto.';
+      renderBrochure(true);
+      return;
+    }
+    brEdMetti(Number(el.getAttribute('data-i')), BR.edSel);
+  }
+  function brEdRiquadro(el, tipo){
+    if(tipo !== 'click' || Date.now() < BR_ED.finoA || !BR.mod) return;
+    var n = Number(el.getAttribute('data-i')), a = BR.edSel;
+    if(a === n){ BR.edSel = -1; renderBrochure(true); return; }
+    if(a >= 0){
+      BR.edSel = -1;
+      brEdCambia(function(m){ m.riquadri = brScambia(m.riquadri, a, n); }, el);
+      return;
+    }
+    BR.edSel = n;
+    renderBrochure(true);
+  }
+  function brEdCentra(el, tipo){
+    if(tipo !== 'click' || !BR.mod || BR.edSel < 0 || !BR.mod.riquadri[BR.edSel]) return;
+    var n = BR.edSel;
+    brEdCambia(function(m){ m.riquadri[n].x = 50; m.riquadri[n].y = 50; }, el);
+  }
+  function brEdZoom(el, tipo){
+    if(!BR.mod || BR.edSel < 0 || !BR.mod.riquadri[BR.edSel]) return;
+    var z = Math.round(Number(el.value));
+    if(!isFinite(z)) return;
+    z = Math.min(200, Math.max(100, z));
+    var n = BR.edSel;
+    if(tipo === 'input'){
+      brEdInizio();
+      BR.mod.riquadri[n].zoom = z;
+      brEdApplica(g('br-foglio'));
+    } else if(tipo === 'change'){
+      brEdInizio();
+      BR.mod.riquadri[n].zoom = z;
+      brEdFine();
+    }
+  }
+  function brEdPos(el, tipo){
+    var k = el.getAttribute('data-k'), n = BR.edSel;
+    if(!BR.mod || n < 0 || !BR.mod.riquadri[n] || (k !== 'x' && k !== 'y')) return;
+    var v = Math.round(Number(el.value));
+    if(!isFinite(v)) return;
+    v = Math.min(100, Math.max(0, v));
+    if(tipo === 'input'){
+      brEdInizio();
+      BR.mod.riquadri[n][k] = v;
+      brEdApplica(g('br-foglio'));
+    } else if(tipo === 'change'){
+      brEdInizio();
+      BR.mod.riquadri[n][k] = v;
+      brEdFine();
+    }
+  }
+  function brEdTavolozza(el, tipo){
+    if(tipo !== 'click') return;
+    var id = el.getAttribute('data-v'), p = brEdPal(id);
+    if(id !== 'modello' && !p) return;
+    brEdCambia(function(m){
+      m.tavolozza = p ? p.id : 'modello';
+      m.colori = p ? { sfondo: p.sfondo, testo: p.testo, titolo: p.titolo, fascia: p.fascia } : null;
+    }, el);
+  }
+  function brEdColore(el, tipo){
+    if(tipo !== 'input' && tipo !== 'change') return;
+    var k = el.getAttribute('data-k'), v = String(el.value || '').toLowerCase();
+    if(['sfondo', 'testo', 'titolo', 'fascia'].indexOf(k) < 0 || !brColoreOk(v) || !BR.mod) return;
+    brEdInizio();
+    if(!BR.mod.colori) BR.mod.colori = brEdColoriDa('navy-oro');
+    BR.mod.colori[k] = v;
+    BR.mod.tavolozza = 'libera';
+    if(tipo === 'input'){
+      brEdApplica(g('br-foglio'));
+    } else {
+      brEdFine();
+      renderBrochure(true);
+    }
+  }
+  function brEdTestoCampo(el, tipo){
+    var k = el.getAttribute('data-k');
+    if(!BR.mod || (k !== 'titolo' && k !== 'descrizione')) return;
+    if(tipo === 'input'){
+      var im = brImmobile();
+      if(!im) return;
+      brEdInizio();
+      if(!BR.mod.testi[BR.lingua]) BR.mod.testi[BR.lingua] = brEdBase(im);
+      var lim = k === 'titolo' ? 300 : 5000;
+      BR.mod.testi[BR.lingua][k] = String(el.value).slice(0, lim);
+      var foglio = g('br-foglio');
+      var box = foglio && foglio.querySelector(k === 'titolo' ? '.br-titolo' : '.br-descr');
+      if(box) box.textContent = BR.mod.testi[BR.lingua][k];
+    } else if(tipo === 'change'){
+      brEdFine();
+    }
+  }
+  function brEdGrandezza(el, tipo){
+    if(tipo !== 'click' || !BR.mod) return;
+    var k = el.getAttribute('data-k'), v = el.getAttribute('data-v');
+    if((k !== 'titolo' && k !== 'testo') || ['s', 'm', 'l'].indexOf(v) < 0) return;
+    brEdCambia(function(m){ m.grandezze[k] = v; }, el);
+  }
+  function brEdNascondi(el, tipo){
+    if(tipo !== 'change' || !BR.mod) return;
+    var k = el.getAttribute('data-k');
+    if(['prezzo', 'descrizione', 'qr', 'contatti', 'dati'].indexOf(k) < 0) return;
+    var v = el.checked === true;
+    brEdCambia(function(m){ m.nascondi[k] = v; }, el);
+  }
+
+  /* ---------- panel ---------- */
+  function brEdPannello(i){
+    var m = BR.mod, base = brEdBase(i), n = BR.edSel;
+    var sel = n >= 0 && m.riquadri[n] ? m.riquadri[n] : null;
+    var cur = m.colori || brEdColoriDa('navy-oro');
+    var foto = BR.foto.map(function(u, k){
+      return H`<button class="br-ed-min" type="button" data-act="br-ed-foto" data-i="${k}" aria-label="Foto ${k + 1}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
+    });
+    var inquadratura = sel
+      ? H`<div class="br-ed-riga"><label>Zoom <input type="range" min="100" max="200" step="5" value="${sel.zoom}" data-act="br-ed-zoom"></label>
+          <label>Orizzontale <input type="range" min="0" max="100" value="${sel.x}" data-act="br-ed-pos" data-k="x"></label>
+          <label>Verticale <input type="range" min="0" max="100" value="${sel.y}" data-act="br-ed-pos" data-k="y"></label>
+          <button class="br-ed-btn" type="button" data-act="br-ed-centra">Centra</button></div>`
+      : H`<p class="br-ed-nota">Tocca un riquadro della brochure per spostare l’inquadratura o cambiare lo zoom.</p>`;
+    var pal = [H`<button class="br-ed-btn" type="button" data-act="br-ed-tavolozza" data-v="modello" aria-pressed="${String(m.tavolozza === 'modello')}">Colori del modello</button>`]
+      .concat(BR_TAVOLOZZE.map(function(t){
+        return H`<button class="br-ed-btn" type="button" data-act="br-ed-tavolozza" data-v="${t.id}" aria-pressed="${String(m.tavolozza === t.id)}">${t.nome}</button>`;
+      }));
+    var colori = [['sfondo', 'Sfondo'], ['testo', 'Testo'], ['titolo', 'Titolo'], ['fascia', 'Fascia']].map(function(c){
+      return H`<label class="br-ed-colore">${c[1]} <input type="color" data-act="br-ed-colore" data-k="${c[0]}" value="${cur[c[0]]}"></label>`;
+    });
+    var campi = H`<label class="br-ed-campo">Titolo <textarea data-act="br-ed-testo" data-k="titolo" maxlength="300" rows="2">${brEdValore('titolo', base)}</textarea></label>
+      <label class="br-ed-campo">Descrizione <textarea data-act="br-ed-testo" data-k="descrizione" maxlength="5000" rows="6">${brEdValore('descrizione', base)}</textarea></label>`;
+    var grand = [['titolo', 'Titolo'], ['testo', 'Testo']].map(function(c){
+      var bottoni = ['s', 'm', 'l'].map(function(v, k){
+        return H`<button class="br-ed-btn" type="button" data-act="br-ed-grandezza" data-k="${c[0]}" data-v="${v}" aria-pressed="${String(m.grandezze[c[0]] === v)}">${['Piccolo', 'Medio', 'Grande'][k]}</button>`;
+      });
+      return H`<div class="br-ed-riga"><span>${c[1]}</span>${bottoni}</div>`;
+    });
+    var casella = [['prezzo', 'Nascondi il prezzo'], ['descrizione', 'Nascondi la descrizione'], ['qr', 'Nascondi il QR'], ['contatti', 'Nascondi i contatti'], ['dati', 'Nascondi i dati principali']].map(function(c){
+      return H`<label class="br-ed-casella"><input type="checkbox" data-act="br-ed-nascondi" data-k="${c[0]}"${raw(m.nascondi[c[0]] ? ' checked' : '')}> ${c[1]}</label>`;
+    });
+    var annulla = H`<button class="br-ed-btn" type="button" data-act="br-ed-annulla" aria-keyshortcuts="Control+Z"${raw(BR.annulla.length ? '' : ' disabled')}>Annulla</button>`;
+    var ripeti = H`<button class="br-ed-btn" type="button" data-act="br-ed-ripeti" aria-keyshortcuts="Control+Y"${raw(BR.ripeti.length ? '' : ' disabled')}>Ripeti</button>`;
+    var ripristina = H`<button class="br-ed-btn" type="button" data-act="br-ed-ripristina">Ripristina il modello</button>`;
+    return H`<section id="tcag-br-ed" class="br-ed" aria-label="Modifica"><h3>Modifica</h3>
+      <div class="br-ed-sez"><h4>Foto</h4>
+        <p class="br-ed-nota">Trascina una foto su un riquadro, oppure tocca un riquadro e poi una foto.</p>
+        <div class="br-ed-striscia">${foto}</div>
+        ${inquadratura}
+      </div>
+      <div class="br-ed-sez"><h4>Colori</h4>
+        <div class="br-ed-riga">${pal}</div>
+        <div class="br-ed-riga">${colori}</div>
+        <p id="tcag-br-ed-avviso" class="br-ed-avviso" role="status" hidden></p>
+      </div>
+      <div class="br-ed-sez"><h4>Testi</h4>
+        ${campi}
+        ${grand}
+        <div class="br-ed-caselle">${casella}</div>
+      </div>
+      <div class="br-ed-riga">${annulla}${ripeti}${ripristina}</div>
+    </section>`;
+  }
+
+  /* ---------- drag (pointer events: mouse and finger) ---------- */
+  function brEdLega(host){
+    if(!host || host.getAttribute('data-br-ed') === '1') return;
+    host.setAttribute('data-br-ed', '1');
+    host.addEventListener('pointerdown', brEdGiu);
+  }
+  function brEdGiu(e){
+    var el = e.target && e.target.closest ? e.target.closest('[data-act="br-ed-foto"],[data-act="br-ed-riquadro"]') : null;
+    if(!el || !BR.mod) return;
+    if(e.pointerType === 'mouse' && e.button !== 0) return;
+    e.preventDefault();
+    var quale = el.getAttribute('data-act') === 'br-ed-foto' ? 'foto' : 'riquadro';
+    var i = Number(el.getAttribute('data-i'));
+    if(quale === 'foto' && !BR.foto[i]) return;
+    if(quale === 'riquadro' && !BR.mod.riquadri[i]) return;
+    var pan = quale === 'riquadro' && i === BR.edSel;
+    BR_ED.drag = {
+      tipo: quale, i: i, x0: e.clientX, y0: e.clientY, mosso: false, pan: pan,
+      rect: el.getBoundingClientRect(),
+      r0: pan ? { x: BR.mod.riquadri[i].x, y: BR.mod.riquadri[i].y } : null
+    };
+    if(pan) brEdInizio();
+    document.addEventListener('pointermove', brEdMuovi);
+    document.addEventListener('pointerup', brEdSu);
+    document.addEventListener('pointercancel', brEdSu);
+  }
+  function brEdMuovi(e){
+    var d = BR_ED.drag;
+    if(!d) return;
+    var dx = e.clientX - d.x0, dy = e.clientY - d.y0;
+    if(!d.mosso && Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+    d.mosso = true;
+    if(d.pan){
+      var rq = BR.mod.riquadri[d.i];
+      if(!rq) return;
+      var w = d.rect.width || 1, h = d.rect.height || 1;
+      rq.x = Math.min(100, Math.max(0, Math.round(d.r0.x - dx / w * 100)));
+      rq.y = Math.min(100, Math.max(0, Math.round(d.r0.y - dy / h * 100)));
+      brEdApplica(g('br-foglio'));
+      return;
+    }
+    var sotto = document.elementFromPoint(e.clientX, e.clientY);
+    var zona = sotto && sotto.closest ? sotto.closest('.br-riq') : null;
+    $$('.br-ed-sopra').forEach(function(x){ x.classList.remove('br-ed-sopra'); });
+    if(zona) zona.classList.add('br-ed-sopra');
+  }
+  function brEdSu(e){
+    var d = BR_ED.drag;
+    document.removeEventListener('pointermove', brEdMuovi);
+    document.removeEventListener('pointerup', brEdSu);
+    document.removeEventListener('pointercancel', brEdSu);
+    $$('.br-ed-sopra').forEach(function(x){ x.classList.remove('br-ed-sopra'); });
+    BR_ED.drag = null;
+    if(!d || !d.mosso) return;
+    BR_ED.finoA = Date.now() + 400;
+    if(d.pan){ brEdFine(); return; }
+    var sotto = document.elementFromPoint(e.clientX, e.clientY);
+    var zona = sotto && sotto.closest ? sotto.closest('.br-riq') : null;
+    if(!zona) return;
+    var n = Number(zona.getAttribute('data-i'));
+    if(d.tipo === 'foto') brEdMetti(d.i, n);
+    else if(n !== d.i) brEdCambia(function(m){ m.riquadri = brScambia(m.riquadri, d.i, n); }, null);
+  }
+
+  /* ---------- keyboard: Ctrl/Cmd+Z undo, Ctrl/Cmd+Y or Ctrl/Cmd+Shift+Z redo ---------- */
+  function brEdTasto(e){
+    if(e.altKey) return false;
+    if(S.sec !== 'strumenti' || S.sub !== 'brochure' || !BR.mod) return false;
+    var t = e.target, tag = t && t.tagName;
+    if(tag === 'TEXTAREA' || tag === 'INPUT') return false;
+    if(!(e.ctrlKey || e.metaKey)) return false;
+    var k = String(e.key || '').toLowerCase();
+    if(k === 'z' && !e.shiftKey){ e.preventDefault(); brEdAnnulla(null, 'click'); return true; }
+    if(k === 'y' || (k === 'z' && e.shiftKey)){ e.preventDefault(); brEdRipeti(null, 'click'); return true; }
+    return false;
+  }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
      =========================================================
@@ -13074,6 +13675,25 @@ function stuaAzione(a, el){
      EVENTI
      ========================================================= */
   function nodoDa(id){ return DOC.nodi[id] || null; }
+  // V6.19.0: brochure editor (cases here, functions in 04e4f-brochure-editor.js)
+  function brEdSmista(a, el, tipo){
+    switch(a){
+      case 'br-ed-foto': brEdFoto(el, tipo); break;
+      case 'br-ed-riquadro': brEdRiquadro(el, tipo); break;
+      case 'br-ed-centra': brEdCentra(el, tipo); break;
+      case 'br-ed-zoom': brEdZoom(el, tipo); break;
+      case 'br-ed-pos': brEdPos(el, tipo); break;
+      case 'br-ed-tavolozza': brEdTavolozza(el, tipo); break;
+      case 'br-ed-colore': brEdColore(el, tipo); break;
+      case 'br-ed-testo': brEdTestoCampo(el, tipo); break;
+      case 'br-ed-grandezza': brEdGrandezza(el, tipo); break;
+      case 'br-ed-nascondi': brEdNascondi(el, tipo); break;
+      case 'br-ed-annulla': brEdAnnulla(el, tipo); break;
+      case 'br-ed-ripeti': brEdRipeti(el, tipo); break;
+      case 'br-ed-ripristina': brEdRipristina(el, tipo); break;
+      default: break;
+    }
+  }
   function onClick(e){
     var el = e.target.closest('[data-act]');
     if(!el){ if(openPopId && !e.target.closest('.pop')) closePops(); return; }
@@ -13083,6 +13703,7 @@ function stuaAzione(a, el){
     var x, v;
     if(a.indexOf('dg-') === 0){ if(U && U.ruolo === 'admin') dgClic(a, el); return; }          // V6.7: Gestione Diana Assistant (solo admin; il cancello controlla comunque)
     if(a.indexOf('stu-') === 0){ stAzione(a, el); return; }
+    if(a.indexOf('br-ed-') === 0){ brEdSmista(a, el, 'click'); return; }
     if(a.indexOf('br-') === 0){ brAzione(a, el); return; }
     if(a.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(a, el); return; }
     if(a.indexOf('pre-') === 0){ preClic(a, el); return; }                                       // V6.8: Precompila con AI nei moduli PDF
@@ -13256,6 +13877,7 @@ function stuaAzione(a, el){
     if((e.key === 'Enter' || e.key === ' ') && t.getAttribute && t.getAttribute('role') === 'button' && t.getAttribute('data-act')){ e.preventDefault(); t.click(); return; }
     if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); if(avvisiAperti()) return; closePops(); openModal('m-search'); g('s-input').focus(); return; }       // V6.7.2 revisione: con la finestra degli avvisi aperta la ricerca non si apre sopra
     if(avvisoTab(e)) return;
+    if(brEdTasto(e)) return;
     if(e.key === 'Escape'){
       var fsm = g('as-fs-menu');
       if(fsm && !fsm.hidden && !openPopId && !$$('.modal-bg').some(function(m){ return !m.hidden; })){ aiMenuMisura(false); var fsb = g('as-fs'); if(fsb && fsb.focus) fsb.focus(); return; }   // V6.16.0
@@ -13278,6 +13900,7 @@ function stuaAzione(a, el){
     else if(t.id === 'tcag-dg-file' || t.id === 'tcag-dg-dir'){ if(U && U.ruolo === 'admin') dgScelti(t); }
     else if(act && act.indexOf('pre-') === 0){ preCambio(t, act); }                             // V6.8: Precompila con AI (spunte, scelte, file)
     else if(act && act.indexOf('stu-') === 0){ stAzione(act, t); }
+    else if(act && act.indexOf('br-ed-') === 0){ brEdSmista(act, t, 'change'); }
     else if(act && act.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(act, t); }
     else if(act === 'mc-casella'){ mcCasella(t); }                                              // V6.8.5: casella «Compilabile» (solo admin)
     else if(act === 'open-local' && t.files && t.files[0]){
@@ -13295,6 +13918,7 @@ function stuaAzione(a, el){
     else if(t.id === 'tcag-dn-t'){ var idn = S.sub; if(idn){ noteStato(idn).bozza = t.value; var bn = g('dn-add'); if(bn) bn.disabled = !t.value.trim() || noteStato(idn).inv; } }
     else if(t.id === 'tcag-chiudi-nota'){ var bc = g('chiudi-ok'); if(bc) bc.disabled = !t.value.trim(); }
     else if(t.id && t.id.indexOf('tcag-dg-') === 0){ if(U && U.ruolo === 'admin') dgInput(t); }
+    else if(t.getAttribute && (t.getAttribute('data-act') || '').indexOf('br-ed-') === 0){ brEdSmista(t.getAttribute('data-act'), t, 'input'); }
     else if(t.id && t.id.indexOf('tcag-pre-') === 0 || (t.getAttribute && /^pre-/.test(t.getAttribute('data-act') || ''))){ preInput(t); }       // V6.8
   }
   var legato = false;
