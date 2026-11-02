@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build d2cb594c)
+  Guscio app Team Contato - V1.4.0 (build ab041d97)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.19.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.19.2 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'd2cb594c', blocco: 'V6.19.1' };
+window.TC_APP = { versione: '1.4.0', build: 'ab041d97', blocco: 'V6.19.2' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -484,6 +484,10 @@ html.tc-guscio body{margin:0}
 #tcag .ptitle{flex:1;min-width:0;font:600 18px var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #tcag .back{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 8px;border:0;background:none;color:#fff;font:500 15px var(--sans);cursor:pointer}
 #tcag .bar.phone .avatar{width:40px;height:40px;cursor:pointer;background:rgba(201,169,97,.2)}
+@media (max-width:359px){#tcag .ptitle{font-size:16px}
+#tcag .back{padding:0 4px;gap:2px;font-size:14px}
+#tcag .bar.phone{gap:4px;padding:0 4px 0 6px}
+}
 #tcag .bottom{position:fixed;left:0;right:0;bottom:0;z-index:1000;height:calc(var(--barra-bassa-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid var(--bordo);display:none;justify-content:space-around}
 #tcag .bt-item{position:relative;flex:1 1 0;min-width:0;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;background:none;color:var(--tenue);font:500 11px var(--sans);cursor:pointer}
 #tcag .bt-item[aria-current=page]{color:var(--nv);font-weight:600}
@@ -1266,7 +1270,7 @@ html.tc-guscio body{margin:0}
 @media (max-width:899px){#tcag .chips.adm-tabs,
 #tcag .chips.dg-tabs{flex-wrap:wrap;overflow-x:visible;width:auto}
 #tcag .chips.adm-tabs .chip,
-#tcag .chips.dg-tabs .chip{min-height:44px}
+#tcag .chips.dg-tabs .chip{min-height:44px;white-space:normal;line-height:1.25;padding-top:8px;padding-bottom:8px}
 }
 #tcag .agg{display:none;position:fixed;top:calc(var(--barra-h) + 8px);right:14px;z-index:950;align-items:center;gap:8px;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.94);border:1px solid var(--bordo);box-shadow:0 2px 8px rgba(10,42,94,.12);font:500 13px var(--sans);color:var(--tenue);pointer-events:none}
 #tcag[data-agg="1"] .agg{display:flex}
@@ -1327,7 +1331,7 @@ html.tc-guscio body{margin:0}
 #tcag .altro-grid>template{display:none}
 #tcag .dg-tabs{margin-bottom:14px}
 #tcag .dg-vai{margin-bottom:16px}
-#tcag .dg-vai .btn{white-space:normal;min-height:52px;text-align:center}
+#tcag .dg-vai .btn{white-space:normal;font-size:15px;font-weight:600;line-height:1.3;min-height:44px;padding:12px 20px;text-align:left}
 #tcag .dg-vai-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
 #tcag .dg-tabs .chip{min-height:44px}
 #tcag .dg-pt{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--rosso);vertical-align:middle;margin-left:2px}
@@ -1403,7 +1407,7 @@ html.tc-guscio body{margin:0}
 #tcag .dg-anteprima{border:1px dashed var(--bordo);border-radius:8px;padding:10px}
 @media (max-width:899px){#tcag .dg-card{padding:14px}
 #tcag .dg-az .btn,
-#tcag .dg-fondo .btn{flex:1 1 100%;max-width:none}
+#tcag .dg-fondo .btn{flex:1 1 100%;max-width:none;white-space:normal;text-align:center;line-height:1.3;min-height:44px}
 #tcag .dg-due{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 #tcag .dg-dom{flex-wrap:wrap}
 #tcag .dg-card .dg-dom input{flex:1 1 100%}
@@ -1628,17 +1632,23 @@ html.tc-guscio body{margin:0}
 #tcag .bp-pagina button,
 #tcag .bp-pagina .btn,
 #tcag .hub-bp{min-height:44px}
+#tcag .bp-pagina>*{min-width:0;max-width:100%;overflow-wrap:anywhere}
+#tcag .bp-pagina img,
+#tcag .bp-pagina canvas{max-width:100%;height:auto}
 #tcag .bp-pagina input,
 #tcag .bp-pagina select,
 #tcag .bp-pagina textarea{font-size:16px;min-height:44px}
-#tcag .bp-blocco{border:1px solid var(--bordo);border-radius:12px;padding:16px}
+#tcag .bp-blocco{border:1px solid var(--bordo);border-radius:12px;padding:16px;min-width:0;max-width:100%}
 #tcag .bp-titolo{font-size:18px;font-weight:600}
+#tcag .bp-pagina h2,
+#tcag .bp-pagina h3{font-family:var(--serif);font-weight:600;color:var(--nv);font-size:24px;line-height:1.15;letter-spacing:-0.02em}
 #tcag .bp-lista{display:flex;flex-direction:column;gap:8px}
-#tcag .bp-riga{display:flex;align-items:center;gap:12px;min-height:44px;padding:12px;width:100%;text-align:left}
+#tcag .bp-riga{display:flex;flex-wrap:wrap;align-items:center;gap:12px;min-height:44px;padding:12px 0;width:100%;min-width:0;text-align:left;border-top:1px solid var(--bordo)}
+#tcag .bp-riga>*{min-width:0;overflow-wrap:anywhere}
 #tcag .bp-stato{font:600 14px var(--sans)}
 #tcag .bp-stato-ok{color:var(--verde)}
 #tcag .bp-stato-err{color:var(--rosso)}
-#tcag .bp-doc{display:flex;flex-direction:column;gap:8px}
+#tcag .bp-doc{display:flex;flex-direction:column;gap:8px;min-width:0;max-width:100%}
 #tcag .bp-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #tcag .bp-manca{border:1px solid var(--bordo);border-radius:12px;padding:16px}
 #tcag .bp-campo{display:block}
@@ -1651,6 +1661,7 @@ html.tc-guscio body{margin:0}
 #tcag .bp-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 @media (max-width:639px){#tcag .bp-unita-riga{grid-template-columns:1fr}
 #tcag .bp-riga{flex-direction:column;align-items:flex-start}
+#tcag .bp-riga>*{max-width:100%;white-space:normal}
 #tcag .bp-azioni>*{width:100%}
 }
 #tcag .as-wrap{--as-fs:17px}
@@ -1839,7 +1850,8 @@ html.tc-guscio body{margin:0}
 #tcag .br-m5 .br-titolo,
 #tcag .br-m5 .br-prezzo{color:var(--oro)}
 #tcag .br-m5 .br-dato dt,
-#tcag .br-m5 .br-contatti{color:#c9bfa5}
+#tcag .br-m5 .br-contatti,
+#tcag .br-m5 .br-prezzo span{color:#c9bfa5}
 #tcag .br-m5 .br-contatti b{color:var(--oro)}
 #tcag .br-m6 .br-logo,
 #tcag .br-m6 .br-testo,
@@ -1848,7 +1860,8 @@ html.tc-guscio body{margin:0}
 #tcag .br-m6 .br-contatti{background:var(--nv);color:#fff;padding:5mm;border-radius:2mm}
 #tcag .br-m6 .br-titolo,
 #tcag .br-m6 .br-prezzo,
-#tcag .br-m6 .br-dato dt{color:#fff}
+#tcag .br-m6 .br-dato dt,
+#tcag .br-m6 .br-prezzo span{color:#fff}
 #tcag .br-m6 .br-dato{border-color:rgba(255,255,255,.3)}
 #tcag .br-m6 .br-contatti b{color:var(--oro)}
 @media print{#tcag .br-foglio{transform:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -1945,7 +1958,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.19.1';
+  var VERSIONE = 'V6.19.2';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2220,7 +2233,10 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
       if(j && j.status === 401 && azione !== 'accedi'){
         esci(motivo401(azione, j));         // V6.8.2: per un dispositivo ricordato la frase giusta (tetto dei 90 giorni o accesso chiuso dall'amministratore); da 12 ore: quella di sempre
       }
-      var e = new Error((j && j.error) || 'risposta non valida');
+      // il testo grezzo del server va in console; l'utente legge una frase comprensibile
+      var grezzo = (j && j.error) || 'risposta non valida';
+      var e = new Error(grezzo === 'azione sconosciuta' ? 'Questa funzione non è ancora attiva sul server: riprova più tardi o avvisa la segreteria.' : grezzo);
+      if(e.message !== grezzo) console.warn('[Area Agenti] ' + azione + ': ' + grezzo);
       e.status = j && j.status;
       e.diag = true;           // gia' trattato qui: se nessuno lo prende non diventa anche un "errore nascosto"
       if(e.status >= 500 && !j.atteso) diagChiamata(azione, 'S' + e.status, j.error, 0);     // j.atteso: stato previsto (es. richieste non ancora attivate), non e' un guasto
