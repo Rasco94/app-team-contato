@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 47dc2533)
+  Guscio app Team Contato - V1.4.0 (build 59a79b11)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.22.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.23.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '47dc2533', blocco: 'V6.22.0' };
+window.TC_APP = { versione: '1.4.0', build: '59a79b11', blocco: 'V6.23.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1983,6 +1983,16 @@ html.tc-guscio body{margin:0}
 #tcag .adm-largo .lrow .bpa-riass{margin-top:4px}
 #tcag .adm-largo h2{font-family:var(--serif);font-weight:600;color:var(--nv);font-size:24px;line-height:1.15;margin:16px 0 8px}
 #tcag .adm-largo .sec-h{margin:24px 0 8px}
+#tcag .stru-lista{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:1100px){#tcag .stru-lista{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+#tcag .stru-riga{display:flex;flex-direction:column;gap:12px;min-width:0}
+#tcag .stru-testa{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+#tcag .stru-testa h2{margin:0;flex:1 1 12ch;min-width:0;overflow-wrap:anywhere}
+#tcag .stru-ico{flex:none;display:inline-flex;color:var(--nv)}
+#tcag .stru-link{align-self:flex-start}
+#tcag .stru-limite{display:grid;gap:8px;border-left:3px solid var(--oro);padding-left:12px;margin-top:4px}
+#tcag .stru-corpo{display:grid;gap:8px;min-width:0}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -2018,7 +2028,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.22.0';
+  var VERSIONE = 'V6.23.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -2646,7 +2656,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   var ADM = { assegna: ris(), accessi: ris(), log: ris(), problemi: ris() };
   // V6.8.5: la scheda «Moduli compilabili» e' SOLO dell'admin (non ha un suo ADM[...]: usa l'albero dei Documenti, DOC.albero, e la scelta DOC.comp)
   var ADM_SCHEDE = ['assegna', 'accessi', 'log', 'problemi'];
-  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['moduli', 'avvisi', 'bp', 'studio']) : ADM_SCHEDE; }
+  function admSchede(){ return U && U.ruolo === 'admin' ? ADM_SCHEDE.concat(['strumenti', 'moduli', 'precompila', 'avvisi', 'bp', 'studio']) : ADM_SCHEDE; }
   var S = {
     sec:'oggi', sub:'', oggiF:'',
     rq:{ f:'tutte', q:'', tipo:'', imm:'' }, im:{ f:'pubblicato', q:'', n:0 },
@@ -2902,7 +2912,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     else if(s === 'richieste') caricaRichieste();
     else if(s === 'immobili') caricaImmobili();
     else if(s === 'documenti') caricaAlbero(true);
-    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else if(S.adm === 'avvisi') caricaAvvisi(true); else if(S.adm === 'bp') bpAdmCarica(true); else if(S.adm === 'studio') stuaApri(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
+    else if(s === 'admin') { if(S.adm === 'moduli') caricaAlbero(true); else if(S.adm === 'avvisi') caricaAvvisi(true); else if(S.adm === 'bp') bpAdmCarica(true); else if(S.adm === 'studio') stuaApri(true); else if(S.adm === 'strumenti') struApri(true); else if(S.adm === 'precompila') preAdmApri(true); else caricaAdm(S.adm); }       // V6.8.5: «Moduli compilabili» riprova l'albero (e la scelta)
     else if(s === 'impostazioni') caricaImp();
     else if(s === 'campagne') caricaCamp();
     else if(s === 'diana') dgRiprova();
@@ -3013,6 +3023,9 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     var parts = (location.hash.slice(1) || 'oggi').split('/'), sec = parts[0], sub = '';
     try { sub = decodeURIComponent(parts[1] || ''); } catch(e){}
     if(SECS.indexOf(sec) < 0) sec = 'oggi';
+    // V6.23.0: old addresses
+    if(sec === 'diana' && sub === 'interruttori'){ try { history.replaceState(null, '', '#diana/limiti'); } catch(e){} sub = 'limiti'; }
+    if(sec === 'diana' && sub === 'moduli'){ try { history.replaceState(null, '', '#admin/precompila'); } catch(e){} sec = 'admin'; sub = 'precompila'; }
     if(sec === 'admin' && !staff()){ sec = 'oggi'; sub = ''; }
     if(sec === 'diana' && !(U && U.ruolo === 'admin')){ sec = 'oggi'; sub = ''; }          // V6.7: Gestione Diana Assistant solo per l'admin (il cancello lo verifica comunque a ogni chiamata)
     if(sec === 'diana' && DG_TAB_ID.indexOf(sub) < 0) sub = GD.tab;
@@ -3052,6 +3065,8 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'admin' && S.adm === 'moduli'){ if(DOC.albero.stato === 'idle') caricaAlbero(false); }       // V6.8.5: l'albero dei Documenti (con la scelta dei moduli compilabili)
     else if(sec === 'admin' && S.adm === 'avvisi'){ if(AVV.stato === 'idle') caricaAvvisi(false); }       // V6.9: «Avvisi» ha il suo stato (AVV), non ADM
     else if(sec === 'admin' && S.adm === 'studio'){ stuaApri(false); }
+    else if(sec === 'admin' && S.adm === 'strumenti'){ struApri(false); }
+    else if(sec === 'admin' && S.adm === 'precompila'){ preAdmApri(false); }
     else if(sec === 'admin' && S.adm === 'bp'){ bpAdmCarica(false); }       // V6.14.0: Business plan has its own state (BPA), ADM.bp does not exist
     else if(sec === 'admin' && (ADM[S.adm].stato === 'idle' || (S.adm === 'problemi' && ADM.problemi.ok && Date.now() - ADM.problemi.agg > 60000))) caricaAdm(S.adm);
     if(sec === 'impostazioni' && (IMP.stato === 'idle' || (IMP.stato === 'err' && !IMP.ok))) caricaImp();
@@ -12117,7 +12132,7 @@ function findClose(){
   /* =========================================================
      GESTIONE DIANA ASSISTANT  (V6.7, CONTRATTO-V6.7 par. 6, 9.2) — SOLO ADMIN
      =========================================================
-     Sezione #diana (sette schede: Personalita', Benvenuto e domande, Conoscenza, Interruttori e limiti, Moduli AI (V6.8, in 04e9c), Stato e uso, Testi).
+     Sezione #diana (sei schede: Personalità, Benvenuto e domande, Conoscenza, Limiti, Stato e uso, Testi). Interruttori e limite dei render sono in Amministrazione → Strumenti e interruttori (04e9h), Precompila in Amministrazione → Precompila (04e9c).
      Si apre dal riquadro in "Altro", che esiste solo per l'admin. Nascondere il riquadro NON protegge niente: ogni chiamata passa dal cancello
      (GET/POST <origine del cancello>/ai/admin/...), che controlla la sessione E il ruolo admin a ogni volta; qui si mostra solo l'esito.
      Con cancello 1.4.0 le rotte rispondono 404: la pagina dice "server non aggiornato" e non rompe niente.
@@ -12126,7 +12141,7 @@ function findClose(){
      Caricamento file: .md .txt .pdf .docx, 10 MB, controllo anche nel browser (il server rifiuta comunque), un file alla volta (XMLHttpRequest,
      per vedere l'avanzamento), a lotti di 20 (limite del server sui file in attesa): controllo privacy (codice fiscale, IBAN, telefono, email)
      PRIMA di mettere i file nella conoscenza. Con un avviso si chiede sempre; senza avvisi il lotto entra da solo. */
-  var DG_TABS = [['personalita', 'Personalità'], ['benvenuto', 'Benvenuto e domande'], ['conoscenza', 'Conoscenza'], ['interruttori', 'Interruttori e limiti'], ['moduli', 'Moduli AI'], ['stato', 'Stato e uso'], ['testi', 'Testi']];
+  var DG_TABS = [['personalita', 'Personalità'], ['benvenuto', 'Benvenuto e domande'], ['conoscenza', 'Conoscenza'], ['limiti', 'Limiti'], ['stato', 'Stato e uso'], ['testi', 'Testi']];
   var DG_TAB_ID = DG_TABS.map(function(t){ return t[0]; });
   var DG_PER_MIN = 40, DG_PER_MAX = 2500;
   var DG_FILE_MAX = 10 * 1024 * 1024, DG_LOTTO = 20, DG_CODA_MAX = 200, DG_LIVELLI = 4, DG_TIPI = ['md', 'txt', 'pdf', 'docx'];
@@ -12211,6 +12226,7 @@ function findClose(){
   }
   function dgImpArrivata(){ if(GD.imp.dati) dianaApplica(GD.imp.dati, Date.now()); }
   function dgRiprova(){
+    if(S.sec === 'admin'){ dgCarica('imp'); return; }                 // Precompila (Amministrazione) legge le impostazioni
     var k = GD.tab === 'personalita' ? 'per' : GD.tab === 'conoscenza' ? 'con' : GD.tab === 'stato' ? 'sta' : 'imp';
     dgCarica(k);
   }
@@ -12219,7 +12235,6 @@ function findClose(){
     if(DG_TAB_ID.indexOf(sub) >= 0) GD.tab = sub;
     var t = GD.tab, k = t === 'personalita' ? 'per' : t === 'conoscenza' ? 'con' : t === 'stato' ? 'sta' : 'imp', R = GD[k];
     if(R.stato === 'idle' || (R.stato === 'err' && !R.ok) || k === 'sta') dgCarica(k);
-    if(t === 'moduli') preStato(true).then(function(){ if(S.sec === 'diana' && GD.tab === 'moduli') dgDisegna(); });       // V6.8: stato del servizio dei moduli
     if(!GD.timer) GD.timer = setInterval(function(){
       if(S.sec === 'diana' && GD.tab === 'stato' && !document.hidden && !appEl.hidden && !GD.sta.vol) dgCarica('sta', true);
     }, DG_STATO_MS);
@@ -12245,10 +12260,9 @@ function findClose(){
      col cancello 1.5.0 la pagina fa come nella V6.7 (domande da 1 a 500, render da 0 a 100 dove 0 = nessun render) e non mostra gli interruttori. */
   function dgSenzaLimite(){ var v = dgImpDati().vincoli; return !!v && typeof v === 'object' && v.senza_limite === true; }
   function dgIntSalvato(){
-    var d = dgImpDati(), a = d.assistente || {}, rn = d.render || {}, l = d.limiti || {}, sl = dgSenzaLimite();
-    var dm = dianaInt(l.domande_giorno, sl ? 0 : 1, 500, sl ? 0 : 60), rr = dianaInt(l.render_giorno, 0, 100, sl ? 0 : 30);
-    return { as_on: a.attivo !== false, as_msg: typeof a.messaggio === 'string' ? a.messaggio : '', rn_on: rn.attivo !== false, rn_msg: typeof rn.messaggio === 'string' ? rn.messaggio : '',
-             dom: String(dm || 60), dom_sl: sl && dm === 0, ren: String(sl ? (rr || 30) : rr), ren_sl: sl && rr === 0 };
+    var d = dgImpDati(), l = d.limiti || {}, sl = dgSenzaLimite();
+    var dm = dianaInt(l.domande_giorno, sl ? 0 : 1, 500, sl ? 0 : 60);
+    return { dom: String(dm || 60), dom_sl: sl && dm === 0 };
   }
   function dgIntBozza(){ if(!GD.intB) GD.intB = dgIntSalvato(); return GD.intB; }
   function dgTxtSalvato(){
@@ -12261,7 +12275,7 @@ function findClose(){
   function dgSporcoBen(){ return !!GD.benB && JSON.stringify(GD.benB) !== JSON.stringify(dgBenSalvato()); }
   function dgSporcoInt(){ return !!GD.intB && JSON.stringify(GD.intB) !== JSON.stringify(dgIntSalvato()); }
   function dgSporcoTxt(){ return !!GD.txtB && JSON.stringify(GD.txtB) !== JSON.stringify(dgTxtSalvato()); }
-  function dgSporco(){ return dgSporcoPer() || dgSporcoBen() || dgSporcoInt() || dgSporcoTxt() || dgSporcoMod(); }
+  function dgSporco(){ return dgSporcoPer() || dgSporcoBen() || dgSporcoInt() || dgSporcoTxt(); }
 
   /* ---------- pagina e schede ---------- */
   function dgDigitando(){
@@ -12270,7 +12284,7 @@ function findClose(){
   }
   function dgChips(){
     put(g('dg-tabs'), DG_TABS.map(function(t){
-      var sp = (t[0] === 'personalita' && dgSporcoPer()) || (t[0] === 'benvenuto' && dgSporcoBen()) || (t[0] === 'interruttori' && dgSporcoInt()) || (t[0] === 'moduli' && dgSporcoMod()) || (t[0] === 'testi' && dgSporcoTxt());
+      var sp = (t[0] === 'personalita' && dgSporcoPer()) || (t[0] === 'benvenuto' && dgSporcoBen()) || (t[0] === 'limiti' && dgSporcoInt()) || (t[0] === 'testi' && dgSporcoTxt());
       return H`<button class="chip" type="button" data-act="dg-tab" data-k="${t[0]}" aria-pressed="${String(GD.tab === t[0])}">${t[1]}${sp ? raw(' <span class="dg-pt" title="Modifiche non salvate" aria-label="modifiche non salvate"></span>') : ''}</button>`;
     }));
   }
@@ -12287,8 +12301,8 @@ function findClose(){
     return H`<section class="card imp-card dg-vai" aria-labelledby="tcag-dgv-h-${da}"><div class="sec-h" id="tcag-dgv-h-${da}">Gestione Diana Assistant</div>
       <p class="imp-p">Solo per l'amministratore: cosa sa, cosa dice e cosa può fare Diana.</p>
       <button class="btn pri big" type="button" data-act="diana-vai" data-h="diana/conoscenza" data-da="${da}">Conoscenza: i documenti di Diana</button>
-      <button class="btn sec big" type="button" data-act="diana-vai" data-h="diana/moduli" data-da="${da}" style="margin-top:10px">Dati agenzia e mediatore per i moduli</button>
-      <div class="dg-vai-l">${DG_TABS.filter(function(t){ return t[0] !== 'conoscenza' && t[0] !== 'moduli'; }).map(function(t){
+      <button class="btn sec big" type="button" data-act="diana-vai" data-h="admin/precompila" data-da="${da}" style="margin-top:10px">Precompila: dati agenzia e mediatori</button>
+      <div class="dg-vai-l">${DG_TABS.filter(function(t){ return t[0] !== 'conoscenza'; }).map(function(t){
         return H`<button class="btn sec" type="button" data-act="diana-vai" data-h="diana/${t[0]}" data-da="${da}">${t[1]}</button>`;
       })}</div></section>`;
   }
@@ -12302,7 +12316,7 @@ function findClose(){
   function dgTutto(){ dgChips(); dgDisegna(); }
   function dgDisegna(){
     var b = g('dg-body'); if(!b) return;
-    var h = GD.tab === 'personalita' ? dgPerHTML() : GD.tab === 'benvenuto' ? dgBenHTML() : GD.tab === 'conoscenza' ? dgConHTML() : GD.tab === 'interruttori' ? dgIntHTML() : GD.tab === 'moduli' ? dgModHTML() : GD.tab === 'stato' ? dgStatoHTML() : dgTxtHTML();
+    var h = GD.tab === 'personalita' ? dgPerHTML() : GD.tab === 'benvenuto' ? dgBenHTML() : GD.tab === 'conoscenza' ? dgConHTML() : GD.tab === 'limiti' ? dgIntHTML() : GD.tab === 'stato' ? dgStatoHTML() : dgTxtHTML();
     put(b, h);
     dgDopoDisegno();
     // i due selettori di file stanno FUORI dalla parte che si ridisegna (HTML fisso): se un ridisegno in sottofondo (rilettura dell'elenco) li sostituisse mentre si sta scegliendo, la scelta andrebbe persa
@@ -12455,10 +12469,12 @@ function findClose(){
       <div class="dg-az dg-fondo"><button class="btn pri big" type="button" id="tcag-dg-ben-salva" data-act="dg-ben-salva" ${sp && !pr.length && !GD.salvando ? '' : 'disabled'}>${GD.salvando === 'ben' ? 'Salvo…' : 'Salva'}</button>
         <button class="btn sec big" type="button" data-act="dg-ben-parti" ${GD.salvando ? 'disabled' : ''}>Torna ai testi approvati</button></div>`;
   }
+  // V6.23.0: Precompila settings live in Administration: redraw the page that shows them
+  function dgRidisegna(){ if(S.sec === 'admin') renderCorrente(); else dgTutto(); }
   function dgSalvaImp(chiave, corpo, ok){
     if(GD.salvando) return;
     var base = dgImpDati().versione;
-    GD.salvando = chiave; dgMsg(chiave, '', ''); dgDisegna();
+    GD.salvando = chiave; dgMsg(chiave, '', ''); dgRidisegna();
     var c = JSON.parse(JSON.stringify(corpo)); c.base = base;
     return dgApi('POST', 'impostazioni', c).then(function(j){
       if(j && typeof j === 'object' && j.versione != null){           // la risposta e' l'insieme aggiornato: si unisce a quello che c'e' (i testi approvati restano)
@@ -12468,7 +12484,7 @@ function findClose(){
     }).then(function(){ if(ok) ok(); }).catch(function(e){
       dgMsg(chiave, 'err', dgTesto(e));
       if(e.http === 409) return dgCarica('imp', true);
-    }).then(function(){ GD.salvando = ''; dgTutto(); });
+    }).then(function(){ GD.salvando = ''; dgRidisegna(); });
   }
   function dgBenSalva(){
     var B = dgBenBozza(); if(dgBenProblemi(B).length) return;
@@ -12492,11 +12508,8 @@ function findClose(){
      4) INTERRUTTORI E LIMITI
      ========================================================= */
   function dgIntProblemi(I){
-    var d = Number(I.dom), r = Number(I.ren), sl = dgSenzaLimite(), noLim = ' Per nessun limite accendi «Senza limite».';
-    if(!(sl && I.dom_sl) && (!/^\d{1,3}$/.test(String(I.dom).trim()) || d < 1 || d > 500)) return 'Le domande al giorno vanno da 1 a 500.' + (sl ? noLim : '');
-    if(sl){
-      if(!I.ren_sl && (!/^\d{1,3}$/.test(String(I.ren).trim()) || r < 1 || r > 100)) return 'I render al giorno vanno da 1 a 100.' + noLim;
-    } else if(!/^\d{1,3}$/.test(String(I.ren).trim()) || r < 0 || r > 100) return 'I render al giorno vanno da 0 a 100 (0 = nessun render).';
+    var d = Number(I.dom), sl = dgSenzaLimite();
+    if(!(sl && I.dom_sl) && (!/^\d{1,3}$/.test(String(I.dom).trim()) || d < 1 || d > 500)) return 'Le domande al giorno vanno da 1 a 500.' + (sl ? ' Per nessun limite accendi «Senza limite».' : '');
     return '';
   }
   function dgSw(k, on, testo){
@@ -12504,49 +12517,27 @@ function findClose(){
   }
   function dgIntHTML(){
     var car = dgCaricamento(GD.imp, 'le impostazioni'); if(car) return car;
-    var I = dgIntBozza(), pr = dgIntProblemi(I), sp = dgSporcoInt(), S0 = dgIntSalvato(), slc = dgSenzaLimite();
+    var I = dgIntBozza(), pr = dgIntProblemi(I), sp = dgSporcoInt(), slc = dgSenzaLimite();
     var fileMsg = dgImpDati().file === 'illeggibile' ? 'Il file delle impostazioni sul server è rovinato: per prudenza Diana Assistant e Render sono SPENTI. Controlla gli interruttori e salva.' : dgImpDati().file === 'bak' ? 'Il file delle impostazioni era rovinato: il server usa la copia di sicurezza precedente. Controlla gli interruttori e salva.' : dgImpDati().file === 'memoria' ? 'Il file delle impostazioni sul server è stato rovinato: il server tiene l’ultimo stato buono. Salva per ripararlo.' : '';
     return H`${dgMsgHTML('int')}
       ${fileMsg ? H`<p class="dg-msg err" id="tcag-dg-file-avviso" role="alert">${ic('warn', 18)}<span>${fileMsg}</span></p>` : ''}
-      <div class="dg-griglia">
-      <section class="card dg-card" aria-labelledby="tcag-dg-as-h">
-        <h2 id="tcag-dg-as-h">Diana Assistant</h2>
-        <div class="sw-lista">${dgSw('as', I.as_on, 'Diana Assistant risponde')}</div>
-        ${I.as_on ? '' : H`<p class="dg-msg err" role="status">${ic('warn', 18)}<span>Spenta: gli agenti vedono il messaggio qui sotto e non possono fare domande.</span></p>`}
-        <label class="fld">Messaggio per gli agenti (facoltativo)<input id="tcag-dg-as-m" maxlength="300" autocomplete="off" value="${I.as_msg}" placeholder="Es. Torno online alle 14:00."></label>
-        <p class="mut dg-nota">Se lo lasci vuoto, l’agente legge: «Diana Assistant è in manutenzione: riprova più tardi.»</p>
-      </section>
-      <section class="card dg-card" aria-labelledby="tcag-dg-rn-h">
-        <h2 id="tcag-dg-rn-h">Render rustici</h2>
-        <div class="sw-lista">${dgSw('rn', I.rn_on, 'Il Render funziona')}</div>
-        ${I.rn_on ? '' : H`<p class="dg-msg err" role="status">${ic('warn', 18)}<span>Spento: nessuno può creare nuovi render. Quelli già in coda finiscono.</span></p>`}
-        <label class="fld">Messaggio per gli agenti (facoltativo)<input id="tcag-dg-rn-m" maxlength="300" autocomplete="off" value="${I.rn_msg}" placeholder="Es. La scheda video è in manutenzione."></label>
-      </section>
       <section class="card dg-card" aria-labelledby="tcag-dg-li-h">
-        <h2 id="tcag-dg-li-h">Limiti per agente</h2>
+        <h2 id="tcag-dg-li-h">Domande a Diana per agente</h2>
         <p class="mut">Contano le ultime 24 ore (non il giorno di calendario), per ogni agente.</p>
-        <div class="dg-due">
-          <div><label class="fld">Domande a Diana<input id="tcag-dg-li-d" inputmode="numeric" maxlength="3" autocomplete="off" value="${I.dom}" aria-describedby="tcag-dg-li-aiuto" ${slc && I.dom_sl ? 'disabled' : ''}></label>
-          ${slc ? H`<div class="sw-lista">${dgSw('dom-sl', I.dom_sl, 'Senza limite')}</div>` : ''}</div>
-          <div><label class="fld">Render<input id="tcag-dg-li-r" inputmode="numeric" maxlength="3" autocomplete="off" value="${I.ren}" aria-describedby="tcag-dg-li-aiuto" ${slc && I.ren_sl ? 'disabled' : ''}></label>
-          ${slc ? H`<div class="sw-lista">${dgSw('ren-sl', I.ren_sl, 'Senza limite')}</div>` : ''}</div>
-        </div>
-        <p class="mut dg-nota" id="tcag-dg-li-aiuto">${slc ? 'Con «Senza limite» acceso, ogni agente può fare quante domande o render vuole. Se lo spegni, scrivi un numero: domande da 1 a 500, render da 1 a 100. Il Render si ferma con l’interruttore qui sopra, non con il numero.' : 'Domande da 1 a 500. Render da 0 a 100 (0 = nessun render).'}</p>
-      </section></div>
+        <label class="fld">Domande a Diana<input id="tcag-dg-li-d" inputmode="numeric" maxlength="3" autocomplete="off" value="${I.dom}" aria-describedby="tcag-dg-li-aiuto" ${slc && I.dom_sl ? 'disabled' : ''}></label>
+        ${slc ? H`<div class="sw-lista">${dgSw('dom-sl', I.dom_sl, 'Senza limite')}</div>` : ''}
+        <p class="mut dg-nota" id="tcag-dg-li-aiuto">${slc ? 'Con «Senza limite» acceso, ogni agente può fare quante domande vuole. Se lo spegni, scrivi un numero da 1 a 500.' : 'Domande da 1 a 500.'}</p>
+        <p class="mut dg-nota">Gli interruttori dei moduli e il limite dei render sono in Amministrazione.</p>
+        <div class="dg-az"><button class="btn sec" type="button" data-act="go" data-h="admin/strumenti">Strumenti e interruttori ›</button></div>
+      </section>
       <p class="dg-aiuto" id="tcag-dg-int-pr" role="status" ${pr ? '' : 'hidden'}>${pr}</p>
       <div class="dg-az dg-fondo"><span class="dg-sporco" id="tcag-dg-int-s" ${sp ? '' : 'hidden'}>Non salvato</span>
         <button class="btn pri big" type="button" id="tcag-dg-int-salva" data-act="dg-int-salva" ${sp && !pr && !GD.salvando ? '' : 'disabled'}>${GD.salvando === 'int' ? 'Salvo…' : 'Salva'}</button></div>`;
   }
-  function dgIntSalva(forza){
-    var I = dgIntBozza(), S0 = dgIntSalvato();
+  function dgIntSalva(){
+    var I = dgIntBozza();
     if(dgIntProblemi(I)) return;
-    var spegne = (S0.as_on && !I.as_on) ? 'Diana Assistant' : (S0.rn_on && !I.rn_on) ? 'il Render' : '';
-    if(spegne && forza !== true){
-      var due = S0.as_on && !I.as_on && S0.rn_on && !I.rn_on;
-      dgFoglioConferma(due ? 'Spegnere Diana Assistant e il Render per tutti?' : 'Spegnere ' + spegne + ' per tutti?', 'Gli agenti non potranno usarla finché non la riaccendi.', 'Sì, spegni', 'int-salva');
-      return;
-    }
-    dgSalvaImp('int', { assistente: { attivo: I.as_on, messaggio: I.as_msg.trim() }, render: { attivo: I.rn_on, messaggio: I.rn_msg.trim() }, limiti: { domande_giorno: (dgSenzaLimite() && I.dom_sl) ? 0 : Number(I.dom), render_giorno: (dgSenzaLimite() && I.ren_sl) ? 0 : Number(I.ren) } },
+    dgSalvaImp('int', { limiti: { domande_giorno: (dgSenzaLimite() && I.dom_sl) ? 0 : Number(I.dom) } },
       function(){ GD.intB = null; dgMsg('int', 'ok', 'Salvato.'); });
   }
 
@@ -13073,9 +13064,9 @@ function findClose(){
       c = g('dg-ben-s'); if(c) c.hidden = !sp2;
       c = g('dg-ben-salva'); if(c) c.disabled = !sp2 || !!pr.length || !!GD.salvando;
       c = g('dg-ben-pr'); if(c){ c.hidden = !pr.length; c.textContent = pr[0] || ''; }
-    } else if(id === 'tcag-dg-as-m' || id === 'tcag-dg-rn-m' || id === 'tcag-dg-li-d' || id === 'tcag-dg-li-r'){
+    } else if(id === 'tcag-dg-li-d'){
       var I = dgIntBozza();
-      if(id === 'tcag-dg-as-m') I.as_msg = v; else if(id === 'tcag-dg-rn-m') I.rn_msg = v; else if(id === 'tcag-dg-li-d') I.dom = v; else I.ren = v;
+      I.dom = v;
       var pi = dgIntProblemi(I), sp3 = dgSporcoInt();
       c = g('dg-int-pr'); if(c){ c.hidden = !pi; c.textContent = pi; }
       c = g('dg-int-s'); if(c) c.hidden = !sp3;
@@ -13101,7 +13092,7 @@ function findClose(){
   }
   function aggiornaBarreDg(){
     $$('#tcag-dg-tabs .chip').forEach(function(b){
-      var k = b.getAttribute('data-k'), sp = (k === 'personalita' && dgSporcoPer()) || (k === 'benvenuto' && dgSporcoBen()) || (k === 'interruttori' && dgSporcoInt()) || (k === 'moduli' && dgSporcoMod()) || (k === 'testi' && dgSporcoTxt()), p = $('.dg-pt', b);
+      var k = b.getAttribute('data-k'), sp = (k === 'personalita' && dgSporcoPer()) || (k === 'benvenuto' && dgSporcoBen()) || (k === 'limiti' && dgSporcoInt()) || (k === 'testi' && dgSporcoTxt()), p = $('.dg-pt', b);
       if(sp && !p){ var s = document.createElement('span'); s.className = 'dg-pt'; s.title = 'Modifiche non salvate'; b.appendChild(document.createTextNode(' ')); b.appendChild(s); }
       else if(!sp && p){ b.removeChild(p); }
     });
@@ -13133,7 +13124,7 @@ function findClose(){
       }
       case 'dg-ben-salva': dgBenSalva(); break;
       case 'dg-ben-parti': dgFoglioConferma('Torno ai testi approvati?', 'Benvenuto e domande tornano come li ha approvati Oscar. Quello che hai scritto si perde.', 'Sì, ripristina', 'ben-parti'); break;
-      case 'dg-sw': { var I = dgIntBozza(); if(k === 'as') I.as_on = !I.as_on; else if(k === 'dom-sl') I.dom_sl = !I.dom_sl; else if(k === 'ren-sl') I.ren_sl = !I.ren_sl; else I.rn_on = !I.rn_on; dgTutto(); var sw = $('[data-act="dg-sw"][data-k="' + k + '"]'); if(sw) try { sw.focus(); } catch(e){} break; }
+      case 'dg-sw': { var I = dgIntBozza(); if(k === 'dom-sl') I.dom_sl = !I.dom_sl; dgTutto(); var sw = $('[data-act="dg-sw"][data-k="' + k + '"]'); if(sw) try { sw.focus(); } catch(e){} break; }
       case 'dg-int-salva': dgIntSalva(); break;
       case 'dg-txt-salva': dgTxtSalva(); break;
       case 'dg-txt-parti': {
@@ -13158,17 +13149,15 @@ function findClose(){
         if(k === 'per-parti') dgPerRipristina('partenza');
         else if(k === 'per-usa') dgPerRipristina(v);
         else if(k === 'ben-parti') dgRipristinaImp(['benvenuto', 'domande'], 'ben', 'Ho rimesso i testi approvati.');
-        else if(k === 'int-salva') dgIntSalva(true);
-        else if(k === 'mod-salva') dgModSalva(true);
         else if(k === 'con-elimina') dgEliminaOk(v);
         break;
       }
     }
   }
   /* =========================================================
-     GESTIONE > MODULI AI  (V6.8, CONTRATTO-MODULI-AI.md rev. 2, par. 7.3 e 7.4) — SOLO ADMIN
+     PRECOMPILA CON AI  (V6.8, poi scheda di Amministrazione V6.23.0; CONTRATTO-MODULI-AI.md rev. 2, par. 7.3 e 7.4) — SOLO ADMIN
      =========================================================
-     Settima scheda di Gestione Diana Assistant (si trova anche in Impostazioni, nel riquadro «Gestione Diana Assistant»).
+     Amministrazione → Precompila (V6.23.0), solo admin: l'interruttore e il messaggio sono in Strumenti e interruttori (04e9h); prima stavano in Gestione Diana Assistant.
      Tre cose, tutte nella sezione «moduli» del file delle impostazioni del cancello (POST /ai/admin/impostazioni, stessa conferma di versione delle altre schede):
        1) interruttore «Precompila con AI» + messaggio per gli agenti (parte SPENTO: il pulsante dice «in arrivo» finche' l'admin non lo accende);
        2) DATI DELL'AGENZIA (11 voci) scritti UNA VOLTA: finiscono nei moduli senza passare dall'AI;
@@ -13195,7 +13184,7 @@ function findClose(){
       DG_MOD_MED.forEach(function(c){ o[c[0]] = typeof x[c[0]] === 'string' ? x[c[0]] : ''; });
       return o;
     });
-    return { on:m.attivo === true, msg:typeof m.messaggio === 'string' ? m.messaggio : '', ag:ag, med:lista };
+    return { ag:ag, med:lista };
   }
   function dgModBozza(){ if(!GD.modB) GD.modB = JSON.parse(JSON.stringify(dgModSalvato())); return GD.modB; }
   function dgSporcoMod(){ return !!GD.modB && JSON.stringify(GD.modB) !== JSON.stringify(dgModSalvato()); }
@@ -13203,8 +13192,6 @@ function findClose(){
   // primo problema, in italiano semplice ('' = tutto a posto)
   function dgModProblemi(B){
     var i, c, v;
-    if(B.msg.length > DG_MOD_MAX) return 'Il messaggio è più lungo di ' + DG_MOD_MAX + ' caratteri.';
-    if(dgModTestoMale(B.msg)) return 'Nel messaggio non si possono usare < e >.';
     for(i = 0; i < DG_MOD_AG.length; i++){
       c = DG_MOD_AG[i]; v = B.ag[c[0]].trim();
       if(v.length > DG_MOD_MAX) return '«' + c[1] + '» è più lungo di ' + DG_MOD_MAX + ' caratteri.';
@@ -13261,15 +13248,13 @@ function findClose(){
     }
     var B = dgModBozza(), pr = dgModProblemi(B), sp = dgSporcoMod();
     var fatte = dgModConta(B);
+    var on = (dgModDati() || {}).attivo === true;
     return H`${dgMsgHTML('mod')}
       <div class="dg-griglia">
       <section class="card dg-card" aria-labelledby="tcag-dg-mod-h">
         <h2 id="tcag-dg-mod-h">Precompila con AI</h2>
-        <p class="mut">Nei moduli PDF compilabili, l’agente può far leggere carta d’identità, tessera e visura. <b>Parte spento.</b> Accendilo dopo le prove.</p>
-        <div class="sw-lista"><button class="sw" type="button" role="switch" aria-checked="${String(!!B.on)}" data-act="dg-mod-sw" id="tcag-dg-mod-sw"><span class="sw-t">Precompila con AI funziona</span><span class="sw-st">${B.on ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button></div>
-        ${B.on ? '' : H`<p class="dg-msg err" role="status">${ic('warn', 18)}<span>Spento: gli agenti vedono «in arrivo» sul pulsante.</span></p>`}
-        <label class="fld">Messaggio per gli agenti (facoltativo)<input id="tcag-dg-mod-msg" maxlength="${DG_MOD_MAX}" autocomplete="off" value="${B.msg}" placeholder="Es. Torno online alle 14:00."></label>
-        <p class="mut dg-nota">Se il servizio è spento per manutenzione, l’agente legge questo messaggio.</p>
+        <p class="mut">Nei moduli PDF compilabili, l’agente può far leggere carta d’identità, tessera e visura.</p>
+        <div class="lrow" id="tcag-dg-mod-int"><span class="g">Interruttore: <b>${on ? 'Acceso' : 'Spento'}</b></span><button class="btn sec sm" type="button" data-act="go" data-h="admin/strumenti">Cambia in Strumenti e interruttori ›</button></div>
       </section>
       <section class="card dg-card" aria-labelledby="tcag-dg-mod-st-h">
         <h2 id="tcag-dg-mod-st-h">Stato del servizio</h2>
@@ -13296,32 +13281,25 @@ function findClose(){
       <div class="dg-az dg-fondo"><span class="dg-sporco" id="tcag-dg-mod-s" ${sp ? '' : 'hidden'}>Non salvato</span>
         <button class="btn pri big" type="button" id="tcag-dg-mod-salva" data-act="dg-mod-salva" ${sp && !pr && !GD.salvando ? '' : 'disabled'}>${GD.salvando === 'mod' ? 'Salvo…' : 'Salva'}</button></div>`;
   }
-  function dgModSalva(forza){
-    var B = dgModBozza(), S0 = dgModSalvato();
+  function dgModSalva(){
+    var B = dgModBozza();
     if(dgModProblemi(B)) return;
-    if(S0.on !== B.on && forza !== true){
-      dgFoglioConferma(B.on ? 'Accendere «Precompila con AI» per tutti?' : 'Spegnere «Precompila con AI» per tutti?',
-        B.on ? 'Gli agenti vedranno il pulsante in ogni modulo compilabile che il servizio conosce.' : 'Gli agenti non potranno usarla finché non la riaccendi.',
-        B.on ? 'Sì, accendi' : 'Sì, spegni', 'mod-salva');
-      return;
-    }
     var ag = {}; DG_MOD_AG.forEach(function(c){ ag[c[0]] = B.ag[c[0]].trim(); });
     var med = {};
     B.med.forEach(function(m){
       var o = {}; DG_MOD_MED.forEach(function(c){ o[c[0]] = m[c[0]].trim(); });
       med[m.email.trim().toLowerCase()] = o;
     });
-    dgSalvaImp('mod', { moduli: { attivo:B.on, messaggio:B.msg.trim(), agenzia:ag, mediatori:med } }, function(){
+    dgSalvaImp('mod', { moduli: { agenzia:ag, mediatori:med } }, function(){
       GD.modB = null; PRE.statoT = 0; preStrumentiT = 0;
       dgMsg('mod', 'ok', 'Salvato.');
-      preStato(true).then(function(){ if(S.sec === 'diana' && GD.tab === 'moduli') dgDisegna(); });
+      preStato(true).then(function(){ if(S.sec === 'admin' && S.adm === 'precompila') renderCorrente(); });
     });
   }
   // digitazione: si aggiorna la bozza e i pezzi che cambiano, senza ridisegnare sotto le dita
   function dgModInput(t){
     var B = dgModBozza(), id = t.id, v = t.value, m;
-    if(id === 'tcag-dg-mod-msg') B.msg = v;
-    else if((m = /^tcag-dg-mod-a-(.+)$/.exec(id)) && Object.prototype.hasOwnProperty.call(B.ag, m[1])) B.ag[m[1]] = v;
+    if((m = /^tcag-dg-mod-a-(.+)$/.exec(id)) && Object.prototype.hasOwnProperty.call(B.ag, m[1])) B.ag[m[1]] = v;
     else if((m = /^tcag-dg-mod-m-(\d+)-(.+)$/.exec(id)) && B.med[+m[1]] && Object.prototype.hasOwnProperty.call(B.med[+m[1]], m[2])) B.med[+m[1]][m[2]] = v;
     var pr = dgModProblemi(B), sp = dgSporcoMod(), c;
     c = g('dg-mod-pr'); if(c){ c.hidden = !pr; c.textContent = pr; }
@@ -13332,21 +13310,22 @@ function findClose(){
   function dgModClic(a, el){
     var i = +el.getAttribute('data-i'), B;
     switch(a){
-      case 'dg-mod-sw': B = dgModBozza(); B.on = !B.on; dgTutto(); var sw = g('dg-mod-sw'); if(sw) try { sw.focus(); } catch(e){} break;
       case 'dg-mod-add':
         B = dgModBozza(); if(B.med.length >= DG_MOD_MED_MAX) break;
         var vuoto = { email:'' }; DG_MOD_MED.forEach(function(c){ vuoto[c[0]] = ''; });
-        B.med.push(vuoto); dgTutto();
+        B.med.push(vuoto); dgRidisegna();
         var ni = g('dg-mod-m-' + (B.med.length - 1) + '-email'); if(ni) try { ni.focus(); } catch(e){}
         break;
-      case 'dg-mod-del': B = dgModBozza(); B.med.splice(i, 1); dgTutto(); break;
+      case 'dg-mod-del': B = dgModBozza(); B.med.splice(i, 1); dgRidisegna(); break;
       case 'dg-mod-salva': dgModSalva(); break;
       case 'dg-mod-ricontrolla':
-        preStato(true).then(function(){ if(S.sec === 'diana' && GD.tab === 'moduli') dgDisegna(); });
-        dgDisegna();
-        break;
+        preStato(true).then(function(){ if(S.sec === 'admin' && S.adm === 'precompila') renderCorrente(); }); dgRidisegna(); break;
     }
   }
+  // V6.23.0: Precompila is an admin tab (Amministrazione > Precompila); 04f draws it through renderPrecompilaAdmin
+  function preAdmApri(forza){ if(!(U && U.ruolo === 'admin')) return; if(GD.imp.stato === 'idle' || (forza && !GD.imp.ok)) dgCarica('imp'); preStato(!!forza).then(function(){ if(S.sec === 'admin' && S.adm === 'precompila') renderCorrente(); }); }
+  // not redrawn while the admin is typing in one of its fields
+  function renderPrecompilaAdmin(box){ if(!(U && U.ruolo === 'admin')){ put(box, ''); return; } var a = document.activeElement; if(a && box.contains(a) && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && box.querySelector('#tcag-dg-mod-ag-h')) return; put(box, H`<div class="narrow adm-largo">${dgModHTML()}</div>`); }
   /* =========================================================
      AMMINISTRAZIONE > MODULI COMPILABILI  (V6.8.5, SOLO ADMIN)
      =========================================================
@@ -13589,7 +13568,7 @@ function findClose(){
     });
   }
 /* BUSINESS PLAN (admin only): switch, all practices, read-only practice. The gate re-checks the admin role on every /ai/admin/* call. */
-  var BPA = { imp:'idle', lista:ris(), aperta:'', vista:ris(), bozza:null, salvando:false, msg:null, filtro:'' };   // filtro = email of the selected owner, '' = Tutti
+  var BPA = { imp:'idle', lista:ris(), aperta:'', vista:ris(), filtro:'' };   // filtro = email of the selected owner, '' = Tutti
   function bpAdmCarica(forza){
     if(!(U && U.ruolo === 'admin')) return Promise.resolve();
     if(GD.imp.stato === 'idle' || (forza && !GD.imp.ok)) dgCarica('imp');
@@ -13600,36 +13579,16 @@ function findClose(){
       }, function(e){ throw new Error(dgTesto(e)); });
     });
   }
-  // la bozza nasce dalle impostazioni del server; resta in memoria (niente localStorage)
-  function bpaBozza(){
-    if(BPA.bozza === null){
-      var bp = dgImpDati().bp || {};
-      BPA.bozza = { attivo: bp.attivo === true, messaggio: typeof bp.messaggio === 'string' ? bp.messaggio : '' };
-    }
-    return BPA.bozza;
-  }
   function renderBpAdmin(box){
     if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
     if(!box.querySelector('#tcag-bpa-imp')) put(box, H`<div class="narrow adm-largo"><section class="card bpa-imp" id="tcag-bpa-imp"></section><div id="tcag-bpa-corpo"></div></div>`);
     var corpo = box.querySelector('#tcag-bpa-corpo'), imp = box.querySelector('#tcag-bpa-imp');
-    // PARTE (a): interruttore e messaggio. Non si ridisegna mentre l'admin scrive nel campo del messaggio
-    if(document.activeElement !== g('bpa-msg')){
-      var dati = dgImpDati(), b = null, cosa;
-      if(!GD.imp.ok) cosa = GD.imp.stato === 'err' ? erroreBox('le impostazioni', GD.imp.err) : skel(1);
-      else if(!dati.bp) cosa = H`<p class="mut">Il server non è ancora aggiornato per questa funzione (serve il cancello AI 1.10.0).</p>`;
-      else {
-        b = bpaBozza();
-        cosa = H`<button class="sw" type="button" role="switch" aria-checked="${String(b.attivo)}" data-act="bpa-toggle"><span class="sw-t">Business plan per gli agenti</span><span class="sw-st">${b.attivo ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button>
-          ${b.attivo ? '' : H`<p class="bpa-avviso">Spento: gli agenti vedono «in arrivo»</p>`}
-          <label for="tcag-bpa-msg">Messaggio per gli agenti (facoltativo)</label>
-          <input id="tcag-bpa-msg" type="text" maxlength="300" value="${b.messaggio}">
-          ${BPA.msg ? H`<p class="bpa-msg ${BPA.msg.t}" role="${BPA.msg.t === 'err' ? 'alert' : 'status'}">${BPA.msg.testo}</p>` : ''}
-          <button class="btn pri t16" type="button" data-act="bpa-salva" ${BPA.salvando ? 'disabled' : ''}>Salva</button>`;
-      }
-      put(imp, H`<h2>Business plan per gli agenti</h2>${cosa}`);
-      var mi = g('bpa-msg');
-      if(mi) mi.oninput = function(){ bpaBozza().messaggio = this.value; };
-    }
+    // PARTE (a): riga in sola lettura, l'interruttore si cambia in Strumenti e interruttori
+    var dati = dgImpDati(), cosa;
+    if(!GD.imp.ok) cosa = GD.imp.stato === 'err' ? erroreBox('le impostazioni', GD.imp.err) : skel(1);
+    else if(!dati.bp) cosa = H`<p class="mut">Il server non è ancora aggiornato per questa funzione (serve il cancello AI 1.10.0).</p>`;
+    else cosa = H`<div class="lrow" id="tcag-bpa-int"><span class="g">Interruttore: <b>${dati.bp.attivo === true ? 'Acceso' : 'Spento'}</b></span><button class="btn sec sm" type="button" data-act="go" data-h="admin/strumenti">Cambia in Strumenti e interruttori ›</button></div>`;
+    put(imp, H`<h2>Business plan per gli agenti</h2>${cosa}`);
     // PARTE (b): elenco di tutte le pratiche
     if(BPA.aperta === ''){
       var lista = BPA.lista.dati || [], proprietari = [], cosaB;
@@ -13697,43 +13656,14 @@ function findClose(){
     bpAdmCarica(false);
     renderCorrente();
   }
-  function bpaToggle(){
-    var b = bpaBozza();
-    b.attivo = !b.attivo; BPA.msg = null;
-    renderCorrente();
-  }
-  function bpaSalva(btn){
-    if(!(U && U.ruolo === 'admin') || BPA.salvando) return;
-    var b = bpaBozza();
-    var mi = g('bpa-msg');
-    var m = String(mi ? mi.value : (b.messaggio || '')).trim();
-    if(/[<>]/.test(m)){ BPA.msg = { t:'err', testo:'Il messaggio non può contenere i caratteri < e >.' }; renderCorrente(); return; }
-    if(m.length > 300){ BPA.msg = { t:'err', testo:'Massimo 300 caratteri.' }; renderCorrente(); return; }
-    BPA.salvando = true; renderCorrente();
-    return dgApi('POST', 'impostazioni', { bp: { attivo: b.attivo, messaggio: m }, base: dgImpDati().versione }).then(function(j){
-      if(j && j.versione != null){
-        var nuovo = {};
-        Object.keys(dgImpDati()).forEach(function(k){ nuovo[k] = dgImpDati()[k]; });
-        Object.keys(j).forEach(function(k){ nuovo[k] = j[k]; });
-        GD.imp.dati = nuovo; GD.imp.agg = Date.now(); dgImpArrivata();
-      } else return dgCarica('imp', true);
-    }).then(function(){ BPA.bozza = null; BPA.msg = { t:'ok', testo:'Salvato.' }; })
-      .catch(function(e){
-        BPA.msg = { t:'err', testo: dgTesto(e) };
-        if(e.http === 409){ BPA.bozza = null; return dgCarica('imp', true); }
-      }).then(function(){
-        BPA.salvando = false;
-        if(S.sec === 'admin' && S.adm === 'bp') renderCorrente();
-      });
-  }
   function bpaRiprova(){
     if(BPA.aperta) bpaApri(BPA.aperta); else bpAdmCarica(true);
   }
-/* Study Assistant, admin only (V6.17.0). Switch and message for the agents, and the choice of the .md files of the Documents tree
+/* Study Assistant, admin only (V6.17.0). The switch and the message are in Strumenti e interruttori (04e9h); here the choice of the .md files of the Documents tree
    that become study material on the gateway. Files go up one at a time with scaricaConProgresso and the raw bytes as body.
    Nothing is kept on the device (no storage). Text from the server goes in with H`` or textContent only. The gateway checks the admin role on every call. */
 var STUA_MAX_BYTE = 2097152;
-var STUA = { mat:ris(), bozza:null, salvando:false, msg:null, mod:{}, lavoro:null, esiti:{} };   // mod = scelte non ancora salvate { chiave: bool }; esiti = errore per riga
+var STUA = { mat:ris(), salvando:false, msg:null, mod:{}, lavoro:null, esiti:{} };   // mod = scelte non ancora salvate { chiave: bool }; esiti = errore per riga
 
 // dati della scheda: impostazioni, albero dei Documenti e elenco dei materiali sul server
 function stuaApri(forza){
@@ -13777,15 +13707,6 @@ function stuaRighe(){
   return out;
 }
 
-// la bozza nasce dalle impostazioni del server; resta in memoria
-function stuaBozza(){
-  if(STUA.bozza === null){
-    var st = dgImpDati().studio || {};
-    STUA.bozza = { attivo: st.attivo === true, messaggio: typeof st.messaggio === 'string' ? st.messaggio : '' };
-  }
-  return STUA.bozza;
-}
-
 function stuaRigaHTML(r){
   var mod = Object.prototype.hasOwnProperty.call(STUA.mod, r.k);
   var spunta = mod ? !!STUA.mod[r.k] : !!r.voce;
@@ -13806,55 +13727,19 @@ function renderStudioAdmin(box){
   if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
   if(!box.querySelector('#tcag-stua-imp')) put(box, H`<div class="narrow adm-largo"><section class="card stua-imp" id="tcag-stua-imp"></section><div id="tcag-stua-corpo"></div></div>`);
   var corpo = box.querySelector('#tcag-stua-corpo'), imp = box.querySelector('#tcag-stua-imp');
-  // PARTE (a): interruttore e messaggio. Non si ridisegna mentre l'admin scrive nel campo del messaggio
-  if(document.activeElement !== g('stua-msg')){
-    var cosa;
-    if(!GD.imp.ok) cosa = GD.imp.stato === 'err' ? erroreBox('le impostazioni', GD.imp.err) : skel(1);
-    else if(!dgImpDati().studio) cosa = H`<p class="mut">Il server non è ancora aggiornato per questa funzione (serve il cancello AI 1.11.0).</p>`;
-    else {
-      var b = stuaBozza();
-      cosa = H`<button class="sw" type="button" role="switch" aria-checked="${String(b.attivo)}" data-act="stua-toggle"><span class="sw-t">Study Assistant per gli agenti</span><span class="sw-st">${b.attivo ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button>
-        <label for="tcag-stua-msg">Messaggio per gli agenti (facoltativo)</label>
-        <input id="tcag-stua-msg" type="text" maxlength="300" value="${b.messaggio}">
-        ${STUA.msg ? H`<p class="stua-msg ${STUA.msg.t}" role="${STUA.msg.t === 'err' ? 'alert' : 'status'}">${STUA.msg.testo}</p>` : ''}
-        <button class="btn pri t16" type="button" data-act="stua-salva-imp" ${STUA.salvando ? 'disabled' : ''}>Salva</button>`;
-    }
-    put(imp, H`<h2>Study Assistant</h2>${cosa}`);
-    var mi = g('stua-msg');
-    if(mi) mi.oninput = function(){ stuaBozza().messaggio = this.value; };
-  }
+  // PARTE (a): riga in sola lettura, l'interruttore si cambia in Strumenti e interruttori
+  var cosa;
+  if(!GD.imp.ok) cosa = GD.imp.stato === 'err' ? erroreBox('le impostazioni', GD.imp.err) : skel(1);
+  else if(!dgImpDati().studio) cosa = H`<p class="mut">Il server non è ancora aggiornato per questa funzione (serve il cancello AI 1.11.0).</p>`;
+  else cosa = H`<div class="lrow" id="tcag-stua-int"><span class="g">Interruttore: <b>${dgImpDati().studio.attivo === true ? 'Acceso' : 'Spento'}</b></span><button class="btn sec sm" type="button" data-act="go" data-h="admin/strumenti">Cambia in Strumenti e interruttori ›</button></div>`;
+  put(imp, H`<h2>Study Assistant</h2>${cosa}`);
   // PARTE (b): i materiali di studio, scelti dai file .md dei Documenti
   var righe = stuaRighe(), cosaB;
   if(!DOC.albero.ok) cosaB = DOC.albero.stato === 'err' ? erroreBox('i Documenti', DOC.albero.err) : skel(2);
   else if(!STUA.mat.ok) cosaB = STUA.mat.stato === 'err' ? H`<div class="err" role="alert"><span>Non riesco a leggere i materiali di studio. ${STUA.mat.err || ''}</span><button class="btn sec sm" type="button" data-act="stua-riprova">Riprova</button></div>` : skel(2);
   else if(!righe.length) cosaB = vuoto('Nei Documenti non ci sono file .md.');
-  else cosaB = H`<div class="card rows adm-griglia">${righe.map(stuaRigaHTML)}</div>${stuaBarra()}`;
+  else cosaB = H`<div class="card rows adm-griglia">${righe.map(stuaRigaHTML)}</div>${stuaBarra()}${STUA.msg ? H`<p class="stua-msg ${STUA.msg.t}" role="${STUA.msg.t === 'err' ? 'alert' : 'status'}">${STUA.msg.testo}</p>` : ''}`;
   put(corpo, H`<div class="sec-h">Materiali di studio</div>${cosaB}`);
-}
-
-// Salva delle impostazioni (interruttore e messaggio), stessa logica di bpaSalva
-function stuaSalvaImp(){
-  if(!(U && U.ruolo === 'admin') || STUA.salvando) return;
-  var b = stuaBozza(), mi = g('stua-msg');
-  var m = String(mi ? mi.value : (b.messaggio || '')).trim();
-  if(/[<>]/.test(m)){ STUA.msg = { t:'err', testo:'Il messaggio non può contenere i caratteri < e >.' }; renderCorrente(); return; }
-  if(m.length > 300){ STUA.msg = { t:'err', testo:'Massimo 300 caratteri.' }; renderCorrente(); return; }
-  STUA.salvando = true; renderCorrente();
-  return dgApi('POST', 'impostazioni', { studio: { attivo: b.attivo, messaggio: m }, base: dgImpDati().versione }).then(function(j){
-    if(j && j.versione != null){
-      var nuovo = {};
-      Object.keys(dgImpDati()).forEach(function(k){ nuovo[k] = dgImpDati()[k]; });
-      Object.keys(j).forEach(function(k){ nuovo[k] = j[k]; });
-      GD.imp.dati = nuovo; GD.imp.agg = Date.now(); dgImpArrivata();
-    } else return dgCarica('imp', true);
-  }).then(function(){ STUA.bozza = null; STUA.msg = { t:'ok', testo:'Salvato.' }; })
-    .catch(function(e){
-      STUA.msg = { t:'err', testo: dgTesto(e) };
-      if(e.http === 409){ STUA.bozza = null; return dgCarica('imp', true); }
-    }).then(function(){
-      STUA.salvando = false;
-      if(S.sec === 'admin' && S.adm === 'studio') renderCorrente();
-    });
 }
 
 // carica un file .md sul gateway: il corpo sono i byte del file
@@ -13931,13 +13816,175 @@ function stuaAzione(a, el){
   var admin = !!(U && U.ruolo === 'admin');
   if(!admin) return;
   switch(a){
-    case 'stua-toggle': stuaBozza().attivo = !stuaBozza().attivo; STUA.msg = null; renderCorrente(); break;
-    case 'stua-salva-imp': stuaSalvaImp(); break;
     case 'stua-casella': STUA.mod[el.getAttribute('data-k')] = el.checked; break;
     case 'stua-salva': stuaSalva(); break;
     case 'stua-riprova': stuaApri(true); break;
   }
 }
+  /* =========================================================
+     ADMINISTRATION > TOOLS AND SWITCHES (V6.23.0): admin only.
+     The gate re-checks the admin role on every /ai/admin/* call.
+     ========================================================= */
+  var STRU = { bozza: null, salvando: false, msg: null };
+  var STRU_MODULI = [['assistente', 'Diana Assistant', 'chat-spark', 'diana/personalita'], ['render', 'Render rustici', 'home-brush', ''], ['moduli', 'Precompila moduli', 'doc-spark', 'admin/precompila'], ['bp', 'Business plan', 'bp-chart', 'admin/bp'], ['studio', 'Study Assistant', 'study', 'admin/studio'], ['brochure', 'Brochure', 'brochure', '']];
+
+  // the saved state, in the shape of the draft: null = the gate has no such section
+  function struSalvato(){
+    var d = dgImpDati(), sl = dgSenzaLimite(), out = {};
+    STRU_MODULI.forEach(function(m){
+      var k = m[0], x = d[k];
+      out[k] = x && typeof x === 'object' ? { on: (k === 'moduli' || k === 'bp' || k === 'studio') ? x.attivo === true : x.attivo !== false, msg: typeof x.messaggio === 'string' ? x.messaggio : '' } : null;
+    });
+    var l = d.limiti || {}, rr = dianaInt(l.render_giorno, 0, 100, sl ? 0 : 30);
+    out.ren = String(sl ? (rr || 30) : rr);
+    out.ren_sl = sl && rr === 0;
+    return out;
+  }
+  function struBozza(){
+    var S0 = struSalvato();
+    if(!STRU.bozza) STRU.bozza = JSON.parse(JSON.stringify(S0));
+    // a section that arrived after the draft was started (the draft has null for it) is filled in
+    STRU_MODULI.forEach(function(m){ var k = m[0]; if(!STRU.bozza[k] && S0[k]) STRU.bozza[k] = { on: S0[k].on, msg: S0[k].msg }; });
+    return STRU.bozza;
+  }
+  function struSporco(){ return !!STRU.bozza && JSON.stringify(STRU.bozza) !== JSON.stringify(struSalvato()); }
+
+  // the patch: only the sections that changed (the gate merges them)
+  function struPatch(B, S0, sl){
+    var out = {}, chiavi = ['assistente', 'render', 'moduli', 'bp', 'studio', 'brochure'];
+    chiavi.forEach(function(k){
+      if(B[k] && S0[k] && (B[k].on !== S0[k].on || B[k].msg.trim() !== S0[k].msg.trim())) out[k] = { attivo: B[k].on, messaggio: B[k].msg.trim() };
+    });
+    var n = (sl && B.ren_sl) ? 0 : Number(B.ren);
+    var n0 = (sl && S0.ren_sl) ? 0 : Number(S0.ren);
+    if(n !== n0) out.limiti = { render_giorno: n };
+    return out;
+  }
+  // the sections that go from on to off, in STRU_MODULI order
+  function struSpegne(B, S0){
+    return ['assistente', 'render', 'moduli', 'bp', 'studio', 'brochure'].filter(function(k){ return B[k] && S0[k] && S0[k].on && !B[k].on; });
+  }
+  // first problem in plain Italian ('' = all fine)
+  function struProblemi(B, sl){
+    var nomi = { assistente: 'Diana Assistant', render: 'Render rustici', moduli: 'Precompila moduli', bp: 'Business plan', studio: 'Study Assistant', brochure: 'Brochure' }, p = '';
+    ['assistente', 'render', 'moduli', 'bp', 'studio', 'brochure'].forEach(function(k){
+      var m = B[k];
+      if(!m || p) return;
+      if(m.msg.length > 300) p = '«' + nomi[k] + '»: il messaggio è più lungo di 300 caratteri.';
+      else if(/[<>]/.test(m.msg)) p = '«' + nomi[k] + '»: nel messaggio non si possono usare < e >.';
+    });
+    if(p) return p;
+    var r = Number(B.ren), okr = /^\d{1,3}$/.test(String(B.ren).trim());
+    if(sl){
+      if(!B.ren_sl && (!okr || r < 1 || r > 100)) return 'I render al giorno vanno da 1 a 100. Per nessun limite accendi «Senza limite».';
+    } else if(!okr || r < 0 || r > 100) return 'I render al giorno vanno da 0 a 100 (0 = nessun render).';
+    return '';
+  }
+  function struNome(k){ var m = STRU_MODULI.filter(function(x){ return x[0] === k; })[0]; return m ? m[1] : k; }
+
+  function struApri(forza){
+    if(!(U && U.ruolo === 'admin')) return;
+    if(!struSporco()) STRU.bozza = null;
+    if(GD.imp.stato === 'idle' || (forza && !GD.imp.ok)) dgCarica('imp');
+  }
+
+  function renderStruAdmin(box){
+    if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
+    var a = document.activeElement;
+    if(a && box.contains(a) && a.tagName === 'INPUT' && (a.id || '').indexOf('tcag-stru-') === 0) return;
+    if(!GD.imp.ok){
+      put(box, H`<div class="narrow adm-largo">${GD.imp.stato === 'err' ? H`<div class="err" role="alert">${ic('warn', 18)}<span>Non riesco a caricare le impostazioni.${GD.imp.err ? ' ' + GD.imp.err : ''}</span><button class="btn sec sm" type="button" data-act="stru-riprova">Riprova</button></div>` : skel(2)}</div>`);
+      return;
+    }
+    var B = struBozza(), S0 = struSalvato(), sl = dgSenzaLimite(), pr = struProblemi(B, sl), sp = struSporco();
+    var file = dgImpDati().file;
+    var fileMsg = file === 'illeggibile' ? 'Il file delle impostazioni sul server è rovinato: per prudenza Diana Assistant e Render sono SPENTI. Controlla gli interruttori e salva.' : file === 'bak' ? 'Il file delle impostazioni era rovinato: il server usa la copia di sicurezza precedente. Controlla gli interruttori e salva.' : file === 'memoria' ? 'Il file delle impostazioni sul server è stato rovinato: il server tiene l’ultimo stato buono. Salva per ripararlo.' : '';
+
+    function swBtn(k, on, testo){
+      return H`<button class="sw" type="button" role="switch" aria-checked="${String(!!on)}" data-act="stru-sw" data-k="${k}" id="tcag-stru-sw-${k}"><span class="sw-t">${testo}</span><span class="sw-st">${on ? 'Acceso' : 'Spento'}</span><span class="sw-i" aria-hidden="true"></span></button>`;
+    }
+    function struRigaHTML(m, B, S0, sl){
+      var k = m[0], b = B[k], s = S0[k], sOn = !!(s && s.on), on = !!(b && b.on), corpo;
+      if(!s) corpo = H`<p class="mut">Il server non è aggiornato per questo interruttore.</p>`;
+      else corpo = H`<div class="sw-lista">${swBtn(k, on, 'Acceso per gli agenti')}</div>${on ? '' : H`<p class="dg-msg err" role="status">${ic('warn', 18)}<span>Spento: gli agenti vedono il messaggio qui sotto.</span></p>`}<label class="fld">Messaggio per gli agenti quando è spento<input id="tcag-stru-msg-${k}" maxlength="300" autocomplete="off" value="${b ? b.msg : s.msg}"></label>${k === 'render' ? H`<div class="stru-limite"><label class="fld">Render al giorno per agente<input id="tcag-stru-ren" inputmode="numeric" maxlength="3" autocomplete="off" value="${B.ren}" aria-describedby="tcag-stru-ren-aiuto" ${sl && B.ren_sl ? 'disabled' : ''}></label>${sl ? H`<div class="sw-lista">${swBtn('ren-sl', B.ren_sl, 'Senza limite')}</div>` : ''}<p class="mut dg-nota" id="tcag-stru-ren-aiuto">${sl ? 'Con «Senza limite» acceso, ogni agente può fare quanti render vuole. Se lo spegni, scrivi un numero da 1 a 100. Il Render si ferma con l’interruttore qui sopra, non con il numero.' : 'Render da 0 a 100 (0 = nessun render).'}</p></div>` : ''}${m[3] ? H`<button class="btn sec stru-link" type="button" data-act="go" data-h="${m[3]}">Impostazioni del modulo ›</button>` : ''}`;
+      return H`<section class="card stru-riga" id="tcag-stru-${k}" aria-labelledby="tcag-stru-h-${k}"><div class="stru-testa"><span class="stru-ico" aria-hidden="true">${ic(m[2], 28)}</span><h2 id="tcag-stru-h-${k}">${m[1]}</h2><span class="pill ${sOn ? 's-app' : 's-nuova'}" id="tcag-stru-st-${k}">${sOn ? 'Acceso' : 'Spento'}</span></div><div class="stru-corpo">${corpo}</div></section>`;
+    }
+
+    put(box, H`<div class="narrow adm-largo" id="tcag-stru">
+      <p class="mut">Accendi e spegni i moduli per tutti gli agenti. Quando un modulo è spento, gli agenti leggono il messaggio che scrivi qui.</p>
+      ${fileMsg ? H`<p class="dg-msg err" id="tcag-stru-file-avviso" role="alert">${ic('warn', 18)}<span>${fileMsg}</span></p>` : ''}
+      <div class="stru-lista">${STRU_MODULI.map(function(m){ return struRigaHTML(m, B, S0, sl); })}</div>
+      <p class="dg-aiuto" id="tcag-stru-pr" role="status" ${pr ? '' : 'hidden'}>${pr}</p>
+      <div class="dg-az dg-fondo"><span class="dg-sporco" id="tcag-stru-s" ${sp ? '' : 'hidden'}>Non salvato</span><button class="btn pri big" type="button" id="tcag-stru-salva" data-act="stru-salva" ${sp && !pr && !STRU.salvando ? '' : 'disabled'}>${STRU.salvando ? 'Salvo…' : 'Salva'}</button></div>
+      ${STRU.msg ? H`<p class="dg-msg ${STRU.msg.t}" id="tcag-stru-esito" role="${STRU.msg.t === 'err' ? 'alert' : 'status'}">${ic(STRU.msg.t === 'err' ? 'warn' : 'check', 18)}<span>${STRU.msg.testo}</span></p>` : ''}
+    </div>`);
+  }
+
+  function struSalva(forza){
+    if(!(U && U.ruolo === 'admin') || STRU.salvando || !GD.imp.ok) return;
+    var B = struBozza(), S0 = struSalvato(), sl = dgSenzaLimite();
+    if(struProblemi(B, sl)) return;
+    var patch = struPatch(B, S0, sl);
+    if(!Object.keys(patch).length) return;
+    var off = struSpegne(B, S0);
+    if(off.length && forza !== true){
+      var nomi = off.map(struNome);
+      var elenco = nomi.length > 1 ? nomi.slice(0, -1).join(', ') + ' e ' + nomi[nomi.length - 1] : nomi[0];
+      apriFoglio(H`<h2>Spegnere ${elenco} per tutti gli agenti?</h2><p>Gli agenti non potranno usarli finché non li riaccendi.</p><div class="sheet-btns"><button class="btn pri" type="button" data-act="stru-ok">Sì, spegni</button><button class="btn sec" type="button" data-act="close-modal">No, lascia com’è</button></div>`);
+      return;
+    }
+    // ends a save: Salva is enabled again, also when the re-read after a 409 fails
+    function struFine(){ STRU.salvando = false; if(S.sec === 'admin' && S.adm === 'strumenti') renderCorrente(); }
+    patch.base = dgImpDati().versione;
+    STRU.salvando = true; STRU.msg = null; renderCorrente();
+    dgApi('POST', 'impostazioni', patch).then(function(j){
+      if(j && typeof j === 'object' && j.versione != null){
+        var nuovo = {};
+        Object.keys(dgImpDati()).forEach(function(k2){ nuovo[k2] = dgImpDati()[k2]; });
+        Object.keys(j).forEach(function(k2){ nuovo[k2] = j[k2]; });
+        GD.imp.dati = nuovo; GD.imp.agg = Date.now(); dgImpArrivata();
+      } else return dgCarica('imp', true);
+    }).then(function(){
+      STRU.bozza = null; STRU.msg = { t: 'ok', testo: 'Salvato.' }; PRE.statoT = 0; preStrumentiT = 0;
+    }).catch(function(e){
+      STRU.msg = { t: 'err', testo: dgTesto(e) };
+      if(e.http === 409){ STRU.bozza = null; return dgCarica('imp', true); }
+    }).then(struFine, function(e2){
+      STRU.msg = { t: 'err', testo: dgTesto(e2) };
+      struFine();
+    });
+  }
+
+  // a digit typed in a field: the draft changes, the page is not redrawn (the focus stays)
+  function struInput(t){
+    var id = t.id, B = struBozza();
+    if(id === 'tcag-stru-ren'){ B.ren = t.value; }
+    else {
+      var m = /^tcag-stru-msg-(.+)$/.exec(id);
+      if(m && B[m[1]]) B[m[1]].msg = t.value;
+    }
+    var pr = struProblemi(B, dgSenzaLimite()), c;
+    c = g('stru-pr'); if(c){ c.hidden = !pr; c.textContent = pr; }
+    c = g('stru-s'); if(c) c.hidden = !struSporco();
+    c = g('stru-salva'); if(c) c.disabled = !struSporco() || !!pr || STRU.salvando;
+  }
+
+  function struAzione(a, el){
+    if(!(U && U.ruolo === 'admin')) return;
+    switch(a){
+      case 'stru-sw': {
+        var k = el.getAttribute('data-k'), B = struBozza();
+        if(k === 'ren-sl') B.ren_sl = !B.ren_sl;
+        else if(B[k]) B[k].on = !B[k].on;
+        STRU.msg = null; renderCorrente();
+        var sw = g('stru-sw-' + k); if(sw) sw.focus();
+        break;
+      }
+      case 'stru-salva': struSalva(); break;
+      case 'stru-ok': closeModals(); struSalva(true); break;
+      case 'stru-riprova': struApri(true); break;
+    }
+  }
 
   /* =========================================================
      AMMINISTRAZIONE  (solo segreteria e admin: azioni 'richieste' con assegnatoA, 'amministrazione')
@@ -13947,12 +13994,14 @@ function stuaAzione(a, el){
     dgRiquadro('adm-diana', 'admin');                 // V6.7.2: Gestione Diana Assistant (solo admin)
     var da = (RQ.conteggi && RQ.conteggi.daAssegnare) != null ? RQ.conteggi.daAssegnare : (ADM.assegna.dati ? ADM.assegna.dati.length : 0);
     var schede = [['assegna', 'Da assegnare (' + (da || 0) + ')'], ['accessi', 'Accessi Portale'], ['log', 'Log accessi ai lead'], ['problemi', 'Problemi']];
-    if(U && U.ruolo === 'admin'){ schede.push(['moduli', 'Moduli compilabili']); schede.push(['avvisi', 'Avvisi']); schede.push(['bp', 'Business plan']); schede.push(['studio', 'Study Assistant']); }                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
+    if(U && U.ruolo === 'admin'){ schede.push(['strumenti', 'Strumenti e interruttori']); schede.push(['moduli', 'Moduli compilabili']); schede.push(['precompila', 'Precompila']); schede.push(['avvisi', 'Avvisi']); schede.push(['bp', 'Business plan']); schede.push(['studio', 'Study Assistant']); }                 // V6.8.5: solo l'admin sceglie quali PDF si compilano (lo script lo controlla comunque)
     put(g('adm-tabs'), schede.map(function(t){
       return H`<button class="chip" type="button" data-act="adm" data-t="${t[0]}" aria-pressed="${String(S.adm === t[0])}">${t[1]}</button>`;
     }));
     var R = ADM[S.adm], b = g('adm-body'), h;
     if(S.adm === 'moduli'){ renderModuliComp(b); return; }
+    if(S.adm === 'strumenti'){ renderStruAdmin(b); return; }
+    if(S.adm === 'precompila'){ renderPrecompilaAdmin(b); return; }
     if(S.adm === 'studio'){ renderStudioAdmin(b); return; }
     if(S.adm === 'bp'){ renderBpAdmin(b); return; }       // V6.14.0
     if(S.adm === 'avvisi'){ renderAvvisi(b); return; }                                         // V6.8.5: scheda dell'admin (04e9d)
@@ -14201,6 +14250,7 @@ function stuaAzione(a, el){
     if(a.indexOf('br-ed-') === 0){ brEdSmista(a, el, 'click'); return; }
     if(a.indexOf('br-') === 0){ brAzione(a, el); return; }
     if(a.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(a, el); return; }
+    if(a.indexOf('stru-') === 0){ if(U && U.ruolo === 'admin') struAzione(a, el); return; }
     if(a.indexOf('pre-') === 0){ preClic(a, el); return; }                                       // V6.8: Precompila con AI nei moduli PDF
     switch(a){
       case 'go': closePops(); go(el.getAttribute('data-h')); break;
@@ -14281,8 +14331,6 @@ function stuaAzione(a, el){
       case 'avv-ritira': avvisiRitira(Number(el.getAttribute('data-r')), el); break;
       case 'bpa-apri': if(U && U.ruolo === 'admin') bpaApri(el.getAttribute('data-id')); break;
       case 'bpa-chiudi': if(U && U.ruolo === 'admin') bpaChiudi(); break;
-      case 'bpa-toggle': if(U && U.ruolo === 'admin') bpaToggle(); break;
-      case 'bpa-salva': if(U && U.ruolo === 'admin') bpaSalva(el); break;
       case 'bpa-riprova': if(U && U.ruolo === 'admin') bpaRiprova(); break;
       case 'bp-nuova': bpNuova(); break;
       case 'bp-crea': bpCrea(); break;
@@ -14413,6 +14461,7 @@ function stuaAzione(a, el){
     else if(/^tcag-imp-(da|a|nome|tel)$/.test(t.id)){ impInput(t); }
     else if(t.id === 'tcag-dn-t'){ var idn = S.sub; if(idn){ noteStato(idn).bozza = t.value; var bn = g('dn-add'); if(bn) bn.disabled = !t.value.trim() || noteStato(idn).inv; } }
     else if(t.id === 'tcag-chiudi-nota'){ var bc = g('chiudi-ok'); if(bc) bc.disabled = !t.value.trim(); }
+    else if(t.id && t.id.indexOf('tcag-stru-') === 0){ if(U && U.ruolo === 'admin') struInput(t); }
     else if(t.id && t.id.indexOf('tcag-dg-') === 0){ if(U && U.ruolo === 'admin') dgInput(t); }
     else if(t.getAttribute && (t.getAttribute('data-act') || '').indexOf('br-ed-') === 0){ brEdSmista(t.getAttribute('data-act'), t, 'input'); }
     else if(t.id && t.id.indexOf('tcag-pre-') === 0 || (t.getAttribute && /^pre-/.test(t.getAttribute('data-act') || ''))){ preInput(t); }       // V6.8
