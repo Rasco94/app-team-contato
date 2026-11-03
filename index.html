@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 59a79b11)
+  Guscio app Team Contato - V1.4.0 (build 2144c04f)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.23.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.24.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '59a79b11', blocco: 'V6.23.0' };
+window.TC_APP = { versione: '1.4.0', build: '2144c04f', blocco: 'V6.24.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1333,7 +1333,7 @@ html.tc-guscio body{margin:0}
 #tcag .altro-grid>template{display:none}
 #tcag .dg-tabs{margin-bottom:14px}
 #tcag .dg-vai{margin-bottom:16px}
-#tcag .dg-vai .btn{white-space:normal;font-size:15px;font-weight:600;line-height:1.3;min-height:44px;padding:12px 20px;text-align:left}
+#tcag .dg-vai .btn{white-space:normal;font-size:15px;font-weight:600;line-height:1.3;min-height:44px;padding:12px 20px;justify-content:flex-start;text-align:left}
 #tcag .dg-vai-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
 #tcag .dg-tabs .chip{min-height:44px}
 #tcag .dg-pt{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--rosso);vertical-align:middle;margin-left:2px}
@@ -1993,6 +1993,46 @@ html.tc-guscio body{margin:0}
 #tcag .stru-link{align-self:flex-start}
 #tcag .stru-limite{display:grid;gap:8px;border-left:3px solid var(--oro);padding-left:12px;margin-top:4px}
 #tcag .stru-corpo{display:grid;gap:8px;min-width:0}
+#tcag .stua-sezioni{margin:24px 0 16px}
+#tcag .stua-sezioni .chip{min-height:44px;padding:0 18px;font-size:15px}
+#tcag .stua-dati{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px 24px;margin:0}
+#tcag .stua-dati dt{font:600 12px/1.3 var(--sans);text-transform:uppercase;letter-spacing:.05em;color:var(--tenue)}
+#tcag .stua-dati dd{margin:4px 0 0;font:600 18px/1.3 var(--sans);color:var(--testo);overflow-wrap:anywhere}
+#tcag .stua-uso{width:100%;border-collapse:collapse;font-size:15px}
+#tcag .stua-uso th,
+#tcag .stua-uso td{padding:10px 12px;border-bottom:1px solid var(--bordo);text-align:left;overflow-wrap:break-word}
+#tcag .stua-uso thead th{font-weight:600;font-size:13px;color:var(--tenue);background:var(--avorio)}
+#tcag .stua-uso td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;width:6.5em}
+@media (max-width:359px){#tcag .stua-uso th,
+#tcag .stua-uso td{padding:8px 6px}
+#tcag .stua-uso td.n{width:4.5em}
+}
+#tcag .stua-azioni{display:flex;flex-wrap:wrap;gap:8px}
+#tcag .stua-azioni .btn{min-height:44px}
+#tcag .stua-parti{list-style:none;margin:0;padding:0}
+#tcag .stua-parti li{padding:12px 0;border-top:1px solid var(--bordo)}
+#tcag .stua-parti li:first-child{border-top:0}
+#tcag .stua-inizio{margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--testo);white-space:pre-wrap;overflow-wrap:anywhere}
+#tcag .stua-parti b{display:block;font:600 16px/1.3 var(--sans);color:var(--testo)}
+#tcag .stua-parti .mut{display:block;font-size:13px}
+#tcag .stua-risposta{font-size:16px;line-height:1.6}
+#tcag .stua-testo{white-space:pre-wrap;overflow-wrap:anywhere}
+#tcag .stua-fonti{display:grid;gap:4px;padding-left:20px;list-style:disc}
+#tcag .stua-avviso{margin:0 0 12px;border-left:3px solid var(--oro);padding-left:12px;color:var(--testo)}
+#tcag .stua-scelta{max-height:280px;overflow:auto;border:1px solid var(--bordo);border-radius:var(--raggio);padding:0 12px;margin:0 0 12px}
+#tcag .stua-nota{margin:12px 0 0;padding:10px 14px;border-left:3px solid var(--oro);background:#fff;color:var(--testo);font-size:15px;max-width:65ch}
+#tcag .stua-vuoto{font:700 12px/1 var(--sans);text-transform:uppercase;letter-spacing:.06em;padding:5px 9px;border-radius:999px;border:1px solid var(--rosso);color:var(--rosso);background:#fff;white-space:nowrap}
+#tcag .stua-riga .g{flex:1 1 180px;min-width:0;overflow-wrap:anywhere}
+#tcag .stua-riga .btn.sm{min-height:44px}
+#tcag .stua-azioni{flex:1 1 100%;justify-content:flex-end}
+@media (min-width:600px){#tcag .stua-azioni{flex:0 0 auto}
+}
+#tcag .stua-prova{display:grid;gap:16px;min-width:0}
+#tcag .stua-prova>.card{min-width:0}
+@media (max-width:479px){#tcag .stua-prova .btn.pri{width:100%}
+}
+@media (min-width:1100px){#tcag .stua-prova{grid-template-columns:minmax(320px,440px) minmax(0,1fr);gap:24px;align-items:start}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -2028,7 +2068,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.23.0';
+  var VERSIONE = 'V6.24.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -13659,15 +13699,18 @@ function findClose(){
   function bpaRiprova(){
     if(BPA.aperta) bpaApri(BPA.aperta); else bpAdmCarica(true);
   }
-/* Study Assistant, admin only (V6.17.0). The switch and the message are in Strumenti e interruttori (04e9h); here the choice of the .md files of the Documents tree
+/* V6.24.0: four sub-tabs (Stato, Materiali, Argomenti, Prova); Stato, Argomenti, Prova and the parts preview live in 04e9i.
+   Study Assistant, admin only (V6.17.0). The switch and the message are in Strumenti e interruttori (04e9h); here the choice of the .md files of the Documents tree
    that become study material on the gateway. Files go up one at a time with scaricaConProgresso and the raw bytes as body.
    Nothing is kept on the device (no storage). Text from the server goes in with H`` or textContent only. The gateway checks the admin role on every call. */
 var STUA_MAX_BYTE = 2097152;
-var STUA = { mat:ris(), salvando:false, msg:null, mod:{}, lavoro:null, esiti:{} };   // mod = scelte non ancora salvate { chiave: bool }; esiti = errore per riga
+var STUA = { mat:ris(), salvando:false, msg:null, mod:{}, lavoro:null, esiti:{}, sez:'stato' };   // mod = scelte non ancora salvate { chiave: bool }; esiti = errore per riga
+var STUA_SEZ = [['stato', 'Stato'], ['materiali', 'Materiali'], ['argomenti', 'Argomenti'], ['prova', 'Prova']];
 
 // dati della scheda: impostazioni, albero dei Documenti e elenco dei materiali sul server
 function stuaApri(forza){
   if(!(U && U.ruolo === 'admin')) return Promise.resolve();
+  stucApri(forza);
   if(GD.imp.stato === 'idle' || (forza && !GD.imp.ok)) dgCarica('imp');
   if(DOC.albero.stato === 'idle' || forza) caricaAlbero(!!forza);
   return conRis(STUA.mat, function(){
@@ -13715,7 +13758,7 @@ function stuaRigaHTML(r){
   var classe = r.stato === 'caricato' ? 'stua-car' : r.stato === 'aggiornare' ? 'stua-agg' : 'stua-non';
   return H`<div class="stua-riga"><label class="lrow"><input type="checkbox" data-act="stua-casella" data-k="${r.k}" ${spunta ? 'checked' : ''} ${STUA.salvando ? 'disabled' : ''}>
     <span class="g"><b>${r.titolo}</b><br><span class="mut">${percorsoDi(r.file)}</span></span>
-    <span class="stua-stato ${classe}">${etic}</span></label>${err ? H`<p class="stua-err" role="alert">${err}</p>` : ''}</div>`;
+    <span class="stua-stato ${classe}">${etic}</span></label>${r.voce ? H`<button class="btn sec sm" type="button" data-act="stua-anteprima" data-id="${r.voce.id}">Anteprima</button>` : ''}${err ? H`<p class="stua-err" role="alert">${err}</p>` : ''}</div>`;
 }
 
 function stuaBarra(){
@@ -13725,7 +13768,7 @@ function stuaBarra(){
 
 function renderStudioAdmin(box){
   if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
-  if(!box.querySelector('#tcag-stua-imp')) put(box, H`<div class="narrow adm-largo"><section class="card stua-imp" id="tcag-stua-imp"></section><div id="tcag-stua-corpo"></div></div>`);
+  if(!box.querySelector('#tcag-stua-imp')) put(box, H`<div class="narrow adm-largo"><section class="card stua-imp" id="tcag-stua-imp"></section><div class="chips stua-sezioni stua-schede" id="tcag-stua-sezioni" role="group" aria-label="Parti dello Study Assistant"></div><div id="tcag-stua-corpo"></div></div>`);
   var corpo = box.querySelector('#tcag-stua-corpo'), imp = box.querySelector('#tcag-stua-imp');
   // PARTE (a): riga in sola lettura, l'interruttore si cambia in Strumenti e interruttori
   var cosa;
@@ -13733,6 +13776,10 @@ function renderStudioAdmin(box){
   else if(!dgImpDati().studio) cosa = H`<p class="mut">Il server non è ancora aggiornato per questa funzione (serve il cancello AI 1.11.0).</p>`;
   else cosa = H`<div class="lrow" id="tcag-stua-int"><span class="g">Interruttore: <b>${dgImpDati().studio.attivo === true ? 'Acceso' : 'Spento'}</b></span><button class="btn sec sm" type="button" data-act="go" data-h="admin/strumenti">Cambia in Strumenti e interruttori ›</button></div>`;
   put(imp, H`<h2>Study Assistant</h2>${cosa}`);
+  put(box.querySelector('#tcag-stua-sezioni'), STUA_SEZ.map(function(t){ return H`<button class="chip" type="button" data-act="stua-sez" data-k="${t[0]}" aria-pressed="${String(STUA.sez === t[0])}">${t[1]}</button>`; }));
+  if(STUA.sez === 'stato'){ stucRenderStato(corpo); return; }
+  if(STUA.sez === 'argomenti'){ stucRenderArgomenti(corpo); return; }
+  if(STUA.sez === 'prova'){ stucRenderProva(corpo); return; }
   // PARTE (b): i materiali di studio, scelti dai file .md dei Documenti
   var righe = stuaRighe(), cosaB;
   if(!DOC.albero.ok) cosaB = DOC.albero.stato === 'err' ? erroreBox('i Documenti', DOC.albero.err) : skel(2);
@@ -13819,6 +13866,13 @@ function stuaAzione(a, el){
     case 'stua-casella': STUA.mod[el.getAttribute('data-k')] = el.checked; break;
     case 'stua-salva': stuaSalva(); break;
     case 'stua-riprova': stuaApri(true); break;
+    case 'stua-sez': {
+      var k = el.getAttribute('data-k'), valida = STUA_SEZ.some(function(t){ return t[0] === k; });
+      if(valida){ STUA.sez = k; renderCorrente(); }
+      break;
+    }
+    case 'stua-anteprima': stucAnteprima(el.getAttribute('data-id')); break;
+    default: stucAzione(a, el);
   }
 }
   /* =========================================================
@@ -13985,6 +14039,306 @@ function stuaAzione(a, el){
       case 'stru-riprova': struApri(true); break;
     }
   }
+/* Study Assistant admin, knowledge (V6.24.0): status, topics, try a question, parts preview; requires gateway 1.14.0; no storage; server text only via H``. */
+var STUC_T_API = 30000;
+var STUC_T_PROVA = 300000;
+var STUC_VECCHIO = 'Serve il cancello AI 1.14.0.';
+var STUC = { sta:ris(), arg:ris(), vecchio:{ sta:false, arg:false }, prova:{ q:'', scelta:'', mat:[], lav:false, ris:null, err:'' }, salvando:false };
+
+// errore della chiamata: http 0 = rete, abort, URL o sessione mancanti
+function stucErr(http, codice, messaggio){
+  var e = new Error('Errore dello Study Assistant');
+  e.http = http;
+  e.codice = codice || '';
+  e.messaggio = messaggio || '';
+  return e;
+}
+
+// chiamata al cancello con timeout; 401 = sessione scaduta (esci); risposta non ok = errore con .http, .codice, .messaggio
+function stucApi(metodo, p, corpo, ms){
+  var url = dgUrl(p);
+  if(!url || !sessione) return Promise.reject(stucErr(0, '', ''));
+  var ctl = window.AbortController ? new AbortController() : null;
+  var timer = ctl ? setTimeout(function(){ ctl.abort(); }, ms || STUC_T_API) : 0;
+  return fetch(url, {
+    method: metodo,
+    headers: { 'Authorization':'Bearer ' + sessione.s, 'Content-Type':'application/json' },
+    body: metodo === 'POST' ? JSON.stringify(corpo || {}) : undefined,
+    signal: ctl ? ctl.signal : undefined
+  }).then(function(risp){
+    clearTimeout(timer);
+    if(risp.status === 401){ esci('La sessione è scaduta: accedi di nuovo.'); throw stucErr(401, '', ''); }
+    return risp.json().catch(function(){ return null; }).then(function(j){
+      var det = j && j.detail && typeof j.detail === 'object' ? j.detail : {};
+      if(!risp.ok) throw stucErr(risp.status, typeof det.codice === 'string' ? det.codice.slice(0, 60) : '', typeof det.messaggio === 'string' ? det.messaggio.slice(0, 300) : '');
+      return j || {};
+    });
+  }, function(){ clearTimeout(timer); throw stucErr(0, '', ''); });
+}
+
+// il cancello e' vecchio (1.12/1.13: 404 senza codice, 405 o 501)
+function stucVecchio(e){
+  return !!e && (e.http === 405 || e.http === 501 || (e.http === 404 && !e.codice));
+}
+
+// frase per l'admin
+function stucTesto(e){
+  if(stucVecchio(e)) return STUC_VECCHIO;
+  if(e && e.http === 0) return 'Non riesco a collegarmi al server. Controlla la connessione.';
+  if(e && e.messaggio) return e.messaggio;
+  return 'Qualcosa non ha funzionato (HTTP ' + (e && e.http != null ? e.http : '') + ').';
+}
+
+// errore che viene da stucApri (Error semplice) o dalla chiamata (stucErr)
+function stucMsg(e){ return e && e.http === undefined ? e.message : stucTesto(e); }
+
+// motivo di uno scarto del cancello, in italiano; il codice sconosciuto resta com'e'
+function stuaMotivo(codice){
+  var mappa = { citazione_assente:'citazione assente nel testo', opzioni_uguali:'opzioni uguali', opzioni:'opzioni uguali o non valide', json_illeggibile:'JSON non valido', json_non_valido:'JSON non valido', non_oggetto:'risposta senza struttura', tipo_sconosciuto:'tipo di blocco sconosciuto', formato:'formato sbagliato', troppo_lungo:'testo troppo lungo', voci:'elenco di voci non valido', incompleto:'blocco incompleto', oltre_limite:'oltre il numero massimo di blocchi', testo:'testo della domanda non valido', giusta:'risposta giusta non valida', spiegazione:'spiegazione mancante', doppia:'domanda doppia' };
+  if(codice == null) return '';
+  var k = String(codice);
+  return Object.prototype.hasOwnProperty.call(mappa, k) ? mappa[k] : k;
+}
+
+function stucRaggiungibile(v){
+  return v === true ? 'Sì' : v === false ? 'No' : 'Non controllato';
+}
+
+// righe della tabella d'uso: [etichetta, 7 giorni, 30 giorni]
+function stucRigheUso(uso){
+  var voci = [['chat', 'Domande in chat'], ['lavagne', 'Lavagne create'], ['lavagne_vuote', 'Lavagne vuote'], ['test_creati', 'Test creati'], ['test_scarsi', 'Test scarsi (meno domande di quelle chieste)'], ['test_falliti', 'Test falliti'], ['consegne', 'Test consegnati'], ['agenti_diversi', 'Agenti diversi']];
+  var u7 = (uso && uso['7g']) || {}, u30 = (uso && uso['30g']) || {};
+  var num = function(x){ return Math.max(0, Math.round(Number(x) || 0)); };
+  var pres = function(s, k){ return s && Object.prototype.hasOwnProperty.call(s, k) ? s[k] : 0; };
+  var righe = voci.map(function(v){ return [v[1], num(u7[v[0]]), num(u30[v[0]])]; });
+  var motivi = Object.create(null);
+  [u7.scarti, u30.scarti].forEach(function(s){
+    if(s && typeof s === 'object') Object.keys(s).forEach(function(k){ if(k.length <= 40) motivi[k] = true; });
+  });
+  Object.keys(motivi).sort().forEach(function(k){
+    righe.push(['Domande scartate: ' + stuaMotivo(k), num(pres(u7.scarti, k)), num(pres(u30.scarti, k))]);
+  });
+  return righe;
+}
+
+// corpo per argomenti/salva: {errore} oppure {corpo}
+function stucCorpoArg(id, nome, descrizione, ids){
+  var n = String(nome == null ? '' : nome).trim(), d = String(descrizione == null ? '' : descrizione).trim();
+  if(n.length < 1 || n.length > 80) return { errore: 'Il nome va da 1 a 80 caratteri.' };
+  if(d.length > 300) return { errore: 'La descrizione può avere al massimo 300 caratteri.' };
+  var mat = [];
+  (Array.isArray(ids) ? ids : []).forEach(function(x){ if(mat.indexOf(x) < 0) mat.push(x); });
+  if(mat.length < 1 || mat.length > 30) return { errore: 'Scegli da 1 a 30 materiali.' };
+  var corpo = {};
+  if(typeof id === 'string' && id) corpo.id = id;
+  corpo.nome = n;
+  corpo.descrizione = d;
+  corpo.materiali = mat;
+  return { corpo: corpo };
+}
+
+// corpo per studio/prova: {errore} oppure {corpo}
+function stucCorpoProva(scelta, ids, domanda){
+  var q = String(domanda == null ? '' : domanda).trim();
+  var sc = String(scelta == null ? '' : scelta);
+  var corpo;
+  if(sc.indexOf('a:') === 0 && sc.length > 2){
+    corpo = { argomento: sc.slice(2) };
+  } else if(sc === 'materiali'){
+    var mat = [];
+    (Array.isArray(ids) ? ids : []).forEach(function(x){ if(mat.indexOf(x) < 0) mat.push(x); });
+    if(mat.length < 1 || mat.length > 30) return { errore: 'Scegli da 1 a 30 materiali.' };
+    corpo = { materiali: mat };
+  } else {
+    return { errore: 'Scegli un argomento o dei materiali.' };
+  }
+  if(q.length < 1 || q.length > 2000) return { errore: 'Scrivi una domanda (al massimo 2000 caratteri).' };
+  corpo.domanda = q;
+  return { corpo: corpo };
+}
+
+// una lettura dello stato o degli argomenti; la forma degli argomenti e' un elenco
+function stucLeggi(R, chiave, p, silenzioso){
+  return conRis(R, function(){
+    return stucApi('GET', p).then(function(j){
+      STUC.vecchio[chiave] = false;
+      R.dati = chiave === 'arg' ? (Array.isArray(j.argomenti) ? j.argomenti : []) : j;
+    }, function(e){
+      if(stucVecchio(e)){ STUC.vecchio[chiave] = true; return; }
+      throw new Error(stucMsg(e));
+    });
+  }, silenzioso);
+}
+
+function stucApri(forza){
+  if(!(U && U.ruolo === 'admin')) return Promise.resolve();
+  return Promise.all([
+    stucLeggi(STUC.sta, 'sta', 'studio/stato', !!(forza && STUC.sta.ok)),
+    stucLeggi(STUC.arg, 'arg', 'studio/argomenti', !!(forza && STUC.arg.ok))
+  ]).then(function(){
+    if(S.sec === 'admin' && S.adm === 'studio') renderCorrente();
+  });
+}
+
+function stucRenderStato(box){
+  if(STUC.vecchio.sta){ put(box, H`<p class="stua-nota">${STUC_VECCHIO}</p>`); return; }
+  if(!STUC.sta.ok){
+    put(box, STUC.sta.stato === 'err' ? H`<div class="err" role="alert"><span>Non riesco a leggere lo stato. ${STUC.sta.err}</span><button class="btn sec sm" type="button" data-act="stua-stato-aggiorna">Riprova</button></div>` : skel(2));
+    return;
+  }
+  var d = STUC.sta.dati || {}, cfg = d.configurato === true;
+  var uso = stucRigheUso(d.uso);
+  put(box, H`<section class="card"><dl class="stua-dati">
+    <dt>Configurato</dt><dd>${cfg ? 'Sì' : 'No'}${cfg ? '' : " Manca il modello nel cancello: va scritto STUDIO_MODELLO nell'.env."}</dd>
+    <dt>Modello</dt><dd>${d.modello || '—'}</dd>
+    <dt>Raggiungibile</dt><dd>${stucRaggiungibile(d.raggiungibile)}</dd>
+    <dt>Strumento per gli agenti</dt><dd>${d.attivo_agenti === true ? 'Acceso' : 'Spento'} <button class="btn sec sm" type="button" data-act="go" data-h="admin/strumenti">Cambia in Strumenti e interruttori ›</button></dd>
+    <dt>Materiali</dt><dd>${d.materiali != null ? d.materiali : '—'}</dd>
+    <dt>Argomenti</dt><dd>${d.argomenti != null ? d.argomenti : '—'}</dd>
+  </dl></section>
+  <div class="sec-h">Uso</div>
+  <table class="stua-uso"><thead><tr><th scope="col">Voce</th><th scope="col">7 giorni</th><th scope="col">30 giorni</th></tr></thead><tbody>${uso.map(function(r){
+    return H`<tr><th scope="row">${r[0]}</th><td class="n">${r[1]}</td><td class="n">${r[2]}</td></tr>`;
+  })}</tbody></table>
+  <button class="btn sec" type="button" data-act="stua-stato-aggiorna">Aggiorna</button>`);
+}
+
+function stucRenderArgomenti(box){
+  if(STUC.vecchio.arg){ put(box, H`<p class="stua-nota">${STUC_VECCHIO}</p>`); return; }
+  if(!STUC.arg.ok){
+    put(box, STUC.arg.stato === 'err' ? H`<div class="err" role="alert"><span>Non riesco a leggere gli argomenti. ${STUC.arg.err}</span><button class="btn sec sm" type="button" data-act="stua-stato-aggiorna">Riprova</button></div>` : skel(2));
+    return;
+  }
+  var lista = Array.isArray(STUC.arg.dati) ? STUC.arg.dati : [];
+  var elenco = !lista.length ? vuoto('Nessun argomento: crea il primo con «Nuovo argomento».') : H`<div class="card rows adm-griglia">${lista.map(function(a){
+    var n = Array.isArray(a.materiali) ? a.materiali.length : 0;
+    return H`<div class="stua-riga"><span class="g"><b>${a.nome}</b>${a.descrizione ? H`<br><span class="mut">${a.descrizione}</span>` : ''}</span>${n ? H`<span class="stua-stato stua-car">${n === 1 ? '1 materiale' : n + ' materiali'}</span>` : H`<span class="stua-vuoto">vuoto</span>`}<span class="stua-azioni"><button class="btn sec sm" type="button" data-act="stua-arg-modifica" data-id="${a.id}">Modifica</button><button class="btn dng sm" type="button" data-act="stua-arg-elimina-chiedi" data-id="${a.id}">Elimina</button></span></div>`;
+  })}</div>`;
+  put(box, H`${elenco}<button class="btn pri" type="button" data-act="stua-arg-nuovo">Nuovo argomento</button>`);
+}
+
+// foglio Nuovo / Modifica argomento (id vuoto = nuovo)
+function stucFoglioArg(id){
+  var a = id ? (Array.isArray(STUC.arg.dati) ? STUC.arg.dati : []).filter(function(x){ return x.id === id; })[0] : null;
+  var sel = a && Array.isArray(a.materiali) ? a.materiali : [];
+  var mat = STUA.mat && STUA.mat.ok && Array.isArray(STUA.mat.dati) ? STUA.mat.dati : [];
+  var senzaMat = !mat.length;
+  var corpoMat = senzaMat
+    ? H`<p class="mut">Carica prima i materiali nella sezione Materiali.</p>`
+    : H`<div class="stua-scelta">${mat.map(function(m){
+        return H`<label class="lrow"><input type="checkbox" name="stua-arg-mat" value="${m.id}" ${sel.indexOf(m.id) >= 0 ? 'checked' : ''}> ${m.titolo}</label>`;
+      })}</div>`;
+  apriFoglio(H`<h2>${a ? 'Modifica argomento' : 'Nuovo argomento'}</h2>
+    <label class="fld">Nome<input id="tcag-stua-arg-nome" maxlength="80" value="${a ? a.nome : ''}"></label>
+    <label class="fld">Descrizione<textarea id="tcag-stua-arg-descr" maxlength="300">${a ? a.descrizione : ''}</textarea></label>
+    ${corpoMat}
+    <p class="stua-err" id="tcag-stua-arg-err" role="alert" hidden></p>
+    <div class="sheet-btns"><button class="btn pri" type="button" data-act="stua-arg-salva" data-id="${id || ''}" ${senzaMat ? 'disabled' : ''}>Salva</button><button class="btn sec" type="button" data-act="close-modal">Annulla</button></div>`, 'Argomento');
+}
+
+function stucArgSalva(el){
+  if(STUC.salvando) return;
+  var nome = (g('stua-arg-nome') || {}).value || '', descr = (g('stua-arg-descr') || {}).value || '';
+  var sh = g('sheet');
+  var ids = sh ? Array.prototype.map.call(sh.querySelectorAll('input[name="stua-arg-mat"]:checked'), function(x){ return x.value; }) : [];
+  var c = stucCorpoArg(el.getAttribute('data-id') || '', nome, descr, ids);
+  var er = g('stua-arg-err');
+  if(c.errore){ if(er){ er.textContent = c.errore; er.hidden = false; } return; }
+  STUC.salvando = true;
+  stucApi('POST', 'studio/argomenti/salva', c.corpo).then(function(){
+    closeModals(); toast('Argomento salvato.');
+    return stucApri(true);
+  }).catch(function(e){
+    var e2 = g('stua-arg-err');
+    if(e2){ e2.textContent = stucMsg(e); e2.hidden = false; } else toast(stucMsg(e));
+  }).then(function(){ STUC.salvando = false; });
+}
+
+function stucArgEliminaChiedi(id){
+  var a = (Array.isArray(STUC.arg.dati) ? STUC.arg.dati : []).filter(function(x){ return x.id === id; })[0];
+  var nome = a ? a.nome : '';
+  apriFoglio(H`<h2>Eliminare l'argomento?</h2><p>«${nome}» non sarà più disponibile per gli agenti. I materiali restano.</p><div class="sheet-btns"><button class="btn dng" type="button" data-act="stua-arg-elimina" data-id="${id}">Sì, elimina</button><button class="btn sec" type="button" data-act="close-modal">No, lascia com’è</button></div>`, 'Eliminare argomento');
+}
+
+function stucArgElimina(id){
+  stucApi('POST', 'studio/argomenti/elimina', { id: id }).then(function(){
+    closeModals(); toast('Argomento eliminato.');
+    return stucApri(true);
+  }).catch(function(e){ toast(stucMsg(e)); });
+}
+
+function stucRenderProva(box){
+  var qEl = box.querySelector('#tcag-stua-prova-q'), scEl = box.querySelector('#tcag-stua-prova-scelta');
+  if(qEl){
+    STUC.prova.q = qEl.value;
+    STUC.prova.scelta = scEl ? scEl.value : STUC.prova.scelta;
+    STUC.prova.mat = Array.prototype.map.call(box.querySelectorAll('input[name="stua-prova-mat"]:checked'), function(x){ return x.value; });
+  }
+  if(STUC.vecchio.sta){ put(box, H`<p class="stua-nota">${STUC_VECCHIO}</p>`); return; }
+  var pronti = (Array.isArray(STUC.arg.dati) ? STUC.arg.dati : []).filter(function(a){ return Array.isArray(a.materiali) && a.materiali.length > 0; });
+  var mat = STUA.mat && STUA.mat.ok && Array.isArray(STUA.mat.dati) ? STUA.mat.dati : [];
+  var p = STUC.prova, esito;
+  if(p.err) esito = H`<p class="stua-err" role="alert">${p.err}</p>`;
+  else if(p.lav) esito = H`<p class="mut">Sto chiedendo al modello… può volerci qualche minuto.</p>`;
+  else if(p.ris) esito = H`<div class="card stua-risposta"><p class="stua-testo">${p.ris.testo}</p><p class="mut">Fonti</p>${p.ris.fonti.length ? H`<ul class="stua-fonti">${p.ris.fonti.map(function(f){ return H`<li>${f.titolo} — parte ${f.parte}</li>`; })}</ul>` : H`<p class="mut">Nessuna fonte.</p>`}<p class="mut">Risposta in ${p.ris.secondi.toLocaleString('it-IT')} secondi</p></div>`;
+  else esito = H`<p class="mut">La risposta comparirà qui.</p>`;
+  var opzioni = [H`<option value="" ${p.scelta === '' ? 'selected' : ''}>Scegli…</option>`]
+    .concat(pronti.map(function(a){ return H`<option value="a:${a.id}" ${p.scelta === 'a:' + a.id ? 'selected' : ''}>${a.nome}</option>`; }));
+  opzioni.push(H`<option value="materiali" ${p.scelta === 'materiali' ? 'selected' : ''}>Materiali scelti qui sotto</option>`);
+  put(box, H`<div class="stua-prova"><div class="card"><p class="stua-nota">La prova funziona anche con lo strumento spento per gli agenti.</p>
+    <label class="fld">Su cosa<select id="tcag-stua-prova-scelta">${opzioni}</select></label>
+    ${mat.length ? H`<div class="stua-scelta">${mat.map(function(m){
+      return H`<label class="lrow"><input type="checkbox" name="stua-prova-mat" value="${m.id}" ${p.mat.indexOf(m.id) >= 0 ? 'checked' : ''}> ${m.titolo}</label>`;
+    })}</div>` : ''}
+    <label class="fld">Domanda<textarea id="tcag-stua-prova-q" maxlength="2000">${p.q}</textarea></label>
+    <button class="btn pri" type="button" data-act="stua-prova-chiedi" ${p.lav ? 'disabled' : ''}>${p.lav ? 'Chiedo…' : 'Chiedi'}</button></div>
+    <div class="card" id="tcag-stua-prova-esito" role="status" aria-live="polite">${esito}</div></div>`);
+}
+
+function stucProvaChiedi(){
+  if(STUC.prova.lav) return;
+  var qEl = g('stua-prova-q'), scEl = g('stua-prova-scelta');
+  if(qEl) STUC.prova.q = qEl.value;
+  if(scEl) STUC.prova.scelta = scEl.value;
+  var ids = $$('input[name="stua-prova-mat"]:checked').map(function(x){ return x.value; });
+  STUC.prova.mat = ids;
+  var c = stucCorpoProva(STUC.prova.scelta, ids, STUC.prova.q);
+  if(c.errore){ STUC.prova.err = c.errore; STUC.prova.ris = null; renderCorrente(); return; }
+  STUC.prova.err = ''; STUC.prova.lav = true; STUC.prova.ris = null; renderCorrente();
+  stucApi('POST', 'studio/prova', c.corpo, STUC_T_PROVA).then(function(j){
+    STUC.prova.ris = { testo: String(j.testo || ''), fonti: Array.isArray(j.fonti) ? j.fonti.slice(0, 20) : [], secondi: Number(j.secondi) || 0 };
+  }).catch(function(e){ STUC.prova.err = stucMsg(e); }).then(function(){
+    STUC.prova.lav = false;
+    // redraw only if the admin is still on the Study Assistant tab
+    if(S.sec === 'admin' && S.adm === 'studio') renderCorrente();
+  });
+}
+
+// anteprima delle parti di un materiale (al massimo 200 parti)
+function stucAnteprima(id){
+  return stucApi('GET', 'studio/materiali/' + encodeURIComponent(id) + '/parti').then(function(j){
+    var mat = j.materiale || {};
+    var parti = Array.isArray(j.parti) ? j.parti.slice(0, 200) : [];
+    apriFoglio(H`<h2>${mat.titolo || ''}</h2><p class="mut">${parti.length} parti</p><ol class="stua-parti">${parti.map(function(p){
+      return H`<li><b>${p.titolo || 'Parte ' + p.n}</b> <span class="mut">${p.caratteri} caratteri</span><p class="stua-inizio">${p.inizio}</p></li>`;
+    })}</ol><div class="sheet-btns"><button class="btn sec" type="button" data-act="close-modal">Chiudi</button></div>`, 'Anteprima delle parti');
+  }).catch(function(e){ toast(stucMsg(e)); });
+}
+
+// azioni della scheda Study Assistant (chiamate da stuaAzione in 04e9g)
+function stucAzione(a, el){
+  if(!(U && U.ruolo === 'admin')) return;
+  var id = el ? el.getAttribute('data-id') || '' : '';
+  switch(a){
+    case 'stua-stato-aggiorna': stucApri(true).catch(function(e){ toast(stucMsg(e)); }); break;
+    case 'stua-arg-nuovo': stucFoglioArg(''); break;
+    case 'stua-arg-modifica': stucFoglioArg(id); break;
+    case 'stua-arg-salva': stucArgSalva(el); break;
+    case 'stua-arg-elimina-chiedi': stucArgEliminaChiedi(id); break;
+    case 'stua-arg-elimina': stucArgElimina(id); break;
+    case 'stua-prova-chiedi': stucProvaChiedi(); break;
+  }
+}
 
   /* =========================================================
      AMMINISTRAZIONE  (solo segreteria e admin: azioni 'richieste' con assegnatoA, 'amministrazione')
