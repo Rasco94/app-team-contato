@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build ccb02275)
+  Guscio app Team Contato - V1.4.0 (build 5cbd912d)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.28.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.29.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'ccb02275', blocco: 'V6.28.0' };
+window.TC_APP = { versione: '1.4.0', build: '5cbd912d', blocco: 'V6.29.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2140,6 +2140,92 @@ html.tc-guscio body{margin:0}
 #tcag .br-m14 .br-qr-svg{outline:.25mm solid var(--oro);outline-offset:2mm;background:var(--bianco)}
 #tcag .br-m14 .br-contatti{flex-direction:column;align-items:flex-end;justify-self:end;gap:1mm;color:var(--testo);font-size:10pt;text-align:right;border-top:.3mm solid var(--oro);padding-top:5mm}
 #tcag .br-m14 .br-contatti b{color:var(--nv)}
+#tcag .br-mini-m15{background:linear-gradient(#fbfaf7 0 10%,#faf9f6 10% 55%,#c9a961 55% calc(55% + 1px),#fbfaf7 calc(55% + 1px))}
+#tcag .br-mini-m16{background:linear-gradient(#8a93a6 0 64%,#0a2a5e 64%)}
+#tcag .br-m15{background:#fbfaf7;color:var(--testo);padding:14mm}
+#tcag .br-m15 .br-foto{display:contents}
+#tcag .br-m15.br-v{grid-template-areas:"aper aper aper aper" "testo testo testo testo" "prezzo prezzo prezzo prezzo" "corpo corpo corpo corpo" "dati dati dati dati" ". g1 g2 ." "logo contatti contatti qr";grid-template-columns:minmax(0,1fr) 62mm 62mm minmax(0,1fr);grid-template-rows:206mm auto auto minmax(0,1fr) auto 40mm 34mm;gap:4mm 6mm}
+#tcag .br-m15.br-o{grid-template-areas:"aper logo logo" "aper testo testo" "aper prezzo prezzo" "aper corpo corpo" "aper dati dati" "aper g1 g2" "aper contatti qr";grid-template-columns:248mm minmax(0,1fr) minmax(0,1fr);grid-template-rows:10mm auto auto minmax(0,1fr) auto 34mm 34mm;gap:4mm 8mm}
+#tcag .br-m15 .br-riq:first-child{grid-area:aper;box-sizing:border-box;border:18mm solid var(--avorio);box-shadow:0 0 0 .25mm var(--bordo)}
+#tcag .br-m15.br-v .br-riq:first-child{height:206mm;width:230mm;justify-self:center}
+#tcag .br-m15.br-o .br-riq:first-child{width:248mm;height:269mm;justify-self:start}
+#tcag .br-m15 .br-riq:nth-child(2){grid-area:g1;box-sizing:border-box;border:5mm solid var(--avorio);box-shadow:0 0 0 .25mm var(--bordo);width:62mm;justify-self:end}
+#tcag .br-m15 .br-riq:nth-child(3){grid-area:g2;box-sizing:border-box;border:5mm solid var(--avorio);box-shadow:0 0 0 .25mm var(--bordo);width:62mm;justify-self:start}
+#tcag .br-m15.br-v .br-riq:nth-child(2),
+#tcag .br-m15.br-v .br-riq:nth-child(3){height:40mm}
+#tcag .br-m15.br-o .br-riq:nth-child(2),
+#tcag .br-m15.br-o .br-riq:nth-child(3){height:34mm;width:auto;justify-self:stretch}
+#tcag .br-m15 .br-riq::after{content:'';position:absolute;inset:0;border:.25mm solid var(--oro);pointer-events:none}
+#tcag .br-m15 .br-logo{background:#fbfaf7;color:var(--nv);font-family:var(--br-serif);font-size:14pt;padding:0;border-radius:0;justify-self:start;align-self:center}
+#tcag .br-m15 .br-logo::before{content:'';width:2mm;height:2mm;border-radius:50%;background:var(--rosso);flex:0 0 auto}
+#tcag .br-m15 .br-testo{background:#fbfaf7;color:var(--nv);align-items:center;text-align:center;gap:3mm}
+#tcag .br-m15 .br-occhiello{color:#4b5a78;font-size:8pt;font-weight:600;text-transform:uppercase;letter-spacing:.24em}
+#tcag .br-m15 .br-titolo{color:var(--nv);font-family:var(--br-serif);font-size:36pt;font-weight:600;line-height:1.1;letter-spacing:-0.01em}
+#tcag .br-m15 .br-titolo::after{content:'';display:block;width:24mm;height:.25mm;background:var(--oro);margin:5mm auto 0}
+#tcag .br-m15 .br-prezzo{background:#fbfaf7;grid-area:prezzo;flex-direction:column;align-items:center;gap:1mm;justify-self:center}
+#tcag .br-m15 .br-prezzo span{color:#4b5a78;font-size:8pt;text-transform:uppercase;letter-spacing:.18em}
+#tcag .br-m15 .br-prezzo b{color:var(--nv);font-family:var(--br-serif);font-size:26pt;font-weight:700}
+#tcag .br-m15 .br-corpo{justify-self:center;width:150mm;max-width:100%}
+#tcag .br-m15 .br-descr{color:var(--testo);font-size:10.5pt;line-height:1.7;text-align:justify;text-align-last:left;hyphens:auto;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m15 .br-dati{display:flex;flex-wrap:wrap;justify-content:center;gap:1mm 3mm;max-width:230mm;margin:auto}
+#tcag .br-m15 .br-dato{display:flex;gap:1.5mm;align-items:baseline;border:0;padding:0}
+#tcag .br-m15 .br-dato+.br-dato::before{content:'·';color:#4b5a78;margin:0 3mm}
+#tcag .br-m15 .br-dato dt{color:#4b5a78;font-size:8pt;text-transform:uppercase;letter-spacing:.14em}
+#tcag .br-m15 .br-dato dd{color:var(--testo);font-size:10pt;text-align:left}
+#tcag .br-m15 .br-qr{flex-direction:row;align-items:center;justify-content:flex-end;justify-self:end;gap:3mm;color:var(--nv);font-size:9pt;text-align:right;border-top:.25mm solid var(--bordo);padding-top:4mm}
+#tcag .br-m15 .br-qr span{color:#4b5a78;font-size:8pt}
+#tcag .br-m15 .br-qr-svg{width:32mm;height:32mm;background:var(--bianco)}
+#tcag .br-m15 .br-contatti{flex-direction:column;align-items:flex-start;align-self:end;gap:1mm;color:var(--testo);font-size:10pt;border-top:.25mm solid var(--bordo);padding-top:4mm}
+#tcag .br-m15 .br-contatti b{color:var(--nv);font-family:var(--br-serif);font-size:12pt;font-weight:600}
+#tcag .br-m15.br-o .br-qr{grid-area:qr;justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:2mm;text-align:right}
+#tcag .br-m15.br-o .br-contatti{grid-area:contatti;justify-self:start;text-align:left}
+#tcag .br-m15 .br-qr span{font-size:8pt;color:#4b5a78}
+#tcag .br-m15.br-o .br-corpo{align-self:center}
+#tcag .br-m15.br-o .br-dati{align-self:end;padding-top:4mm;border-top:.25mm solid var(--bordo)}
+#tcag .br-m16{position:relative;background:var(--nv);color:var(--avorio);padding:14mm 14mm 12mm;--br-pannello:rgba(10,42,94,.92)}
+#tcag .br-m16::after{content:'';position:absolute;z-index:1;background:var(--br-pannello);pointer-events:none}
+#tcag .br-m16.br-v::after{left:0;right:0;bottom:0;height:150mm}
+#tcag .br-m16.br-o::after{top:0;right:0;bottom:0;width:150mm}
+#tcag .br-m16 .br-logo,
+#tcag .br-m16 .br-testo,
+#tcag .br-m16 .br-prezzo,
+#tcag .br-m16 .br-corpo,
+#tcag .br-m16 .br-cifre,
+#tcag .br-m16 .br-qr,
+#tcag .br-m16 .br-contatti{position:relative;z-index:2}
+#tcag .br-m16 .br-foto{display:contents}
+#tcag .br-m16 .br-riq:first-child{position:absolute;left:0;top:0;z-index:0}
+#tcag .br-m16.br-v .br-riq:first-child{width:297mm;height:420mm}
+#tcag .br-m16.br-o .br-riq:first-child{width:420mm;height:297mm}
+#tcag .br-m16 .br-dati,
+#tcag .br-m16 .br-linea,
+#tcag .br-m16 .br-rif{display:none}
+#tcag .br-m16.br-v{grid-template-areas:"logo ." ". ." "testo prezzo" "corpo cifre" "contatti qr";grid-template-columns:minmax(0,1fr) 92mm;grid-template-rows:12mm minmax(0,1fr) auto 36mm 40mm;gap:4mm 10mm}
+#tcag .br-m16.br-o{grid-template-areas:"logo testo" ". prezzo" ". cifre" ". corpo" ". contatti" ". qr";grid-template-columns:minmax(0,1fr) 122mm;grid-template-rows:auto auto auto minmax(0,1fr) auto 40mm;gap:5mm 28mm}
+#tcag .br-m16 .br-logo{background:var(--nv);color:var(--avorio);font-family:var(--br-serif);font-size:12pt;padding:3mm 4mm;border-radius:0;justify-self:start;align-self:start}
+#tcag .br-m16 .br-testo{color:var(--avorio);gap:2mm}
+#tcag .br-m16 .br-occhiello{color:#d9dde6;font-size:8pt;font-weight:600;text-transform:uppercase;letter-spacing:.24em}
+#tcag .br-m16 .br-titolo{color:var(--avorio);font-family:var(--br-serif);font-size:40pt;font-weight:600;line-height:1.08;letter-spacing:-0.02em}
+#tcag .br-m16 .br-prezzo{color:var(--avorio);grid-area:prezzo;gap:3mm;align-items:baseline;align-self:end;justify-content:flex-end;text-align:right;border-top:.25mm solid var(--oro);padding-top:2mm}
+#tcag .br-m16.br-o .br-prezzo{justify-content:flex-start;text-align:left}
+#tcag .br-m16 .br-prezzo span{color:#d9dde6;font-size:8pt;text-transform:uppercase;letter-spacing:.18em}
+#tcag .br-m16 .br-prezzo b{color:var(--avorio);font-family:var(--br-serif);font-size:30pt;font-weight:700}
+#tcag .br-m16 .br-corpo{border-top:.25mm solid var(--oro);padding:4mm 8mm 0 0;max-width:140mm}
+#tcag .br-m16 .br-descr{color:var(--avorio);font-size:10pt;line-height:1.55;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m16.br-o .br-descr{-webkit-line-clamp:12}
+#tcag .br-m16 .br-cifre{gap:0;border-top:.25mm solid var(--oro);border-left:.25mm solid var(--oro);padding:4mm 0 0 8mm;align-items:flex-start}
+#tcag .br-m16 .br-cifra{flex:1 1 0}
+#tcag .br-m16 .br-cifra+.br-cifra{border-left:.25mm solid var(--oro);padding-left:4mm}
+#tcag .br-m16 .br-cifra b{color:var(--avorio);font-size:22pt}
+#tcag .br-m16 .br-cifra span{color:#c9d0dd;font-size:8pt;text-transform:uppercase;letter-spacing:.14em}
+#tcag .br-m16 .br-qr{flex-direction:row;align-items:center;justify-content:flex-end;gap:3mm;color:var(--avorio);font-size:9pt;text-align:right}
+#tcag .br-m16 .br-qr span{color:#d9dde6;font-size:8pt}
+#tcag .br-m16 .br-qr-svg{width:36mm;height:36mm;background:var(--bianco);padding:2mm;box-sizing:border-box}
+#tcag .br-m16 .br-contatti{flex-direction:column;align-items:flex-start;align-self:center;gap:1mm;color:var(--avorio);font-size:10pt}
+#tcag .br-m16 .br-contatti b{color:var(--avorio);font-family:var(--br-serif);font-size:14pt;font-weight:700}
+#tcag .br-m16.br-o .br-cifre{border:0;border-top:.25mm solid var(--oro);padding:4mm 0 0;text-align:left}
+#tcag .br-m16.br-o .br-cifre>*{border:0;padding:0}
+#tcag .br-m16.br-o .br-cifra+.br-cifra{border-left:0;padding-left:0}
 #tcag .adm-largo{max-width:1800px}
 #tcag .bp-colonne{display:flex;flex-direction:column;gap:16px;min-width:0}
 #tcag .bp-col{display:flex;flex-direction:column;gap:16px;min-width:0}
@@ -2249,7 +2335,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.28.0';
+  var VERSIONE = 'V6.29.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -9813,6 +9899,7 @@ function findClose(){
      V6.19.0: the editor lives in 04e4f-brochure-editor.js; this file only wires it.
      V6.20.0: preview on top, parameters below, Italian language names, Category select.
      V6.21.0: fonts from Bunny Fonts, server preferences (04e4g-brochure-pref.js), favourites.
+     V6.29.0: luxury models 15 «Galleria» and 16 «Notturno».
      =========================================================
      Page #marketing/brochure (V6.26.0; #strumenti/brochure redirects here), code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -9832,7 +9919,7 @@ function findClose(){
     zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租', collezione:'豪华精选', pregio:'精品房产' },
     ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件' }
   };
-  var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1, cat:'classici' }, { n:2, nome:'Griglia classica', foto:4, cat:'classici' }, { n:3, nome:'Magazine', foto:3, cat:'classici' }, { n:4, nome:'Minimal', foto:1, cat:'moderni' }, { n:5, nome:'Lusso scuro', foto:2, cat:'lusso' }, { n:6, nome:'Banda laterale', foto:3, cat:'moderni' }, { n:7, nome:'Mosaico', foto:6, cat:'fotografici' }, { n:8, nome:'Panorama', foto:2, cat:'moderni' }, { n:9, nome:'Scheda tecnica', foto:4, cat:'classici' }, { n:10, nome:'Doppia colonna', foto:4, cat:'classici' }, { n:11, nome:'Casa d’aste', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:12, nome:'Rivista d’architettura', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:13, nome:'Catalogo privato', foto:4, cat:'lusso', blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, nome:'Editoriale avorio', foto:4, cat:'lusso', blocchi:['occhiello','pregio'] }];
+  var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1, cat:'classici' }, { n:2, nome:'Griglia classica', foto:4, cat:'classici' }, { n:3, nome:'Magazine', foto:3, cat:'classici' }, { n:4, nome:'Minimal', foto:1, cat:'moderni' }, { n:5, nome:'Lusso scuro', foto:2, cat:'lusso' }, { n:6, nome:'Banda laterale', foto:3, cat:'moderni' }, { n:7, nome:'Mosaico', foto:6, cat:'fotografici' }, { n:8, nome:'Panorama', foto:2, cat:'moderni' }, { n:9, nome:'Scheda tecnica', foto:4, cat:'classici' }, { n:10, nome:'Doppia colonna', foto:4, cat:'classici' }, { n:11, nome:'Casa d’aste', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:12, nome:'Rivista d’architettura', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:13, nome:'Catalogo privato', foto:4, cat:'lusso', blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, nome:'Editoriale avorio', foto:4, cat:'lusso', blocchi:['occhiello','pregio'] }, { n:15, nome:'Galleria', foto:3, cat:'lusso', blocchi:['occhiello'] }, { n:16, nome:'Notturno', foto:1, cat:'lusso', blocchi:['occhiello','cifre'] }];
   var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
@@ -10938,7 +11025,7 @@ function findClose(){
   var BR_T_FONT = 5000;
   var BR_PREF_T_API = 30000;
   var BR_PREF_ATTESA = 2000;
-  var BR_PREF_MODELLO_MAX = 14;
+  var BR_PREF_MODELLO_MAX = 16;
   var BR_PREF = { stato:'idle', dati:null, toccato:false, timer:0 };
 
   // adds the Bunny Fonts stylesheets of the sheet, each one once: Playfair Display and Inter, plus Noto for Chinese and Japanese
