@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 093e0d53)
+  Guscio app Team Contato - V1.4.0 (build 9b61a0c3)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.25.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.26.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '093e0d53', blocco: 'V6.25.0' };
+window.TC_APP = { versione: '1.4.0', build: '9b61a0c3', blocco: 'V6.26.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -121,6 +121,8 @@ html.tc-guscio body{margin:0}
       <symbol id="tci-study" viewBox="0 0 24 24"><path d="M12 8.5C10 7 7 6.5 3 7v13c4-.5 7 0 9 1.5"/><path d="M12 8.5c.9-.7 1.9-1.1 3-1.4"/><path d="M21 12v8c-4-.5-7 0-9 1.5"/><path d="M12 8.5v13"/><path d="M19 .5l1.1 2.9 2.9 1.1-2.9 1.1L19 8.5l-1.1-2.9L15 4.5l2.9-1.1z"/></symbol>
       <symbol id="tci-brochure" viewBox="0 0 24 24"><path d="M6 10H1.5v10H6"/><path d="M6 7h9v15H6z"/><path d="M15 12h5v8h-5"/><path d="M6 16h9"/><path d="M7.5 16l3-4 3 4"/><circle cx="12.6" cy="10" r=".8"/><path d="M8.5 19h4"/><path d="M19 .5l1.1 2.9 2.9 1.1-2.9 1.1L19 8.5l-1.1-2.9L15 4.5l2.9-1.1z"/></symbol>
       <symbol id="tci-contact" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3M15 9h3M15 13h3"/></symbol>
+      <symbol id="tci-megaphone" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h3l9 5V5L7 10H4a1 1 0 0 0-1 1z"/><path d="M7 14l1.5 5h3L10 14.7"/><path d="M19.5 9.5a3.5 3.5 0 0 1 0 5"/></symbol>
+      <symbol id="tci-vetrina" viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 11.5V20h14v-8.5"/><rect x="8" y="14" width="8" height="6"/></symbol>
       <symbol id="tci-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
       <symbol id="tci-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
       <symbol id="tci-send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
@@ -267,8 +269,19 @@ html.tc-guscio body{margin:0}
           <div id="tcag-str-render" class="str-page" hidden></div>
           <div id="tcag-str-bp" class="str-page" hidden></div>
           <div id="tcag-str-studio" class="str-page" hidden></div>
-          <div id="tcag-str-brochure" class="str-page" hidden></div>
           <div id="tcag-str-assistente" class="str-page" hidden></div>
+        </div>
+      </section>
+
+      <section id="tcag-s-marketing" class="sec" hidden aria-labelledby="tcag-t-mk">
+        <div class="wrap">
+          <div class="sec-head" id="tcag-mk-head">
+            <div><div class="sub" id="tcag-mk-sub">Materiali per far conoscere gli immobili</div><h1 class="sec-t" id="tcag-t-mk">Marketing</h1></div>
+            <button class="btn sec big hide-phone" type="button" id="tcag-mk-back" data-act="back" hidden><svg class="i" width="18" height="18"><use href="#tci-arrow-left"/></svg>Indietro</button>
+          </div>
+          <div id="tcag-mk-hub" class="hub"></div>
+          <div id="tcag-mk-brochure" class="str-page" hidden></div>
+          <div id="tcag-mk-vetrine" class="str-page" hidden></div>
         </div>
       </section>
 
@@ -276,7 +289,7 @@ html.tc-guscio body{margin:0}
         <div class="wrap">
           <div class="sec-head"><div><div class="sub">Informazioni e strumenti di supporto</div><h1 class="sec-t" id="tcag-t-altro">Altro</h1></div></div>
           <button class="acc-link" type="button" data-act="go" data-h="strumenti" style="margin-bottom:12px"><span><svg class="i" width="20" height="20"><use href="#tci-sparkles"/></svg>Strumenti AI<svg class="i" width="18" height="18" style="margin-left:auto"><use href="#tci-right"/></svg></span></button>
-          <button class="acc-link sempre" type="button" id="tcag-camp-link" data-act="go" data-h="campagne" style="margin-bottom:12px"><span><svg class="i" width="22" height="22" aria-hidden="true"><use href="#tci-chart"/></svg><span class="acc-txt"><span class="acc-t">Campagne Google</span><span class="acc-s">Quante richieste arrivano dalle pubblicità</span></span><svg class="i" width="18" height="18" style="margin-left:auto" aria-hidden="true"><use href="#tci-right"/></svg></span></button>
+          <button class="acc-link sempre" type="button" id="tcag-camp-link" data-act="go" data-h="marketing/campagne" style="margin-bottom:12px"><span><svg class="i" width="22" height="22" aria-hidden="true"><use href="#tci-chart"/></svg><span class="acc-txt"><span class="acc-t">Campagne Google</span><span class="acc-s">Quante richieste arrivano dalle pubblicità</span></span><svg class="i" width="18" height="18" style="margin-left:auto" aria-hidden="true"><use href="#tci-right"/></svg></span></button>
           <div class="altro-grid" id="tcag-altro-grid">
             <div class="card cookie-box" id="tcag-cookie-box" hidden><h2>Privacy e cookie</h2><p class="mut" style="margin:0 0 12px">Scegli quali cookie accettare sul sito.</p><button class="btn pri big" type="button" data-act="cookie-pref"><svg class="i" width="20" height="20" aria-hidden="true"><use href="#tci-shield"/></svg>Preferenze cookie</button></div>
           </div>
@@ -495,6 +508,8 @@ html.tc-guscio body{margin:0}
 #tcag .bt-item[aria-current=page]{color:var(--nv);font-weight:600}
 #tcag .bt-item[aria-current=page]::before{content:"";position:absolute;top:0;left:50%;width:28px;height:3px;margin-left:-14px;background:var(--oro);border-radius:0 0 3px 3px}
 #tcag .bt-item .bdg{position:absolute;top:4px;left:calc(50% + 6px)}
+@media (max-width:359px){#tcag .bt-item{font-size:10px}
+}
 #tcag .fab{position:fixed;right:16px;bottom:calc(var(--barra-bassa-h) + env(safe-area-inset-bottom) + 14px);width:56px;height:56px;border-radius:50%;border:0;background:var(--nv);color:#fff;box-shadow:0 6px 18px rgba(10,42,94,.35);z-index:900;display:none;align-items:center;justify-content:center;cursor:pointer}
 #tcag .wrap{max-width:2400px;margin:0 auto;padding:24px 32px}
 #tcag .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
@@ -737,6 +752,7 @@ html.tc-guscio body{margin:0}
 #tcag .hub-t{font:600 22px/1.2 var(--serif);color:var(--nv)}
 #tcag .hub-d{font-size:16px;color:var(--tenue);line-height:1.4}
 #tcag .hub-tile .soon{margin-top:auto}
+#tcag .mk-vuoto{max-width:65ch;margin:0;padding:24px;background:var(--bianco);border:1px solid var(--bordo);border-radius:var(--raggio);box-shadow:var(--ombra);color:var(--testo);font:400 15px/1.55 var(--sans)}
 @media (min-width:900px){#tcag .hub-tile{min-height:clamp(200px,34vh,380px);padding:28px;gap:14px}
 #tcag .hub-ico{width:72px;height:72px}
 #tcag .hub-t{font-size:26px}
@@ -767,7 +783,8 @@ html.tc-guscio body{margin:0}
 #tcag .fld.big textarea{min-height:120px}
 #tcag .str-card .btn.big.pri,
 #tcag .str-card .btn.big.sec{width:100%}
-#tcag #tcag-str-back{min-height:48px}
+#tcag #tcag-str-back,
+#tcag #tcag-mk-back{min-height:48px}
 #tcag .ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 #tcag .ba div{aspect-ratio:4/3;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:600;background:linear-gradient(135deg,#8f9bb0,#59647a)}
 #tcag .ba div+div{background:linear-gradient(135deg,#c9a961,#8a6d1f)}
@@ -1159,6 +1176,7 @@ html.tc-guscio body{margin:0}
 #tcag .imp-salva{position:sticky;bottom:12px;z-index:60;margin-top:18px;max-width:520px;padding:10px;border-radius:12px;background:rgba(250,249,246,.96);border:1px solid var(--bordo);box-shadow:var(--ombra)}
 #tcag .imp-salva .btn{width:100%}
 @media (max-width:1279px){#tcag .acct .role{display:none}
+#tcag .nv-item{padding:8px 10px}
 }
 @media (max-width:1099px){#tcag .nv-item .lbl,
 #tcag .acct .nm,
@@ -2079,7 +2097,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.25.0';
+  var VERSIONE = 'V6.26.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -3055,10 +3073,13 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
      NAVIGAZIONE
      ========================================================= */
   var NAV = [['oggi', 'Oggi', 'calendar'], ['richieste', 'Richieste', 'inbox'], ['immobili', 'Immobili', 'home'],
-             ['documenti', 'Documenti', 'folder'], ['strumenti', 'Strumenti AI', 'sparkles'], ['altro', 'Altro', 'more']];
-  var SECS = ['oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'altro', 'impostazioni', 'campagne', 'admin', 'diana'];
-  var STR_SUB = ['precompila', 'render', 'assistente', 'bp', 'studio', 'brochure'];
-  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant', bp:'Business plan', studio:'Study Assistant', brochure:'Brochure' };
+             ['documenti', 'Documenti', 'folder'], ['strumenti', 'Strumenti AI', 'sparkles'], ['marketing', 'Marketing', 'megaphone'],
+             ['altro', 'Altro', 'more']];
+  var SECS = ['oggi', 'richieste', 'immobili', 'documenti', 'strumenti', 'marketing', 'altro', 'impostazioni', 'campagne', 'admin', 'diana'];
+  var STR_SUB = ['precompila', 'render', 'assistente', 'bp', 'studio'];
+  var STR_TITOLI = { '':'Strumenti AI', precompila:'Precompila con AI', render:'Render rustici', assistente:'Diana Assistant', bp:'Business plan', studio:'Study Assistant' };
+  var MK_SUB = ['brochure', 'vetrine', 'campagne'];
+  var MK_TITOLI = { '':'Marketing', brochure:'Brochure', vetrine:'Vetrine', campagne:'Campagne' };
   var RE_ID = /^(RC|OM|CG|VA|TE)-\d{4,6}$/;
   function buildNav(){
     put(g('mainnav'), NAV.map(function(n){
@@ -3077,6 +3098,11 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     // V6.23.0: old addresses
     if(sec === 'diana' && sub === 'interruttori'){ try { history.replaceState(null, '', '#diana/limiti'); } catch(e){} sub = 'limiti'; }
     if(sec === 'diana' && sub === 'moduli'){ try { history.replaceState(null, '', '#admin/precompila'); } catch(e){} sec = 'admin'; sub = 'precompila'; }
+    // V6.26.0: old addresses of the Brochure and of Campagne
+    if(sec === 'strumenti' && sub === 'brochure'){ try { history.replaceState(null, '', '#marketing/brochure'); } catch(e){} sec = 'marketing'; }
+    if(sec === 'campagne'){ try { history.replaceState(null, '', '#marketing/campagne'); } catch(e){} }
+    if(sec === 'marketing' && sub === 'campagne'){ sec = 'campagne'; sub = ''; }
+    if(sec === 'marketing' && MK_SUB.indexOf(sub) < 0) sub = '';
     if(sec === 'admin' && !staff()){ sec = 'oggi'; sub = ''; }
     if(sec === 'diana' && !(U && U.ruolo === 'admin')){ sec = 'oggi'; sub = ''; }          // V6.7: Gestione Diana Assistant solo per l'admin (il cancello lo verifica comunque a ogni chiamata)
     if(sec === 'diana' && DG_TAB_ID.indexOf(sub) < 0) sub = GD.tab;
@@ -3124,6 +3150,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'campagne' && !CAMP.vol && (CAMP.stato === 'idle' || (CAMP.stato === 'err' && !CAMP.ok) || Date.now() - CAMP.agg > CAMP_RIAPRI_MS)) caricaCamp();
     if(sec === 'diana') dgApri(sub);
     if(sec === 'strumenti') dianaCarica();                // V6.7: nome, testo legale, domande e interruttori di Diana Assistant (una volta ogni 10 minuti al massimo)
+    if(sec === 'marketing') dianaCarica();                // V6.26.0: stato della card Brochure
     if(sec === 'richieste' && sub && !trova(sub) && RQ.ok) cercaPerId(sub);
     if(sec === 'strumenti' && sub === 'assistente' && !eraChat){ AI.segui = true; chatApri(); }     // V6.6: cronologia dal cancello (prima la copia sul dispositivo)
     renderCorrente();
@@ -3143,14 +3170,14 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   }
   function ridisegna(){ if(!appEl.hidden) renderAuto(); }
   function renderCorrente(){
-    var f = { oggi:renderOggi, richieste:renderRichieste, immobili:renderImmobili, documenti:renderDocumenti, admin:renderAdmin, altro:renderAltro, strumenti:renderStrumenti, impostazioni:renderImpostazioni, campagne:renderCampagne, diana:renderDiana }[S.sec];
+    var f = { oggi:renderOggi, richieste:renderRichieste, immobili:renderImmobili, documenti:renderDocumenti, admin:renderAdmin, altro:renderAltro, strumenti:renderStrumenti, marketing:renderMarketing, impostazioni:renderImpostazioni, campagne:renderCampagne, diana:renderDiana }[S.sec];
     if(f) f();
     aggiornaBarre();
   }
   function aggiornaBarre(){
     var sec = S.sec, sub = S.sub;
-    $$('#tcag-mainnav .nv-item').forEach(function(b){ b.removeAttribute('aria-current'); if(b.getAttribute('data-s') === (sec === 'campagne' || sec === 'diana' ? 'altro' : sec)) b.setAttribute('aria-current', 'page'); });
-    var bsec = (sec === 'strumenti' || sec === 'campagne' || sec === 'diana') ? 'altro' : sec;
+    $$('#tcag-mainnav .nv-item').forEach(function(b){ b.removeAttribute('aria-current'); if(b.getAttribute('data-s') === (sec === 'campagne' ? 'marketing' : sec === 'diana' ? 'altro' : sec)) b.setAttribute('aria-current', 'page'); });
+    var bsec = sec === 'campagne' ? 'marketing' : (sec === 'strumenti' || sec === 'diana') ? 'altro' : sec;
     $$('#tcag-bottomnav .bt-item').forEach(function(b){ b.removeAttribute('aria-current'); if(b.getAttribute('data-s') === bsec) b.setAttribute('aria-current', 'page'); });
     var n = nonAperte().length;
     $$('[data-b=rq]').forEach(function(b){ b.textContent = n; b.hidden = !n; });
@@ -3168,17 +3195,18 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
     if(sec === 'admin') g('gear').setAttribute('aria-current', 'page'); else g('gear').removeAttribute('aria-current');
     var da = staff() ? contatoriVista().daAssegnare : null, ba = g('b-assegna');
     ba.textContent = da || 0; ba.hidden = !da;
-    var titoli = { oggi:'Oggi', richieste: sub ? sub + ' | Scheda richiesta' : 'Richieste', immobili:'Immobili', documenti: sub === 'compila' ? 'Compila modulo' : sub === 'vedi' ? 'Visualizza' : 'Documenti', strumenti: STR_TITOLI[sub] || 'Strumenti AI', altro:'Altro', impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione', diana:'Gestione Diana Assistant' };
+    var titoli = { oggi:'Oggi', richieste: sub ? sub + ' | Scheda richiesta' : 'Richieste', immobili:'Immobili', documenti: sub === 'compila' ? 'Compila modulo' : sub === 'vedi' ? 'Visualizza' : 'Documenti', strumenti: STR_TITOLI[sub] || 'Strumenti AI', marketing: MK_TITOLI[sub] || 'Marketing', altro:'Altro', impostazioni:'Impostazioni', campagne:'Campagne', admin:'Amministrazione', diana:'Gestione Diana Assistant' };
     g('ptitle').textContent = titoli[sec];
-    var back = (sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'documenti' && sub === 'vedi') || sec === 'strumenti' || sec === 'admin' || sec === 'impostazioni' || sec === 'campagne' || sec === 'diana';
+    var back = (sec === 'richieste' && !!sub) || (sec === 'documenti' && sub === 'compila') || (sec === 'documenti' && sub === 'vedi') || sec === 'strumenti' || (sec === 'marketing' && !!sub) || sec === 'admin' || sec === 'impostazioni' || sec === 'campagne' || sec === 'diana';
     g('ph-back').hidden = !back; g('ph-logo').hidden = back;
   }
   function indietro(){
     if(S.sec === 'richieste') go('richieste');
     else if(S.sec === 'documenti') go('documenti');
     else if(S.sec === 'strumenti') go(S.sub ? 'strumenti' : 'altro');
+    else if(S.sec === 'marketing') go(S.sub ? 'marketing' : 'oggi');
     else if(S.sec === 'diana') go(GD.da || 'altro');               // V6.7.2: da Impostazioni/Amministrazione/chat si torna li'; da Altro, ad Altro
-    else if(S.sec === 'campagne') go('altro');
+    else if(S.sec === 'campagne') go('marketing');
     else go('oggi');
   }
 
@@ -6811,13 +6839,11 @@ function findClose(){
     ritocchiHubDiana();
     ritocchiHubBp();
     ritocchiHubStudio();
-    ritocchiHubBrochure();
     preStrumenti();                       // V6.8: il riquadro Precompila dice «Attivo» quando l'admin accende lo strumento
     if(sub === 'assistente') renderAssistente();
     if(sub === 'render') renderRender();
     if(sub === 'bp') renderBp();
     if(sub === 'studio') renderStudio();
-    if(sub === 'brochure') renderBrochure();
   }
 
   /* ---------- DIANA ASSISTANT: nome, testo legale, guida, benvenuto, domande, interruttori (V6.7, CONTRATTO-V6.7 par. 6.2 e 9.1) ----------
@@ -6919,6 +6945,7 @@ function findClose(){
     STR_TITOLI.assistente = DI.dati.nome;
     disegnaRigaAi(); if(AI.avvisiAperti) disegnaLegale();          // V6.7.2: nome e testo dell'admin arrivati a finestra gia' aperta
     if(S.sec === 'strumenti'){ if(g('as-log')){ disegnaChat(); aggiornaFormAi(); } if(typeof renderStrumenti === 'function') renderStrumenti(); if(typeof aggiornaRender === 'function' && g('ren-stato')) aggiornaRender(); }
+    if(S.sec === 'marketing' && typeof renderMarketing === 'function') renderMarketing();
     if(!appEl.hidden) aggiornaBarre();
   }
   function dianaCarica(forza){
@@ -6961,14 +6988,15 @@ function findClose(){
     if(so){ so.textContent = off ? 'In manutenzione' : 'Attivo'; so.classList.toggle('ok', !off); }
   }
   // V6.16.1: every hub card added by the code goes through here, so it always has its icon
-  function hubTileCodice(h, titolo, descr, icona, cls){
-    var hub = g('str-hub'); if(!hub) return null;
-    var t = $('#tcag-str-hub [data-h="' + h + '"]');
+  function hubTileCodice(h, titolo, descr, icona, cls, hub){
+    // V6.26.0: hub = id of the hub without 'tcag-' (default 'str-hub')
+    var hubId = hub || 'str-hub', box = g(hubId); if(!box) return null;
+    var t = $('#tcag-' + hubId + ' [data-h="' + h + '"]');
     if(!t){
       var d = document.createElement('div');
       put(d, H`<button class="hub-tile ${cls}" type="button" data-act="go" data-h="${h}"><svg class="i hub-ico" width="56" height="56" aria-hidden="true"><use href="#${icona}"/></svg><span class="hub-t">${titolo}</span><span class="hub-d">${descr}</span><span class="soon">In arrivo</span></button>`);
       t = d.firstChild;
-      if(t) hub.appendChild(t);
+      if(t) box.appendChild(t);
     }
     if(t && !$('.hub-ico', t)){
       var ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'), u = document.createElementNS(ns, 'use');
@@ -6996,13 +7024,6 @@ function findClose(){
     if(so){ so.textContent = on ? 'Attivo' : 'In arrivo'; so.classList.toggle('ok', on); }
   }
 
-  // V6.18.0: the Brochure card in the hub (on unless the admin turned it off)
-  function ritocchiHubBrochure(){
-    var t = hubTileCodice('strumenti/brochure', 'Brochure', 'Brochure A3 dell’immobile in 9 lingue, pronte da stampare', 'tci-brochure', 'hub-brochure');
-    if(!t) return;
-    var so = $('.soon', t), on = !(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false);
-    if(so){ so.textContent = on ? 'Attivo' : 'In manutenzione'; so.classList.toggle('ok', on); }
-  }
 
   /* ---------- il testo dell'AI: mini-renderer sicuro (solo nodi DOM) ---------- */
   var MD_MAX = 20000;
@@ -9641,7 +9662,7 @@ function findClose(){
      V6.20.0: preview on top, parameters below, Italian language names, Category select.
      V6.21.0: fonts from Bunny Fonts, server preferences (04e4g-brochure-pref.js), favourites.
      =========================================================
-     Page #strumenti/brochure, code only, no AI, nothing on the device.
+     Page #marketing/brochure (V6.26.0; #strumenti/brochure redirects here), code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
      the photos of the gallery and the texts of the published sheet.
      Every value from outside goes through H``, put(), textContent or createElementNS.
@@ -9779,7 +9800,7 @@ function findClose(){
       res.stato = 'err'; res.err = (e && e.testo) || 'Errore';
     }).then(function(){
       res.vol = null;
-      if(S.sec === 'strumenti' && S.sub === 'brochure') renderBrochure(true);
+      if(S.sec === 'marketing' && S.sub === 'brochure') renderBrochure(true);
     });
     return res.vol;
   }
@@ -9813,7 +9834,7 @@ function findClose(){
 
   /* ---------- page ---------- */
   function renderBrochure(forza){
-    var host = g('str-brochure');
+    var host = g('mk-brochure');
     if(!host) return;
     brFontCarica(BR.lingua);
     brPrefCarica();
@@ -10052,7 +10073,7 @@ function findClose(){
     if(a === 'br-stella'){ var sb = $('[data-act="br-stella"][data-m="' + st + '"]'); if(sb) sb.focus(); }
   }
 
-  window.addEventListener('resize', function(){ if(S.sec === 'strumenti' && S.sub === 'brochure') brScala(); });
+  window.addEventListener('resize', function(){ if(S.sec === 'marketing' && S.sub === 'brochure') brScala(); });
   window.addEventListener('afterprint', brFineStampa);
 /* BROCHURE EDITOR (V6.21.0, epic T-MVZLX6RU)
    V6.21.0: my styles on the server, opening photo
@@ -10338,7 +10359,7 @@ function findClose(){
   }
   function brEdFuoco(el){
     if(!el) return;
-    var host = g('str-brochure');
+    var host = g('mk-brochure');
     if(!host) return;
     var sel = '[data-act="' + el.getAttribute('data-act') + '"]';
     ['data-k', 'data-v', 'data-i'].forEach(function(a){
@@ -10686,7 +10707,7 @@ function findClose(){
   /* ---------- keyboard: Ctrl/Cmd+Z undo, Ctrl/Cmd+Y or Ctrl/Cmd+Shift+Z redo ---------- */
   function brEdTasto(e){
     if(e.altKey) return false;
-    if(S.sec !== 'strumenti' || S.sub !== 'brochure' || !BR.mod) return false;
+    if(S.sec !== 'marketing' || S.sub !== 'brochure' || !BR.mod) return false;
     var t = e.target, tag = t && t.tagName;
     if(tag === 'TEXTAREA' || tag === 'INPUT') return false;
     if(!(e.ctrlKey || e.metaKey)) return false;
@@ -10773,7 +10794,7 @@ function findClose(){
     var r = brPrefErrore(e);
     if(r.spegni){
       BR_PREF.stato = 'spento';
-      if(S.sec === 'strumenti' && S.sub === 'brochure') renderBrochure(true);
+      if(S.sec === 'marketing' && S.sub === 'brochure') renderBrochure(true);
       return;
     }
     if(r.testo) toast(r.testo);
@@ -10841,7 +10862,7 @@ function findClose(){
         if(u.modello) BR.modello = u.modello;
         if(u.categoria) BR.categoria = u.categoria;
       } else brPrefUltimaSalva();
-      if(S.sec === 'strumenti' && S.sub === 'brochure') renderBrochure(true);
+      if(S.sec === 'marketing' && S.sub === 'brochure') renderBrochure(true);
     }, function(e){
       brPrefAvvisa(e);
       if(BR_PREF.stato !== 'spento') BR_PREF.stato = 'err';
@@ -10948,6 +10969,41 @@ function findClose(){
       brPrefAvvisa(e);
       renderBrochure(true);
     });
+  }
+/* MARKETING (V6.26.0): hub with Brochure, Vetrine and Campagne. Routes #marketing, #marketing/brochure, #marketing/vetrine; #marketing/campagne shows the Campagne section (route() in 04b). */
+  var MK_VETRINE_TESTO = 'Le vetrine sono in arrivo.';
+  function renderMarketing(){
+    var sub = S.sub;
+    g('mk-hub').hidden = !!sub;
+    g('mk-brochure').hidden = sub !== 'brochure';
+    g('mk-vetrine').hidden = sub !== 'vetrine';
+    g('t-mk').textContent = MK_TITOLI[sub] || 'Marketing';
+    g('mk-sub').textContent = sub ? 'Marketing' : 'Materiali per far conoscere gli immobili';
+    g('mk-back').hidden = !sub;
+    ritocchiMkBrochure();
+    ritocchiMkVetrine();
+    ritocchiMkCampagne();
+    if(sub === 'brochure') renderBrochure();
+    if(sub === 'vetrine') put(g('mk-vetrine'), H`<p class="mk-vuoto">${MK_VETRINE_TESTO}</p>`);
+  }
+  // Brochure card: on unless the admin turned it off (same state as the old Strumenti card)
+  function ritocchiMkBrochure(){
+    var t = hubTileCodice('marketing/brochure', 'Brochure', 'Brochure A3 dell’immobile in 9 lingue, pronte da stampare', 'tci-brochure', 'hub-brochure', 'mk-hub');
+    if(!t) return;
+    var so = $('.soon', t), on = !(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false);
+    if(so){ so.textContent = on ? 'Attivo' : 'In manutenzione'; so.classList.toggle('ok', on); }
+  }
+  function ritocchiMkVetrine(){
+    var t = hubTileCodice('marketing/vetrine', 'Vetrine', 'Cartelli per le vetrine dell’agenzia con foto e dati dell’immobile', 'tci-vetrina', 'hub-vetrine', 'mk-hub');
+    if(!t) return;
+    var so = $('.soon', t);
+    if(so){ so.textContent = 'In arrivo'; so.classList.remove('ok'); }
+  }
+  function ritocchiMkCampagne(){
+    var t = hubTileCodice('marketing/campagne', 'Campagne', 'Quante richieste arrivano dalle pubblicità su Google', 'tci-chart', 'hub-campagne', 'mk-hub');
+    if(!t) return;
+    var so = $('.soon', t);
+    if(so){ so.textContent = 'Attivo'; so.classList.add('ok'); }
   }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
