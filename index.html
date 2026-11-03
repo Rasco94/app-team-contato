@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 3b75f83c)
+  Guscio app Team Contato - V1.4.0 (build 5a762ff9)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.20.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.21.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '3b75f83c', blocco: 'V6.20.0' };
+window.TC_APP = { versione: '1.4.0', build: '5a762ff9', blocco: 'V6.21.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -393,6 +393,8 @@ html.tc-guscio body{margin:0}
   --raggio:10px; --ombra:0 1px 2px rgba(10,42,94,.06),0 4px 12px rgba(10,42,94,.06);
   --serif:var(--tc-serif,'Playfair Display',Georgia,serif);
   --sans:var(--tc-sans,'Inter',-apple-system,'Segoe UI',Roboto,sans-serif);
+  --br-serif:'Playfair Display',Georgia,serif;
+  --br-sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
   
   width:100%; max-width:1440px; margin:0 auto; color:var(--testo);
   font:15px/1.55 var(--sans); -webkit-text-size-adjust:100%;}
@@ -1903,6 +1905,8 @@ html.tc-guscio body{margin:0}
 #tcag .br-ed-campo{display:flex;flex-direction:column;gap:4px;font-size:15px}
 #tcag .br-ed-campo textarea{min-height:44px;font-size:16px;padding:8px;border:1px solid var(--bordo);border-radius:8px;resize:vertical}
 #tcag .br-ed-campo input[type="range"]{min-height:44px}
+#tcag .br-ed-campo input[type="text"]{min-height:44px;font-size:16px;padding:8px;border:1px solid var(--bordo);border-radius:var(--raggio);background:var(--bianco);color:var(--testo)}
+#tcag .br-ed-campo input[type="text"]:focus{border-color:var(--nv)}
 #tcag .br-ed-colore{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:15px}
 #tcag .br-ed-colore input{width:44px;height:44px;padding:0;border:1px solid var(--bordo);border-radius:8px}
 #tcag .br-ed-casella{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px}
@@ -1938,6 +1942,20 @@ html.tc-guscio body{margin:0}
 @media print{#tcag .br-riq[aria-pressed="true"],
 #tcag .br-riq.br-ed-sopra{outline:none}
 }
+#tcag .br-foglio{font-family:var(--br-sans)}
+#tcag .br-foglio .br-titolo{font-family:var(--br-serif)}
+#tcag .br-foglio .br-prezzo{font-family:var(--br-serif)}
+#tcag .br-foglio:lang(zh) .br-titolo{font-family:'Noto Serif SC',var(--br-serif)}
+#tcag .br-foglio:lang(ja) .br-titolo{font-family:'Noto Serif JP',var(--br-serif)}
+#tcag .br-mod-box{position:relative;display:flex}
+#tcag .br-mod-box .br-mod{flex:1 1 auto}
+#tcag .br-stella{position:absolute;top:2px;right:2px;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--tenue);cursor:pointer}
+#tcag .br-stella .i{width:20px;height:20px}
+#tcag .br-stella[aria-pressed="true"]{color:var(--oro-t)}
+#tcag .br-ed-fotobox{display:flex;flex-direction:column;gap:4px;flex:0 0 auto;width:96px}
+#tcag .br-ed-apre{font-size:12px;line-height:1.2;white-space:normal}
+#tcag .br-ed-apre[aria-pressed="true"]{border-color:var(--oro-t);color:var(--oro-t)}
+#tcag .br-ed-stili{display:flex;flex-direction:column;gap:8px}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1973,7 +1991,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.20.0';
+  var VERSIONE = 'V6.21.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -9445,6 +9463,7 @@ function findClose(){
      BROCHURE (V6.18.0, epic T-MVXP2YEM)
      V6.19.0: the editor lives in 04e4f-brochure-editor.js; this file only wires it.
      V6.20.0: preview on top, parameters below, Italian language names, Category select.
+     V6.21.0: fonts from Bunny Fonts, server preferences (04e4g-brochure-pref.js), favourites.
      =========================================================
      Page #strumenti/brochure, code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -9469,7 +9488,7 @@ function findClose(){
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
   var BR_MAX_LISTA = 50;
-  var BR = { codice:'', dati:ris(), lingua:'it', formato:'v', modello:1, categoria:'', foto:[], q:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:-1, edPrima:null };
+  var BR = { codice:'', dati:ris(), lingua:'it', formato:'v', modello:1, categoria:'', foto:[], fotoSito:[], q:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:-1, edPrima:null };
   var brStampando = false;
 
   /* ---------- pure helpers (also run by the bench) ---------- */
@@ -9516,8 +9535,8 @@ function findClose(){
     return BR_LINGUE.indexOf(l) >= 0 ? l : 'it';
   }
   function brFont(l){
-    if(l === 'zh') return '"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif';
-    if(l === 'ja') return '"Hiragino Sans","Yu Gothic","Meiryo","Noto Sans CJK JP",sans-serif';
+    if(l === 'zh') return '"Noto Sans SC","PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif';
+    if(l === 'ja') return '"Noto Sans JP","Hiragino Sans","Yu Gothic","Meiryo","Noto Sans CJK JP",sans-serif';
     return '';
   }
   function brSlug(i){
@@ -9576,6 +9595,7 @@ function findClose(){
       res.dati = j; res.ok = true; res.stato = 'ok'; res.err = '';
       res.lingue = (Array.isArray(j.lingue) ? j.lingue : []).filter(function(l){ return BR_LINGUE.indexOf(l) >= 0; });
       BR.foto = (Array.isArray(j.foto) ? j.foto : []).map(function(u){ return brFotoUrl(u); }).filter(Boolean);
+      BR.fotoSito = BR.foto.slice();
       if(res.lingue.indexOf(BR.lingua) < 0) BR.lingua = res.lingue.length ? res.lingue[0] : 'it';
     }, function(e){
       if(e && e.http === 503 && e.codice === 'brochure_spenta') dianaSegnaSpento('brochure', e.testo);
@@ -9619,6 +9639,8 @@ function findClose(){
   function renderBrochure(forza){
     var host = g('str-brochure');
     if(!host) return;
+    brFontCarica(BR.lingua);
+    brPrefCarica();
     if(!DI.ok) dianaCarica(false);
     if(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false){
       put(host, H`<div class="br-pagina"><p class="br-nota">${DI.dati.brochure.messaggio || 'La Brochure è in manutenzione: riprova più tardi.'}</p></div>`);
@@ -9679,12 +9701,18 @@ function findClose(){
       return H`<button class="br-fmt" type="button" data-act="br-formato" data-f="${f[0]}" aria-pressed="${String(BR.formato === f[0])}">${f[1]}</button>`;
     });
     var cat = BR.categoria || brCategoriaDi(BR.modello);
+    var preferiti = brPrefPreferiti();
+    if(cat === 'preferiti' && !preferiti.length) cat = brCategoriaDi(BR.modello);
     var opzioni = BR_CATEGORIE.map(function(c){
       return H`<option value="${c[0]}"${raw(c[0] === cat ? ' selected' : '')}>${c[1]}</option>`;
     });
+    if(brPrefAttivo() && preferiti.length) opzioni.unshift(H`<option value="preferiti"${raw(cat === 'preferiti' ? ' selected' : '')}>★ Preferiti</option>`);
     var catSel = H`<div class="br-cat"><label class="br-etich" for="tcag-br-cat">Categoria</label><select id="tcag-br-cat" data-act="br-categoria">${opzioni}</select></div>`;
-    var modelli = brModelliDi(cat).map(function(m){
-      return H`<button class="br-mod" type="button" data-act="br-modello" data-m="${m.n}" aria-pressed="${String(BR.modello === m.n)}"><span class="br-mini br-mini-m${m.n}" aria-hidden="true"></span>${m.n + ' ' + m.nome}</button>`;
+    var modelli = (cat === 'preferiti' ? brPrefModelli() : brModelliDi(cat)).map(function(m){
+      var mod = H`<button class="br-mod" type="button" data-act="br-modello" data-m="${m.n}" aria-pressed="${String(BR.modello === m.n)}"><span class="br-mini br-mini-m${m.n}" aria-hidden="true"></span>${m.n + ' ' + m.nome}</button>`;
+      if(!brPrefAttivo()) return mod;
+      var on = brPrefPreferiti().indexOf(m.n) >= 0;
+      return H`<div class="br-mod-box">${mod}<button class="br-stella" type="button" data-act="br-stella" data-m="${m.n}" aria-pressed="${String(on)}" aria-label="${on ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg></button></div>`;
     });
     put(host, H`<div class="br-pagina">
       <div class="br-barra">
@@ -9712,6 +9740,7 @@ function findClose(){
         var src = img.getAttribute('src');
         img.addEventListener('error', function(){
           BR.foto = BR.foto.filter(function(u){ return u !== src; });
+          BR.fotoSito = BR.fotoSito.filter(function(u){ return u !== src; });
           renderBrochure(true);
         });
       });
@@ -9766,6 +9795,7 @@ function findClose(){
     }
     st.textContent = brStileStampa(BR.formato);
     document.documentElement.classList.add('tcag-br-stampa');
+    brFontPronti(BR_T_FONT).then(function(){
     var imgs = Array.prototype.slice.call(f.querySelectorAll('img'));
     var stampa = false;
     function vai(){
@@ -9788,6 +9818,7 @@ function findClose(){
       img.addEventListener('load', uno);
       img.addEventListener('error', uno);
     });
+    });
   }
   function brFineStampa(){
     brStampando = false;
@@ -9801,6 +9832,7 @@ function findClose(){
     switch(a){
       case 'br-scegli':
         BR.codice = el.getAttribute('data-c') || '';
+        BR.fotoSito = [];
         BR.categoria = '';
         BR.mod = null; BR.modChiave = '';
         BR.dati = ris(); BR.foto = []; BR.msg = '';
@@ -9815,9 +9847,14 @@ function findClose(){
         var m = parseInt(el.getAttribute('data-m'), 10);
         if(m >= 1 && m <= 10) BR.modello = m;
         break;
+      case 'br-stella':
+        var st = parseInt(el.getAttribute('data-m'), 10);
+        if(!(st >= 1 && st <= 10)) return;
+        brPrefStella(st);
+        break;
       case 'br-categoria':
         var c = el.value;
-        if(brModelliDi(c).length > 0){ BR.categoria = c; break; }
+        if(brModelliDi(c).length > 0 || (c === 'preferiti' && brPrefPreferiti().length > 0)){ BR.categoria = c; break; }
         return;
       case 'br-stampa':
         brStampa();
@@ -9826,7 +9863,7 @@ function findClose(){
         if(BR.codice){ BR.dati = ris(); brCarica(); } else caricaImmobili();
         break;
       case 'br-cambia':
-        BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.msg = '';
+        BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.fotoSito = []; BR.msg = '';
         BR.categoria = '';
         BR.mod = null; BR.modChiave = '';
         break;
@@ -9834,12 +9871,15 @@ function findClose(){
         return;
     }
     renderBrochure(true);
+    if(a === 'br-lingua' || a === 'br-formato' || a === 'br-modello' || a === 'br-categoria') brPrefUltimaSalva();
     if(a === 'br-categoria'){ var sc = g('br-cat'); if(sc) sc.focus(); }
+    if(a === 'br-stella'){ var sb = $('[data-act="br-stella"][data-m="' + st + '"]'); if(sb) sb.focus(); }
   }
 
   window.addEventListener('resize', function(){ if(S.sec === 'strumenti' && S.sub === 'brochure') brScala(); });
   window.addEventListener('afterprint', brFineStampa);
-/* BROCHURE EDITOR (V6.19.0, epic T-MVXP2Z2N)
+/* BROCHURE EDITOR (V6.21.0, epic T-MVZLX6RU)
+   V6.21.0: my styles on the server, opening photo
    =========================================================
    Editor of the brochure, loaded after 04e4e-brochure.js (it uses its globals BR, renderBrochure, brNumFoto, brImmobile).
    Boxes with photos: drag a photo onto a box, drag a box onto another box (they swap), or tap a box and then a photo.
@@ -9954,6 +9994,43 @@ function findClose(){
     };
   }
 
+  // V6.21.0: the opening photo first, without duplicates; the chosen one (if present) leads
+  function brApertura(foto, url){
+    var out = [];
+    var lista = Array.isArray(foto) ? foto : [];
+    if(typeof url === 'string' && url && lista.indexOf(url) >= 0) out.push(url);
+    lista.forEach(function(u){ if(out.indexOf(u) < 0) out.push(u); });
+    return out;
+  }
+  // V6.21.0: the part of a model that a saved style keeps (no photos, no texts)
+  function brStileMod(mod){
+    var m = mod && typeof mod === 'object' ? mod : {};
+    return JSON.parse(JSON.stringify({ colori: m.colori, tavolozza: m.tavolozza, grandezze: m.grandezze, nascondi: m.nascondi }));
+  }
+  // V6.21.0: applies a saved style to a model: photos and texts stay, invalid colours become null
+  function brStileApplica(mod, stileMod){
+    var out = JSON.parse(JSON.stringify(mod && typeof mod === 'object' ? mod : {}));
+    var s = stileMod && typeof stileMod === 'object' ? stileMod : {};
+    var c = s.colori;
+    var ok = !!c && typeof c === 'object' && ['sfondo', 'testo', 'titolo', 'fascia'].every(function(k){ return brColoreOk(c[k]); });
+    out.colori = ok ? { sfondo: c.sfondo, testo: c.testo, titolo: c.titolo, fascia: c.fascia } : null;
+    out.tavolozza = ok ? (typeof s.tavolozza === 'string' && /^[a-z0-9-]{1,40}$/.test(s.tavolozza) ? s.tavolozza : 'libera') : 'modello';
+    if(s.grandezze && typeof s.grandezze === 'object'){
+      out.grandezze = { titolo: ['s', 'm', 'l'].indexOf(s.grandezze.titolo) >= 0 ? s.grandezze.titolo : 'm', testo: ['s', 'm', 'l'].indexOf(s.grandezze.testo) >= 0 ? s.grandezze.testo : 'm' };
+    }
+    if(s.nascondi && typeof s.nascondi === 'object'){
+      out.nascondi = { prezzo: s.nascondi.prezzo === true, descrizione: s.nascondi.descrizione === true, qr: s.nascondi.qr === true, contatti: s.nascondi.contatti === true, dati: s.nascondi.dati === true };
+    }
+    return out;
+  }
+  // V6.21.0: a style name: trimmed, 1 to 60 characters, no control characters; otherwise ''
+  function brStileNome(t){
+    if(typeof t !== 'string') return '';
+    var s = t.trim();
+    if(s.length < 1 || s.length > 60 || /[\x00-\x1f\x7f]/.test(s)) return '';
+    return s;
+  }
+
   /* ---------- palettes ---------- */
   function brEdPal(id){
     for(var j = 0; j < BR_TAVOLOZZE.length; j++) if(BR_TAVOLOZZE[j].id === id) return BR_TAVOLOZZE[j];
@@ -10000,11 +10077,17 @@ function findClose(){
 
   /* ---------- state of the editor ---------- */
   function brEdPrepara(){
+    BR.foto = brApertura(BR.fotoSito && BR.fotoSito.length ? BR.fotoSito : BR.foto, brPrefAttivo() ? brPrefApertura(BR.codice) : '');
     var n = Math.min(brNumFoto(BR.modello), BR.foto.length);
     var k = brChiave(BR.codice, BR.modello, BR.formato);
     if(BR.modChiave !== k){
       BR.modChiave = k;
-      BR.mod = brModPulito(brEdCarica(k), BR.foto, n);
+      var salvato = brEdCarica(k);
+      BR.mod = brModPulito(salvato, BR.foto, n);
+      if(!salvato && brPrefAttivo()){
+        var t = brPrefUltimaVal('tavolozza');
+        if(brEdPal(t)){ BR.mod.tavolozza = t; BR.mod.colori = brEdColoriDa(t); }
+      }
       BR.annulla = []; BR.ripeti = []; BR.edSel = -1; BR.edPrima = null;
     } else {
       BR.mod = brModPulito(BR.mod, BR.foto, n);
@@ -10199,6 +10282,7 @@ function findClose(){
       m.tavolozza = p ? p.id : 'modello';
       m.colori = p ? { sfondo: p.sfondo, testo: p.testo, titolo: p.titolo, fascia: p.fascia } : null;
     }, el);
+    brPrefUltimaSalva();
   }
   function brEdColore(el, tipo){
     if(tipo !== 'input' && tipo !== 'change') return;
@@ -10246,14 +10330,70 @@ function findClose(){
     brEdCambia(function(m){ m.nascondi[k] = v; }, el);
   }
 
+  /* ---------- my styles and opening photo (V6.21.0) ---------- */
+  function brEdStileDi(id){
+    var l = BR_PREF.dati && BR_PREF.dati.stili ? BR_PREF.dati.stili : [];
+    for(var i = 0; i < l.length; i++) if(l[i].id === id) return l[i];
+    return null;
+  }
+  function brEdSalvaStile(el, tipo){
+    if(tipo !== 'click' || !BR.mod) return;
+    var campo = g('br-ed-stilenome');
+    var nome = brStileNome(campo ? campo.value : '');
+    if(!nome){ toast('Il nome deve avere da 1 a 60 caratteri.'); if(campo) campo.focus(); return; }
+    if(el) el.disabled = true;
+    brPrefStileCrea(nome, brStileMod(BR.mod)).then(function(){
+      toast('Stile salvato');
+      renderBrochure(true);
+    }, function(e){
+      if(el) el.disabled = false;
+      brPrefAvvisa(e);
+    });
+  }
+  function brEdApplicaStile(el, tipo){
+    if(tipo !== 'click' || !BR.mod) return;
+    var s = brEdStileDi(el.getAttribute('data-v'));
+    if(!s) return;
+    brEdCambia(function(m){
+      var n = brStileApplica(m, s.mod);
+      m.colori = n.colori; m.tavolozza = n.tavolozza; m.grandezze = n.grandezze; m.nascondi = n.nascondi;
+    }, el);
+  }
+  function brEdEliminaStile(el, tipo){
+    if(tipo !== 'click') return;
+    var id = el.getAttribute('data-v'), s = brEdStileDi(id);
+    if(!s || !window.confirm('Elimino lo stile «' + s.nome + '»?')) return;
+    brPrefStileElimina(id).then(function(){ renderBrochure(true); }, function(e){ brPrefAvvisa(e); });
+  }
+  function brEdApertura(el, tipo){
+    if(tipo !== 'click' || !BR.mod) return;
+    var u = BR.foto[Number(el.getAttribute('data-i'))];
+    if(!u) return;
+    brPrefAperturaSalva(BR.codice, u);
+    if(BR.mod.riquadri[0]) brEdCambia(function(m){ m.riquadri[0] = { foto: u, x: 50, y: 50, zoom: 100 }; }, null);
+    else renderBrochure(true);
+  }
+  function brEdCopertina(el, tipo){
+    if(tipo !== 'click' || !BR.mod) return;
+    brPrefAperturaSalva(BR.codice, null);
+    var c = BR.fotoSito && BR.fotoSito[0];
+    if(c && BR.mod.riquadri[0]) brEdCambia(function(m){ m.riquadri[0] = { foto: c, x: 50, y: 50, zoom: 100 }; }, null);
+    else renderBrochure(true);
+  }
+
   /* ---------- panel ---------- */
   function brEdPannello(i){
     var m = BR.mod, base = brEdBase(i), n = BR.edSel;
     var sel = n >= 0 && m.riquadri[n] ? m.riquadri[n] : null;
     var cur = m.colori || brEdColoriDa('navy-oro');
     var foto = BR.foto.map(function(u, k){
-      return H`<button class="br-ed-min" type="button" data-act="br-ed-foto" data-i="${k}" aria-label="Foto ${k + 1}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
+      var min = H`<button class="br-ed-min" type="button" data-act="br-ed-foto" data-i="${k}" aria-label="Foto ${k + 1}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
+      if(!brPrefAttivo()) return min;
+      return H`<div class="br-ed-fotobox">${min}<button class="br-ed-btn br-ed-apre" type="button" data-act="br-ed-apertura" data-i="${k}" aria-pressed="${String(u === brPrefApertura(BR.codice))}">★ Usa come apertura</button></div>`;
     });
+    var copertina = brPrefApertura(BR.codice) !== '' ? H`<div class="br-ed-riga"><button class="br-ed-btn" type="button" data-act="br-ed-copertina">Torna alla copertina del sito</button></div>` : '';
+    var elenco = BR_PREF.dati && BR_PREF.dati.stili ? BR_PREF.dati.stili : [];
+    var stili = brPrefAttivo() ? H`<div class="br-ed-sez"><h4>I miei stili</h4><label class="br-ed-campo">Nome dello stile <input type="text" id="tcag-br-ed-stilenome" maxlength="60" autocomplete="off"></label><div class="br-ed-riga"><button class="br-ed-btn" type="button" data-act="br-ed-salvastile">Salva come mio stile</button></div><div class="br-ed-stili">${elenco.length ? elenco.map(function(s){ return H`<div class="br-ed-riga"><span>${s.nome}</span><button class="br-ed-btn" type="button" data-act="br-ed-applicastile" data-v="${s.id}">Applica</button><button class="br-ed-btn" type="button" data-act="br-ed-eliminastile" data-v="${s.id}">Elimina</button></div>`; }) : H`<p class="br-ed-nota">Nessuno stile salvato.</p>`}</div></div>` : '';
     var inquadratura = sel
       ? H`<div class="br-ed-riga"><label>Zoom <input type="range" min="100" max="200" step="5" value="${sel.zoom}" data-act="br-ed-zoom"></label>
           <label>Orizzontale <input type="range" min="0" max="100" value="${sel.x}" data-act="br-ed-pos" data-k="x"></label>
@@ -10285,6 +10425,7 @@ function findClose(){
       <div class="br-ed-sez"><h4>Foto</h4>
         <p class="br-ed-nota">Trascina una foto su un riquadro, oppure tocca un riquadro e poi una foto.</p>
         <div class="br-ed-striscia">${foto}</div>
+        ${copertina}
         ${inquadratura}
       </div>
       <div class="br-ed-sez"><h4>Colori</h4>
@@ -10292,6 +10433,7 @@ function findClose(){
         <div class="br-ed-riga">${colori}</div>
         <p id="tcag-br-ed-avviso" class="br-ed-avviso" role="status" hidden></p>
       </div>
+      ${stili}
       <div class="br-ed-sez"><h4>Testi</h4>
         ${campi}
         ${grand}
@@ -10376,6 +10518,260 @@ function findClose(){
     if(k === 'z' && !e.shiftKey){ e.preventDefault(); brEdAnnulla(null, 'click'); return true; }
     if(k === 'y' || (k === 'z' && e.shiftKey)){ e.preventDefault(); brEdRipeti(null, 'click'); return true; }
     return false;
+  }
+  /* =========================================================
+     BROCHURE PREFERENCES (V6.21.0, epic T-MVZLX6RU, part 1)
+     =========================================================
+     Brochure page: the fonts of the sheet come from Bunny Fonts (one stylesheet per family, added once).
+     The last choice of each agent, the favourite models and the saved styles live on the server.
+     The origin comes from AI_URL, never written here; the only routes are under /ai/brochure/
+     (preferenze, stili, stili/elimina). Authorization: Bearer <portal session>.
+     If the gateway has no preferences (404 or 405) the feature switches off in silence and the page works as before.
+     Text from the server is data: it is written only with H`` / put() or textContent.
+     State lives in memory only (BR_PREF). */
+  var BR_FONT_URL = 'https://fonts.bunny.net/css?family=playfair-display:400,400i,500,600,700|inter:400,500,600,700&display=swap';
+  var BR_FONT_ZH = 'https://fonts.bunny.net/css?family=noto-serif-sc:600,700|noto-sans-sc:400,700&display=swap';
+  var BR_FONT_JA = 'https://fonts.bunny.net/css?family=noto-serif-jp:600,700|noto-sans-jp:400,700&display=swap';
+  var BR_T_FONT = 5000;
+  var BR_PREF_T_API = 30000;
+  var BR_PREF_ATTESA = 2000;
+  var BR_PREF = { stato:'idle', dati:null, toccato:false, timer:0 };
+
+  // adds the Bunny Fonts stylesheets of the sheet, each one once: Playfair Display and Inter, plus Noto for Chinese and Japanese
+  function brFontCarica(lingua){
+    var agg = 0;
+    function metti(id, href){
+      if(document.getElementById(id)) return;
+      var el = document.createElement('link');
+      el.rel = 'stylesheet';
+      el.id = id;
+      el.href = href;
+      document.head.appendChild(el);
+      agg++;
+    }
+    metti('tcag-br-font', BR_FONT_URL);
+    if(lingua === 'zh') metti('tcag-br-font-zh', BR_FONT_ZH);
+    if(lingua === 'ja') metti('tcag-br-font-ja', BR_FONT_JA);
+    return agg;
+  }
+
+  // resolves when the fonts are ready or after ms milliseconds, whichever comes first; never rejects
+  function brFontPronti(ms){
+    return new Promise(function(risolvi){
+      if(!document.fonts || !document.fonts.ready){ risolvi(); return; }
+      var fatto = false;
+      function fine(){ if(fatto) return; fatto = true; clearTimeout(tm); risolvi(); }
+      var tm = setTimeout(fine, ms);
+      document.fonts.ready.then(fine, fine);
+    });
+  }
+
+  // PURE: keeps only the valid values of the last choice; anything else becomes null
+  function brPrefUltima(stato){
+    var lingue = ['it', 'en', 'de', 'fr', 'es', 'ru', 'pl', 'zh', 'ja'];
+    var categorie = ['classici', 'moderni', 'fotografici', 'lusso'];
+    var o = stato && typeof stato === 'object' ? stato : {};
+    var lingua = typeof o.lingua === 'string' && lingue.indexOf(o.lingua) >= 0 ? o.lingua : null;
+    var formato = o.formato === 'v' || o.formato === 'o' ? o.formato : null;
+    var categoria = typeof o.categoria === 'string' && categorie.indexOf(o.categoria) >= 0 ? o.categoria : null;
+    var modello = typeof o.modello === 'number' && o.modello % 1 === 0 && o.modello >= 1 && o.modello <= 10 ? o.modello : null;
+    var tavolozza = typeof o.tavolozza === 'string' && /^[a-z0-9-]{1,40}$/.test(o.tavolozza) ? o.tavolozza : null;
+    return { lingua: lingua, formato: formato, categoria: categoria, modello: modello, tavolozza: tavolozza };
+  }
+
+  // PURE: what a failed call to the preferences route means for the page
+  function brPrefErrore(e){
+    var http = e ? e.http : undefined;
+    if(http === 404 && e && e.codice === 'brochure_pref_non_trovato'){
+      return { spegni: false, testo: typeof e.testo === 'string' && e.testo ? e.testo : 'Non riesco a salvare le preferenze. Riprova.' };
+    }
+    if(http === 404 || http === 405) return { spegni: true, testo: '' };
+    if(http === 401) return { spegni: false, testo: '' };
+    if(http === 409) return { spegni: false, testo: 'Hai già 20 stili: eliminane uno' };
+    var t = e && typeof e.testo === 'string' && e.testo ? e.testo : 'Non riesco a salvare le preferenze. Riprova.';
+    return { spegni: false, testo: t };
+  }
+
+  // shows the error of a preferences call: a toast, or nothing when the feature is switched off
+  function brPrefAvvisa(e){
+    var r = brPrefErrore(e);
+    if(r.spegni){
+      BR_PREF.stato = 'spento';
+      if(S.sec === 'strumenti' && S.sub === 'brochure') renderBrochure(true);
+      return;
+    }
+    if(r.testo) toast(r.testo);
+  }
+
+  function brPrefBase(){
+    try { return new URL(AI_URL).origin + '/ai/brochure/'; } catch(e){ return ''; }
+  }
+
+  // one call to the preferences route: resolves with the JSON, rejects with { http, codice, testo }
+  function brPrefApi(metodo, percorso, corpo){
+    var base = brPrefBase();
+    if(!base) return Promise.reject({ http:0, codice:'', testo:'Lo strumento non è configurato.' });
+    var ctl = window.AbortController ? new AbortController() : null, scaduto = false;
+    var tm = setTimeout(function(){ scaduto = true; if(ctl) ctl.abort(); }, BR_PREF_T_API);
+    var h = { 'Authorization':'Bearer ' + (sessione ? sessione.s : '') }, body = undefined;
+    if(corpo !== null && corpo !== undefined){ body = JSON.stringify(corpo); h['Content-Type'] = 'application/json'; }
+    return fetch(base + percorso, { method:metodo, headers:h, body:body, signal:ctl ? ctl.signal : undefined, cache:'no-store' })
+      .then(function(risp){
+        if(risp.status === 401){
+          esci('La sessione è scaduta: accedi di nuovo.');
+          throw { http:401, codice:'', testo:'La sessione è scaduta: accedi di nuovo.' };
+        }
+        if(risp.ok) return risp.json();
+        return risp.json().catch(function(){ return null; }).then(function(j){
+          var det = j && j.detail && typeof j.detail === 'object' ? j.detail : {};
+          throw { http: risp.status, codice: typeof det.codice === 'string' ? det.codice.slice(0, 60) : '', testo: dianaStr(det.messaggio, 600) || 'Qualcosa non ha funzionato. Riprova.' };
+        });
+      })
+      .then(function(v){ clearTimeout(tm); return v; }, function(e){
+        clearTimeout(tm);
+        if(e && e.http !== undefined) throw e;
+        throw { http:0, codice: scaduto ? 'timeout' : 'rete', testo: scaduto ? 'Il servizio ci mette troppo. Riprova.' : 'Non riesco a collegarmi. Controlla la connessione.' };
+      });
+  }
+
+  // the answer of the server, read with type checks: a part of the wrong type becomes empty
+  function brPrefDatiDa(j){
+    var o = j && typeof j === 'object' ? j : {};
+    var oggetto = function(x){ return x && typeof x === 'object' && !Array.isArray(x) ? x : {}; };
+    var lista = function(x){ return Array.isArray(x) ? x : []; };
+    var aperture = oggetto(o.aperture), out = {};
+    Object.keys(aperture).forEach(function(k){
+      if(typeof aperture[k] === 'string' && aperture[k]) out[k] = aperture[k];
+    });
+    return {
+      ultima: brPrefUltima(oggetto(o.ultima)),
+      preferiti: lista(o.preferiti).filter(function(n){ return typeof n === 'number' && n % 1 === 0 && n >= 1 && n <= 10; }),
+      stili: lista(o.stili).filter(function(s){ return s && typeof s === 'object' && typeof s.id === 'string' && typeof s.nome === 'string'; }),
+      aperture: out
+    };
+  }
+
+  // reads the saved preferences once per page; the last choice is applied unless the agent already touched the page
+  function brPrefCarica(){
+    if(BR_PREF.stato !== 'idle') return;
+    BR_PREF.stato = 'car';
+    brPrefApi('GET', 'preferenze', null).then(function(j){
+      BR_PREF.stato = 'ok';
+      BR_PREF.dati = brPrefDatiDa(j);
+      if(!BR_PREF.toccato){
+        var u = BR_PREF.dati.ultima;
+        if(u.lingua) BR.lingua = u.lingua;
+        if(u.formato) BR.formato = u.formato;
+        if(u.modello) BR.modello = u.modello;
+        if(u.categoria) BR.categoria = u.categoria;
+      } else brPrefUltimaSalva();
+      if(S.sec === 'strumenti' && S.sub === 'brochure') renderBrochure(true);
+    }, function(e){
+      brPrefAvvisa(e);
+      if(BR_PREF.stato !== 'spento') BR_PREF.stato = 'err';
+    });
+  }
+
+  function brPrefAttivo(){
+    return BR_PREF.stato === 'ok';
+  }
+
+  // one value of the saved last choice, or null
+  function brPrefUltimaVal(k){
+    return BR_PREF.dati && BR_PREF.dati.ultima && BR_PREF.dati.ultima[k] !== undefined ? BR_PREF.dati.ultima[k] : null;
+  }
+
+  // saves the last choice once the agent stops changing it: one request at most every 2 s, the last one wins
+  function brPrefUltimaSalva(){
+    BR_PREF.toccato = true;
+    if(!brPrefAttivo()) return;
+    clearTimeout(BR_PREF.timer);
+    BR_PREF.timer = setTimeout(function(){
+      BR_PREF.timer = 0;
+      var ultima = brPrefUltima({ lingua: BR.lingua, formato: BR.formato, categoria: BR.categoria, modello: BR.modello, tavolozza: BR.mod ? BR.mod.tavolozza : null });
+      brPrefApi('POST', 'preferenze', { ultima: ultima }).then(function(){
+        if(BR_PREF.dati) BR_PREF.dati.ultima = ultima;
+      }, function(e){ brPrefAvvisa(e); });
+    }, BR_PREF_ATTESA);
+  }
+
+  function brPrefPreferiti(){
+    return brPrefAttivo() && BR_PREF.dati ? BR_PREF.dati.preferiti.slice() : [];
+  }
+
+  // the models of BR_MODELLI that are favourites, in the order of BR_MODELLI
+  function brPrefModelli(){
+    var p = brPrefPreferiti();
+    return BR_MODELLI.filter(function(m){ return p.indexOf(m.n) >= 0; });
+  }
+
+  // PURE: the favourites list after a failed toggle of n; undoes only that click (aggiunto = it was added by it)
+  function brPrefAnnullaStella(lista, n, aggiunto){
+    var base = Array.isArray(lista) ? lista : [];
+    if(aggiunto) return base.filter(function(x){ return x !== n; });
+    return base.indexOf(n) >= 0 ? base.slice() : base.concat([n]);
+  }
+
+  // toggles a favourite model: the list changes at once and goes back if the server says no
+  function brPrefStella(n){
+    if(!brPrefAttivo() || !BR_PREF.dati) return;
+    var prima = BR_PREF.dati.preferiti.slice();
+    var aggiunto = prima.indexOf(n) < 0;
+    var lista = aggiunto ? prima.concat([n]) : prima.filter(function(x){ return x !== n; });
+    BR_PREF.dati.preferiti = lista;
+    brPrefApi('POST', 'preferenze', { preferiti: lista }).then(function(){}, function(e){
+      BR_PREF.dati.preferiti = brPrefAnnullaStella(BR_PREF.dati.preferiti, n, aggiunto);
+      brPrefAvvisa(e);
+      renderBrochure(true);
+    });
+  }
+
+  // saves a style of the sheet for this agent; the caller shows the error
+  function brPrefStileCrea(nome, mod){
+    return brPrefApi('POST', 'stili', { nome: nome, mod: mod }).then(function(j){
+      if(j && j.stile && BR_PREF.dati) BR_PREF.dati.stili = BR_PREF.dati.stili.concat([j.stile]);
+      return j ? j.stile : null;
+    });
+  }
+
+  // deletes a saved style; the caller shows the error
+  function brPrefStileElimina(id){
+    function togli(){
+      if(BR_PREF.dati) BR_PREF.dati.stili = BR_PREF.dati.stili.filter(function(s){ return s.id !== id; });
+    }
+    return brPrefApi('POST', 'stili/elimina', { id: id }).then(function(j){
+      togli();
+      return j;
+    }, function(e){
+      if(!(e && e.codice === 'brochure_pref_non_trovato')) throw e;
+      togli();
+      return { ok: true, eliminato: id };
+    });
+  }
+
+  // the opening photo saved for a listing, or ''
+  function brPrefApertura(codice){
+    var v = BR_PREF.dati && BR_PREF.dati.aperture ? BR_PREF.dati.aperture[codice] : '';
+    return typeof v === 'string' ? v : '';
+  }
+
+  // saves (or removes, with null) the opening photo of a listing: it shows at once and goes back if the server says no
+  function brPrefAperturaSalva(codice, url){
+    if(!BR_PREF.dati) return;
+    var prima = BR_PREF.dati.aperture, nuove = {};
+    Object.keys(prima).forEach(function(k){ nuove[k] = prima[k]; });
+    if(url) nuove[codice] = url; else delete nuove[codice];
+    BR_PREF.dati.aperture = nuove;
+    var corpo = {};
+    corpo[codice] = url || null;
+    brPrefApi('POST', 'preferenze', { aperture: corpo }).then(function(){}, function(e){
+      var ora = {};
+      Object.keys(BR_PREF.dati.aperture).forEach(function(k){ ora[k] = BR_PREF.dati.aperture[k]; });
+      if(typeof prima[codice] === 'string') ora[codice] = prima[codice]; else delete ora[codice];
+      BR_PREF.dati.aperture = ora;
+      brPrefAvvisa(e);
+      renderBrochure(true);
+    });
   }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
@@ -13752,6 +14148,11 @@ function stuaAzione(a, el){
       case 'br-ed-annulla': brEdAnnulla(el, tipo); break;
       case 'br-ed-ripeti': brEdRipeti(el, tipo); break;
       case 'br-ed-ripristina': brEdRipristina(el, tipo); break;
+      case 'br-ed-salvastile': brEdSalvaStile(el, tipo); break;
+      case 'br-ed-applicastile': brEdApplicaStile(el, tipo); break;
+      case 'br-ed-eliminastile': brEdEliminaStile(el, tipo); break;
+      case 'br-ed-apertura': brEdApertura(el, tipo); break;
+      case 'br-ed-copertina': brEdCopertina(el, tipo); break;
       default: break;
     }
   }
