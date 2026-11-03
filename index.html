@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build ab041d97)
+  Guscio app Team Contato - V1.4.0 (build 3b75f83c)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.19.2 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.20.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'ab041d97', blocco: 'V6.19.2' };
+window.TC_APP = { versione: '1.4.0', build: '3b75f83c', blocco: 'V6.20.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1762,7 +1762,9 @@ html.tc-guscio body{margin:0}
 #tcag .stua-bar .btn{min-height:44px}
 #tcag .stua-msg{margin:8px 0;font-size:16px;color:var(--verde)}
 #tcag .stua-err{margin:8px 0;font-size:16px;color:#8f0f1b}
-#tcag .br-pagina{display:flex;flex-direction:column;gap:16px;max-width:1200px}
+#tcag .br-pagina{display:flex;flex-direction:column;gap:16px;max-width:1800px;width:100%;margin:0 auto}
+@media (min-width:768px){#tcag .br-pagina{gap:24px}
+}
 #tcag .br-pagina button{min-height:44px}
 #tcag .br-scelta{display:flex;flex-direction:column;gap:12px}
 #tcag .br-cerca{display:block;width:100%;min-height:44px;font-size:16px;padding:0 12px;border:1px solid var(--bordo);border-radius:8px;background:#fff;color:var(--testo)}
@@ -1772,7 +1774,17 @@ html.tc-guscio body{margin:0}
 #tcag .br-riga-c{font:600 13px var(--sans);color:var(--oro-t);letter-spacing:.06em}
 #tcag .br-riga-t{min-width:0;overflow-wrap:anywhere;font-size:16px}
 #tcag .br-riga-z{font-size:14px;color:var(--tenue)}
-#tcag .br-comandi{display:flex;flex-direction:column;gap:12px}
+#tcag .br-comandi{display:flex;flex-direction:column;gap:24px}
+@media (min-width:1100px){#tcag .br-comandi{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 32px}
+#tcag .br-comandi>.br-cat,
+#tcag .br-comandi>.br-grp-tutta{grid-column:1/-1}
+}
+#tcag .br-grp{display:flex;flex-direction:column;min-width:0}
+#tcag .br-etich{display:block;margin:0 0 8px;font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.22em;color:var(--tenue)}
+#tcag .br-barra{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+#tcag .br-cat{margin:0;max-width:320px}
+#tcag .br-cat select{min-height:44px;height:44px;min-width:220px;max-width:100%;padding:0 12px;font:400 16px var(--sans);color:var(--testo);background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio)}
+#tcag .br-cat select:focus{border-color:var(--nv)}
 #tcag .br-gruppo{display:flex;flex-wrap:wrap;gap:8px}
 #tcag .br-lingua,
 #tcag .br-fmt{min-height:44px;padding:0 14px;border:1px solid var(--bordo);border-radius:99px;background:#fff;color:var(--nv);font:600 15px var(--sans);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
@@ -1796,7 +1808,7 @@ html.tc-guscio body{margin:0}
 #tcag .br-mini-m10{background:linear-gradient(90deg,#7d8ba3 0 48%,#fff 48% 52%,#7d8ba3 52%)}
 #tcag .br-nota{font-size:15px;color:var(--tenue)}
 #tcag .br-stato{font-size:15px;color:var(--tenue)}
-#tcag .br-anteprima{width:100%;overflow:hidden}
+#tcag .br-anteprima{width:100%;overflow:hidden;margin-bottom:8px}
 #tcag .br-foglio{box-sizing:border-box;display:grid;position:relative;padding:14mm;gap:8mm;background:#fff;color:#22222a;transform-origin:0 0;overflow:hidden;font-size:10pt;line-height:1.35}
 #tcag .br-foglio.br-v{width:297mm;height:420mm}
 #tcag .br-foglio.br-o{width:420mm;height:297mm}
@@ -1866,8 +1878,11 @@ html.tc-guscio body{margin:0}
 #tcag .br-m6 .br-contatti b{color:var(--oro)}
 @media print{#tcag .br-foglio{transform:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
-#tcag .br-lavoro{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
-@media (min-width:1100px){#tcag .br-lavoro{grid-template-columns:minmax(0,1fr) 360px}
+@media (min-width:768px){#tcag .br-ed{padding:24px}
+}
+@media (min-width:1100px){#tcag .br-ed{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start}
+#tcag .br-ed h3,
+#tcag .br-ed>.br-ed-riga{grid-column:1/-1}
 }
 #tcag .br-riq{position:relative;overflow:hidden;min-height:0;min-width:0;cursor:grab}
 #tcag .br-riq-vuoto{background:#e9e6de}
@@ -1958,7 +1973,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.19.2';
+  var VERSIONE = 'V6.20.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -9429,6 +9444,7 @@ function findClose(){
   /* =========================================================
      BROCHURE (V6.18.0, epic T-MVXP2YEM)
      V6.19.0: the editor lives in 04e4f-brochure-editor.js; this file only wires it.
+     V6.20.0: preview on top, parameters below, Italian language names, Category select.
      =========================================================
      Page #strumenti/brochure, code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -9436,7 +9452,7 @@ function findClose(){
      Every value from outside goes through H``, put(), textContent or createElementNS.
      State lives in memory only (var BR). */
   var BR_LINGUE = ['it', 'en', 'de', 'fr', 'es', 'ru', 'pl', 'zh', 'ja'];
-  var BR_NOMI = { it:'Italiano', en:'English', de:'Deutsch', fr:'Français', es:'Español', ru:'Русский', pl:'Polski', zh:'中文', ja:'日本語' };
+  var BR_NOMI = { it:'Italiano', en:'Inglese', de:'Tedesco', fr:'Francese', es:'Spagnolo', ru:'Russo', pl:'Polacco', zh:'Cinese', ja:'Giapponese' };
   var BR_TESTI = {
     it: { prezzo:'Prezzo', prezzo_riservato:'Prezzo riservato', superficie:'Superficie', camere:'Camere', bagni:'Bagni', tipo:'Tipologia', contratto:'Contratto', zona:'Zona', codice:'Codice immobile', scansiona:'Scansiona per vedere l’annuncio', contatti:'Contatti', vendita:'Vendita', affitto:'Affitto' },
     en: { prezzo:'Price', prezzo_riservato:'Price on request', superficie:'Floor area', camere:'Bedrooms', bagni:'Bathrooms', tipo:'Property type', contratto:'Contract', zona:'Area', codice:'Property code', scansiona:'Scan to view the listing', contatti:'Contacts', vendita:'For sale', affitto:'For rent' },
@@ -9448,11 +9464,12 @@ function findClose(){
     zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租' },
     ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸' }
   };
-  var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1 }, { n:2, nome:'Griglia classica', foto:4 }, { n:3, nome:'Magazine', foto:3 }, { n:4, nome:'Minimal', foto:1 }, { n:5, nome:'Lusso scuro', foto:2 }, { n:6, nome:'Banda laterale', foto:3 }, { n:7, nome:'Mosaico', foto:6 }, { n:8, nome:'Panorama', foto:2 }, { n:9, nome:'Scheda tecnica', foto:4 }, { n:10, nome:'Doppia colonna', foto:4 }];
+  var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1, cat:'classici' }, { n:2, nome:'Griglia classica', foto:4, cat:'classici' }, { n:3, nome:'Magazine', foto:3, cat:'classici' }, { n:4, nome:'Minimal', foto:1, cat:'moderni' }, { n:5, nome:'Lusso scuro', foto:2, cat:'lusso' }, { n:6, nome:'Banda laterale', foto:3, cat:'moderni' }, { n:7, nome:'Mosaico', foto:6, cat:'fotografici' }, { n:8, nome:'Panorama', foto:2, cat:'moderni' }, { n:9, nome:'Scheda tecnica', foto:4, cat:'classici' }, { n:10, nome:'Doppia colonna', foto:4, cat:'classici' }];
+  var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
   var BR_MAX_LISTA = 50;
-  var BR = { codice:'', dati:ris(), lingua:'it', formato:'v', modello:1, foto:[], q:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:-1, edPrima:null };
+  var BR = { codice:'', dati:ris(), lingua:'it', formato:'v', modello:1, categoria:'', foto:[], q:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:-1, edPrima:null };
   var brStampando = false;
 
   /* ---------- pure helpers (also run by the bench) ---------- */
@@ -9472,6 +9489,15 @@ function findClose(){
   function brNumFoto(m){
     for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].n === Number(m)) return BR_MODELLI[i].foto;
     return 1;
+  }
+  function brCategoriaDi(m){
+    for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].n === Number(m)) return BR_MODELLI[i].cat;
+    return 'classici';
+  }
+  function brModelliDi(cat){
+    var out = [];
+    for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].cat === cat) out.push(BR_MODELLI[i]);
+    return out;
   }
   function brFotoUrl(u){
     if(typeof u !== 'string') return '';
@@ -9647,24 +9673,33 @@ function findClose(){
     var lingue = D.lingue || [];
     var lingueBtn = BR_LINGUE.map(function(l){
       var ok = lingue.indexOf(l) >= 0, acceso = BR.lingua === l;
-      return H`<button class="br-lingua" type="button" data-act="br-lingua" data-l="${l}" aria-pressed="${String(acceso)}"${raw(ok ? '' : ' disabled title="Traduzione mancante nel foglio"')}>${BR_NOMI[l]}${ok ? '' : H`<small class="br-manca">Traduzione mancante nel foglio</small>`}</button>`;
+      return H`<button class="br-lingua" type="button" lang="it" title="${ok ? BR_NOMI[l] : BR_NOMI[l] + ': traduzione mancante nel foglio'}" data-act="br-lingua" data-l="${l}" aria-pressed="${String(acceso)}"${raw(ok ? '' : ' disabled')}>${BR_NOMI[l]}${ok ? '' : H`<small class="br-manca">Traduzione mancante nel foglio</small>`}</button>`;
     });
-    var formati = [['v', 'A3 verticale'], ['o', 'A3 orizzontale']].map(function(f){
+    var formati = [['v', 'Verticale'], ['o', 'Orizzontale']].map(function(f){
       return H`<button class="br-fmt" type="button" data-act="br-formato" data-f="${f[0]}" aria-pressed="${String(BR.formato === f[0])}">${f[1]}</button>`;
     });
-    var modelli = BR_MODELLI.map(function(m){
+    var cat = BR.categoria || brCategoriaDi(BR.modello);
+    var opzioni = BR_CATEGORIE.map(function(c){
+      return H`<option value="${c[0]}"${raw(c[0] === cat ? ' selected' : '')}>${c[1]}</option>`;
+    });
+    var catSel = H`<div class="br-cat"><label class="br-etich" for="tcag-br-cat">Categoria</label><select id="tcag-br-cat" data-act="br-categoria">${opzioni}</select></div>`;
+    var modelli = brModelliDi(cat).map(function(m){
       return H`<button class="br-mod" type="button" data-act="br-modello" data-m="${m.n}" aria-pressed="${String(BR.modello === m.n)}"><span class="br-mini br-mini-m${m.n}" aria-hidden="true"></span>${m.n + ' ' + m.nome}</button>`;
     });
     put(host, H`<div class="br-pagina">
-      <p><button class="btn sec" type="button" data-act="br-cambia">‹ Cambia immobile</button></p>
-      <p id="tcag-br-msg" class="br-nota" role="status">${BR.msg}</p>
-      <div class="br-comandi">
-        <div class="br-gruppo" role="group" aria-label="Lingua">${lingueBtn}</div>
-        <div class="br-gruppo" role="group" aria-label="Formato">${formati}</div>
-        <div class="br-modelli" role="group" aria-label="Modello">${modelli}</div>
+      <div class="br-barra">
+        <button class="btn sec" type="button" data-act="br-cambia">‹ Cambia immobile</button>
         <button class="btn pri" type="button" data-act="br-stampa">Stampa / Salva PDF</button>
       </div>
-      <div class="br-lavoro"><div id="tcag-br-anteprima" class="br-anteprima">${brFoglio(i)}</div>${brEdPannello(i)}</div>
+      <p id="tcag-br-msg" class="br-nota" role="status">${BR.msg}</p>
+      <div id="tcag-br-anteprima" class="br-anteprima">${brFoglio(i)}</div>
+      <div class="br-comandi">
+        <div class="br-grp"><span class="br-etich">Lingua</span><div class="br-gruppo" role="group" aria-label="Lingua">${lingueBtn}</div></div>
+        <div class="br-grp"><span class="br-etich">Formato</span><div class="br-gruppo" role="group" aria-label="Formato">${formati}</div></div>
+        ${catSel}
+        <div class="br-grp br-grp-tutta"><span class="br-etich">Modello</span><div class="br-modelli" role="group" aria-label="Modello">${modelli}</div></div>
+      </div>
+      ${brEdPannello(i)}
     </div>`);
     g('br-msg').hidden = !BR.msg;
     var f = g('br-foglio');
@@ -9766,6 +9801,7 @@ function findClose(){
     switch(a){
       case 'br-scegli':
         BR.codice = el.getAttribute('data-c') || '';
+        BR.categoria = '';
         BR.mod = null; BR.modChiave = '';
         BR.dati = ris(); BR.foto = []; BR.msg = '';
         break;
@@ -9779,6 +9815,10 @@ function findClose(){
         var m = parseInt(el.getAttribute('data-m'), 10);
         if(m >= 1 && m <= 10) BR.modello = m;
         break;
+      case 'br-categoria':
+        var c = el.value;
+        if(brModelliDi(c).length > 0){ BR.categoria = c; break; }
+        return;
       case 'br-stampa':
         brStampa();
         return;
@@ -9787,12 +9827,14 @@ function findClose(){
         break;
       case 'br-cambia':
         BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.msg = '';
+        BR.categoria = '';
         BR.mod = null; BR.modChiave = '';
         break;
       default:
         return;
     }
     renderBrochure(true);
+    if(a === 'br-categoria'){ var sc = g('br-cat'); if(sc) sc.focus(); }
   }
 
   window.addEventListener('resize', function(){ if(S.sec === 'strumenti' && S.sub === 'brochure') brScala(); });
@@ -13920,6 +13962,7 @@ function stuaAzione(a, el){
     else if(act && act.indexOf('pre-') === 0){ preCambio(t, act); }                             // V6.8: Precompila con AI (spunte, scelte, file)
     else if(act && act.indexOf('stu-') === 0){ stAzione(act, t); }
     else if(act && act.indexOf('br-ed-') === 0){ brEdSmista(act, t, 'change'); }
+    else if(act === 'br-categoria'){ brAzione(act, t); }   // V6.20.0: brochure Category select
     else if(act && act.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(act, t); }
     else if(act === 'mc-casella'){ mcCasella(t); }                                              // V6.8.5: casella «Compilabile» (solo admin)
     else if(act === 'open-local' && t.files && t.files[0]){
