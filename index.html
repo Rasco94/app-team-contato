@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 5a762ff9)
+  Guscio app Team Contato - V1.4.0 (build 47dc2533)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.21.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.22.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '5a762ff9', blocco: 'V6.21.0' };
+window.TC_APP = { versione: '1.4.0', build: '47dc2533', blocco: 'V6.22.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1626,11 +1626,11 @@ html.tc-guscio body{margin:0}
 #tcag .bpa-msg.ok{color:var(--verde)}
 #tcag .bpa-riga{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.3fr) auto auto auto minmax(0,1fr);gap:8px 14px;align-items:center;width:100%;min-height:44px;padding:10px 12px;margin-bottom:8px;text-align:left;cursor:pointer;background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio);font-size:15px}
 #tcag .bpa-riga:hover{border-color:var(--oro)}
-#tcag .bpa-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .bpa-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
 @media (max-width:640px){#tcag .bpa-riga{grid-template-columns:1fr}
 }
 #tcag .hub-bp{text-align:left;width:100%;min-height:44px}
-#tcag .bp-pagina{display:flex;flex-direction:column;gap:16px;max-width:900px}
+#tcag .bp-pagina{display:flex;flex-direction:column;gap:16px;max-width:1800px}
 #tcag .bp-pagina button,
 #tcag .bp-pagina .btn,
 #tcag .hub-bp{min-height:44px}
@@ -1640,7 +1640,7 @@ html.tc-guscio body{margin:0}
 #tcag .bp-pagina input,
 #tcag .bp-pagina select,
 #tcag .bp-pagina textarea{font-size:16px;min-height:44px}
-#tcag .bp-blocco{border:1px solid var(--bordo);border-radius:12px;padding:16px;min-width:0;max-width:100%}
+#tcag .bp-blocco{position:relative;display:flex;flex-direction:column;gap:16px;border:1px solid var(--bordo);border-radius:12px;padding:16px;min-width:0;max-width:100%}
 #tcag .bp-titolo{font-size:18px;font-weight:600}
 #tcag .bp-pagina h2,
 #tcag .bp-pagina h3{font-family:var(--serif);font-weight:600;color:var(--nv);font-size:24px;line-height:1.15;letter-spacing:-0.02em}
@@ -1650,21 +1650,22 @@ html.tc-guscio body{margin:0}
 #tcag .bp-stato{font:600 14px var(--sans)}
 #tcag .bp-stato-ok{color:var(--verde)}
 #tcag .bp-stato-err{color:var(--rosso)}
-#tcag .bp-doc{display:flex;flex-direction:column;gap:8px;min-width:0;max-width:100%}
-#tcag .bp-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .bp-doc{display:flex;flex-direction:column;gap:8px;min-width:0;max-width:100%;padding:16px 0;border-top:1px solid var(--bordo)}
+#tcag .bp-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
 #tcag .bp-manca{border:1px solid var(--bordo);border-radius:12px;padding:16px}
-#tcag .bp-campo{display:block}
+#tcag .bp-campo{display:flex;flex-direction:column;gap:8px}
 #tcag .bp-unita-righe{display:flex;flex-direction:column;gap:8px}
 #tcag .bp-unita-riga{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:center}
 #tcag .bp-ver{font-weight:600}
 #tcag .bp-azioni{display:flex;flex-wrap:wrap;gap:8px}
 #tcag .bp-err{color:var(--rosso);min-height:0}
 #tcag .bp-nota{color:var(--tenue);font-size:14px}
-#tcag .bp-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-@media (max-width:639px){#tcag .bp-unita-riga{grid-template-columns:1fr}
+#tcag .bp-file{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
+@media (max-width:639px){#tcag .bp-unita-riga{grid-template-columns:minmax(0,1fr)}
 #tcag .bp-riga{flex-direction:column;align-items:flex-start}
 #tcag .bp-riga>*{max-width:100%;white-space:normal}
-#tcag .bp-azioni>*{width:100%}
+#tcag .bp-azioni>*:not(.bp-file){width:100%}
+#tcag .bp-azioni .btn{text-align:center}
 }
 #tcag .as-wrap{--as-fs:17px}
 #tcag .as-wrap.as-fs-s{--as-fs:15px}
@@ -1689,7 +1690,7 @@ html.tc-guscio body{margin:0}
 #tcag .as-side-h h2{margin:0}
 #tcag .as-side-x{flex:0 0 auto;min-width:44px;min-height:44px;border-radius:8px;font-size:18px;color:var(--tenue)}
 #tcag .as-side-x:hover{background:var(--avorio);color:var(--nv)}
-#tcag .st-pagina{display:flex;flex-direction:column;gap:16px;max-width:1200px}
+#tcag .st-pagina{display:flex;flex-direction:column;gap:16px;max-width:1800px}
 #tcag .st-avviso{margin:0;padding:12px 14px;border:1px solid #ecd68a;border-radius:10px;background:#fff8e1;color:#6b5314;font-size:16px;line-height:1.5}
 #tcag .st-arg{padding:12px 14px;border:1px solid var(--bordo);border-radius:12px;background:#fff}
 #tcag .st-arg h2{font:600 18px var(--serif);color:var(--nv);margin:0 0 8px}
@@ -1702,10 +1703,12 @@ html.tc-guscio body{margin:0}
 #tcag .st-griglia{display:block}
 #tcag .st-pan{display:none}
 #tcag .st-pan.st-on{display:block}
-@media (min-width:1100px){#tcag .st-griglia{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (min-width:1100px){#tcag .st-griglia{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(360px,1fr);gap:24px;align-items:start}
 #tcag .st-pan.st-pan-chat{display:block}
 #tcag .st-pan.st-dx{display:block}
 #tcag .st-tab-chat{display:none}
+}
+@media (min-width:1600px){#tcag .st-griglia{grid-template-columns:minmax(0,1fr) minmax(360px,45%)}
 }
 #tcag .st-log{display:flex;flex-direction:column;gap:10px;min-height:240px;max-height:60vh;overflow-y:auto;padding:12px;border:1px solid var(--bordo);border-radius:12px;background:var(--avorio)}
 #tcag .st-m{max-width:88%;padding:10px 14px;border-radius:14px;font-size:16px;line-height:1.5;overflow-wrap:anywhere}
@@ -1956,6 +1959,30 @@ html.tc-guscio body{margin:0}
 #tcag .br-ed-apre{font-size:12px;line-height:1.2;white-space:normal}
 #tcag .br-ed-apre[aria-pressed="true"]{border-color:var(--oro-t);color:var(--oro-t)}
 #tcag .br-ed-stili{display:flex;flex-direction:column;gap:8px}
+#tcag .adm-largo{max-width:1800px}
+#tcag .bp-colonne{display:flex;flex-direction:column;gap:16px;min-width:0}
+#tcag .bp-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+#tcag .bp-unita-riga>*{min-width:0;max-width:100%}
+#tcag .bp-pagina .btn{white-space:normal;max-width:100%}
+#tcag .bp-pagina input,
+#tcag .bp-pagina select,
+#tcag .bp-pagina textarea{max-width:100%;min-width:0;box-sizing:border-box}
+#tcag .bp-doc-t,
+#tcag .bp-ver,
+#tcag .bp-manca{min-width:0;overflow-wrap:anywhere}
+@media (min-width:1100px){#tcag .bp-colonne{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+}
+@media (min-width:1100px){#tcag .adm-griglia{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px}
+#tcag .adm-griglia .bpa-riga{grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-bottom:0}
+#tcag .adm-griglia .bpa-riga>*{min-width:0}
+#tcag .adm-griglia .bpa-riga .pill{justify-self:start}
+#tcag .adm-griglia .bpa-riga>span:first-child{font-weight:600}
+}
+#tcag .bp-pagina .bp-file{min-height:0;min-width:0}
+#tcag .adm-largo .lrow .g{min-width:0;overflow-wrap:anywhere}
+#tcag .adm-largo .lrow .bpa-riass{margin-top:4px}
+#tcag .adm-largo h2{font-family:var(--serif);font-weight:600;color:var(--nv);font-size:24px;line-height:1.15;margin:16px 0 8px}
+#tcag .adm-largo .sec-h{margin:24px 0 8px}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -1991,7 +2018,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.21.0';
+  var VERSIONE = 'V6.22.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -8407,6 +8434,8 @@ function findClose(){
     return isFinite(n) ? n : null;
   }
   function bpConta(x){ return Array.isArray(x) ? x.length : (typeof x === 'number' ? x : 0); }
+  // plurale condizionale: 1 documento / 2 documenti, 1 versione / 2 versioni
+  function bpPlurale(n, uno, molti){ return n === 1 ? '1 ' + uno : n + ' ' + molti; }
   function bpChiusa(){ return !!(BP.vista.dati && BP.vista.dati.stato === 'chiusa'); }
   function bpListaVecchia(){ BP.lista.stato = 'idle'; BP.lista.ok = false; }
   function bpAvvisa(testo){
@@ -8471,7 +8500,7 @@ function findClose(){
     if(BP.aperta) bpDisegnaPratica(host); else bpDisegnaElenco(host);
   }
   function bpRiga(p){
-    return H`<button class="bp-riga" type="button" data-act="bp-apri" data-id="${p.id}"><span class="bp-riga-t">${p.etichetta || ''}</span><span class="bp-stato">${p.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</span><span class="bp-nota">${bpConta(p.documenti)} documenti · ${bpConta(p.versioni)} versioni</span><span class="bp-nota">${fmt(p.aggiornata)}</span></button>`;
+    return H`<button class="bp-riga" type="button" data-act="bp-apri" data-id="${p.id}"><span class="bp-riga-t">${p.etichetta || ''}</span><span class="bp-stato">${p.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</span><span class="bp-nota">${bpPlurale(bpConta(p.documenti), 'documento', 'documenti')} · ${bpPlurale(bpConta(p.versioni), 'versione', 'versioni')}</span><span class="bp-nota">${fmt(p.aggiornata)}</span></button>`;
   }
   function bpDisegnaElenco(host){
     var L = BP.lista, cosa;
@@ -8505,9 +8534,7 @@ function findClose(){
       ${BP.msg ? H`<p class="${BP.msg.tipo === 'err' ? 'bp-err' : 'bp-nota'}" role="${BP.msg.tipo === 'err' ? 'alert' : 'status'}">${BP.msg.testo}</p>` : ''}
       ${manca.length ? H`<ul class="bp-nota">${manca.map(function(x){ return H`<li>${typeof x === 'string' ? x : (x && (x.domanda || x.campo)) || ''}</li>`; })}</ul>` : ''}
       ${BP.carico ? H`<p class="bp-nota">${BP.carico}</p>` : ''}
-      ${bpDisegnaDocumenti(v)}
-      ${bpDisegnaManca(v)}
-      ${bpDisegnaVersioni(v)}
+      <div class="bp-colonne"><div class="bp-col">${bpDisegnaDocumenti(v)}</div><div class="bp-col">${bpDisegnaManca(v)}${bpDisegnaVersioni(v)}</div></div>
       ${v.stato === 'aperta' ? H`<div class="bp-azioni"><button class="btn sec" type="button" data-act="bp-chiudi-chiedi">Chiudi la pratica</button></div>` : ''}
       <div class="bp-azioni"><button class="btn sec" type="button" data-act="bp-elimina-chiedi">Elimina la pratica</button></div>
     </div>`);
@@ -8617,7 +8644,7 @@ function findClose(){
   function bpCampoHTML(campo, d){
     var dentro = '';
     if(campo === 'vendita.unita')
-      dentro = H`<div class="bp-unita-righe" data-bp-v>${bpUnitaRiga()}${bpUnitaRiga()}</div><div class="bp-azioni"><button class="btn sec sm" type="button" data-act="bp-unita-aggiungi">Aggiungi unità</button></div>`;
+      dentro = H`<div class="bp-unita-righe" data-bp-v>${bpUnitaRiga()}${bpUnitaRiga()}</div>`;
     else if(campo === 'lavori.opere_edili')
       dentro = H`<label class="fld">Importo in euro<input type="text" data-bp-v inputmode="decimal"></label>`;
     else if(d.valori && Array.isArray(d.valori) && d.valori.length)
@@ -8629,7 +8656,8 @@ function findClose(){
     else if(d.tipo === 'string')
       dentro = H`<label class="fld">Risposta<input type="text" data-bp-v maxlength="500"></label>`;
     if(!dentro) return '';
-    return H`<div class="bp-campo">${dentro}<p class="bp-err" role="alert"></p><div class="bp-azioni"><button class="btn pri sm" type="button" data-act="bp-rispondi" data-campo="${campo}">Rispondi</button></div></div>`;
+    var aggiungi = campo === 'vendita.unita' ? H`<button class="btn sec sm" type="button" data-act="bp-unita-aggiungi">Aggiungi unità</button>` : '';
+    return H`<div class="bp-campo">${dentro}<p class="bp-err" role="alert"></p><div class="bp-azioni">${aggiungi}<button class="btn pri sm" type="button" data-act="bp-rispondi" data-campo="${campo}">Rispondi</button></div></div>`;
   }
   function bpUnitaAggiungi(el){
     var box = el.closest('.bp-manca'), righe = box ? box.querySelector('.bp-unita-righe') : null;
@@ -13582,7 +13610,7 @@ function findClose(){
   }
   function renderBpAdmin(box){
     if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
-    if(!box.querySelector('#tcag-bpa-imp')) put(box, H`<div class="narrow" style="max-width:900px"><section class="card bpa-imp" id="tcag-bpa-imp"></section><div id="tcag-bpa-corpo"></div></div>`);
+    if(!box.querySelector('#tcag-bpa-imp')) put(box, H`<div class="narrow adm-largo"><section class="card bpa-imp" id="tcag-bpa-imp"></section><div id="tcag-bpa-corpo"></div></div>`);
     var corpo = box.querySelector('#tcag-bpa-corpo'), imp = box.querySelector('#tcag-bpa-imp');
     // PARTE (a): interruttore e messaggio. Non si ridisegna mentre l'admin scrive nel campo del messaggio
     if(document.activeElement !== g('bpa-msg')){
@@ -13614,9 +13642,9 @@ function findClose(){
           return H`<option value="${o}" ${o === BPA.filtro ? 'selected' : ''}>${o}</option>`;
         }));
         cosaB = H`<label for="tcag-bpa-filtro">Agente</label> <select id="tcag-bpa-filtro" class="bpa-filtro">${opzioni}</select>
-          ${filtrata.length ? filtrata.map(function(p){
-            return H`<button class="bpa-riga" type="button" data-act="bpa-apri" data-id="${p.id}"><span>${p.etichetta || ''}</span><span class="mut">${p.proprietario || ''}</span><span class="pill ${p.stato === 'chiusa' ? 's-chiusa' : 's-corso'}">${p.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</span><span>${p.documenti || 0} documenti</span><span>${p.versioni || 0} versioni</span><span class="mut">${fmt(p.aggiornata)}</span></button>`;
-          }) : vuoto('Nessuna pratica per questo agente.')}`;
+          ${filtrata.length ? H`<div class="adm-griglia">${filtrata.map(function(p){
+            return H`<button class="bpa-riga" type="button" data-act="bpa-apri" data-id="${p.id}"><span>${p.etichetta || ''}</span><span class="mut">${p.proprietario || ''}</span><span class="pill ${p.stato === 'chiusa' ? 's-chiusa' : 's-corso'}">${p.stato === 'chiusa' ? 'Chiusa' : 'Aperta'}</span><span>${bpPlurale(p.documenti || 0, 'documento', 'documenti')}</span><span>${bpPlurale(p.versioni || 0, 'versione', 'versioni')}</span><span class="mut">${fmt(p.aggiornata)}</span></button>`;
+          })}</div>` : vuoto('Nessuna pratica per questo agente.')}`;
       }
       put(corpo, H`<div class="sec-h">Tutte le pratiche</div>${cosaB}`);
       var fl = g('bpa-filtro');
@@ -13632,7 +13660,7 @@ function findClose(){
           <p class="mut">Creata ${fmt(v.creata)} · Aggiornata ${fmt(v.aggiornata)}</p>
           <div class="sec-h">Documenti</div>
           ${(v.documenti || []).length ? (v.documenti || []).map(function(d){
-            return H`<div class="lrow"><span class="g"><b>${d.categoria || 'Da leggere'}</b> <span class="mut">${d.sottocategoria || ''}</span><br><span class="bpa-riass">${d.riassunto || ''}</span></span>${d.stato ? H`<span class="pill s-corso">${d.stato}</span>` : ''}${d.usa === false ? H`<span class="pill s-chiusa">escluso</span>` : ''}</div>`;
+            return H`<div class="lrow"><span class="g"><b>${d.categoria || 'Da leggere'}</b> <span class="mut">${d.sottocategoria || ''}</span><br><span class="bpa-riass">${d.riassunto || ''}</span></span>${bpaStato(d.stato) ? H`<span class="bp-stato">${bpaStato(d.stato)}</span>` : ''}${d.usa === false ? H`<span class="pill s-chiusa">escluso</span>` : ''}</div>`;
           }) : H`<p class="mut">Nessun documento.</p>`}
           <div class="sec-h">Cosa c’è / cosa manca</div>
           ${!(scheda.ho || []).length && !(scheda.manca || []).length ? H`<p class="mut">Niente da mostrare.</p>` : ''}
@@ -13649,6 +13677,11 @@ function findClose(){
       }
       put(corpo, H`<button class="btn sec t16" type="button" data-act="bpa-chiudi">Torna all’elenco</button>${cosaC}`);
     }
+  }
+  // etichette leggibili dello stato di un documento (il server manda il codice)
+  function bpaStato(s){
+    var k = String(s || '').toUpperCase();
+    return k === 'IN_LETTURA' ? 'Sto leggendo' : k === 'LETTO' ? 'Letto' : k === 'DA_LEGGERE' ? 'Da leggere' : '';
   }
   function bpaApri(id){
     if(!(U && U.ruolo === 'admin') || !id) return;
@@ -13771,7 +13804,7 @@ function stuaBarra(){
 
 function renderStudioAdmin(box){
   if(!(U && U.ruolo === 'admin')){ put(box, ''); return; }
-  if(!box.querySelector('#tcag-stua-imp')) put(box, H`<div class="narrow" style="max-width:900px"><section class="card stua-imp" id="tcag-stua-imp"></section><div id="tcag-stua-corpo"></div></div>`);
+  if(!box.querySelector('#tcag-stua-imp')) put(box, H`<div class="narrow adm-largo"><section class="card stua-imp" id="tcag-stua-imp"></section><div id="tcag-stua-corpo"></div></div>`);
   var corpo = box.querySelector('#tcag-stua-corpo'), imp = box.querySelector('#tcag-stua-imp');
   // PARTE (a): interruttore e messaggio. Non si ridisegna mentre l'admin scrive nel campo del messaggio
   if(document.activeElement !== g('stua-msg')){
@@ -13795,7 +13828,7 @@ function renderStudioAdmin(box){
   if(!DOC.albero.ok) cosaB = DOC.albero.stato === 'err' ? erroreBox('i Documenti', DOC.albero.err) : skel(2);
   else if(!STUA.mat.ok) cosaB = STUA.mat.stato === 'err' ? H`<div class="err" role="alert"><span>Non riesco a leggere i materiali di studio. ${STUA.mat.err || ''}</span><button class="btn sec sm" type="button" data-act="stua-riprova">Riprova</button></div>` : skel(2);
   else if(!righe.length) cosaB = vuoto('Nei Documenti non ci sono file .md.');
-  else cosaB = H`<div class="card rows">${righe.map(stuaRigaHTML)}</div>${stuaBarra()}`;
+  else cosaB = H`<div class="card rows adm-griglia">${righe.map(stuaRigaHTML)}</div>${stuaBarra()}`;
   put(corpo, H`<div class="sec-h">Materiali di studio</div>${cosaB}`);
 }
 
