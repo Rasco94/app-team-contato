@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 2144c04f)
+  Guscio app Team Contato - V1.4.0 (build 093e0d53)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.24.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.25.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '2144c04f', blocco: 'V6.24.0' };
+window.TC_APP = { versione: '1.4.0', build: '093e0d53', blocco: 'V6.25.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1697,6 +1697,17 @@ html.tc-guscio body{margin:0}
 #tcag .st-arg-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px 14px}
 #tcag .st-arg-c{display:flex;align-items:center;gap:10px;min-height:44px;font-size:16px;cursor:pointer}
 #tcag .st-arg-c input{width:24px;height:24px;flex:0 0 24px;margin:0;accent-color:var(--nv)}
+#tcag .st-argo{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;min-height:64px;padding:12px 14px;text-align:left;border:2px solid var(--bordo);border-radius:12px;background:#fff;color:var(--testo);cursor:pointer;transition:border-color 180ms, background-color 180ms, transform 180ms}
+#tcag .st-argo:hover{border-color:var(--oro)}
+#tcag .st-argo:active{transform:scale(.98)}
+#tcag .st-argo[aria-pressed=true]{border-color:var(--nv);background:#eef2fa}
+#tcag .st-argo[aria-pressed=true] .st-argo-n::before{content:"\2713\00a0"}
+#tcag .st-argo-n{font:700 18px/1.25 var(--sans);color:var(--nv);overflow-wrap:anywhere}
+#tcag .st-argo-d{font-size:15px;line-height:1.4;color:var(--tenue);overflow-wrap:anywhere}
+#tcag .st-argo-c{margin-top:4px;font:600 13px var(--sans);color:var(--tenue);letter-spacing:.02em}
+#tcag .st-modo{grid-column:1/-1;justify-self:start;min-height:44px;padding:0 4px;border:0;background:none;color:var(--nv);font:600 16px var(--sans);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+#tcag .st-modo:hover{text-decoration-thickness:2px}
+#tcag .st-arg-l:has(.st-argo){gap:12px}
 #tcag .st-tabs{display:flex;gap:8px;flex-wrap:wrap}
 #tcag .st-tab{min-height:44px;padding:0 16px;border:1px solid var(--bordo);border-radius:99px;background:#fff;color:var(--nv);font:600 16px var(--sans);cursor:pointer}
 #tcag .st-tab[aria-selected="true"]{background:var(--nv);color:#fff;border-color:var(--nv)}
@@ -2068,7 +2079,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.24.0';
+  var VERSIONE = 'V6.25.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -8927,7 +8938,8 @@ function findClose(){
   var ST_MAX_ARG = 10;
   var ST_SENZA_TEMPO = 600;
   var ST_STORIA = 10;
-  var ST = { stato:ris(), scelti:[], chat:[], lavagna:null, test:ris(), aperto:null, risposte:{}, esito:null, tab:'chat', inCorso:false, ctl:null, poll:0, pollN:0, conto:0, fine:0, inizio:0, chiedi:'', lavVol:false, lavCoda:null };
+  var ST_TROPPI = 'Hai scelto troppi argomenti: al massimo 10 documenti insieme.';
+  var ST = { stato:ris(), scelti:[], chat:[], lavagna:null, test:ris(), aperto:null, risposte:{}, esito:null, tab:'chat', inCorso:false, ctl:null, poll:0, pollN:0, conto:0, fine:0, inizio:0, chiedi:'', lavVol:false, lavCoda:null, modo:'argomenti', argScelti:[], titoli:{} };
   var stDettaglio = null;     // the test open in the page: { test:meta, domande:[...] }
   var stLavMsg = '';          // message of the board when there is no board
   var stMsgTest = '';         // message of the test list (create or delete failed)
@@ -8984,6 +8996,8 @@ function findClose(){
       ST.stato.dati = j;
       var ids = j && Array.isArray(j.materiali) ? j.materiali.map(function(m){ return m.id; }) : [];
       ST.scelti = ST.scelti.filter(function(id){ return ids.indexOf(id) >= 0; });
+      var argIds = j && Array.isArray(j.argomenti) ? j.argomenti.map(function(a){ return a ? a.id : null; }) : [];
+      ST.argScelti = ST.argScelti.filter(function(id){ return argIds.indexOf(id) >= 0; });
     }, function(e){ throw new Error((e && e.testo) || 'Errore'); });
   }
 
@@ -9046,7 +9060,7 @@ function findClose(){
               <label>Difficoltà<select id="tcag-st-diff"><option value="facile">Facile</option><option value="medio">Medio</option><option value="difficile">Difficile</option><option value="misto">Misto</option></select></label>
               <label>Domande<select id="tcag-st-n"><option value="5">5</option><option value="10" selected>10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option></select></label>
               <label>Tempo<select id="tcag-st-tempo-sel"><option value="600">Nessuno</option><option value="5">5 min</option><option value="10">10 min</option><option value="15" selected>15 min</option><option value="20">20 min</option><option value="30">30 min</option></select></label>
-              <button class="btn pri" type="button" data-act="stu-crea">Crea test</button>
+              <button class="btn pri" type="button" id="tcag-st-crea-btn" data-act="stu-crea">Crea test</button>
             </div>
             <div id="tcag-st-elenco"></div>
             <div id="tcag-st-svolgi" hidden></div>
@@ -9065,14 +9079,63 @@ function findClose(){
     if(ST.test.stato === 'idle') stCaricaTest();
   }
 
+  // Pure: needs no outer name, so the tests run it with new Function. The limit of 10 documents is written here on purpose.
+  function stArgomentiMateriali(argomenti, scelti){
+    var out = { materiali:[], troppi:false };
+    if(!Array.isArray(argomenti) || !Array.isArray(scelti)) return out;
+    argomenti.forEach(function(a){
+      if(!a || scelti.indexOf(a.id) < 0 || !Array.isArray(a.materiali)) return;
+      a.materiali.forEach(function(m){
+        if(typeof m === 'string' && m && out.materiali.indexOf(m) < 0) out.materiali.push(m);
+      });
+    });
+    out.troppi = out.materiali.length > 10;
+    return out;
+  }
+  // Pure as above: the names of the chosen topics in array order, joined and cut to 120 characters.
+  function stTitoloArgomenti(argomenti, scelti){
+    if(!Array.isArray(argomenti) || !Array.isArray(scelti)) return '';
+    var nomi = [];
+    argomenti.forEach(function(a){
+      if(a && scelti.indexOf(a.id) >= 0 && typeof a.nome === 'string' && a.nome) nomi.push(a.nome);
+    });
+    return nomi.join(' · ').slice(0, 120);
+  }
+  // Topics the gateway sends, kept only when they have an id and at least one material.
+  function stArgomentiPubblici(){
+    var a = ST.stato.dati && Array.isArray(ST.stato.dati.argomenti) ? ST.stato.dati.argomenti : [];
+    return a.filter(function(v){
+      return v && typeof v.id === 'string' && v.id && Array.isArray(v.materiali) && v.materiali.length > 0;
+    });
+  }
+  // The materials to send and whether they are too many: from the chosen topics in topic mode, else from the document checkboxes.
+  function stMaterialiScelti(){
+    var pub = stArgomentiPubblici();
+    if(pub.length > 0 && ST.modo === 'argomenti') return stArgomentiMateriali(pub, ST.argScelti);
+    return { materiali: ST.scelti.slice(), troppi: false };
+  }
   function stDisegnaArgomenti(){
     var box = g('st-arg-l'); if(!box) return;
     var mat = ST.stato.dati && Array.isArray(ST.stato.dati.materiali) ? ST.stato.dati.materiali : [];
-    if(!mat.length){ put(box, H`<p class="st-avviso">Non ci sono ancora materiali di studio.</p>`); return; }
-    put(box, mat.map(function(m){
+    var pub = stArgomentiPubblici();
+    var caselle = mat.map(function(m){
       var on = ST.scelti.indexOf(m.id) >= 0;
       return H`<label class="st-arg-c"><input type="checkbox" data-act="stu-arg" data-id="${m.id}" ${on ? 'checked' : ''}> <span>${m.titolo || ''}</span></label>`;
-    }));
+    });
+    // no topics from the gateway (or an old gateway): the checkboxes, as before
+    if(!pub.length){
+      if(!mat.length){ put(box, H`<p class="st-avviso">Non ci sono ancora materiali di studio.</p>`); return; }
+      put(box, caselle);
+      return;
+    }
+    if(ST.modo === 'argomenti'){
+      put(box, [pub.map(function(a){
+        var on = ST.argScelti.indexOf(a.id) >= 0, n = a.materiali.length;
+        return H`<button class="st-argo" type="button" aria-pressed="${on ? 'true' : 'false'}" data-act="stu-argo" data-id="${a.id}"><span class="st-argo-n">${a.nome || ''}</span>${a.descrizione ? H`<span class="st-argo-d">${a.descrizione}</span>` : ''}<span class="st-argo-c">${n === 1 ? '1 documento' : n + ' documenti'}</span></button>`;
+      }), H`<button class="st-modo" type="button" data-act="stu-modo" data-k="documenti">Scegli i singoli documenti</button>`]);
+      return;
+    }
+    put(box, [caselle, H`<button class="st-modo" type="button" data-act="stu-modo" data-k="argomenti">Torna agli argomenti</button>`]);
   }
   function stAggiornaSchede(){
     var chat = g('st-chat'), lav = g('st-lav'), tst = g('st-test');
@@ -9109,12 +9172,30 @@ function findClose(){
       ST.scelti.splice(k, 1);
     }
   }
+  // A topic card goes on or off in ST.argScelti; the warning shows when the union is over 10 documents.
+  function stArgo(el){
+    var id = el.getAttribute('data-id') || '';
+    var k = ST.argScelti.indexOf(id), scelto = k < 0;
+    if(scelto) ST.argScelti.push(id); else ST.argScelti.splice(k, 1);
+    el.setAttribute('aria-pressed', String(scelto));
+    stAvviso(stMaterialiScelti().troppi ? ST_TROPPI : '');
+    stBottoni();
+  }
+  // The two ways of choosing stay in memory; only the active one counts.
+  function stModo(k){
+    if(k !== 'argomenti' && k !== 'documenti') return;
+    ST.modo = k;
+    stAvviso('');
+    stDisegnaArgomenti();
+    stBottoni();
+  }
   function stBottoni(){
-    var busy = !!ST.ctl;
-    var inv = g('st-invia'), fer = g('st-ferma'), nuo = g('st-nuova');
-    if(inv) inv.disabled = busy;
+    var busy = !!ST.ctl, troppi = stMaterialiScelti().troppi;
+    var inv = g('st-invia'), fer = g('st-ferma'), nuo = g('st-nuova'), cb = g('st-crea-btn');
+    if(inv) inv.disabled = busy || troppi;
     if(fer) fer.hidden = !busy;
     if(nuo) nuo.disabled = busy;
+    if(cb) cb.disabled = troppi;
   }
 
   /* ---------- 3) CHAT ---------- */
@@ -9226,7 +9307,9 @@ function findClose(){
   function stManda(testo){
     if(ST.ctl) return false;
     testo = String(testo == null ? '' : testo).trim();
-    if(!ST.scelti.length){ stAvviso('Scegli almeno un argomento.'); return false; }
+    var sel = stMaterialiScelti();
+    if(!sel.materiali.length){ stAvviso('Scegli almeno un argomento.'); return false; }
+    if(sel.troppi){ stAvviso(ST_TROPPI); return false; }
     if(!testo){ stAvviso('Scrivi una domanda.'); return false; }
     if(testo.length > 1000){ stAvviso('La domanda è troppo lunga: massimo 1000 caratteri.'); return false; }
     stAvviso('');
@@ -9238,7 +9321,7 @@ function findClose(){
     stDisegnaLog();
     stBottoni();
     var log = g('st-log'); if(log) log.scrollTop = log.scrollHeight;
-    stApi('POST', 'chat', { materiali: ST.scelti.slice(), domanda: testo, storia: storia }, { come:'flusso', tempo: ST_T_LUNGO, ctl: ST.ctl })
+    stApi('POST', 'chat', { materiali: sel.materiali, domanda: testo, storia: storia }, { come:'flusso', tempo: ST_T_LUNGO, ctl: ST.ctl })
       .then(function(risp){ return stLeggiFlusso(risp); })
       .catch(function(e){
         if(ST.ctl && ST.ctl.signal.aborted) m.fermata = true;
@@ -9281,7 +9364,8 @@ function findClose(){
     if(ST.lavVol){ ST.lavCoda = { domanda: domanda, risposta: risposta }; return; }
     ST.lavVol = true;
     stLavMsg = '';
-    stApi('POST', 'lavagna', { materiali: ST.scelti.slice(), domanda: domanda, risposta: String(risposta).slice(0, 8000) }, { tempo: ST_T_LUNGO })
+    var sel = stMaterialiScelti();
+    stApi('POST', 'lavagna', { materiali: sel.materiali, domanda: domanda, risposta: String(risposta).slice(0, 8000) }, { tempo: ST_T_LUNGO })
       .then(function(j){ ST.lavagna = j && j.lavagna ? j.lavagna : null; })
       .catch(function(e){
         ST.lavagna = null;
@@ -9371,7 +9455,7 @@ function findClose(){
         : H`<button class="btn sec sm" type="button" data-act="stu-elimina-chiedi" data-id="${t.id}">Elimina</button>`;
     }
     return H`<div class="st-test-riga">
-      <b>${t.titolo || 'Test'}</b>
+      <b>${ST.titoli[t.id] || t.titolo || 'Test'}</b>
       <p>${tipo} · ${stato}</p>
       ${avviso ? H`<p class="st-avviso">${avviso}</p>` : ''}
       <div class="st-form">${fai ? H`<button class="btn pri sm" type="button" data-act="stu-apri" data-id="${t.id}">Fai il test</button>` : ''}${elimina}</div>
@@ -9379,11 +9463,18 @@ function findClose(){
     </div>`;
   }
   function stCrea(){
-    if(!ST.scelti.length){ stAvviso('Scegli almeno un argomento.'); return; }
+    var sel = stMaterialiScelti();
+    if(!sel.materiali.length){ stAvviso('Scegli almeno un argomento.'); return; }
+    if(sel.troppi){ stAvviso(ST_TROPPI); return; }
     stAvviso('');
     stMsgTest = '';
-    stApi('POST', 'test', { materiali: ST.scelti.slice(), tipo: stVal('st-tipo'), difficolta: stVal('st-diff'), n: Number(stVal('st-n')), tempo_min: Number(stVal('st-tempo-sel')) })
-      .then(function(){ return stCaricaTest(); })
+    // a test made from topics keeps the union's title on the page (the gateway writes the titles of the files)
+    var titolo = stArgomentiPubblici().length && ST.modo === 'argomenti' ? stTitoloArgomenti(stArgomentiPubblici(), ST.argScelti) : '';
+    stApi('POST', 'test', { materiali: sel.materiali, tipo: stVal('st-tipo'), difficolta: stVal('st-diff'), n: Number(stVal('st-n')), tempo_min: Number(stVal('st-tempo-sel')) })
+      .then(function(j){
+        if(titolo && j && j.id) ST.titoli[j.id] = titolo;
+        return stCaricaTest();
+      })
       .then(function(){ stAvviaGiro(); }, function(e){
         stMsgTest = (e && e.testo) || 'Errore';
         stDisegnaElenco();
@@ -9482,7 +9573,7 @@ function findClose(){
       return;
     }
     var meta = stDettaglio.test || {}, domande = Array.isArray(stDettaglio.domande) ? stDettaglio.domande : [];
-    var testa = H`<div class="st-form"><b>${meta.titolo || 'Test'}</b><button class="btn sec" type="button" data-act="stu-chiudi">Torna all'elenco</button></div>`;
+    var testa = H`<div class="st-form"><b>${ST.titoli[meta.id] || meta.titolo || 'Test'}</b><button class="btn sec" type="button" data-act="stu-chiudi">Torna all'elenco</button></div>`;
     if(ST.esito){ put(box, H`${testa}${stRisultato(ST.esito)}`); return; }
     var conto = Number(meta.tempo_min) > 0 && Number(meta.tempo_min) < ST_SENZA_TEMPO ? H`<p class="st-tempo" id="tcag-st-tempo"></p>` : '';
     var msg = stMsgTest ? H`<p class="st-avviso" role="alert">${stMsgTest}</p>` : '';
@@ -9524,6 +9615,8 @@ function findClose(){
   function stAzione(a, el){
     switch(a){
       case 'stu-arg': stArgomento(el); break;
+      case 'stu-argo': stArgo(el); break;
+      case 'stu-modo': stModo(el.getAttribute('data-k')); break;
       case 'stu-tab': stTab(el.getAttribute('data-k')); break;
       case 'stu-invia': stInviaDaForm(); break;
       case 'stu-ferma': stFerma(); break;
