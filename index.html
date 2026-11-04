@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 5f955aa0)
+  Guscio app Team Contato - V1.4.0 (build 7bcac5f1)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.31.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.32.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '5f955aa0', blocco: 'V6.31.0' };
+window.TC_APP = { versione: '1.4.0', build: '7bcac5f1', blocco: 'V6.32.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2448,8 +2448,103 @@ html.tc-guscio body{margin:0}
 #tcag .vt-m2.vt-A4o .vt-logo{grid-column:2;grid-row:1}
 #tcag .vt-m2.vt-A3o .vt-corpo,
 #tcag .vt-m2.vt-A4o .vt-corpo{grid-column:2;grid-row:2;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:calc(2.5 * var(--vt-u));min-height:0}
+#tcag .vt-m3{--vt-pannello:rgba(10,42,94,.92);grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#tcag .vt-m3 .vt-foto{grid-area:1 / 1}
+#tcag .vt-m3 .vt-corpo{position:absolute;left:0;right:0;bottom:0;height:40%;box-sizing:border-box;padding:calc(5 * var(--vt-u));display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:end;gap:calc(2 * var(--vt-u)) calc(4 * var(--vt-u));border-top:.6mm solid var(--oro);background:var(--vt-pannello)}
+#tcag .vt-m3 .vt-testa,
+#tcag .vt-m3 .vt-cifre,
+#tcag .vt-m3 .vt-zona,
+#tcag .vt-m3 .vt-codice{grid-column:1}
+#tcag .vt-m3 .vt-qr{grid-column:2;grid-row:1 / span 5;align-self:end;background:var(--bianco)}
+#tcag .vt-m3 .vt-cifre{flex-wrap:nowrap;padding:calc(2 * var(--vt-u)) 0;border-top:.3mm solid var(--oro);border-bottom:.3mm solid var(--oro)}
+#tcag .vt-m3 .vt-cifra+.vt-cifra{border-left:.3mm solid var(--oro);padding:0 calc(3 * var(--vt-u))}
+#tcag .vt-m3 .vt-titolo{color:var(--avorio);font-size:calc(var(--vt-k) * 32pt);font-weight:600;letter-spacing:-0.02em;line-height:1.08}
+#tcag .vt-m3 .vt-prezzo{color:var(--avorio);font-size:calc(var(--vt-k) * 30pt);font-weight:700}
+#tcag .vt-m3 .vt-cifra b{color:var(--avorio);font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m3 .vt-cifra span{color:var(--avorio);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m3 .vt-zona{color:var(--avorio);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m3 .vt-codice{color:var(--avorio);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m3 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m3 .vt-logo{position:absolute;top:calc(4 * var(--vt-u));left:calc(4 * var(--vt-u));box-sizing:border-box;padding:calc(1.5 * var(--vt-u)) calc(2.5 * var(--vt-u));border-radius:999px;background:var(--nv);color:var(--avorio);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m3.vt-A3o .vt-corpo,
+#tcag .vt-m3.vt-A4o .vt-corpo{top:0;left:auto;right:0;bottom:0;width:40%;height:auto;grid-template-columns:minmax(0,1fr);border-top:0;border-left:.6mm solid var(--oro)}
+#tcag .vt-m3.vt-A3o .vt-qr,
+#tcag .vt-m3.vt-A4o .vt-qr{grid-column:1;grid-row:auto;justify-self:start}
+#tcag .vt-m4{background:#fbfaf7;grid-template-rows:55% minmax(0,1fr);grid-template-columns:minmax(0,1fr);box-sizing:border-box;padding:calc(6 * var(--vt-u));row-gap:calc(5 * var(--vt-u))}
+#tcag .vt-m4 .vt-foto{grid-row:1;grid-column:1}
+#tcag .vt-m4 .vt-corpo{grid-row:2;grid-column:1;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto minmax(0,1fr);gap:calc(2 * var(--vt-u)) calc(4 * var(--vt-u));min-height:0}
+#tcag .vt-m4 .vt-testa{grid-column:1;grid-row:1}
+#tcag .vt-m4 .vt-cifre{grid-column:1;grid-row:2;flex-wrap:nowrap;align-items:baseline}
+#tcag .vt-m4 .vt-qr{grid-column:2;grid-row:1 / -1;align-self:end;padding:0}
+#tcag .vt-m4 .vt-zona{display:none;color:var(--tenue);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m4 .vt-codice{display:none;color:var(--tenue);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m4 .vt-titolo{color:var(--nv);font-size:calc(var(--vt-k) * 30pt);font-weight:600;letter-spacing:-0.02em;line-height:1.08}
+#tcag .vt-m4 .vt-prezzo{color:var(--nv);font-size:calc(var(--vt-k) * 28pt);font-weight:700}
+#tcag .vt-m4 .vt-cifra{flex-direction:row;align-items:baseline;gap:calc(.8 * var(--vt-u))}
+#tcag .vt-m4 .vt-cifra b{color:var(--testo);font-size:calc(var(--vt-k) * 16pt);font-weight:600}
+#tcag .vt-m4 .vt-cifra span{color:var(--tenue);font-size:calc(var(--vt-k) * 12pt);text-transform:none;letter-spacing:normal}
+#tcag .vt-m4 .vt-cifra+.vt-cifra::before{content:"\00b7";color:var(--tenue);margin:0 calc(1.5 * var(--vt-u))}
+#tcag .vt-m4 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m4 .vt-logo{position:absolute;left:calc(6 * var(--vt-u));bottom:calc(6 * var(--vt-u));color:var(--nv);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m4.vt-A3o,
+#tcag .vt-m4.vt-A4o{grid-template-columns:55% minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#tcag .vt-m4.vt-A3o .vt-corpo,
+#tcag .vt-m4.vt-A4o .vt-corpo{grid-row:1;grid-column:2}
+#tcag .vt-m5{background:var(--bianco);grid-template-columns:minmax(0,1fr);grid-template-rows:32% 32% minmax(0,1fr);row-gap:1.2mm}
+#tcag .vt-m5 .vt-foto{grid-row:1;grid-column:1}
+#tcag .vt-m5 .vt-foto2{grid-row:2;grid-column:1}
+#tcag .vt-m5 .vt-corpo{grid-row:3;grid-column:1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:start;gap:calc(3 * var(--vt-u)) calc(4 * var(--vt-u));padding:0 calc(5 * var(--vt-u)) calc(5 * var(--vt-u));min-height:0}
+#tcag .vt-m5 .vt-testa{grid-column:1/-1;background:var(--nv);margin:0 calc(-5 * var(--vt-u));padding:calc(3.5 * var(--vt-u)) calc(5 * var(--vt-u));border-bottom:.6mm solid var(--oro);display:flex;justify-content:space-between;align-items:baseline;gap:calc(4 * var(--vt-u))}
+#tcag .vt-m5 .vt-cifre,
+#tcag .vt-m5 .vt-zona,
+#tcag .vt-m5 .vt-codice{grid-column:1}
+#tcag .vt-m5 .vt-cifre{gap:calc(4 * var(--vt-u))}
+#tcag .vt-m5 .vt-qr{grid-column:2;grid-row:2;align-self:start}
+#tcag .vt-m5 .vt-titolo{color:var(--avorio);font-size:calc(var(--vt-k) * 32pt);font-weight:600;letter-spacing:-0.02em;line-height:1.08}
+#tcag .vt-m5 .vt-prezzo{color:var(--avorio);font-size:calc(var(--vt-k) * 30pt);font-weight:700;white-space:nowrap}
+#tcag .vt-m5 .vt-cifra b{color:var(--testo);font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m5 .vt-cifra span{color:var(--tenue);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m5 .vt-zona{color:var(--tenue);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m5 .vt-codice{color:var(--tenue);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m5 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m5 .vt-logo{position:absolute;left:calc(5 * var(--vt-u));bottom:calc(5 * var(--vt-u));color:var(--nv);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m5.vt-A3o,
+#tcag .vt-m5.vt-A4o{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:55% minmax(0,1fr);column-gap:1.2mm}
+#tcag .vt-m5.vt-A3o .vt-foto,
+#tcag .vt-m5.vt-A4o .vt-foto{grid-row:1;grid-column:1}
+#tcag .vt-m5.vt-A3o .vt-foto2,
+#tcag .vt-m5.vt-A4o .vt-foto2{grid-row:1;grid-column:2}
+#tcag .vt-m5.vt-A3o .vt-corpo,
+#tcag .vt-m5.vt-A4o .vt-corpo{grid-row:2;grid-column:1/-1}
+#tcag .vt-m6{background:var(--avorio);grid-template-rows:45% minmax(0,1fr);grid-template-columns:minmax(0,1fr)}
+#tcag .vt-m6.vt-A3v,
+#tcag .vt-m6.vt-A3o{--vt-qr:60mm}
+#tcag .vt-m6.vt-A4v,
+#tcag .vt-m6.vt-A4o{--vt-qr:45mm}
+#tcag .vt-m6 .vt-foto{grid-row:1;grid-column:1}
+#tcag .vt-m6 .vt-corpo{grid-row:2;grid-column:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:calc(2.5 * var(--vt-u));box-sizing:border-box;padding:calc(4 * var(--vt-u)) calc(5 * var(--vt-u));min-height:0}
+#tcag .vt-m6 .vt-testa{order:1;display:flex;flex-direction:column;align-items:center;gap:calc(1 * var(--vt-u))}
+#tcag .vt-m6 .vt-qr{order:2;background:var(--bianco);border:.3mm solid var(--oro);padding:calc(2 * var(--vt-u))}
+#tcag .vt-m6 .vt-cifre{order:3;justify-content:center;gap:calc(4 * var(--vt-u))}
+#tcag .vt-m6 .vt-cifra{align-items:center}
+#tcag .vt-m6 .vt-titolo{color:var(--nv);font-size:calc(var(--vt-k) * 28pt);font-weight:600;letter-spacing:-0.02em;line-height:1.1}
+#tcag .vt-m6 .vt-prezzo{box-sizing:border-box;color:var(--nv);font-size:calc(var(--vt-k) * 44pt);font-weight:700;line-height:1}
+#tcag .vt-m6 .vt-cifra b{color:var(--testo);font-size:calc(var(--vt-k) * 16pt);font-weight:600}
+#tcag .vt-m6 .vt-cifra span{color:var(--tenue);font-size:calc(var(--vt-k) * 9pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m6 .vt-zona{font-size:calc(var(--vt-k) * 11pt);order:4;color:var(--tenue)}
+#tcag .vt-m6 .vt-codice{font-size:calc(var(--vt-k) * 9pt);order:5;color:var(--tenue)}
+#tcag .vt-m6 .vt-qr span{font-size:calc(var(--vt-k) * 12pt);font-weight:600;color:var(--testo)}
+#tcag .vt-m6 .vt-logo{position:absolute;top:calc(4 * var(--vt-u));right:calc(4 * var(--vt-u));box-sizing:border-box;padding:calc(1.5 * var(--vt-u)) calc(2.5 * var(--vt-u));border-radius:999px;background:var(--avorio);color:var(--nv);font-size:calc(var(--vt-k) * 11pt)}
+#tcag .vt-m6.vt-A3o,
+#tcag .vt-m6.vt-A4o{grid-template-columns:45% minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#tcag .vt-m6.vt-A3o .vt-corpo,
+#tcag .vt-m6.vt-A4o .vt-corpo{grid-row:1;grid-column:2;justify-content:center}
 #tcag .vt-mini-m1{background:linear-gradient(#7d8ba3 0 60%,#0a2a5e 60%)}
 #tcag .vt-mini-m2{background:linear-gradient(#faf9f6 0 10%,#7d8ba3 10% 58%,#faf9f6 58%)}
+#tcag .vt-mini-m3{background:linear-gradient(#7d8ba3 0 62%,#0a2a5e 62% 100%)}
+#tcag .vt-mini-m4{background:linear-gradient(#fbfaf7 0 8%,#7d8ba3 8% 62%,#fbfaf7 62%)}
+#tcag .vt-mini-m5{background:linear-gradient(#7d8ba3 0 30%,#fff 30% 32%,#7d8ba3 32% 62%,#0a2a5e 62% 76%,#fff 76%)}
+#tcag .vt-mini-m6{background:linear-gradient(#faf9f6 0 45%,#0a2a5e 45% 47%,#faf9f6 47%)}
 @media print{#tcag .vt-foglio{transform:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media print{#tcag #tcag-vt-anteprima .vt-foglio{outline:0}
@@ -2489,7 +2584,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.31.0';
+  var VERSIONE = 'V6.32.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -10065,15 +10160,15 @@ function findClose(){
   var BR_LINGUE = ['it', 'en', 'de', 'fr', 'es', 'ru', 'pl', 'zh', 'ja'];
   var BR_NOMI = { it:'Italiano', en:'Inglese', de:'Tedesco', fr:'Francese', es:'Spagnolo', ru:'Russo', pl:'Polacco', zh:'Cinese', ja:'Giapponese' };
   var BR_TESTI = {
-    it: { prezzo:'Prezzo', prezzo_riservato:'Prezzo riservato', superficie:'Superficie', camere:'Camere', bagni:'Bagni', tipo:'Tipologia', contratto:'Contratto', zona:'Zona', codice:'Codice immobile', scansiona:'Scansiona per vedere l’annuncio', contatti:'Contatti', vendita:'Vendita', affitto:'Affitto', collezione:'Collezione Lusso', pregio:'Immobili di pregio' },
-    en: { prezzo:'Price', prezzo_riservato:'Price on request', superficie:'Floor area', camere:'Bedrooms', bagni:'Bathrooms', tipo:'Property type', contratto:'Contract', zona:'Area', codice:'Property code', scansiona:'Scan to view the listing', contatti:'Contacts', vendita:'For sale', affitto:'For rent', collezione:'Luxury Collection', pregio:'Prestige properties' },
-    de: { prezzo:'Preis', prezzo_riservato:'Preis auf Anfrage', superficie:'Wohnfläche', camere:'Zimmer', bagni:'Badezimmer', tipo:'Objektart', contratto:'Vertrag', zona:'Lage', codice:'Objektnummer', scansiona:'Scannen, um das Inserat zu sehen', contatti:'Kontakt', vendita:'Kauf', affitto:'Miete', collezione:'Luxuskollektion', pregio:'Exklusive Immobilien' },
-    fr: { prezzo:'Prix', prezzo_riservato:'Prix sur demande', superficie:'Surface', camere:'Chambres', bagni:'Salles de bains', tipo:'Type de bien', contratto:'Contrat', zona:'Quartier', codice:'Référence du bien', scansiona:'Scannez pour voir l’annonce', contatti:'Contacts', vendita:'Vente', affitto:'Location', collezione:'Collection Luxe', pregio:'Biens de prestige' },
-    es: { prezzo:'Precio', prezzo_riservato:'Precio a consultar', superficie:'Superficie', camere:'Habitaciones', bagni:'Baños', tipo:'Tipo de inmueble', contratto:'Contrato', zona:'Zona', codice:'Referencia del inmueble', scansiona:'Escanea para ver el anuncio', contatti:'Contacto', vendita:'Venta', affitto:'Alquiler', collezione:'Colección de Lujo', pregio:'Inmuebles de prestigio' },
-    ru: { prezzo:'Цена', prezzo_riservato:'Цена по запросу', superficie:'Площадь', camere:'Спальни', bagni:'Ванные комнаты', tipo:'Тип объекта', contratto:'Договор', zona:'Район', codice:'Код объекта', scansiona:'Отсканируйте, чтобы открыть объявление', contatti:'Контакты', vendita:'Продажа', affitto:'Аренда', collezione:'Коллекция люкс', pregio:'Элитная недвижимость' },
-    pl: { prezzo:'Cena', prezzo_riservato:'Cena na zapytanie', superficie:'Powierzchnia', camere:'Sypialnie', bagni:'Łazienki', tipo:'Rodzaj nieruchomości', contratto:'Umowa', zona:'Okolica', codice:'Kod nieruchomości', scansiona:'Zeskanuj, aby zobaczyć ogłoszenie', contatti:'Kontakt', vendita:'Sprzedaż', affitto:'Wynajem', collezione:'Kolekcja luksusowa', pregio:'Nieruchomości prestiżowe' },
-    zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租', collezione:'豪华精选', pregio:'精品房产' },
-    ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件' }
+    it: { prezzo:'Prezzo', prezzo_riservato:'Prezzo riservato', superficie:'Superficie', camere:'Camere', bagni:'Bagni', tipo:'Tipologia', contratto:'Contratto', zona:'Zona', codice:'Codice immobile', scansiona:'Scansiona per vedere l’annuncio', contatti:'Contatti', vendita:'Vendita', affitto:'Affitto', collezione:'Collezione Lusso', pregio:'Immobili di pregio', inquadra:'Inquadra per vedere foto e dettagli' },
+    en: { prezzo:'Price', prezzo_riservato:'Price on request', superficie:'Floor area', camere:'Bedrooms', bagni:'Bathrooms', tipo:'Property type', contratto:'Contract', zona:'Area', codice:'Property code', scansiona:'Scan to view the listing', contatti:'Contacts', vendita:'For sale', affitto:'For rent', collezione:'Luxury Collection', pregio:'Prestige properties', inquadra:'Scan to see photos and details' },
+    de: { prezzo:'Preis', prezzo_riservato:'Preis auf Anfrage', superficie:'Wohnfläche', camere:'Zimmer', bagni:'Badezimmer', tipo:'Objektart', contratto:'Vertrag', zona:'Lage', codice:'Objektnummer', scansiona:'Scannen, um das Inserat zu sehen', contatti:'Kontakt', vendita:'Kauf', affitto:'Miete', collezione:'Luxuskollektion', pregio:'Exklusive Immobilien', inquadra:'Scannen für Fotos und Details' },
+    fr: { prezzo:'Prix', prezzo_riservato:'Prix sur demande', superficie:'Surface', camere:'Chambres', bagni:'Salles de bains', tipo:'Type de bien', contratto:'Contrat', zona:'Quartier', codice:'Référence du bien', scansiona:'Scannez pour voir l’annonce', contatti:'Contacts', vendita:'Vente', affitto:'Location', collezione:'Collection Luxe', pregio:'Biens de prestige', inquadra:'Scannez pour voir photos et détails' },
+    es: { prezzo:'Precio', prezzo_riservato:'Precio a consultar', superficie:'Superficie', camere:'Habitaciones', bagni:'Baños', tipo:'Tipo de inmueble', contratto:'Contrato', zona:'Zona', codice:'Referencia del inmueble', scansiona:'Escanea para ver el anuncio', contatti:'Contacto', vendita:'Venta', affitto:'Alquiler', collezione:'Colección de Lujo', pregio:'Inmuebles de prestigio', inquadra:'Escanea para ver fotos y detalles' },
+    ru: { prezzo:'Цена', prezzo_riservato:'Цена по запросу', superficie:'Площадь', camere:'Спальни', bagni:'Ванные комнаты', tipo:'Тип объекта', contratto:'Договор', zona:'Район', codice:'Код объекта', scansiona:'Отсканируйте, чтобы открыть объявление', contatti:'Контакты', vendita:'Продажа', affitto:'Аренда', collezione:'Коллекция люкс', pregio:'Элитная недвижимость', inquadra:'Отсканируйте, чтобы увидеть фото и детали' },
+    pl: { prezzo:'Cena', prezzo_riservato:'Cena na zapytanie', superficie:'Powierzchnia', camere:'Sypialnie', bagni:'Łazienki', tipo:'Rodzaj nieruchomości', contratto:'Umowa', zona:'Okolica', codice:'Kod nieruchomości', scansiona:'Zeskanuj, aby zobaczyć ogłoszenie', contatti:'Kontakt', vendita:'Sprzedaż', affitto:'Wynajem', collezione:'Kolekcja luksusowa', pregio:'Nieruchomości prestiżowe', inquadra:'Zeskanuj, aby zobaczyć zdjęcia i szczegóły' },
+    zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租', collezione:'豪华精选', pregio:'精品房产', inquadra:'扫码查看照片和详情' },
+    ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件', inquadra:'スキャンして写真と詳細を見る' }
   };
   var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1, cat:'classici' }, { n:2, nome:'Griglia classica', foto:4, cat:'classici' }, { n:3, nome:'Magazine', foto:3, cat:'classici' }, { n:4, nome:'Minimal', foto:1, cat:'moderni' }, { n:5, nome:'Lusso scuro', foto:2, cat:'lusso' }, { n:6, nome:'Banda laterale', foto:3, cat:'moderni' }, { n:7, nome:'Mosaico', foto:6, cat:'fotografici' }, { n:8, nome:'Panorama', foto:2, cat:'moderni' }, { n:9, nome:'Scheda tecnica', foto:4, cat:'classici' }, { n:10, nome:'Doppia colonna', foto:4, cat:'classici' }, { n:11, nome:'Casa d’aste', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:12, nome:'Rivista d’architettura', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:13, nome:'Catalogo privato', foto:4, cat:'lusso', blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, nome:'Editoriale avorio', foto:4, cat:'lusso', blocchi:['occhiello','pregio'] }, { n:15, nome:'Galleria', foto:3, cat:'lusso', blocchi:['occhiello'] }, { n:16, nome:'Notturno', foto:1, cat:'lusso', blocchi:['occhiello','cifre'] }, { n:17, nome:'Monografia', foto:3, cat:'lusso', blocchi:['occhiello'] }, { n:18, nome:'Ritratto', foto:3, cat:'lusso', blocchi:['occhiello','cifre'] }];
   var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
@@ -11468,9 +11563,10 @@ function findClose(){
     if(so){ so.textContent = 'Attivo'; so.classList.add('ok'); }
   }
   /* VETRINE (V6.31.0, ticket T-MVZM5L21): cartelli da stampare per la vetrina dell'agenzia.
+     V6.32.0: models 3-6 (Notte sul lago, Minimal, Doppia foto, QR grande).
      Riusa il motore della brochure (dati, lingue, QR, font, stampa): le funzioni si chiamano, non si copiano.
      Stato: VT in memoria (formato e modello). Lingua e immobile sono quelli della brochure (BR). */
-  var VT_MODELLI = [{ n:1, nome:'Vetrina classica' }, { n:2, nome:'Cartello lusso' }];
+  var VT_MODELLI = [{ n:1, nome:'Vetrina classica' }, { n:2, nome:'Cartello lusso' }, { n:3, nome:'Notte sul lago' }, { n:4, nome:'Minimal' }, { n:5, nome:'Doppia foto' }, { n:6, nome:'QR grande' }];
   var VT_FORMATI = [['A3v', 'A3 verticale'], ['A3o', 'A3 orizzontale'], ['A4v', 'A4 verticale'], ['A4o', 'A4 orizzontale']];
   var VT = { formato:'A3v', modello:1, msg:'' };
 
@@ -11497,6 +11593,14 @@ function findClose(){
       zona: [i.zona, i.citta && i.citta !== i.zona ? i.citta : ''].filter(Boolean).join(' · '),
       codice: brVuoto(i.codice) ? '' : brTesto(l, 'codice') + ' ' + i.codice
     };
+  }
+  // second photo of the sheet (model 5): the first photo of the list that is not the opening one; the opening one if there is none
+  function vtFoto2(prima, elenco){
+    if(!Array.isArray(elenco)) return prima;
+    for(var k = 0; k < elenco.length; k++){
+      if(typeof elenco[k] === 'string' && elenco[k] !== '' && elenco[k] !== prima) return elenco[k];
+    }
+    return prima;
   }
   function vtSvuota(id){
     var el = g(id);
@@ -11588,12 +11692,13 @@ function findClose(){
     var cifre = c.cifre.map(function(x){ return H`<div class="vt-cifra"><b>${x[0]}</b><span>${x[1]}</span></div>`; });
     return H`<div id="tcag-vt-foglio" class="vt-foglio vt-m${VT.modello} vt-${VT.formato}" lang="${brLangAttr(l)}">
       <div class="vt-foto">${foto ? H`<img class="vt-img" src="${foto}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>
+      ${VT.modello === 5 ? H`<div class="vt-foto vt-foto2"><img class="vt-img" src="${vtFoto2(foto, BR.foto)}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false"></div>` : ''}
       <div class="vt-corpo">
         <div class="vt-testa"><h1 class="vt-titolo">${titolo}</h1>${c.prezzo ? H`<p class="vt-prezzo">${c.prezzo}</p>` : ''}</div>
         ${cifre.length ? H`<div class="vt-cifre">${cifre}</div>` : ''}
         ${c.zona ? H`<p class="vt-zona">${c.zona}</p>` : ''}
         ${c.codice ? H`<p class="vt-codice">${c.codice}</p>` : ''}
-        <div id="tcag-vt-qr" class="vt-qr"><span>${brTesto(l, 'scansiona')}</span></div>
+        <div id="tcag-vt-qr" class="vt-qr"><span>${brTesto(l, VT.modello === 6 ? 'inquadra' : 'scansiona')}</span></div>
       </div>
       <div class="vt-logo"><svg class="vt-logo-ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#tci-logo"/></svg><span>Team Contato</span></div>
     </div>`;
