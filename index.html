@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build a79b61f0)
+  Guscio app Team Contato - V1.4.0 (build 5f955aa0)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.30.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.31.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'a79b61f0', blocco: 'V6.30.0' };
+window.TC_APP = { versione: '1.4.0', build: '5f955aa0', blocco: 'V6.31.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1801,13 +1801,14 @@ html.tc-guscio body{margin:0}
 }
 #tcag .br-pagina button{min-height:44px}
 #tcag .br-scelta{display:flex;flex-direction:column;gap:12px}
+#tcag .br-scelta h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.15;color:var(--nv);margin:24px 0 12px}
 #tcag .br-cerca{display:block;width:100%;min-height:44px;font-size:16px;padding:0 12px;border:1px solid var(--bordo);border-radius:8px;background:#fff;color:var(--testo)}
 #tcag .br-lista{display:flex;flex-direction:column;gap:8px}
-#tcag .br-riga{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:center;width:100%;min-height:44px;padding:10px 12px;text-align:left;background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio)}
+#tcag .br-riga{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:2px;align-items:baseline;width:100%;min-height:44px;padding:10px 12px;text-align:left;background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio)}
 #tcag .br-riga:hover{border-color:var(--oro)}
 #tcag .br-riga-c{font:600 13px var(--sans);color:var(--oro-t);letter-spacing:.06em}
-#tcag .br-riga-t{min-width:0;overflow-wrap:anywhere;font-size:16px}
-#tcag .br-riga-z{font-size:14px;color:var(--tenue)}
+#tcag .br-riga-t{min-width:0;overflow-wrap:anywhere;font-size:15px;font-weight:600;color:var(--testo)}
+#tcag .br-riga-z{grid-column:2;text-align:left;font-size:13px;color:var(--tenue)}
 #tcag .br-comandi{display:flex;flex-direction:column;gap:24px}
 @media (min-width:1100px){#tcag .br-comandi{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 32px}
 #tcag .br-comandi>.br-cat,
@@ -1815,7 +1816,8 @@ html.tc-guscio body{margin:0}
 }
 #tcag .br-grp{display:flex;flex-direction:column;min-width:0}
 #tcag .br-etich{display:block;margin:0 0 8px;font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.22em;color:var(--tenue)}
-#tcag .br-barra{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+#tcag .br-barra{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+#tcag .br-barra .btn.sec{border:1px solid var(--nv);color:var(--nv);background:transparent}
 #tcag .br-cat{margin:0;max-width:320px}
 #tcag .br-cat select{min-height:44px;height:44px;min-width:220px;max-width:100%;padding:0 12px;font:400 16px var(--sans);color:var(--testo);background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio)}
 #tcag .br-cat select:focus{border-color:var(--nv)}
@@ -1825,8 +1827,9 @@ html.tc-guscio body{margin:0}
 #tcag .br-lingua[aria-pressed="true"],
 #tcag .br-fmt[aria-pressed="true"],
 #tcag .br-mod[aria-pressed="true"]{background:var(--nv);color:#fff;border-color:var(--nv)}
-#tcag .br-lingua:disabled{opacity:.55;cursor:not-allowed}
+#tcag .br-lingua:disabled{color:var(--nv);border-style:dashed;border-color:var(--bordo);cursor:not-allowed}
 #tcag .br-manca{font-size:13px;font-weight:400}
+#tcag .br-lingua:disabled .br-manca{color:var(--tenue);font-size:13px}
 #tcag .br-modelli{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
 #tcag .br-mod{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:44px;padding:8px;border:1px solid var(--bordo);border-radius:10px;background:#fff;color:var(--nv);font:600 14px var(--sans)}
 #tcag .br-mini{display:block;width:48px;height:68px;border:1px solid #cfc9b8;background:#fff}
@@ -2378,6 +2381,79 @@ html.tc-guscio body{margin:0}
 }
 @media (min-width:1100px){#tcag .stua-prova{grid-template-columns:minmax(320px,440px) minmax(0,1fr);gap:24px;align-items:start}
 }
+#tcag .vt-foglio.vt-A3v{width:297mm;height:420mm;--vt-u:2.97mm;--vt-k:1.4142;--vt-qr:50mm}
+#tcag .vt-foglio.vt-A3o{width:420mm;height:297mm;--vt-u:4.2mm;--vt-k:1.4142;--vt-qr:50mm}
+#tcag .vt-foglio.vt-A4v{width:210mm;height:297mm;--vt-u:2.1mm;--vt-k:1;--vt-qr:36mm}
+#tcag .vt-foglio.vt-A4o{width:297mm;height:210mm;--vt-u:2.97mm;--vt-k:1;--vt-qr:36mm}
+#tcag .vt-foglio{box-sizing:border-box;position:relative;overflow:hidden;display:grid;transform-origin:0 0;background:var(--bianco);color:var(--testo);font-family:var(--br-sans);line-height:1.3}
+#tcag #tcag-vt-anteprima{overflow:hidden;position:relative}
+#tcag #tcag-vt-anteprima .vt-foglio{outline:1px solid var(--bordo)}
+#tcag .vt-foto{position:relative;min-width:0;min-height:0;overflow:hidden}
+#tcag .vt-img{display:block;width:100%;height:100%;object-fit:cover}
+#tcag .vt-titolo{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-family:var(--br-serif);overflow-wrap:anywhere}
+#tcag .vt-prezzo{font-family:var(--br-serif)}
+#tcag .vt-testa,
+#tcag .vt-zona,
+#tcag .vt-codice,
+#tcag .vt-cifra{min-width:0}
+#tcag .vt-zona,
+#tcag .vt-codice{overflow-wrap:anywhere}
+#tcag .vt-cifre{display:flex;flex-wrap:wrap}
+#tcag .vt-cifra{display:flex;flex-direction:column}
+#tcag .vt-qr{display:flex;flex-direction:column;align-items:center;box-sizing:border-box;gap:calc(1 * var(--vt-u));padding:calc(1.5 * var(--vt-u))}
+#tcag .vt-qr .br-qr-svg{display:block;width:var(--vt-qr);height:var(--vt-qr)}
+#tcag .vt-logo{display:flex;align-items:center;gap:calc(1.2 * var(--vt-u));font-family:var(--br-serif);font-weight:600}
+#tcag .vt-logo-ico{flex:0 0 auto;width:calc(6 * var(--vt-u));height:calc(6 * var(--vt-u))}
+#tcag .vt-m1{grid-template-columns:minmax(0,1fr);grid-template-rows:60% minmax(0,1fr)}
+#tcag .vt-m1 .vt-foto{grid-row:1}
+#tcag .vt-m1 .vt-corpo{grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:end;align-items:end;gap:calc(2 * var(--vt-u)) calc(3 * var(--vt-u));box-sizing:border-box;padding:calc(5 * var(--vt-u));border-top:.8mm solid var(--oro);background:var(--nv)}
+#tcag .vt-m1 .vt-testa,
+#tcag .vt-m1 .vt-cifre,
+#tcag .vt-m1 .vt-zona,
+#tcag .vt-m1 .vt-codice{grid-column:1}
+#tcag .vt-m1 .vt-qr{grid-column:2;grid-row:1 / span 5;align-self:end}
+#tcag .vt-m1 .vt-cifre{gap:0}
+#tcag .vt-m1 .vt-cifra{padding:0 calc(3 * var(--vt-u));border-left:.3mm solid var(--avorio)}
+#tcag .vt-m1 .vt-cifra:first-child{padding-left:0;border-left:0}
+#tcag .vt-m1 .vt-logo{position:absolute;top:calc(4 * var(--vt-u));left:calc(4 * var(--vt-u));box-sizing:border-box;padding:calc(1.5 * var(--vt-u)) calc(2.5 * var(--vt-u));border-radius:999px;background:var(--nv)}
+#tcag .vt-m1 .vt-titolo{color:var(--avorio);font-size:calc(var(--vt-k) * 32pt);font-weight:600;letter-spacing:-0.02em;line-height:1.08}
+#tcag .vt-m1 .vt-prezzo{color:var(--avorio);font-size:calc(var(--vt-k) * 30pt);font-weight:700}
+#tcag .vt-m1 .vt-cifra b{color:var(--avorio);font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m1 .vt-cifra span{color:var(--avorio);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m1 .vt-zona{color:var(--avorio);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m1 .vt-codice{color:var(--avorio);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m1 .vt-qr span{color:var(--avorio);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m1 .vt-logo{color:var(--avorio);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m2{background:var(--avorio);box-sizing:border-box;padding:calc(6 * var(--vt-u));grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto auto auto auto auto;gap:calc(2.5 * var(--vt-u));justify-items:center;text-align:center}
+#tcag .vt-m2 .vt-corpo{display:contents;background:var(--avorio)}
+#tcag .vt-m2 .vt-testa{display:contents}
+#tcag .vt-m2 .vt-logo{order:1;width:calc(20 * var(--vt-u));justify-content:center;box-sizing:border-box;padding-bottom:calc(2 * var(--vt-u));border-bottom:.4mm solid var(--oro);color:var(--nv);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m2 .vt-logo{color:var(--nv)}
+#tcag .vt-m2 .vt-foto{order:2;box-sizing:border-box;width:100%;padding:calc(2.5 * var(--vt-u));border:.3mm solid var(--oro);background:var(--bianco)}
+#tcag .vt-m2 .vt-titolo{order:4;color:var(--nv);font-size:calc(var(--vt-k) * 34pt);font-weight:600;letter-spacing:-0.02em;line-height:1.08}
+#tcag .vt-m2 .vt-prezzo{order:5;box-sizing:border-box;width:calc(20 * var(--vt-u));padding-bottom:calc(2 * var(--vt-u));border-bottom:.4mm solid var(--oro);color:var(--nv);font-size:calc(var(--vt-k) * 28pt);font-weight:700}
+#tcag .vt-m2 .vt-cifre{order:6;display:flex;justify-content:center;gap:calc(4 * var(--vt-u))}
+#tcag .vt-m2 .vt-cifra{align-items:center}
+#tcag .vt-m2 .vt-cifra b{color:var(--testo);font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m2 .vt-cifra span{color:var(--tenue);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m2 .vt-zona{order:7;color:var(--tenue);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m2 .vt-qr{order:8;background:var(--bianco)}
+#tcag .vt-m2 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m2 .vt-codice{order:9;color:var(--tenue);font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m2.vt-A3o,
+#tcag .vt-m2.vt-A4o{grid-template-columns:55% minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+#tcag .vt-m2.vt-A3o .vt-foto,
+#tcag .vt-m2.vt-A4o .vt-foto{grid-column:1;grid-row:1 / -1;height:100%}
+#tcag .vt-m2.vt-A3o .vt-logo,
+#tcag .vt-m2.vt-A4o .vt-logo{grid-column:2;grid-row:1}
+#tcag .vt-m2.vt-A3o .vt-corpo,
+#tcag .vt-m2.vt-A4o .vt-corpo{grid-column:2;grid-row:2;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:calc(2.5 * var(--vt-u));min-height:0}
+#tcag .vt-mini-m1{background:linear-gradient(#7d8ba3 0 60%,#0a2a5e 60%)}
+#tcag .vt-mini-m2{background:linear-gradient(#faf9f6 0 10%,#7d8ba3 10% 58%,#faf9f6 58%)}
+@media print{#tcag .vt-foglio{transform:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media print{#tcag #tcag-vt-anteprima .vt-foglio{outline:0}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -2413,7 +2489,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.30.0';
+  var VERSIONE = 'V6.31.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -9979,6 +10055,7 @@ function findClose(){
      V6.21.0: fonts from Bunny Fonts, server preferences (04e4g-brochure-pref.js), favourites.
      V6.29.0: luxury models 15 «Galleria» and 16 «Notturno».
      V6.30.0: luxury models 17 «Monografia» and 18 «Ritratto».
+     V6.31.0: print, QR and preview scale take a sheet id and a paper size (used by the Vetrine).
      =========================================================
      Page #marketing/brochure (V6.26.0; #strumenti/brochure redirects here), code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -10078,10 +10155,12 @@ function findClose(){
     if(x.protocol !== 'https:') return '';
     return u + (u.indexOf('?') < 0 ? '?' : '&') + 'format=2500w';
   }
-  function brStileStampa(formato){
+  function brStileStampa(formato, carta, idFoglio){
     var o = formato === 'o';
+    var a4 = carta === 'A4', id = idFoglio || 'tcag-br-foglio';
     var media = '@media print { html.tcag-br-stampa, html.tcag-br-stampa body { width: %W; height: %H; margin: 0; padding: 0; overflow: hidden } html.tcag-br-stampa body * { visibility: hidden !important } html.tcag-br-stampa #tcag-br-foglio, html.tcag-br-stampa #tcag-br-foglio * { visibility: visible !important } html.tcag-br-stampa #tcag-br-foglio { position: fixed; left: 0; top: 0; margin: 0; transform: none !important } }';
-    return (o ? '@page { size: A3 landscape; margin: 0 }' : '@page { size: A3 portrait; margin: 0 }') + '\n' + media.replace('%W', o ? '420mm' : '297mm').replace('%H', o ? '297mm' : '420mm');
+    var css = media.split('#tcag-br-foglio').join('#' + id);
+    return '@page { size: ' + (a4 ? 'A4' : 'A3') + (o ? ' landscape' : ' portrait') + '; margin: 0 }' + '\n' + css.replace('%W', a4 ? (o ? '297mm' : '210mm') : (o ? '420mm' : '297mm')).replace('%H', a4 ? (o ? '210mm' : '297mm') : (o ? '297mm' : '420mm'));
   }
   function brLangAttr(l){
     if(l === 'zh') return 'zh-Hans';
@@ -10156,13 +10235,13 @@ function findClose(){
       res.stato = 'err'; res.err = (e && e.testo) || 'Errore';
     }).then(function(){
       res.vol = null;
-      if(S.sec === 'marketing' && S.sub === 'brochure') renderBrochure(true);
+      if(S.sec === 'marketing' && (S.sub === 'brochure' || S.sub === 'vetrine')) brRidisegna(true);
     });
     return res.vol;
   }
 
   /* ---------- QR as vector ---------- */
-  function brQrSvg(testo){
+  function brQrSvg(testo, lingua){
     var q = QR.crea(String(testo || ''));
     if(!q) return null;
     var ns = 'http://www.w3.org/2000/svg', L = q.dimensione + 8;
@@ -10171,7 +10250,7 @@ function findClose(){
     svg.setAttribute('class', 'br-qr-svg');
     svg.setAttribute('shape-rendering', 'crispEdges');
     svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', brTesto(BR.lingua, 'scansiona'));
+    svg.setAttribute('aria-label', brTesto(lingua || BR.lingua, 'scansiona'));
     var bianco = document.createElementNS(ns, 'rect');
     bianco.setAttribute('x', '0'); bianco.setAttribute('y', '0');
     bianco.setAttribute('width', L); bianco.setAttribute('height', L);
@@ -10186,6 +10265,12 @@ function findClose(){
       svg.appendChild(m);
     }
     return svg;
+  }
+
+  // Brochure and Vetrine share the same redraw: the sheet that is open decides which page draws
+  function brRidisegna(forza){
+    if(S.sec === 'marketing' && S.sub === 'vetrine' && typeof renderVetrine === 'function') renderVetrine(forza);
+    else renderBrochure(forza);
   }
 
   /* ---------- page ---------- */
@@ -10342,8 +10427,8 @@ function findClose(){
       ${contatti}
     </div>`;
   }
-  function brScala(){
-    var w = g('br-anteprima'), f = g('br-foglio');
+  function brScala(idAnteprima, idFoglio){
+    var w = g(idAnteprima || 'br-anteprima'), f = g(idFoglio || 'br-foglio');
     if(!w || !f) return;
     f.style.transform = '';
     var s = Math.min(1, w.clientWidth / f.offsetWidth);
@@ -10352,8 +10437,9 @@ function findClose(){
   }
 
   /* ---------- print ---------- */
-  function brStampa(){
-    var f = g('br-foglio');
+  function brStampa(f, css, avviso){
+    f = f || g('br-foglio');
+    css = css || brStileStampa(BR.formato);
     if(!f || brStampando) return;
     brStampando = true;
     var st = document.getElementById('tcag-br-page');
@@ -10362,7 +10448,7 @@ function findClose(){
       st.id = 'tcag-br-page';
       document.head.appendChild(st);
     }
-    st.textContent = brStileStampa(BR.formato);
+    st.textContent = css;
     document.documentElement.classList.add('tcag-br-stampa');
     brFontPronti(BR_T_FONT).then(function(){
     var imgs = Array.prototype.slice.call(f.querySelectorAll('img'));
@@ -10374,9 +10460,13 @@ function findClose(){
       window.print();
     }
     var tm = setTimeout(function(){
-      BR.msg = 'Alcune foto non sono arrivate in 20 secondi: stampo lo stesso.';
-      var m = g('br-msg');
-      if(m){ m.textContent = BR.msg; m.hidden = false; }
+      var testo = 'Alcune foto non sono arrivate in 20 secondi: stampo lo stesso.';
+      if(avviso){ avviso(testo); }
+      else {
+        BR.msg = testo;
+        var m = g('br-msg');
+        if(m){ m.textContent = BR.msg; m.hidden = false; }
+      }
       vai();
     }, BR_T_STAMPA);
     var mancano = imgs.filter(function(img){ return !img.complete; }).length;
@@ -10439,7 +10529,7 @@ function findClose(){
       default:
         return;
     }
-    renderBrochure(true);
+    brRidisegna(true);
     if(a === 'br-lingua' || a === 'br-formato' || a === 'br-modello' || a === 'br-categoria') brPrefUltimaSalva();
     if(a === 'br-categoria'){ var sc = g('br-cat'); if(sc) sc.focus(); }
     if(a === 'br-stella'){ var sb = $('[data-act="br-stella"][data-m="' + st + '"]'); if(sb) sb.focus(); }
@@ -11344,7 +11434,6 @@ function findClose(){
     });
   }
 /* MARKETING (V6.26.0): hub with Brochure, Vetrine and Campagne. Routes #marketing, #marketing/brochure, #marketing/vetrine; #marketing/campagne shows the Campagne section (route() in 04b). */
-  var MK_VETRINE_TESTO = 'Le vetrine sono in arrivo.';
   function renderMarketing(){
     var sub = S.sub;
     g('mk-hub').hidden = !!sub;
@@ -11357,7 +11446,7 @@ function findClose(){
     ritocchiMkVetrine();
     ritocchiMkCampagne();
     if(sub === 'brochure') renderBrochure();
-    if(sub === 'vetrine') put(g('mk-vetrine'), H`<p class="mk-vuoto">${MK_VETRINE_TESTO}</p>`);
+    if(sub === 'vetrine') renderVetrine(); else vtSvuota('mk-vetrine');
   }
   // Brochure card: on unless the admin turned it off (same state as the old Strumenti card)
   function ritocchiMkBrochure(){
@@ -11369,8 +11458,8 @@ function findClose(){
   function ritocchiMkVetrine(){
     var t = hubTileCodice('marketing/vetrine', 'Vetrine', 'Cartelli per le vetrine dell’agenzia con foto e dati dell’immobile', 'tci-vetrina', 'hub-vetrine', 'mk-hub');
     if(!t) return;
-    var so = $('.soon', t);
-    if(so){ so.textContent = 'In arrivo'; so.classList.remove('ok'); }
+    var so = $('.soon', t), on = !(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false);
+    if(so){ so.textContent = on ? 'Attivo' : 'In manutenzione'; so.classList.toggle('ok', on); }
   }
   function ritocchiMkCampagne(){
     var t = hubTileCodice('marketing/campagne', 'Campagne', 'Quante richieste arrivano dalle pubblicità su Google', 'tci-chart', 'hub-campagne', 'mk-hub');
@@ -11378,6 +11467,170 @@ function findClose(){
     var so = $('.soon', t);
     if(so){ so.textContent = 'Attivo'; so.classList.add('ok'); }
   }
+  /* VETRINE (V6.31.0, ticket T-MVZM5L21): cartelli da stampare per la vetrina dell'agenzia.
+     Riusa il motore della brochure (dati, lingue, QR, font, stampa): le funzioni si chiamano, non si copiano.
+     Stato: VT in memoria (formato e modello). Lingua e immobile sono quelli della brochure (BR). */
+  var VT_MODELLI = [{ n:1, nome:'Vetrina classica' }, { n:2, nome:'Cartello lusso' }];
+  var VT_FORMATI = [['A3v', 'A3 verticale'], ['A3o', 'A3 orizzontale'], ['A4v', 'A4 verticale'], ['A4o', 'A4 orizzontale']];
+  var VT = { formato:'A3v', modello:1, msg:'' };
+
+  // page size of a format, as CSS @page text; unknown value = A3 portrait
+  function vtPagina(formato){
+    var pagine = { A3v:'A3 portrait', A3o:'A3 landscape', A4v:'A4 portrait', A4o:'A4 landscape' };
+    return Object.prototype.hasOwnProperty.call(pagine, formato) ? pagine[formato] : 'A3 portrait';
+  }
+  function vtFormatoEsiste(f){
+    for(var k = 0; k < VT_FORMATI.length; k++) if(VT_FORMATI[k][0] === f) return true;
+    return false;
+  }
+  // true only for a number equal to the n of a model of VT_MODELLI
+  function vtModelloEsiste(m){
+    if(typeof m !== 'number') return false;
+    for(var k = 0; k < VT_MODELLI.length; k++) if(VT_MODELLI[k].n === m) return true;
+    return false;
+  }
+  // the texts of the sheet: price, optional figures, zone and property code (an empty field is '')
+  function vtCartello(l, i){
+    return {
+      prezzo: brPrezzo(l, i),
+      cifre: brExtra(l, i, ['cifre']).cifre,
+      zona: [i.zona, i.citta && i.citta !== i.zona ? i.citta : ''].filter(Boolean).join(' · '),
+      codice: brVuoto(i.codice) ? '' : brTesto(l, 'codice') + ' ' + i.codice
+    };
+  }
+  function vtSvuota(id){
+    var el = g(id);
+    if(el) put(el, '');
+  }
+
+  function renderVetrine(forza){
+    var host = g('mk-vetrine');
+    if(!host) return;
+    vtSvuota('mk-brochure');
+    brPrefCarica();
+    if(!DI.ok) dianaCarica(false);
+    if(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false){
+      put(host, H`<div class="br-pagina"><p class="br-nota">${DI.dati.brochure.messaggio || 'Le Vetrine sono in manutenzione: riprova più tardi.'}</p></div>`);
+      return;
+    }
+    if(!forza && document.activeElement && document.activeElement.tagName === 'INPUT' && host.contains(document.activeElement)){
+      brDisegnaLista();
+      return;
+    }
+    if(BR.codice === ''){ brDisegnaScelta(host); return; }
+    var i = brImmobile();
+    if(!i){
+      if(IM.ok){ BR.codice = ''; brDisegnaScelta(host); }
+      else put(host, H`<div class="br-pagina"><p class="br-nota">Carico gli immobili…</p></div>`);
+      return;
+    }
+    vtDisegna(host, i);
+  }
+
+  function vtDisegna(host, i){
+    if(BR.dati.stato === 'idle') brCarica();
+    if(!BR.dati.ok){
+      put(host, H`<div class="br-pagina"><p><button class="btn sec" type="button" data-act="br-cambia"><svg class="i" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Cambia immobile</button></p>${BR.dati.stato === 'err'
+        ? H`<div class="err" role="alert"><span>${BR.dati.err}</span><button class="btn sec sm" type="button" data-act="br-riprova">Riprova</button></div>`
+        : H`<div class="br-stato">Carico i dati della brochure…</div>`}</div>`);
+      return;
+    }
+    var lingue = BR.dati.lingue || [];
+    var lingueOk = BR_LINGUE.filter(function(l){ return lingue.indexOf(l) >= 0; });
+    var lingueNo = BR_LINGUE.filter(function(l){ return lingue.indexOf(l) < 0; });
+    var lingueBtn = lingueOk.concat(lingueNo).map(function(l){
+      var ok = lingue.indexOf(l) >= 0, acceso = BR.lingua === l;
+      return H`<button class="br-lingua" type="button" lang="it" title="${ok ? BR_NOMI[l] : BR_NOMI[l] + ': traduzione mancante nel foglio'}" data-act="br-lingua" data-l="${l}" aria-pressed="${String(acceso)}"${raw(ok ? '' : ' disabled')}>${BR_NOMI[l]}${ok ? '' : H`<small class="br-manca">Manca la traduzione</small>`}</button>`;
+    });
+    var formati = VT_FORMATI.map(function(f){
+      return H`<button class="br-fmt" type="button" data-act="vt-formato" data-f="${f[0]}" aria-pressed="${String(VT.formato === f[0])}">${f[1]}</button>`;
+    });
+    var modelli = VT_MODELLI.map(function(m){
+      return H`<button class="br-mod" type="button" data-act="vt-modello" data-m="${m.n}" aria-pressed="${String(VT.modello === m.n)}"><span class="br-mini vt-mini-m${m.n}" aria-hidden="true"></span>${m.n + ' ' + m.nome}</button>`;
+    });
+    put(host, H`<div class="br-pagina">
+      <div class="br-barra">
+        <button class="btn sec" type="button" data-act="br-cambia"><svg class="i" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Cambia immobile</button>
+        <button class="btn pri" type="button" data-act="vt-stampa">Stampa / Salva PDF</button>
+      </div>
+      <p id="tcag-vt-msg" class="br-nota" role="status">${VT.msg}</p>
+      <div id="tcag-vt-anteprima" class="br-anteprima">${vtFoglio(i)}</div>
+      <div class="br-comandi">
+        <div class="br-grp"><span class="br-etich">Lingua</span><div class="br-gruppo" role="group" aria-label="Lingua">${lingueBtn}</div></div>
+        <div class="br-grp"><span class="br-etich">Formato</span><div class="br-gruppo" role="group" aria-label="Formato">${formati}</div></div>
+        <div class="br-grp br-grp-tutta"><span class="br-etich">Modello</span><div class="br-modelli" role="group" aria-label="Modello">${modelli}</div></div>
+      </div>
+    </div>`);
+    g('vt-msg').hidden = !VT.msg;
+    var f = g('vt-foglio');
+    if(f){
+      f.style.fontFamily = brFont(BR.lingua);
+      var box = g('vt-qr');
+      var s = i.url ? brQrSvg(i.url, BR.lingua) : null;
+      if(s && box) box.insertBefore(s, box.firstChild);
+      else if(box) box.hidden = true;
+      $$('img', f).forEach(function(img){
+        var src = img.getAttribute('src');
+        img.addEventListener('error', function(){
+          BR.foto = BR.foto.filter(function(u){ return u !== src; });
+          BR.fotoSito = BR.fotoSito.filter(function(u){ return u !== src; });
+          renderVetrine(true);
+        });
+      });
+    }
+    brScala('vt-anteprima', 'vt-foglio');
+  }
+
+  // the sheet: photo, title, price, figures, zone, code, QR and logo; an empty field is not drawn
+  function vtFoglio(i){
+    var l = BR.lingua, c = vtCartello(l, i), titolo = brEdBase(i).titolo;
+    var foto = brPrefApertura(BR.codice) || BR.foto[0] || '';
+    var cifre = c.cifre.map(function(x){ return H`<div class="vt-cifra"><b>${x[0]}</b><span>${x[1]}</span></div>`; });
+    return H`<div id="tcag-vt-foglio" class="vt-foglio vt-m${VT.modello} vt-${VT.formato}" lang="${brLangAttr(l)}">
+      <div class="vt-foto">${foto ? H`<img class="vt-img" src="${foto}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>
+      <div class="vt-corpo">
+        <div class="vt-testa"><h1 class="vt-titolo">${titolo}</h1>${c.prezzo ? H`<p class="vt-prezzo">${c.prezzo}</p>` : ''}</div>
+        ${cifre.length ? H`<div class="vt-cifre">${cifre}</div>` : ''}
+        ${c.zona ? H`<p class="vt-zona">${c.zona}</p>` : ''}
+        ${c.codice ? H`<p class="vt-codice">${c.codice}</p>` : ''}
+        <div id="tcag-vt-qr" class="vt-qr"><span>${brTesto(l, 'scansiona')}</span></div>
+      </div>
+      <div class="vt-logo"><svg class="vt-logo-ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#tci-logo"/></svg><span>Team Contato</span></div>
+    </div>`;
+  }
+
+  // print: the same engine as the brochure, with the sheet of the Vetrine and its own paper size
+  function vtStampa(){
+    var f = g('vt-foglio');
+    if(!f) return;
+    brStampa(f, brStileStampa(VT.formato.charAt(2), VT.formato.slice(0, 2), 'tcag-vt-foglio'), function(t){
+      VT.msg = t;
+      var m = g('vt-msg');
+      if(m){ m.textContent = t; m.hidden = false; }
+    });
+  }
+
+  // clicks of the Vetrine page: one case per data-act (the brochure actions go to brAzione)
+  function vtAzione(a, el){
+    switch(a){
+      case 'vt-formato':
+        var f = el.getAttribute('data-f');
+        if(vtFormatoEsiste(f)) VT.formato = f;
+        break;
+      case 'vt-modello':
+        var m = parseInt(el.getAttribute('data-m'), 10);
+        if(vtModelloEsiste(m)) VT.modello = m;
+        break;
+      case 'vt-stampa':
+        vtStampa();
+        return;
+      default:
+        return;
+    }
+    renderVetrine(true);
+  }
+
+  window.addEventListener('resize', function(){ if(S.sec === 'marketing' && S.sub === 'vetrine') brScala('vt-anteprima', 'vt-foglio'); });
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
      =========================================================
@@ -15125,6 +15378,7 @@ function stucAzione(a, el){
     if(a.indexOf('stu-') === 0){ stAzione(a, el); return; }
     if(a.indexOf('br-ed-') === 0){ brEdSmista(a, el, 'click'); return; }
     if(a.indexOf('br-') === 0){ brAzione(a, el); return; }
+    if(a.indexOf('vt-') === 0){ vtAzione(a, el); return; }
     if(a.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(a, el); return; }
     if(a.indexOf('stru-') === 0){ if(U && U.ruolo === 'admin') struAzione(a, el); return; }
     if(a.indexOf('pre-') === 0){ preClic(a, el); return; }                                       // V6.8: Precompila con AI nei moduli PDF
