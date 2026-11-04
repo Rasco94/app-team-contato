@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build e0b109f9)
+  Guscio app Team Contato - V1.4.0 (build de7e2075)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.33.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.34.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'e0b109f9', blocco: 'V6.33.0' };
+window.TC_APP = { versione: '1.4.0', build: 'de7e2075', blocco: 'V6.34.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1177,6 +1177,9 @@ html.tc-guscio body{margin:0}
 #tcag .imp-salva .btn{width:100%}
 @media (max-width:1279px){#tcag .acct .role{display:none}
 #tcag .nv-item{padding:8px 10px}
+#tcag .acct .nm,
+#tcag .brand .bt{display:none}
+#tcag .nv-item{gap:6px;font-size:13px}
 }
 @media (max-width:1099px){#tcag .nv-item .lbl,
 #tcag .acct .nm,
@@ -1942,6 +1945,9 @@ html.tc-guscio body{margin:0}
 #tcag .br-ed h3{font:600 17px var(--sans);color:var(--nv);margin:0}
 #tcag .br-ed-sez{display:flex;flex-direction:column;gap:8px;min-width:0;max-width:100%}
 #tcag .br-ed-striscia{display:flex;flex-wrap:wrap;gap:8px;min-width:0;max-width:100%;padding-bottom:4px}
+#tcag .br-ed>*{min-width:0}
+#tcag .br-ed-sez{min-width:0}
+#tcag .br-ed-striscia{max-width:100%;overscroll-behavior-x:contain}
 #tcag .br-ed-min{flex:0 0 auto;width:72px;height:56px;min-height:44px;padding:0;border:2px solid transparent;border-radius:6px;overflow:hidden;background:#eee;touch-action:pan-x;cursor:grab}
 #tcag .br-ed-min img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
 #tcag .br-ed-riga{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -2595,7 +2601,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.33.0';
+  var VERSIONE = 'V6.34.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
