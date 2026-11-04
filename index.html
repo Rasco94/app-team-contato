@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 179f5b34)
+  Guscio app Team Contato - V1.4.0 (build 73070b1c)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.36.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.37.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '179f5b34', blocco: 'V6.36.0' };
+window.TC_APP = { versione: '1.4.0', build: '73070b1c', blocco: 'V6.37.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2605,6 +2605,47 @@ html.tc-guscio body{margin:0}
 #tcag .vt-mini-m4{background:linear-gradient(#fbfaf7 0 8%,#7d8ba3 8% 62%,#fbfaf7 62%)}
 #tcag .vt-mini-m5{background:linear-gradient(#7d8ba3 0 30%,#fff 30% 32%,#7d8ba3 32% 62%,#0a2a5e 62% 76%,#fff 76%)}
 #tcag .vt-mini-m6{background:linear-gradient(#faf9f6 0 45%,#0a2a5e 45% 47%,#faf9f6 47%)}
+#tcag .vt-foglio.vt-colori{background:var(--vt-sfondo);color:var(--vt-testo)}
+#tcag .vt-foglio.vt-colori .vt-corpo,
+#tcag .vt-foglio.vt-colori .vt-testa,
+#tcag .vt-foglio.vt-colori .vt-qr{background:var(--vt-sfondo)}
+#tcag .vt-foglio.vt-colori .vt-titolo,
+#tcag .vt-foglio.vt-colori .vt-prezzo{color:var(--vt-titolo)}
+#tcag .vt-foglio.vt-colori .vt-frase,
+#tcag .vt-foglio.vt-colori .vt-cifra b,
+#tcag .vt-foglio.vt-colori .vt-cifra span,
+#tcag .vt-foglio.vt-colori .vt-zona,
+#tcag .vt-foglio.vt-colori .vt-codice,
+#tcag .vt-foglio.vt-colori .vt-qr span,
+#tcag .vt-foglio.vt-colori .vt-contatti{color:var(--vt-testo)}
+#tcag .vt-foglio.vt-colori .vt-logo{background:var(--vt-fascia);color:#fff}
+#tcag .vt-no-prezzo .vt-prezzo,
+#tcag .vt-no-cifre .vt-cifre,
+#tcag .vt-no-zona .vt-zona,
+#tcag .vt-no-codice .vt-codice,
+#tcag .vt-no-qr .vt-qr,
+#tcag .vt-no-logo .vt-logo{display:none}
+#tcag .vt-frase{margin:0;overflow-wrap:anywhere;font-size:calc(var(--vt-k) * 14pt);line-height:1.3}
+#tcag .vt-contatti{display:flex;flex-direction:column;gap:calc(.5 * var(--vt-u));overflow-wrap:anywhere;font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m1 .vt-frase,
+#tcag .vt-m1 .vt-contatti,
+#tcag .vt-m3 .vt-frase,
+#tcag .vt-m3 .vt-contatti{color:var(--avorio)}
+#tcag .vt-m5 .vt-frase{color:var(--avorio)}
+#tcag .vt-m5 .vt-contatti{color:var(--tenue)}
+#tcag .vt-m2 .vt-frase,
+#tcag .vt-m2 .vt-contatti,
+#tcag .vt-m4 .vt-frase,
+#tcag .vt-m4 .vt-contatti,
+#tcag .vt-m6 .vt-frase,
+#tcag .vt-m6 .vt-contatti{color:var(--tenue)}
+#tcag .vt-m1 .vt-contatti,
+#tcag .vt-m3 .vt-contatti,
+#tcag .vt-m5 .vt-contatti{grid-column:1}
+#tcag .vt-m2 .vt-contatti{order:10}
+#tcag .vt-m2 .vt-frase{order:4}
+#tcag .vt-m4 .vt-contatti{grid-column:1;grid-row:3}
+#tcag .vt-m6 .vt-contatti{order:6;align-items:center}
 @media print{#tcag .vt-foglio{transform:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media print{#tcag #tcag-vt-anteprima .vt-foglio{outline:0}
@@ -2644,7 +2685,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.36.0';
+  var VERSIONE = 'V6.37.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -7456,6 +7497,7 @@ function findClose(){
     var as = j.assistente && typeof j.assistente === 'object' ? j.assistente : {}, rn = j.render && typeof j.render === 'object' ? j.render : {};
     var be = j.benvenuto && typeof j.benvenuto === 'object' ? j.benvenuto : {}, te = j.testi && typeof j.testi === 'object' ? j.testi : {};
     var li = j.limiti && typeof j.limiti === 'object' ? j.limiti : {}, og = j.oggi && typeof j.oggi === 'object' ? j.oggi : {};
+    var ma = j.materiali && typeof j.materiali === 'object' ? j.materiali : {}, mp = ma.persona && typeof ma.persona === 'object' ? ma.persona : {}, mg = ma.agenzia && typeof ma.agenzia === 'object' ? ma.agenzia : {};
     var dom = (Array.isArray(j.domande) ? j.domande : []).map(function(d){ return dianaStr(d, 120); }).filter(Boolean).slice(0, 8);
     return {
       nome: dianaStr(j.nome, 40) || DIANA_NOME,
@@ -7464,6 +7506,7 @@ function findClose(){
       bp: { attivo: (j.bp && j.bp.attivo) === true, messaggio: dianaStr(j.bp && j.bp.messaggio, 300) },
       studio: { attivo: (j.studio && j.studio.attivo) === true, messaggio: dianaStr(j.studio && j.studio.messaggio, 300) },
       brochure: { attivo: !(j.brochure && j.brochure.attivo === false), messaggio: dianaStr(j.brochure && j.brochure.messaggio, 300) },
+      materiali: { persona: { nome: dianaStr(mp.nome, 120), ruolo: dianaStr(mp.ruolo, 120), telefono: dianaStr(mp.telefono, 120), email: dianaStr(mp.email, 120) }, agenzia: { nome: dianaStr(mg.nome, 120), indirizzo: dianaStr(mg.indirizzo, 120), telefono: dianaStr(mg.telefono, 120), email: dianaStr(mg.email, 120), sito: dianaStr(mg.sito, 120) } },
       benvenuto: { titolo: dianaStr(be.titolo, 60) || DIANA_BENV.titolo, testo: dianaStr(be.testo, 300) || DIANA_BENV.testo },
       domande: dom,
       testi: { avviso_legale: dianaStr(te.avviso_legale, 1200) || DIANA_LEGALE, guida_titolo: dianaStr(te.guida_titolo, 60) || DIANA_GUIDA_TITOLO, guida: dianaStr(te.guida, 4000) || DIANA_GUIDA },
@@ -11439,7 +11482,7 @@ function findClose(){
   var BR_PREF_T_API = 30000;
   var BR_PREF_ATTESA = 2000;
   var BR_PREF_MODELLO_MAX = 18;
-  var BR_PREF = { stato:'idle', dati:null, toccato:false, timer:0 };
+  var BR_PREF = { stato:'idle', dati:null, toccato:false, timer:0, vtTimer:0 };
 
   // adds the Bunny Fonts stylesheets of the sheet, each one once: Playfair Display and Inter, plus Noto for Chinese and Japanese
   function brFontCarica(lingua){
@@ -11547,11 +11590,24 @@ function findClose(){
     Object.keys(aperture).forEach(function(k){
       if(typeof aperture[k] === 'string' && aperture[k]) out[k] = aperture[k];
     });
+    // the favourite numbers of a list: whole numbers from 1 to BR_PREF_MODELLO_MAX, the rest is dropped
+    var preferitiValidi = function(x){
+      return lista(x).filter(function(n){ return typeof n === 'number' && n % 1 === 0 && n >= 1 && n <= BR_PREF_MODELLO_MAX; });
+    };
+    var validoStile = function(s){ return s && typeof s === 'object' && typeof s.id === 'string' && typeof s.nome === 'string'; };
+    // the showcase part: null when the server sent no object for it
+    var vt = o.vetrine;
+    var vetrine = vt && typeof vt === 'object' && !Array.isArray(vt) ? {
+      ultima: vtPrefUltima(oggetto(vt.ultima)),
+      preferiti: preferitiValidi(vt.preferiti)
+    } : null;
     return {
       ultima: brPrefUltima(oggetto(o.ultima)),
-      preferiti: lista(o.preferiti).filter(function(n){ return typeof n === 'number' && n % 1 === 0 && n >= 1 && n <= BR_PREF_MODELLO_MAX; }),
-      stili: lista(o.stili).filter(function(s){ return s && typeof s === 'object' && typeof s.id === 'string' && typeof s.nome === 'string'; }),
-      aperture: out
+      preferiti: preferitiValidi(o.preferiti),
+      stili: lista(o.stili).filter(function(s){ return validoStile(s) && s.doc !== 'vt'; }),
+      stiliVt: lista(o.stili).filter(function(s){ return validoStile(s) && s.doc === 'vt'; }),
+      aperture: out,
+      vetrine: vetrine
     };
   }
 
@@ -11570,6 +11626,7 @@ function findClose(){
         if(u.categoria) BR.categoria = u.categoria;
       } else brPrefUltimaSalva();
       if(S.sec === 'marketing' && S.sub === 'brochure') renderBrochure(true);
+      else if(S.sec === 'marketing' && S.sub === 'vetrine') renderVetrine(true);
     }, function(e){
       brPrefAvvisa(e);
       if(BR_PREF.stato !== 'spento') BR_PREF.stato = 'err';
@@ -11630,10 +11687,15 @@ function findClose(){
     });
   }
 
-  // saves a style of the sheet for this agent; the caller shows the error
-  function brPrefStileCrea(nome, mod){
-    return brPrefApi('POST', 'stili', { nome: nome, mod: mod }).then(function(j){
-      if(j && j.stile && BR_PREF.dati) BR_PREF.dati.stili = BR_PREF.dati.stili.concat([j.stile]);
+  // saves a style for this agent: doc 'vt' is a showcase style, anything else a brochure style; the caller shows the error
+  function brPrefStileCrea(nome, mod, doc){
+    var corpo = { nome: nome, mod: mod };
+    if(doc === 'vt') corpo.doc = 'vt';
+    return brPrefApi('POST', 'stili', corpo).then(function(j){
+      if(j && j.stile && BR_PREF.dati){
+        if(doc === 'vt') BR_PREF.dati.stiliVt = BR_PREF.dati.stiliVt.concat([j.stile]);
+        else BR_PREF.dati.stili = BR_PREF.dati.stili.concat([j.stile]);
+      }
       return j ? j.stile : null;
     });
   }
@@ -11641,7 +11703,9 @@ function findClose(){
   // deletes a saved style; the caller shows the error
   function brPrefStileElimina(id){
     function togli(){
-      if(BR_PREF.dati) BR_PREF.dati.stili = BR_PREF.dati.stili.filter(function(s){ return s.id !== id; });
+      if(!BR_PREF.dati) return;
+      BR_PREF.dati.stili = BR_PREF.dati.stili.filter(function(s){ return s.id !== id; });
+      BR_PREF.dati.stiliVt = BR_PREF.dati.stiliVt.filter(function(s){ return s.id !== id; });
     }
     return brPrefApi('POST', 'stili/elimina', { id: id }).then(function(j){
       togli();
@@ -11675,6 +11739,84 @@ function findClose(){
       BR_PREF.dati.aperture = ora;
       brPrefAvvisa(e);
       renderBrochure(true);
+    });
+  }
+
+  // PURE: the last choice of the showcases: the format is A3v or A3o only, the rest follows brPrefUltima
+  function vtPrefUltima(stato){
+    var u = brPrefUltima(stato);
+    var o = stato && typeof stato === 'object' ? stato : {};
+    return {
+      formato: o.formato === 'A3v' || o.formato === 'A3o' ? o.formato : null,
+      categoria: u.categoria,
+      modello: u.modello,
+      tavolozza: u.tavolozza
+    };
+  }
+
+  // PURE: what a failed showcase preferences call means for the page
+  function vtPrefErrore(e){
+    var http = e ? e.http : undefined;
+    var ripiego = 'Non riesco a salvare le preferenze. Riprova.';
+    if(http === 400) return { spegni: true, testo: '' };
+    if(http === 404 && e.codice === 'brochure_pref_non_trovato'){
+      return { spegni: false, testo: typeof e.testo === 'string' && e.testo ? e.testo : ripiego };
+    }
+    if(http === 404 || http === 405) return { spegni: true, testo: '' };
+    if(http === 401) return { spegni: false, testo: '' };
+    if(http === 409) return { spegni: false, testo: 'Hai già 20 stili: eliminane uno' };
+    return { spegni: false, testo: e && typeof e.testo === 'string' && e.testo ? e.testo : ripiego };
+  }
+
+  // shows the error of a showcase preferences call: a toast, or nothing when the feature is switched off
+  function vtPrefAvvisa(e){
+    var r = vtPrefErrore(e);
+    if(r.spegni){
+      if(BR_PREF.dati) BR_PREF.dati.vetrine = null;
+      if(S.sec === 'marketing' && S.sub === 'vetrine') renderVetrine(true);
+      return;
+    }
+    if(r.testo) toast(r.testo);
+  }
+
+  // true when the server has the showcase preferences and the page has read them
+  function vtPrefAttivo(){
+    return brPrefAttivo() && !!BR_PREF.dati && !!BR_PREF.dati.vetrine;
+  }
+
+  // one value of the saved showcase last choice, or null
+  function vtPrefUltimaVal(k){
+    return vtPrefAttivo() && BR_PREF.dati.vetrine.ultima[k] !== undefined ? BR_PREF.dati.vetrine.ultima[k] : null;
+  }
+
+  // a copy of the favourite showcase models, or an empty list
+  function vtPrefPreferiti(){
+    return vtPrefAttivo() ? BR_PREF.dati.vetrine.preferiti.slice() : [];
+  }
+
+  // saves the showcase last choice once the agent stops changing it: one request at most every 2 s, the last one wins
+  function vtPrefUltimaSalva(ultima){
+    if(!vtPrefAttivo()) return;
+    var u = vtPrefUltima(ultima);
+    clearTimeout(BR_PREF.vtTimer);
+    BR_PREF.vtTimer = setTimeout(function(){
+      BR_PREF.vtTimer = 0;
+      brPrefApi('POST', 'preferenze', { vetrine: { ultima: u } }).then(function(){
+        if(vtPrefAttivo()) BR_PREF.dati.vetrine.ultima = u;
+      }, function(e){ vtPrefAvvisa(e); });
+    }, BR_PREF_ATTESA);
+  }
+
+  // saves the favourite showcase models; resolves true when saved, false otherwise, and never rejects
+  function vtPrefPreferitiSalva(lista){
+    if(!vtPrefAttivo()) return Promise.resolve(false);
+    var l = lista.slice();
+    return brPrefApi('POST', 'preferenze', { vetrine: { preferiti: l } }).then(function(){
+      if(vtPrefAttivo()) BR_PREF.dati.vetrine.preferiti = l;
+      return true;
+    }, function(e){
+      vtPrefAvvisa(e);
+      return false;
     });
   }
 /* MARKETING (V6.26.0): hub with Brochure, Vetrine and Campagne. Routes #marketing, #marketing/brochure, #marketing/vetrine; #marketing/campagne shows the Campagne section (route() in 04b). */
@@ -11716,18 +11858,62 @@ function findClose(){
      V6.33.0: Print, Save PDF and Save image.
      Riusa il motore della brochure (dati, lingue, QR, font, stampa): le funzioni si chiamano, non si copiano.
      Stato: VT in memoria (formato e modello). Lingua e immobile sono quelli della brochure (BR). */
-  var VT_MODELLI = [{ n:1, nome:'Vetrina classica' }, { n:2, nome:'Cartello lusso' }, { n:3, nome:'Notte sul lago' }, { n:4, nome:'Minimal' }, { n:5, nome:'Doppia foto' }, { n:6, nome:'QR grande' }];
-  var VT_FORMATI = [['A3v', 'A3 verticale'], ['A3o', 'A3 orizzontale'], ['A4v', 'A4 verticale'], ['A4o', 'A4 orizzontale']];
-  var VT = { formato:'A3v', modello:1, msg:'' };
+  var VT_MODELLI = [{ n:1, nome:'Vetrina classica', cat:'classici' }, { n:2, nome:'Cartello lusso', cat:'lusso' }, { n:3, nome:'Notte sul lago', cat:'lusso' }, { n:4, nome:'Minimal', cat:'moderni' }, { n:5, nome:'Doppia foto', cat:'fotografici' }, { n:6, nome:'QR grande', cat:'moderni' }];
+  var VT_FORMATI = [['A3v', 'A3 verticale'], ['A3o', 'A3 orizzontale']];
+  var VT = { formato:'A3v', modello:1, categoria:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:0, edPrima:null, preferiti:[], toccato:false, prefFatta:false };
 
   // page size of a format, as CSS @page text; unknown value = A3 portrait
   function vtPagina(formato){
-    var pagine = { A3v:'A3 portrait', A3o:'A3 landscape', A4v:'A4 portrait', A4o:'A4 landscape' };
+    var pagine = { A3v:'A3 portrait', A3o:'A3 landscape' };
     return Object.prototype.hasOwnProperty.call(pagine, formato) ? pagine[formato] : 'A3 portrait';
   }
   function vtFormatoEsiste(f){
     for(var k = 0; k < VT_FORMATI.length; k++) if(VT_FORMATI[k][0] === f) return true;
     return false;
+  }
+  // the format of the showcase: only A3 is offered; an A4 choice saved before becomes A3 with the same orientation
+  function vtFormatoA3(f){
+    if(f === 'A3o' || f === 'A4o') return 'A3o';
+    return 'A3v';
+  }
+  // the models of one category, in VT_MODELLI order
+  function vtModelliDi(cat){
+    var out = [];
+    for(var k = 0; k < VT_MODELLI.length; k++) if(VT_MODELLI[k].cat === cat) out.push(VT_MODELLI[k]);
+    return out;
+  }
+  // the name of a model of VT_MODELLI, empty when the model does not exist
+  function vtNomeModello(m){
+    for(var k = 0; k < VT_MODELLI.length; k++) if(VT_MODELLI[k].n === m) return VT_MODELLI[k].nome;
+    return '';
+  }
+  // the contact lines of the printed materials, in order: persona, then agency; an empty line is left out
+  function vtContatti(m){
+    if(!m || typeof m !== 'object') return [];
+    var p = m.persona && typeof m.persona === 'object' ? m.persona : {};
+    var a = m.agenzia && typeof m.agenzia === 'object' ? m.agenzia : {};
+    var t = function(x){ return typeof x === 'string' ? x.trim() : ''; };
+    var unisci = function(x, y){ return [t(x), t(y)].filter(Boolean).join(' · '); };
+    var sito = t(a.sito).replace(/^https:[\/][\/]/, '');
+    return [unisci(p.nome, p.ruolo), unisci(p.telefono, p.email), t(a.nome), t(a.indirizzo), unisci(a.telefono, a.email), sito].filter(Boolean);
+  }
+  // applies the saved last choice of the showcases, once per page load and only while the agent has not touched the page
+  function vtPrefApplica(){
+    if(!VT.prefFatta && vtPrefAttivo()){
+      VT.prefFatta = true;
+      VT.preferiti = vtPrefPreferiti();
+    }
+    if(VT.toccato) return;
+    var ultima = BR_PREF.dati && BR_PREF.dati.vetrine ? BR_PREF.dati.vetrine.ultima : null;
+    if(!ultima) return;
+    if(ultima.formato) VT.formato = vtFormatoA3(ultima.formato);
+    if(vtModelloEsiste(ultima.modello)) VT.modello = ultima.modello;
+    if(ultima.categoria) VT.categoria = ultima.categoria;
+  }
+  // remembers the last choice: format, model, category and palette
+  function vtSalvaUltima(){
+    VT.toccato = true;
+    vtPrefUltimaSalva(vtUltimaAdesso());
   }
   // true only for a number equal to the n of a model of VT_MODELLI
   function vtModelloEsiste(m){
@@ -11762,6 +11948,7 @@ function findClose(){
     if(!host) return;
     vtSvuota('mk-brochure');
     brPrefCarica();
+    vtPrefApplica();
     if(!DI.ok) dianaCarica(false);
     if(DI.dati && DI.dati.brochure && DI.dati.brochure.attivo === false){
       put(host, H`<div class="br-pagina"><p class="br-nota">${DI.dati.brochure.messaggio || 'Le Vetrine sono in manutenzione: riprova più tardi.'}</p></div>`);
@@ -11789,30 +11976,42 @@ function findClose(){
         : H`<div class="br-stato">Carico i dati della brochure…</div>`}</div>`);
       return;
     }
+    vtEdPrepara();
     var lingue = BR.dati.lingue || [];
-    var lingueOk = BR_LINGUE.filter(function(l){ return lingue.indexOf(l) >= 0; });
-    var lingueNo = BR_LINGUE.filter(function(l){ return lingue.indexOf(l) < 0; });
-    var lingueBtn = lingueOk.concat(lingueNo).map(function(l){
-      var ok = lingue.indexOf(l) >= 0, acceso = BR.lingua === l;
-      return H`<button class="br-lingua" type="button" lang="it" title="${ok ? BR_NOMI[l] : BR_NOMI[l] + ': traduzione mancante nel foglio'}" data-act="br-lingua" data-l="${l}" aria-pressed="${String(acceso)}"${raw(ok ? '' : ' disabled')}>${BR_NOMI[l]}${ok ? '' : H`<small class="br-manca">Manca la traduzione</small>`}</button>`;
-    });
+    var lingueSel = H`<label class="fld" for="tcag-vt-lingua">Lingua<select id="tcag-vt-lingua" data-act="br-lingua" lang="it">${BR_LINGUE.map(function(l){
+      var ok = lingue.indexOf(l) >= 0;
+      return H`<option value="${l}"${raw(BR.lingua === l ? ' selected' : '')}${raw(ok ? '' : ' disabled')}>${ok ? BR_NOMI[l] : BR_NOMI[l] + ' (traduzione mancante)'}</option>`;
+    })}</select></label>`;
     var formati = VT_FORMATI.map(function(f){
-      return H`<button class="br-fmt" type="button" data-act="vt-formato" data-f="${f[0]}" aria-pressed="${String(VT.formato === f[0])}">${f[1]}</button>`;
+      return H`<button class="br-chip" type="button" data-act="vt-formato" data-f="${f[0]}" aria-pressed="${String(VT.formato === f[0])}">${f[1]}</button>`;
     });
-    var modelli = VT_MODELLI.map(function(m){
-      return H`<button class="br-mod" type="button" data-act="vt-modello" data-m="${m.n}" aria-pressed="${String(VT.modello === m.n)}"><span class="br-mini vt-mini-m${m.n}" aria-hidden="true"></span>${m.n + ' ' + m.nome}</button>`;
+    var cat = VT.categoria || vtCategoriaDi(VT.modello);
+    if(cat === 'preferiti' && !VT.preferiti.length) cat = vtCategoriaDi(VT.modello);
+    var opzioni = BR_CATEGORIE.map(function(c){
+      return H`<option value="${c[0]}"${raw(c[0] === cat ? ' selected' : '')}>${c[1]}</option>`;
     });
-    put(host, H`<div class="br-pagina">
+    if(VT.preferiti.length) opzioni.unshift(H`<option value="preferiti"${raw(cat === 'preferiti' ? ' selected' : '')}>★ Preferiti</option>`);
+    var catSel = H`<label class="fld br-cat" for="tcag-vt-cat">Categoria<select id="tcag-vt-cat" data-act="vt-categoria">${opzioni}</select></label>`;
+    var lista = cat === 'preferiti' ? VT_MODELLI.filter(function(m){ return VT.preferiti.indexOf(m.n) >= 0; }) : vtModelliDi(cat);
+    var modelli = lista.length ? H`<div class="br-modelli br-modelli-${VT.formato.charAt(2)}" role="group" aria-label="Modello">${lista.map(function(m){
+      var on = VT.preferiti.indexOf(m.n) >= 0;
+      return H`<div class="br-mod-box"><button class="br-mod" type="button" data-act="vt-modello" data-m="${m.n}" aria-pressed="${String(VT.modello === m.n)}"><span class="br-mini vt-mini-m${m.n}" aria-hidden="true"></span><span class="br-mod-nome">${m.n + ' ' + m.nome}</span></button><button class="br-stella" type="button" data-act="vt-stella" data-m="${m.n}" aria-pressed="${String(on)}" aria-label="${on ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg></button></div>`;
+    })}</div>` : H`<p class="br-nota">Nessuna vetrina in questa categoria</p>`;
+    var scMod = (VT.modello + ' ' + vtNomeModello(VT.modello)).trim();
+    var scLin = BR_NOMI[BR.lingua] + ' · ' + (VT.formato === 'A3o' ? 'A3 orizzontale' : 'A3 verticale');
+    put(host, H`<div class="br-pagina br-doppia">
       <div class="br-barra">
-        <button class="btn sec" type="button" data-act="br-cambia"><svg class="i" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Cambia immobile</button>
+        <button class="btn sec sm" type="button" data-act="br-cambia">‹ Cambia immobile</button>
+        <span class="br-barra-imm"><b>${i.codice}</b> ${i.titolo || ''}</span>
+        <div class="br-storia" role="group" aria-label="Modifiche">${vtEdBarra()}</div>
         <div class="br-azioni" role="group" aria-label="Stampa e salvataggio"><button class="btn pri" type="button" data-act="vt-stampa">Stampa</button><button class="btn sec" type="button" data-act="vt-pdf">Salva PDF</button><button class="btn sec" type="button" data-act="vt-png">Salva immagine</button></div>
       </div>
       <p id="tcag-vt-avviso" class="br-avviso" role="status" aria-live="polite" hidden>${VT.msg}</p>
       <div id="tcag-vt-anteprima" class="br-anteprima">${vtFoglio(i)}</div>
       <div class="br-comandi">
-        <div class="br-grp"><span class="br-etich">Lingua</span><div class="br-gruppo" role="group" aria-label="Lingua">${lingueBtn}</div></div>
-        <div class="br-grp"><span class="br-etich">Formato</span><div class="br-gruppo" role="group" aria-label="Formato">${formati}</div></div>
-        <div class="br-grp br-grp-tutta"><span class="br-etich">Modello</span><div class="br-modelli" role="group" aria-label="Modello">${modelli}</div></div>
+        <details class="br-sez" data-sez="modello"${brSezAttr('modello')}><summary class="br-sez-tit">Modello<span class="br-sez-scelta">${' · ' + scMod}</span></summary><div class="br-sez-corpo">${catSel}${modelli}</div></details>
+        <details class="br-sez" data-sez="lingua"${brSezAttr('lingua')}><summary class="br-sez-tit">Lingua e formato<span class="br-sez-scelta">${' · ' + scLin}</span></summary><div class="br-sez-corpo">${lingueSel}<div class="br-gruppo" role="group" aria-label="Formato">${formati}</div></div></details>
+        ${vtEdPannello(i)}
       </div>
     </div>`);
     g('vt-avviso').hidden = !VT.msg;
@@ -11832,23 +12031,29 @@ function findClose(){
         });
       });
     }
+    vtEdApplica(g('vt-foglio'));
+    brSezLega(host);
     brScala('vt-anteprima', 'vt-foglio');
   }
 
   // the sheet: photo, title, price, figures, zone, code, QR and logo; an empty field is not drawn
   function vtFoglio(i){
-    var l = BR.lingua, c = vtCartello(l, i), titolo = brEdBase(i).titolo;
-    var foto = brPrefApertura(BR.codice) || BR.foto[0] || '';
+    var l = BR.lingua, c = vtCartello(l, i), base = vtEdBase(i);
+    var titolo = vtEdValore('titolo', base), frase = vtEdValore('descrizione', base), riq = VT.mod ? VT.mod.riquadri : [];
+    var foto = (riq[0] && riq[0].foto) || brPrefApertura(BR.codice) || BR.foto[0] || '';
+    var foto2 = (riq[1] && riq[1].foto) || vtFoto2(foto, BR.foto);
+    var righe = vtContatti(DI.dati ? DI.dati.materiali : null);
     var cifre = c.cifre.map(function(x){ return H`<div class="vt-cifra"><b>${x[0]}</b><span>${x[1]}</span></div>`; });
-    return H`<div id="tcag-vt-foglio" class="vt-foglio vt-m${VT.modello} vt-${VT.formato}" lang="${brLangAttr(l)}">
-      <div class="vt-foto">${foto ? H`<img class="vt-img" src="${foto}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>
-      ${VT.modello === 5 ? H`<div class="vt-foto vt-foto2"><img class="vt-img" src="${vtFoto2(foto, BR.foto)}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false"></div>` : ''}
+    return H`<div id="tcag-vt-foglio" class="vt-foglio vt-m${VT.modello} vt-${VT.formato}${vtEdClassi()}" lang="${brLangAttr(l)}">
+      <div class="vt-foto vt-riq" data-i="0">${foto ? H`<img class="vt-img" src="${foto}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>
+      ${VT.modello === 5 ? H`<div class="vt-foto vt-foto2 vt-riq" data-i="1"><img class="vt-img" src="${foto2}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false"></div>` : ''}
       <div class="vt-corpo">
-        <div class="vt-testa"><h1 class="vt-titolo">${titolo}</h1>${c.prezzo ? H`<p class="vt-prezzo">${c.prezzo}</p>` : ''}</div>
+        <div class="vt-testa"><h1 class="vt-titolo">${titolo}</h1>${frase ? H`<p class="vt-frase">${frase}</p>` : ''}${c.prezzo ? H`<p class="vt-prezzo">${c.prezzo}</p>` : ''}</div>
         ${cifre.length ? H`<div class="vt-cifre">${cifre}</div>` : ''}
         ${c.zona ? H`<p class="vt-zona">${c.zona}</p>` : ''}
         ${c.codice ? H`<p class="vt-codice">${c.codice}</p>` : ''}
         <div id="tcag-vt-qr" class="vt-qr"><span>${brTesto(l, VT.modello === 6 ? 'inquadra' : 'scansiona')}</span></div>
+        ${righe.length ? H`<div class="vt-contatti"><b>${brTesto(l, 'contatti')}</b>${righe.map(function(r){ return H`<span>${r}</span>`; })}</div>` : ''}
       </div>
       <div class="vt-logo"><svg class="vt-logo-ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#tci-logo"/></svg><span>Team Contato</span></div>
     </div>`;
@@ -11869,12 +12074,28 @@ function findClose(){
   function vtAzione(a, el){
     switch(a){
       case 'vt-formato':
-        var f = el.getAttribute('data-f');
-        if(vtFormatoEsiste(f)) VT.formato = f;
+        VT.formato = vtFormatoA3(el.getAttribute('data-f'));
+        vtSalvaUltima();
         break;
       case 'vt-modello':
         var m = parseInt(el.getAttribute('data-m'), 10);
-        if(vtModelloEsiste(m)) VT.modello = m;
+        if(vtModelloEsiste(m)){ VT.modello = m; vtSalvaUltima(); }
+        break;
+      case 'vt-categoria':
+        var c = el.value;
+        if(vtModelliDi(c).length > 0 || (c === 'preferiti' && VT.preferiti.length > 0)){ VT.categoria = c; vtSalvaUltima(); break; }
+        return;
+      case 'vt-stella':
+        var n = parseInt(el.getAttribute('data-m'), 10);
+        if(!vtModelloEsiste(n)) return;
+        var aggiunto = VT.preferiti.indexOf(n) < 0;
+        VT.preferiti = aggiunto ? VT.preferiti.concat([n]) : VT.preferiti.filter(function(x){ return x !== n; });
+        vtPrefPreferitiSalva(VT.preferiti).then(function(ok){
+          if(!ok && vtPrefAttivo()){
+            VT.preferiti = brPrefAnnullaStella(VT.preferiti, n, aggiunto);
+            renderVetrine(true);
+          }
+        });
         break;
       case 'vt-stampa':
         vtStampa();
@@ -12202,6 +12423,527 @@ function findClose(){
       return false;
     });
   }
+/* VETRINE EDITOR (T-MW1WTK9C-S2)
+   Editor of the showcase sheets (Vetrine): photo choice and framing, colours, texts, what to show,
+   my styles, undo and redo (50 steps), restore. It works on the VT state of 04e4h and reuses the pure
+   helpers of 04e4f-brochure-editor.js (brModPulito, brStileApplica, brStoria, brEdPal, ...), which are
+   not modified here. The state lives in memory only: nothing is written on the device. The last choice
+   and the saved styles go to the server through 04e4g-brochure-pref.js.
+   Order: state, pure helpers, actions, markup. Text from outside goes through H``, textContent or
+   style.setProperty only. */
+var VT_ED_STORIA = 50;
+var VT_ED_CAMPI_NASCONDI = ['prezzo', 'cifre', 'zona', 'codice', 'qr', 'logo'];
+
+/* ---------- pure helpers ---------- */
+
+// how many photos a model shows: model 5 has two boxes, the others one
+function vtNumFoto(m){
+  return m === 5 ? 2 : 1;
+}
+
+// the six flags of what the sheet hides; a missing value hides nothing
+function vtNascondi(x){
+  return {
+    prezzo: !!x && x.prezzo === true,
+    cifre: !!x && x.cifre === true,
+    zona: !!x && x.zona === true,
+    codice: !!x && x.codice === true,
+    qr: !!x && x.qr === true,
+    logo: !!x && x.logo === true
+  };
+}
+
+// a showcase model: the brochure model, with descriptions cut to 160 characters and the six flags
+function vtModPulito(o, foto, n){
+  var m = brModPulito(o, foto, n);
+  Object.keys(m.testi).forEach(function(l){
+    var t = m.testi[l];
+    if(typeof t.descrizione === 'string') t.descrizione = t.descrizione.slice(0, 160);
+  });
+  m.nascondi = vtNascondi(o && typeof o === 'object' ? o.nascondi : null);
+  return m;
+}
+
+// the part of a model that a saved showcase style keeps: colours, palette and three flags
+function vtStileMod(mod){
+  var m = mod && typeof mod === 'object' ? mod : {};
+  var n = m.nascondi && typeof m.nascondi === 'object' ? m.nascondi : {};
+  return brCopia({
+    colori: m.colori || null,
+    tavolozza: m.tavolozza,
+    nascondi: { prezzo: n.prezzo === true, dati: n.cifre === true, qr: n.qr === true }
+  });
+}
+
+// applies a saved showcase style: photos and texts stay, zone, code and logo stay as they are
+function vtStileApplica(mod, stileMod){
+  var s = stileMod && typeof stileMod === 'object' ? stileMod : {};
+  var out = brStileApplica(mod, { colori: s.colori, tavolozza: s.tavolozza });
+  out.nascondi = vtNascondi(mod && mod.nascondi);
+  if(s.nascondi && typeof s.nascondi === 'object'){
+    out.nascondi.prezzo = s.nascondi.prezzo === true;
+    out.nascondi.cifre = s.nascondi.dati === true;
+    out.nascondi.qr = s.nascondi.qr === true;
+  }
+  return out;
+}
+
+// the category of a model in VT_MODELLI; an unknown model or one without a category is 'classici'
+function vtCategoriaDi(m){
+  for(var k = 0; k < VT_MODELLI.length; k++){
+    if(VT_MODELLI[k].n === m && typeof VT_MODELLI[k].cat === 'string') return VT_MODELLI[k].cat;
+  }
+  return 'classici';
+}
+
+// the last choice of the showcases, as the server keeps it
+function vtUltimaAdesso(){
+  return {
+    formato: VT.formato,
+    categoria: (VT.categoria && VT.categoria !== 'preferiti') ? VT.categoria : vtCategoriaDi(VT.modello),
+    modello: VT.modello,
+    tavolozza: VT.mod ? VT.mod.tavolozza : null
+  };
+}
+
+// the photos of the listing, the opening one first
+function vtEdFotoLista(){
+  return brApertura(BR.foto, brPrefApertura(BR.codice));
+}
+
+// prepares the state of the editor for the listing and the model on screen
+function vtEdPrepara(){
+  if(!Array.isArray(VT.annulla)) VT.annulla = [];
+  if(!Array.isArray(VT.ripeti)) VT.ripeti = [];
+  if(VT.edPrima === undefined) VT.edPrima = null;
+  var lista = vtEdFotoLista();
+  var n = Math.min(vtNumFoto(VT.modello), lista.length);
+  var k = BR.codice + '-' + VT.modello;
+  if(VT.modChiave !== k){
+    VT.modChiave = k;
+    VT.mod = vtModPulito(null, lista, n);
+    var tav = vtPrefAttivo() ? vtPrefUltimaVal('tavolozza') : null;
+    if(brEdPal(tav)){
+      VT.mod.tavolozza = tav;
+      VT.mod.colori = brEdColoriDa(tav);
+    }
+    VT.annulla = [];
+    VT.ripeti = [];
+    VT.edPrima = null;
+    VT.edSel = n > 0 ? 0 : -1;
+  } else {
+    VT.mod = vtModPulito(VT.mod, lista, n);
+  }
+  if(!isFinite(VT.edSel) || VT.edSel >= n) VT.edSel = n > 0 ? 0 : -1;
+}
+
+// the default title and an empty description for a listing, before the agent writes his own
+function vtEdBase(i){
+  return { titolo: brEdBase(i).titolo, descrizione: '' };
+}
+
+// a text of the current language: the agent's version when it exists, else the base value
+function vtEdValore(campo, base){
+  var t = VT.mod && VT.mod.testi && VT.mod.testi[BR.lingua];
+  return t && typeof t[campo] === 'string' ? t[campo] : base[campo];
+}
+
+// the classes of the sheet: colours on, and one class for each hidden field
+function vtEdClassi(){
+  if(!VT.mod) return '';
+  var s = VT.mod.colori ? ' vt-colori' : '';
+  VT_ED_CAMPI_NASCONDI.forEach(function(k){
+    if((VT.mod.nascondi || {})[k] === true) s += ' vt-no-' + k;
+  });
+  return s;
+}
+
+/* ---------- drawing on the sheet (no markup is built here) ---------- */
+
+// the colours of the model on the sheet, the framing of each box, then the warning and the sample colours
+function vtEdApplica(f){
+  if(!f || !VT.mod) return;
+  var c = VT.mod.colori;
+  if(c){
+    f.style.setProperty('--vt-sfondo', c.sfondo);
+    f.style.setProperty('--vt-testo', c.testo);
+    f.style.setProperty('--vt-titolo', c.titolo);
+    f.style.setProperty('--vt-fascia', c.fascia);
+    f.classList.add('vt-colori');
+  } else {
+    f.style.removeProperty('--vt-sfondo');
+    f.style.removeProperty('--vt-testo');
+    f.style.removeProperty('--vt-titolo');
+    f.style.removeProperty('--vt-fascia');
+    f.classList.remove('vt-colori');
+  }
+  $$('.vt-riq', f).forEach(function(box){
+    var i = Number(box.getAttribute('data-i')), r = VT.mod.riquadri[i], img = box.querySelector('img');
+    if(!r || !img) return;
+    img.style.objectPosition = r.x + '% ' + r.y + '%';
+    img.style.transformOrigin = r.x + '% ' + r.y + '%';
+    img.style.transform = 'scale(' + (r.zoom / 100) + ')';
+  });
+  vtEdAvviso();
+  vtEdCampioni(f);
+}
+
+// the warning under the colours when the text is hard to read on its background
+function vtEdAvviso(){
+  var box = g('vt-ed-avviso');
+  if(!box) return;
+  var c = VT.mod && VT.mod.colori, rapporto = c ? brContrasto(c.testo, c.sfondo) : 0;
+  var basso = !!c && rapporto < 4.5;
+  box.hidden = !basso;
+  if(basso) box.textContent = 'Contrasto basso fra testo e sfondo (' + String(rapporto).replace('.', ',') + ':1): il testo può leggersi male. Puoi stampare lo stesso.';
+}
+
+// with the model colours, the colour inputs show the real colours of the drawn sheet
+function vtEdCampioni(f){
+  if(!f || !VT.mod || VT.mod.colori !== null) return;
+  var host = g('mk-vetrine');
+  if(!host) return;
+  var tit = f.querySelector('.vt-titolo'), corpo = f.querySelector('.vt-corpo');
+  var cs = getComputedStyle(f);
+  var v = {
+    sfondo: cs.backgroundColor,
+    testo: cs.color,
+    titolo: tit ? getComputedStyle(tit).color : '',
+    fascia: corpo ? getComputedStyle(corpo).backgroundColor : ''
+  };
+  var R = brEdColoriLetti(v, brEdColoriDa('navy-oro'));
+  $$('[data-act="vt-ed-colore"]', host).forEach(function(inp){
+    var k = inp.getAttribute('data-k');
+    if(R[k]) inp.value = R[k];
+  });
+}
+
+// the starting colours of a free change: the four colour inputs on screen, when they hold a valid colour
+function vtEdColoriPagina(){
+  var base = brEdColoriDa('navy-oro'), host = g('mk-vetrine');
+  if(!host) return base;
+  $$('[data-act="vt-ed-colore"]', host).forEach(function(inp){
+    var k = inp.getAttribute('data-k'), v = String(inp.value || '').toLowerCase();
+    if(['sfondo', 'testo', 'titolo', 'fascia'].indexOf(k) >= 0 && brColoreOk(v)) base[k] = v;
+  });
+  return base;
+}
+
+/* ---------- history: one step per change, 50 steps ---------- */
+
+function vtEdInizio(){
+  if(VT.mod && !VT.edPrima) VT.edPrima = brCopia(VT.mod);
+}
+
+function vtEdFine(){
+  if(!VT.edPrima) return;
+  if(JSON.stringify(VT.edPrima) !== JSON.stringify(VT.mod)){
+    VT.annulla = brStoria(VT.annulla || [], VT.edPrima, VT_ED_STORIA);
+    VT.ripeti = [];
+  }
+  VT.edPrima = null;
+}
+
+// puts the focus back on the control that was changed, after the sheet is drawn again
+function vtEdFuoco(el){
+  if(!el) return;
+  var host = g('mk-vetrine');
+  if(!host) return;
+  var sel = '[data-act="' + el.getAttribute('data-act') + '"]';
+  ['data-k', 'data-v', 'data-i'].forEach(function(a){
+    if(el.hasAttribute(a)) sel += '[' + a + '="' + el.getAttribute(a) + '"]';
+  });
+  var t = host.querySelector(sel);
+  if(t && t.focus) t.focus();
+}
+
+// one change of the model: a history step, then the sheet is drawn again
+function vtEdCambia(fn, el){
+  vtEdInizio();
+  fn(VT.mod);
+  vtEdFine();
+  renderVetrine(true);
+  vtEdFuoco(el);
+}
+
+/* ---------- actions (one case per data-act, see vtEdSmista in 04f) ---------- */
+
+// click on a photo of the list: it becomes the photo of the chosen box (the first box when none is chosen)
+function vtEdScegliFoto(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  var lista = vtEdFotoLista(), i = Number(el.getAttribute('data-i'));
+  var r = VT.edSel < 0 ? 0 : VT.edSel;
+  if(!lista[i] || !VT.mod.riquadri[r]) return;
+  var foto = lista[i];
+  vtEdCambia(function(m){ m.riquadri[r] = { foto: foto, x: 50, y: 50, zoom: 100 }; }, el);
+}
+
+// click on a box chip (model 5): that box is the one to change
+function vtEdRiquadro(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  var i = Number(el.getAttribute('data-i'));
+  if(!VT.mod.riquadri[i]) return;
+  VT.edSel = i;
+  renderVetrine(true);
+}
+
+function vtEdCentra(el, tipo){
+  if(tipo !== 'click' || !VT.mod || VT.edSel < 0 || !VT.mod.riquadri[VT.edSel]) return;
+  var n = VT.edSel;
+  vtEdCambia(function(m){ m.riquadri[n].x = 50; m.riquadri[n].y = 50; }, el);
+}
+
+function vtEdZoom(el, tipo){
+  if(!VT.mod || VT.edSel < 0 || !VT.mod.riquadri[VT.edSel]) return;
+  var z = Math.round(Number(el.value));
+  if(!isFinite(z)) return;
+  z = Math.min(200, Math.max(100, z));
+  var n = VT.edSel;
+  if(tipo === 'input'){
+    vtEdInizio();
+    VT.mod.riquadri[n].zoom = z;
+    vtEdApplica(g('vt-foglio'));
+  } else if(tipo === 'change'){
+    vtEdInizio();
+    VT.mod.riquadri[n].zoom = z;
+    vtEdFine();
+  }
+}
+
+function vtEdPos(el, tipo){
+  var k = el.getAttribute('data-k'), n = VT.edSel;
+  if(!VT.mod || n < 0 || !VT.mod.riquadri[n] || (k !== 'x' && k !== 'y')) return;
+  var v = Math.round(Number(el.value));
+  if(!isFinite(v)) return;
+  v = Math.min(100, Math.max(0, v));
+  if(tipo === 'input'){
+    vtEdInizio();
+    VT.mod.riquadri[n][k] = v;
+    vtEdApplica(g('vt-foglio'));
+  } else if(tipo === 'change'){
+    vtEdInizio();
+    VT.mod.riquadri[n][k] = v;
+    vtEdFine();
+  }
+}
+
+// a palette chip: the four colours of the palette, or the model colours; the choice is kept for the next time
+function vtEdTavolozza(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  var id = el.getAttribute('data-v'), p = brEdPal(id);
+  if(id !== 'modello' && !p) return;
+  vtEdCambia(function(m){
+    m.tavolozza = p ? p.id : 'modello';
+    m.colori = p ? { sfondo: p.sfondo, testo: p.testo, titolo: p.titolo, fascia: p.fascia } : null;
+  }, el);
+  VT.toccato = true;
+  vtPrefUltimaSalva(vtUltimaAdesso());
+}
+
+// one of the four free colours: the first change makes the colours of the model editable
+function vtEdColore(el, tipo){
+  if(tipo !== 'input' && tipo !== 'change') return;
+  var k = el.getAttribute('data-k'), v = String(el.value || '').toLowerCase();
+  if(['sfondo', 'testo', 'titolo', 'fascia'].indexOf(k) < 0 || !brColoreOk(v) || !VT.mod) return;
+  vtEdInizio();
+  if(!VT.mod.colori) VT.mod.colori = vtEdColoriPagina();
+  VT.mod.colori[k] = v;
+  VT.mod.tavolozza = 'libera';
+  if(tipo === 'input'){
+    vtEdApplica(g('vt-foglio'));
+  } else {
+    vtEdFine();
+    renderVetrine(true);
+  }
+}
+
+// the title and the short sentence: typed text goes to the sheet at once, saved on change
+function vtEdTestoCampo(el, tipo){
+  var k = el.getAttribute('data-k');
+  if(!VT.mod || (k !== 'titolo' && k !== 'frase')) return;
+  var campo = k === 'titolo' ? 'titolo' : 'descrizione', lim = k === 'titolo' ? 300 : 160;
+  if(tipo === 'input'){
+    var im = brImmobile();
+    if(!im) return;
+    vtEdInizio();
+    if(!VT.mod.testi[BR.lingua]) VT.mod.testi[BR.lingua] = vtEdBase(im);
+    VT.mod.testi[BR.lingua][campo] = String(el.value).slice(0, lim);
+    var testo = VT.mod.testi[BR.lingua][campo];
+    var f = g('vt-foglio');
+    var box = f && f.querySelector(k === 'titolo' ? '.vt-titolo' : '.vt-frase');
+    if(box) box.textContent = testo;
+    var conto = g(k === 'titolo' ? 'vt-conta-titolo' : 'vt-conta-frase');
+    if(conto) conto.textContent = String(testo).length + '/' + lim;
+  } else if(tipo === 'change'){
+    vtEdFine();
+    renderVetrine(true);
+  }
+}
+
+// a field of «Cosa mostrare»: checked means shown, so the flag is the opposite
+function vtEdMostra(el, tipo){
+  if(tipo !== 'change' || !VT.mod) return;
+  var k = el.getAttribute('data-k');
+  if(VT_ED_CAMPI_NASCONDI.indexOf(k) < 0) return;
+  var v = el.checked !== true;
+  vtEdCambia(function(m){ m.nascondi[k] = v; }, el);
+}
+
+function vtEdAnnulla(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  vtEdFine();
+  if(!VT.annulla || !VT.annulla.length) return;
+  VT.ripeti = brStoria(VT.ripeti || [], brCopia(VT.mod), VT_ED_STORIA);
+  VT.mod = VT.annulla[VT.annulla.length - 1];
+  VT.annulla = VT.annulla.slice(0, -1);
+  renderVetrine(true);
+}
+
+function vtEdRipeti(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  vtEdFine();
+  if(!VT.ripeti || !VT.ripeti.length) return;
+  VT.annulla = brStoria(VT.annulla || [], brCopia(VT.mod), VT_ED_STORIA);
+  VT.mod = VT.ripeti[VT.ripeti.length - 1];
+  VT.ripeti = VT.ripeti.slice(0, -1);
+  renderVetrine(true);
+}
+
+// back to the model as it was: photos, colours and texts of this showcase; the step can be undone
+function vtEdRipristina(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  if(!window.confirm('Ripristino il modello? Tolgo le modifiche di questa vetrina (foto, colori e testi).')) return;
+  vtEdFine();
+  var lista = vtEdFotoLista(), n = Math.min(vtNumFoto(VT.modello), lista.length);
+  VT.annulla = brStoria(VT.annulla || [], brCopia(VT.mod), VT_ED_STORIA);
+  VT.ripeti = [];
+  VT.mod = vtModPulito(null, lista, n);
+  VT.edSel = n > 0 ? 0 : -1;
+  renderVetrine(true);
+}
+
+// the saved styles of the showcases; the list is empty when the cancello has no preferences
+function vtEdStileDi(id){
+  var l = vtPrefAttivo() && BR_PREF.dati && BR_PREF.dati.stiliVt ? BR_PREF.dati.stiliVt : [];
+  for(var i = 0; i < l.length; i++) if(l[i].id === id) return l[i];
+  return null;
+}
+
+// saves the current showcase as a style of mine; the button is off while saving
+function vtEdSalvaStile(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  var campo = g('vt-ed-stilenome');
+  var nome = brStileNome(campo ? campo.value : '');
+  if(!nome){
+    toast('Il nome deve avere da 1 a 60 caratteri.');
+    if(campo) campo.focus();
+    return;
+  }
+  if(el) el.disabled = true;
+  brPrefStileCrea(nome, vtStileMod(VT.mod), 'vt').then(function(){
+    toast('Stile salvato');
+    renderVetrine(true);
+  }, function(e){
+    if(el) el.disabled = false;
+    vtPrefAvvisa(e);
+  });
+}
+
+// applies a saved style: colours, palette and the three flags; photos and texts stay
+function vtEdApplicaStile(el, tipo){
+  if(tipo !== 'click' || !VT.mod) return;
+  var s = vtEdStileDi(el.getAttribute('data-v'));
+  if(!s) return;
+  vtEdCambia(function(m){
+    var n = vtStileApplica(m, s.mod);
+    m.colori = n.colori;
+    m.tavolozza = n.tavolozza;
+    m.nascondi = n.nascondi;
+  }, el);
+}
+
+function vtEdEliminaStile(el, tipo){
+  if(tipo !== 'click') return;
+  var id = el.getAttribute('data-v'), s = vtEdStileDi(id);
+  if(!s || !window.confirm('Elimino lo stile «' + s.nome + '»?')) return;
+  brPrefStileElimina(id).then(function(){ renderVetrine(true); }, function(e){ vtPrefAvvisa(e); });
+}
+
+// keys of the editor: Ctrl/Cmd+Z undo, Ctrl/Cmd+Y or Ctrl/Cmd+Shift+Z redo, on the Vetrine page only
+function vtEdTasto(e){
+  if(e.altKey) return false;
+  if(S.sec !== 'marketing' || S.sub !== 'vetrine' || !VT.mod) return false;
+  var t = e.target, tag = t && t.tagName;
+  if(tag === 'TEXTAREA' || tag === 'INPUT') return false;
+  if(!(e.ctrlKey || e.metaKey)) return false;
+  var k = String(e.key || '').toLowerCase();
+  if(k === 'z' && !e.shiftKey){ e.preventDefault(); vtEdAnnulla(null, 'click'); return true; }
+  if(k === 'y' || (k === 'z' && e.shiftKey)){ e.preventDefault(); vtEdRipeti(null, 'click'); return true; }
+  return false;
+}
+
+/* ---------- markup ---------- */
+
+// the three buttons above the sheet: undo, redo and restore
+function vtEdBarra(){
+  return H`<button class="btn sec sm" type="button" data-act="vt-ed-annulla" aria-keyshortcuts="Control+Z"${raw((VT.annulla || []).length ? '' : ' disabled')}>Annulla</button><button class="btn sec sm" type="button" data-act="vt-ed-ripeti" aria-keyshortcuts="Control+Y"${raw((VT.ripeti || []).length ? '' : ' disabled')}>Ripeti</button><button class="btn sec sm" type="button" data-act="vt-ed-ripristina">Ripristina il modello</button>`;
+}
+
+// the sections of the editor, in the order of the brochure: colours, texts, photos, what to show, my styles
+function vtEdPannello(i){
+  var m = VT.mod, base = vtEdBase(i);
+  var k = VT.edSel < 0 ? 0 : VT.edSel;
+  var sel = m.riquadri[k] || null;
+  var lista = vtEdFotoLista();
+  var cur = m.colori || brEdColoriDa('navy-oro');
+  var nomeL = BR_NOMI[BR.lingua] || BR.lingua;
+
+  var pal = [H`<button class="br-chip" type="button" data-act="vt-ed-tavolozza" data-v="modello" aria-pressed="${String(m.tavolozza === 'modello')}">Colori del modello</button>`]
+    .concat(BR_TAVOLOZZE.map(function(t){
+      return H`<button class="br-chip" type="button" data-act="vt-ed-tavolozza" data-v="${t.id}" aria-pressed="${String(m.tavolozza === t.id)}">${t.nome}</button>`;
+    }));
+  var colori = [['sfondo', 'Sfondo'], ['testo', 'Testo'], ['titolo', 'Titolo'], ['fascia', 'Fascia']].map(function(c){
+    return H`<label class="br-ed-colore">${c[1]} <input type="color" data-act="vt-ed-colore" data-k="${c[0]}" value="${cur[c[0]]}"></label>`;
+  });
+  var coloriSez = H`<details class="br-sez" data-sez="colori"${brSezAttr('colori')}><summary class="br-sez-tit">Colori<span class="br-sez-scelta">${' · ' + brEdTavolozzaNome(m.tavolozza)}</span></summary><div class="br-sez-corpo"><div class="br-ed-riga">${pal}</div><div class="br-ed-riga">${colori}</div><p id="tcag-vt-ed-avviso" class="br-ed-avviso" role="status" hidden></p></div></details>`;
+
+  var tit = vtEdValore('titolo', base), fra = vtEdValore('descrizione', base);
+  var testiSez = H`<details class="br-sez" data-sez="testi"${brSezAttr('testi')}><summary class="br-sez-tit">Testi</summary><div class="br-sez-corpo"><label class="br-ed-campo">${'Titolo (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="titolo" maxlength="300" rows="2">${tit}</textarea><span class="br-conta" id="tcag-vt-conta-titolo">${String(tit || '').length + '/300'}</span></label><label class="br-ed-campo">${'Frase breve (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="frase" maxlength="160" rows="3">${fra}</textarea><span class="br-conta" id="tcag-vt-conta-frase">${String(fra || '').length + '/160'}</span></label></div></details>`;
+
+  var striscia = lista.map(function(u, j){
+    return H`<button class="br-ed-min" type="button" data-act="vt-ed-foto" data-i="${j}" aria-label="Foto ${j + 1}" aria-pressed="${String(!!sel && sel.foto === u)}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
+  });
+  var riquadri = m.riquadri.length === 2
+    ? H`<div class="br-ed-riga" role="group" aria-label="Riquadro">${['Foto 1', 'Foto 2'].map(function(nome, j){
+        return H`<button class="br-chip" type="button" data-act="vt-ed-riquadro" data-i="${j}" aria-pressed="${String(k === j)}">${nome}</button>`;
+      })}</div>`
+    : '';
+  var inquadratura = sel
+    ? H`<div class="br-ed-riga"><label>Zoom <input type="range" min="100" max="200" step="5" value="${sel.zoom}" data-act="vt-ed-zoom"></label><label>Orizzontale <input type="range" min="0" max="100" value="${sel.x}" data-act="vt-ed-pos" data-k="x"></label><label>Verticale <input type="range" min="0" max="100" value="${sel.y}" data-act="vt-ed-pos" data-k="y"></label><button class="btn sec sm" type="button" data-act="vt-ed-centra">Centra</button></div>`
+    : '';
+  var fotoCorpo = !lista.length
+    ? H`<p class="br-ed-nota">Questo immobile non ha foto.</p>`
+    : H`<p class="br-ed-nota">Tocca una foto: diventa la foto del cartello.</p>${riquadri}<div class="br-ed-striscia">${striscia}</div>${inquadratura}`;
+  var fotoScelta = lista.length ? ' · Foto ' + (k + 1) + ' di ' + lista.length : '';
+  var fotoSez = H`<details class="br-sez" data-sez="foto"${brSezAttr('foto')}><summary class="br-sez-tit">Foto<span class="br-sez-scelta">${fotoScelta}</span></summary><div class="br-sez-corpo">${fotoCorpo}</div></details>`;
+
+  var etichette = [['prezzo', 'Prezzo', false], ['cifre', 'Cifre (m², camere, bagni)', false], ['zona', 'Zona', true], ['codice', 'Codice dell’immobile', true], ['qr', 'QR', false], ['logo', 'Logo', true]];
+  var caselle = etichette.map(function(c){
+    var acceso = m.nascondi[c[0]] !== true;
+    return H`<label class="br-ed-casella"><input type="checkbox" data-act="vt-ed-mostra" data-k="${c[0]}"${raw(acceso ? ' checked' : '')}> ${c[1]}${c[2] ? H` <span class="br-conta">non entra negli stili</span>` : ''}</label>`;
+  });
+  var visibili = etichette.filter(function(c){ return m.nascondi[c[0]] !== true; }).length;
+  var mostraSez = H`<details class="br-sez" data-sez="mostra"${brSezAttr('mostra')}><summary class="br-sez-tit">Cosa mostrare<span class="br-sez-scelta">${' · ' + visibili + ' di 6 elementi'}</span></summary><div class="br-sez-corpo"><div class="br-ed-caselle">${caselle}</div></div></details>`;
+
+  var elenco = vtPrefAttivo() && BR_PREF.dati && BR_PREF.dati.stiliVt ? BR_PREF.dati.stiliVt : [];
+  var stiliSez = vtPrefAttivo()
+    ? H`<details class="br-sez" data-sez="stili"${brSezAttr('stili')}><summary class="br-sez-tit">I miei stili</summary><div class="br-sez-corpo"><label class="br-ed-campo">Nome dello stile <input type="text" id="tcag-vt-ed-stilenome" maxlength="60" autocomplete="off"></label><div class="br-ed-riga"><button class="btn sec sm" type="button" data-act="vt-ed-salvastile">Salva come mio stile</button></div><div class="br-ed-stili">${elenco.length ? elenco.map(function(s){
+        return H`<div class="br-ed-riga"><span>${s.nome}</span><button class="btn sec sm" type="button" data-act="vt-ed-applicastile" data-v="${s.id}">Applica</button><button class="btn sec sm" type="button" data-act="vt-ed-eliminastile" data-v="${s.id}">Elimina</button></div>`;
+      }) : H`<p class="br-ed-nota">Nessuno stile salvato.</p>`}</div></div></details>`
+    : '';
+
+  return H`${coloriSez}${testiSez}${fotoSez}${mostraSez}${stiliSez}`;
+}
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
      =========================================================
@@ -15243,6 +15985,200 @@ function stuaAzione(a, el){
   }
 }
   /* =========================================================
+     ADMINISTRATION > TOOLS AND SWITCHES: card «Contatti per brochure e vetrine».
+     The admin fills the persona and agency contacts printed on brochures and showcases.
+     Used by 04e9h-admin-strumenti.js (ctScheda, ctAzione, ctInput).
+     Pure helpers first (they run also in the bench), then the draft and the card.
+     Text that comes from outside goes through H`` or textContent only. The gate checks the admin role on every call.
+     ========================================================= */
+  var CT = { bozza: null, salvando: false, msg: null };
+
+  /* ---------- pure helpers (also run by the bench) ---------- */
+  // a value that is not a string becomes ''
+  function ctStr(v){
+    return typeof v === 'string' ? v : '';
+  }
+  // an object, or an empty object when the value is not one
+  function ctObj(v){
+    return v && typeof v === 'object' && !Array.isArray(v) ? v : {};
+  }
+  // the saved contacts as the gate sends them; null when the gate has no materiali section (old gate)
+  function ctDa(d){
+    var m = d && typeof d === 'object' ? d.materiali : null;
+    if(!m || typeof m !== 'object' || Array.isArray(m)) return null;
+    var p = ctObj(m.persona), a = ctObj(m.agenzia);
+    return {
+      persona: { nome: ctStr(p.nome), ruolo: ctStr(p.ruolo), telefono: ctStr(p.telefono), email: ctStr(p.email) },
+      agenzia: { nome: ctStr(a.nome), indirizzo: ctStr(a.indirizzo), telefono: ctStr(a.telefono), email: ctStr(a.email), sito: ctStr(a.sito) }
+    };
+  }
+  // the agency name and address come from the proposal, only where the saved ones are empty
+  function ctConProposta(s, proposta){
+    var out = JSON.parse(JSON.stringify(s));
+    var pa = proposta && typeof proposta === 'object' && proposta.agenzia && typeof proposta.agenzia === 'object' ? proposta.agenzia : null;
+    if(!pa) return out;
+    if(out.agenzia.nome === '' && typeof pa.nome === 'string') out.agenzia.nome = pa.nome;
+    if(out.agenzia.indirizzo === '' && typeof pa.indirizzo === 'string') out.agenzia.indirizzo = pa.indirizzo;
+    return out;
+  }
+  // the persona picked from the table of the agents: name and email, when the email is in the table
+  function ctPersona(b, persone, email){
+    var out = JSON.parse(JSON.stringify(b));
+    if(!Array.isArray(persone)) return out;
+    for(var i = 0; i < persone.length; i++){
+      var p = persone[i];
+      if(p && typeof p === 'object' && p.email === email){
+        if(typeof p.nome === 'string') out.persona.nome = p.nome;
+        out.persona.email = p.email;
+        break;
+      }
+    }
+    return out;
+  }
+  // the first problem of the draft, in plain Italian ('' = all fine)
+  function ctProblemi(b){
+    var campi = [
+      ['persona', 'nome', 'Nome (persona)'], ['persona', 'ruolo', 'Ruolo (persona)'],
+      ['persona', 'telefono', 'Telefono (persona)'], ['persona', 'email', 'Email (persona)'],
+      ['agenzia', 'nome', 'Nome dell’agenzia'], ['agenzia', 'indirizzo', 'Indirizzo (agenzia)'],
+      ['agenzia', 'telefono', 'Telefono (agenzia)'], ['agenzia', 'email', 'Email (agenzia)'],
+      ['agenzia', 'sito', 'Sito (agenzia)']
+    ];
+    for(var i = 0; i < campi.length; i++){
+      var parte = campi[i][0], campo = campi[i][1], nome = campi[i][2];
+      var v = ctStr(ctObj(b[parte])[campo]).trim(), pre = '«' + nome + '»: ';
+      if(v.length > 120) return pre + 'al massimo 120 caratteri.';
+      if(/[<>]/.test(v)) return pre + 'non si possono usare < e >.';
+      if(campo === 'email' && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return pre + 'l’email non è valida.';
+      if(campo === 'telefono' && v && (!/^[0-9+ .()\-]+$/.test(v) || !/[0-9]/.test(v))) return pre + 'il telefono può avere solo cifre, spazi e + . - ( ).';
+      if(campo === 'sito' && v && v.indexOf('https://') !== 0) return pre + 'il sito deve iniziare con https://.';
+    }
+    return '';
+  }
+  // what goes to the gate: values without spaces at the ends, keys in the gate order
+  function ctPatch(b){
+    var p = ctObj(b.persona), a = ctObj(b.agenzia);
+    return {
+      persona: { nome: ctStr(p.nome).trim(), ruolo: ctStr(p.ruolo).trim(), telefono: ctStr(p.telefono).trim(), email: ctStr(p.email).trim() },
+      agenzia: { nome: ctStr(a.nome).trim(), indirizzo: ctStr(a.indirizzo).trim(), telefono: ctStr(a.telefono).trim(), email: ctStr(a.email).trim(), sito: ctStr(a.sito).trim() }
+    };
+  }
+
+  /* ---------- draft and state ---------- */
+  // the draft: the saved contacts, with the agency data proposed where they are still empty
+  function ctBozza(){
+    var s = ctDa(dgImpDati());
+    if(!s) return null;
+    if(!CT.bozza) CT.bozza = ctConProposta(s, dgImpDati().materiali_proposta);
+    return CT.bozza;
+  }
+  // true when the draft differs from what is saved
+  function ctSporco(){
+    if(!CT.bozza) return false;
+    var s = ctDa(dgImpDati());
+    return !!s && JSON.stringify(ctPatch(CT.bozza)) !== JSON.stringify(ctPatch(s));
+  }
+  // one text field of the card: a label with the input inside (the value is escaped by H)
+  function ctCampo(id, etichetta, valore, attr){
+    return H`<label class="fld">${etichetta}<input id="${id}" maxlength="120" autocomplete="off" value="${valore}"${raw(attr)}></label>`;
+  }
+
+  /* ---------- the card ---------- */
+  // the card, built like the other cards of Tools and switches; empty for anyone who is not an admin
+  function ctScheda(){
+    if(!(U && U.ruolo === 'admin')) return '';
+    var S0 = ctDa(dgImpDati()), B = S0 ? ctBozza() : null;
+    var prop = ctObj(dgImpDati().materiali_proposta), pa = ctObj(prop.agenzia);
+    var persone = Array.isArray(prop.persone) ? prop.persone.filter(function(p){ return p && typeof p.email === 'string' && p.email; }) : [];
+    var pieno = !!S0 && [S0.persona, S0.agenzia].some(function(gr){
+      return Object.keys(gr).some(function(k){ return gr[k] !== ''; });
+    });
+    var daProposta = !!B && !!S0 && ((S0.agenzia.nome === '' && B.agenzia.nome !== '' && B.agenzia.nome === ctStr(pa.nome)) ||
+      (S0.agenzia.indirizzo === '' && B.agenzia.indirizzo !== '' && B.agenzia.indirizzo === ctStr(pa.indirizzo)));
+    var sp = ctSporco(), pr = B ? ctProblemi(B) : '', corpo;
+    if(!B){
+      corpo = H`<p class="mut">Il server non è aggiornato per questi contatti (serve il cancello AI 1.15.0).</p>`;
+    } else {
+      corpo = H`<p class="mut">Compaiono nelle vetrine e nelle brochure stampate dagli agenti, al posto dei dati di chi stampa.</p>
+        <h3>Persona</h3>
+        ${persone.length ? H`<label class="fld">Persona<select id="tcag-stru-ct-persona"><option value="">Scegli dalla tabella dei mediatori…</option>${persone.map(function(p){ return H`<option value="${p.email}">${(ctStr(p.nome) ? p.nome + ' · ' : '') + p.email}</option>`; })}</select></label>` : ''}
+        ${ctCampo('tcag-stru-ct-p-nome', 'Nome', B.persona.nome, '')}
+        ${ctCampo('tcag-stru-ct-p-ruolo', 'Ruolo', B.persona.ruolo, '')}
+        ${ctCampo('tcag-stru-ct-p-telefono', 'Telefono', B.persona.telefono, ' inputmode="tel"')}
+        ${ctCampo('tcag-stru-ct-p-email', 'Email', B.persona.email, ' inputmode="email"')}
+        <h3>Agenzia</h3>
+        ${ctCampo('tcag-stru-ct-a-nome', 'Nome dell’agenzia', B.agenzia.nome, '')}
+        ${ctCampo('tcag-stru-ct-a-indirizzo', 'Indirizzo', B.agenzia.indirizzo, '')}
+        ${ctCampo('tcag-stru-ct-a-telefono', 'Telefono', B.agenzia.telefono, ' inputmode="tel"')}
+        ${ctCampo('tcag-stru-ct-a-email', 'Email', B.agenzia.email, ' inputmode="email"')}
+        ${ctCampo('tcag-stru-ct-a-sito', 'Sito (https://…)', B.agenzia.sito, ' inputmode="url"')}
+        ${daProposta ? H`<p class="mut dg-nota">Proposto dai dati agenzia</p>` : ''}
+        <p class="dg-aiuto" id="tcag-stru-ct-pr" role="status" ${pr ? '' : 'hidden'}>${pr}</p>
+        <div class="dg-az dg-fondo"><span class="dg-sporco" id="tcag-stru-ct-s" ${sp ? '' : 'hidden'}>Non salvato</span><button class="btn pri big" type="button" id="tcag-stru-ct-salva" data-act="stru-ct-salva" ${sp && !pr && !CT.salvando ? '' : 'disabled'}>${CT.salvando ? 'Salvo…' : 'Salva i contatti'}</button></div>
+        ${CT.msg ? H`<p class="dg-msg ${CT.msg.t}" id="tcag-stru-ct-esito" role="${CT.msg.t === 'err' ? 'alert' : 'status'}">${ic(CT.msg.t === 'err' ? 'warn' : 'check', 18)}<span>${CT.msg.testo}</span></p>` : ''}`;
+    }
+    return H`<section class="card stru-riga" id="tcag-stru-ct" aria-labelledby="tcag-stru-h-ct"><div class="stru-testa"><span class="stru-ico" aria-hidden="true">${ic('brochure', 28)}</span><h2 id="tcag-stru-h-ct">Contatti per brochure e vetrine</h2><span class="pill ${pieno ? 's-app' : 's-nuova'}" id="tcag-stru-ct-st">${pieno ? 'Compilati' : 'Da compilare'}</span></div><div class="stru-corpo">${corpo}</div></section>`;
+  }
+
+  // the actions of the card (data-act stru-ct-*), sent here by struAzione
+  function ctAzione(a, el){
+    if(!(U && U.ruolo === 'admin')) return;
+    switch(a){
+      case 'stru-ct-salva': ctSalva(); break;
+    }
+  }
+
+  // ends a save: Salva is enabled again, also when the re-read after a failed save fails
+  function ctFine(){
+    CT.salvando = false;
+    if(S.sec === 'admin' && S.adm === 'strumenti') renderCorrente();
+  }
+
+  // saves persona and agency contacts; the gate checks the version read by the page
+  function ctSalva(){
+    if(!(U && U.ruolo === 'admin') || CT.salvando || !GD.imp.ok) return;
+    var B = ctBozza();
+    if(!B || ctProblemi(B) || !ctSporco()) return;
+    CT.salvando = true; CT.msg = null; renderCorrente();
+    dgApi('POST', 'impostazioni', { materiali: ctPatch(B), base: dgImpDati().versione }).then(function(j){
+      if(j && typeof j === 'object' && j.versione != null){
+        var nuovo = {};
+        Object.keys(dgImpDati()).forEach(function(k){ nuovo[k] = dgImpDati()[k]; });
+        Object.keys(j).forEach(function(k){ nuovo[k] = j[k]; });
+        GD.imp.dati = nuovo; GD.imp.agg = Date.now(); dgImpArrivata();
+      } else return dgCarica('imp', true);
+    }).then(function(){
+      CT.bozza = null; CT.msg = { t: 'ok', testo: 'Contatti salvati.' };
+    }, function(e){
+      CT.msg = { t: 'err', testo: dgTesto(e) };
+      if(e && e.http === 409){ CT.bozza = null; return dgCarica('imp', true); }
+    }).then(ctFine, function(e2){
+      CT.msg = { t: 'err', testo: dgTesto(e2) };
+      ctFine();
+    });
+  }
+
+  // a letter typed in a field: the draft changes and the page is not redrawn (the focus stays);
+  // picking a persona redraws the card, because it fills four fields
+  function ctInput(t){
+    var id = t.id, B = ctBozza();
+    if(!B) return;
+    if(id === 'tcag-stru-ct-persona'){
+      CT.bozza = ctPersona(B, ctObj(dgImpDati().materiali_proposta).persone, t.value);
+      CT.msg = null; renderCorrente();
+      return;
+    }
+    var m = /^tcag-stru-ct-(p|a)-(nome|ruolo|telefono|email|indirizzo|sito)$/.exec(id);
+    if(!m) return;
+    var parte = m[1] === 'p' ? 'persona' : 'agenzia';
+    if(!Object.prototype.hasOwnProperty.call(B[parte], m[2])) return;
+    B[parte][m[2]] = t.value;
+    var pr = ctProblemi(B), c;
+    c = g('stru-ct-pr'); if(c){ c.hidden = !pr; c.textContent = pr; }
+    c = g('stru-ct-s'); if(c) c.hidden = !ctSporco();
+    c = g('stru-ct-salva'); if(c) c.disabled = !ctSporco() || !!pr || CT.salvando;
+  }
+  /* =========================================================
      ADMINISTRATION > TOOLS AND SWITCHES (V6.23.0): admin only.
      The gate re-checks the admin role on every /ai/admin/* call.
      ========================================================= */
@@ -15306,6 +16242,7 @@ function stuaAzione(a, el){
   function struApri(forza){
     if(!(U && U.ruolo === 'admin')) return;
     if(!struSporco()) STRU.bozza = null;
+    if(!ctSporco()) CT.bozza = null;
     if(GD.imp.stato === 'idle' || (forza && !GD.imp.ok)) dgCarica('imp');
   }
 
@@ -15338,6 +16275,7 @@ function stuaAzione(a, el){
       <p class="dg-aiuto" id="tcag-stru-pr" role="status" ${pr ? '' : 'hidden'}>${pr}</p>
       <div class="dg-az dg-fondo"><span class="dg-sporco" id="tcag-stru-s" ${sp ? '' : 'hidden'}>Non salvato</span><button class="btn pri big" type="button" id="tcag-stru-salva" data-act="stru-salva" ${sp && !pr && !STRU.salvando ? '' : 'disabled'}>${STRU.salvando ? 'Salvo…' : 'Salva'}</button></div>
       ${STRU.msg ? H`<p class="dg-msg ${STRU.msg.t}" id="tcag-stru-esito" role="${STRU.msg.t === 'err' ? 'alert' : 'status'}">${ic(STRU.msg.t === 'err' ? 'warn' : 'check', 18)}<span>${STRU.msg.testo}</span></p>` : ''}
+      ${ctScheda()}
     </div>`);
   }
 
@@ -15378,6 +16316,7 @@ function stuaAzione(a, el){
 
   // a digit typed in a field: the draft changes, the page is not redrawn (the focus stays)
   function struInput(t){
+    if(t.id.indexOf('tcag-stru-ct-') === 0){ ctInput(t); return; }
     var id = t.id, B = struBozza();
     if(id === 'tcag-stru-ren'){ B.ren = t.value; }
     else {
@@ -15392,6 +16331,7 @@ function stuaAzione(a, el){
 
   function struAzione(a, el){
     if(!(U && U.ruolo === 'admin')) return;
+    if(a.indexOf('stru-ct-') === 0){ ctAzione(a, el); return; }
     switch(a){
       case 'stru-sw': {
         var k = el.getAttribute('data-k'), B = struBozza();
@@ -15976,6 +16916,27 @@ function stucAzione(a, el){
       default: break;
     }
   }
+  // V6.37.0: showcase editor (cases here, functions in 04e4j-vetrine-editor.js)
+  function vtEdSmista(a, el, tipo){
+    switch(a){
+      case 'vt-ed-foto': vtEdScegliFoto(el, tipo); break;
+      case 'vt-ed-riquadro': vtEdRiquadro(el, tipo); break;
+      case 'vt-ed-centra': vtEdCentra(el, tipo); break;
+      case 'vt-ed-zoom': vtEdZoom(el, tipo); break;
+      case 'vt-ed-pos': vtEdPos(el, tipo); break;
+      case 'vt-ed-tavolozza': vtEdTavolozza(el, tipo); break;
+      case 'vt-ed-colore': vtEdColore(el, tipo); break;
+      case 'vt-ed-testo': vtEdTestoCampo(el, tipo); break;
+      case 'vt-ed-mostra': vtEdMostra(el, tipo); break;
+      case 'vt-ed-annulla': vtEdAnnulla(el, tipo); break;
+      case 'vt-ed-ripeti': vtEdRipeti(el, tipo); break;
+      case 'vt-ed-ripristina': vtEdRipristina(el, tipo); break;
+      case 'vt-ed-salvastile': vtEdSalvaStile(el, tipo); break;
+      case 'vt-ed-applicastile': vtEdApplicaStile(el, tipo); break;
+      case 'vt-ed-eliminastile': vtEdEliminaStile(el, tipo); break;
+      default: break;
+    }
+  }
   function onClick(e){
     var el = e.target.closest('[data-act]');
     if(!el){ if(openPopId && !e.target.closest('.pop')) closePops(); return; }
@@ -15987,6 +16948,7 @@ function stucAzione(a, el){
     if(a.indexOf('stu-') === 0){ stAzione(a, el); return; }
     if(a.indexOf('br-ed-') === 0){ brEdSmista(a, el, 'click'); return; }
     if(a.indexOf('br-') === 0){ brAzione(a, el); return; }
+    if(a.indexOf('vt-ed-') === 0){ vtEdSmista(a, el, 'click'); return; }
     if(a.indexOf('vt-') === 0){ vtAzione(a, el); return; }
     if(a.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(a, el); return; }
     if(a.indexOf('stru-') === 0){ if(U && U.ruolo === 'admin') struAzione(a, el); return; }
@@ -16160,6 +17122,7 @@ function stucAzione(a, el){
     if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); if(avvisiAperti()) return; closePops(); openModal('m-search'); g('s-input').focus(); return; }       // V6.7.2 revisione: con la finestra degli avvisi aperta la ricerca non si apre sopra
     if(avvisoTab(e)) return;
     if(brEdTasto(e)) return;
+    if(vtEdTasto(e)) return;
     if(e.key === 'Escape'){
       var fsm = g('as-fs-menu');
       if(fsm && !fsm.hidden && !openPopId && !$$('.modal-bg').some(function(m){ return !m.hidden; })){ aiMenuMisura(false); var fsb = g('as-fs'); if(fsb && fsb.focus) fsb.focus(); return; }   // V6.16.0
@@ -16185,6 +17148,8 @@ function stucAzione(a, el){
     else if(act && act.indexOf('br-ed-') === 0){ brEdSmista(act, t, 'change'); }
     else if(act === 'br-categoria'){ brAzione(act, t); }   // V6.20.0: brochure Category select
     else if(act === 'br-lingua'){ brAzione(act, t); }   // V6.36.0: brochure Language select
+    else if(act && act.indexOf('vt-ed-') === 0){ vtEdSmista(act, t, 'change'); }
+    else if(act === 'vt-categoria'){ vtAzione(act, t); }
     else if(act && act.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(act, t); }
     else if(act === 'mc-casella'){ mcCasella(t); }                                              // V6.8.5: casella «Compilabile» (solo admin)
     else if(act === 'open-local' && t.files && t.files[0]){
@@ -16204,6 +17169,7 @@ function stucAzione(a, el){
     else if(t.id && t.id.indexOf('tcag-stru-') === 0){ if(U && U.ruolo === 'admin') struInput(t); }
     else if(t.id && t.id.indexOf('tcag-dg-') === 0){ if(U && U.ruolo === 'admin') dgInput(t); }
     else if(t.getAttribute && (t.getAttribute('data-act') || '').indexOf('br-ed-') === 0){ brEdSmista(t.getAttribute('data-act'), t, 'input'); }
+    else if(t.getAttribute && (t.getAttribute('data-act') || '').indexOf('vt-ed-') === 0){ vtEdSmista(t.getAttribute('data-act'), t, 'input'); }
     else if(t.id && t.id.indexOf('tcag-pre-') === 0 || (t.getAttribute && /^pre-/.test(t.getAttribute('data-act') || ''))){ preInput(t); }       // V6.8
   }
   var legato = false;
