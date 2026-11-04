@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 14429af8)
+  Guscio app Team Contato - V1.4.0 (build 179f5b34)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.35.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.36.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '14429af8', blocco: 'V6.35.0' };
+window.TC_APP = { versione: '1.4.0', build: '179f5b34', blocco: 'V6.36.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1837,8 +1837,6 @@ html.tc-guscio body{margin:0}
 #tcag .br-avviso{margin:8px 0 0;max-width:65ch;padding:8px 12px;font:400 13px/1.45 var(--sans);color:var(--testo);background:var(--bianco);border:1px solid var(--bordo);border-left:3px solid var(--oro);border-radius:var(--raggio)}
 #tcag .br-avviso[hidden]{display:none}
 #tcag .br-cat{margin:0;max-width:320px}
-#tcag .br-cat select{min-height:44px;height:44px;min-width:220px;max-width:100%;padding:0 12px;font:400 16px var(--sans);color:var(--testo);background:#fff;border:1px solid var(--bordo);border-radius:var(--raggio)}
-#tcag .br-cat select:focus{border-color:var(--nv)}
 #tcag .br-gruppo{display:flex;flex-wrap:wrap;gap:8px}
 #tcag .br-lingua,
 #tcag .br-fmt{min-height:44px;padding:0 14px;border:1px solid var(--bordo);border-radius:99px;background:#fff;color:var(--nv);font:600 15px var(--sans);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
@@ -1955,9 +1953,6 @@ html.tc-guscio body{margin:0}
 #tcag .br-ed-min{flex:0 0 auto;width:72px;height:56px;min-height:44px;padding:0;border:2px solid transparent;border-radius:6px;overflow:hidden;background:#eee;touch-action:pan-x;cursor:grab}
 #tcag .br-ed-min img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
 #tcag .br-ed-riga{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-#tcag .br-ed-btn{min-height:44px;padding:0 14px;border:1px solid var(--bordo);border-radius:99px;background:#fff;color:var(--nv);font:600 15px var(--sans)}
-#tcag .br-ed-btn[aria-pressed="true"]{background:var(--nv);color:#fff;border-color:var(--nv)}
-#tcag .br-ed-btn:disabled{opacity:.5;cursor:not-allowed}
 #tcag .br-ed-campo{display:flex;flex-direction:column;gap:4px;font-size:15px}
 #tcag .br-ed-campo textarea{min-height:44px;font-size:16px;padding:8px;border:1px solid var(--bordo);border-radius:8px;resize:vertical}
 #tcag .br-ed-campo input[type="range"]{min-height:44px}
@@ -2008,10 +2003,54 @@ html.tc-guscio body{margin:0}
 #tcag .br-stella{position:absolute;top:2px;right:2px;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--tenue);cursor:pointer}
 #tcag .br-stella .i{width:20px;height:20px}
 #tcag .br-stella[aria-pressed="true"]{color:var(--oro-t)}
-#tcag .br-ed-fotobox{display:flex;flex-direction:column;gap:4px;flex:0 0 auto;width:96px;max-width:100%;min-width:0}
-#tcag .br-ed-apre{font-size:12px;line-height:1.2;white-space:normal;width:100%;max-width:100%;padding:0 6px;overflow-wrap:anywhere;text-align:center}
-#tcag .br-ed-apre[aria-pressed="true"]{border-color:var(--oro-t);color:var(--oro-t)}
 #tcag .br-ed-stili{display:flex;flex-direction:column;gap:8px}
+@media (min-width:1100px){#tcag .br-doppia{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(360px,1fr);align-items:start;column-gap:32px}
+#tcag .br-doppia>.br-barra,
+#tcag .br-doppia>.br-avviso{grid-column:1/-1}
+#tcag .br-doppia>.br-anteprima{position:sticky;top:calc(var(--barra-h) + 12px);max-height:calc(100vh - var(--barra-h) - 24px)}
+#tcag .br-doppia .br-comandi{display:flex;flex-direction:column;gap:16px}
+}
+@media (min-width:768px) and (max-width:1099px){#tcag .br-doppia>.br-anteprima{max-height:60vh}
+#tcag .br-doppia .br-comandi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+#tcag .br-doppia .br-comandi>[data-sez="modello"]{grid-column:1/-1}
+}
+@media (max-width:767px){#tcag .br-doppia>.br-anteprima{max-height:50vh}
+}
+#tcag .br-chip{min-height:44px;padding:0 14px;border:1px solid var(--bordo);border-radius:999px;background:#fff;color:var(--nv);font:600 15px var(--sans)}
+#tcag .br-chip[aria-pressed="true"]{background:var(--nv);color:#fff;border-color:var(--nv)}
+#tcag .br-chip{display:inline-flex;align-items:center;justify-content:center;transition:background-color 180ms,color 180ms,border-color 180ms}
+#tcag .br-chip:hover{border-color:var(--nv)}
+#tcag .br-chip:active{transform:scale(.98)}
+#tcag .br-chip:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+#tcag .br-chip:disabled{opacity:.5;cursor:not-allowed}
+#tcag .br-sez{min-width:0;background:var(--bianco);border:1px solid var(--bordo);border-radius:var(--raggio);box-shadow:var(--ombra)}
+#tcag .br-sez-tit{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:44px;padding:12px 16px;cursor:pointer;list-style:none;font:600 15px var(--sans);color:var(--nv);overflow-wrap:anywhere}
+#tcag .br-sez-tit::-webkit-details-marker{display:none}
+#tcag .br-sez-tit::after{content:'';flex:0 0 auto;width:8px;height:8px;margin-left:auto;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform 180ms}
+#tcag .br-sez[open]>.br-sez-tit::after{transform:rotate(-135deg)}
+#tcag .br-sez[open]>.br-sez-tit{border-bottom:1px solid var(--bordo);margin-bottom:12px}
+#tcag .br-sez-scelta{font-weight:400;color:var(--tenue)}
+#tcag .br-sez-corpo{display:flex;flex-direction:column;gap:12px;min-width:0;padding:0 16px 16px}
+#tcag .br-sez-tit:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+#tcag .br-sez .fld{margin:0}
+#tcag .br-sez .fld select{min-height:44px}
+#tcag .br-barra-imm{flex:1 1 200px;min-width:0;overflow-wrap:anywhere;font:400 15px var(--sans);color:var(--testo)}
+#tcag .br-barra-imm b{font:700 13px var(--sans);color:var(--nv)}
+#tcag .br-storia{display:flex;flex-wrap:wrap;gap:8px}
+#tcag .br-doppia>.br-barra{padding:12px 0;border-bottom:1px solid var(--bordo);margin-bottom:24px}
+#tcag .br-doppia>.br-anteprima{display:flex;justify-content:center;background:var(--avorio);border:1px solid var(--bordo);border-radius:var(--raggio);padding:16px}
+@media (min-width:1100px){#tcag .br-doppia>.br-anteprima{padding:24px}
+}
+#tcag .br-doppia .br-foglio{flex:0 0 auto;transform-origin:top center}
+#tcag .br-doppia .br-modelli{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
+#tcag .br-doppia .br-mini{width:72px;height:102px}
+#tcag .br-doppia .br-modelli-o .br-mini{width:102px;height:72px}
+#tcag .br-doppia .br-mod[aria-pressed="true"]{background:#fff;color:var(--nv);border-color:var(--nv);box-shadow:0 0 0 1px var(--nv)}
+#tcag .br-mod-nome{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-align:center;overflow-wrap:anywhere}
+#tcag .br-ed-lungo textarea{width:100%;font-size:16px}
+#tcag .br-conta{align-self:flex-end;font:400 13px var(--sans);color:var(--tenue)}
+@media (max-width:767px){#tcag .br-barra-imm{flex-basis:100%}
+}
 #tcag .br-rif{grid-area:rif;min-width:0;justify-self:end;display:flex;align-items:center;gap:2mm;font-size:8pt;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:#4b5a78}
 #tcag .br-occhiello{grid-area:occhiello;min-width:0;font-size:8pt;font-weight:600;text-transform:uppercase;letter-spacing:.18em}
 #tcag .br-corpo{grid-area:corpo;min-width:0;overflow:hidden}
@@ -2605,7 +2644,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.35.0';
+  var VERSIONE = 'V6.36.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -10448,12 +10487,12 @@ function findClose(){
     }
     brEdPrepara();
     var lingue = D.lingue || [];
-    var lingueBtn = BR_LINGUE.map(function(l){
-      var ok = lingue.indexOf(l) >= 0, acceso = BR.lingua === l;
-      return H`<button class="br-lingua" type="button" lang="it" title="${ok ? BR_NOMI[l] : BR_NOMI[l] + ': traduzione mancante nel foglio'}" data-act="br-lingua" data-l="${l}" aria-pressed="${String(acceso)}"${raw(ok ? '' : ' disabled')}>${BR_NOMI[l]}${ok ? '' : H`<small class="br-manca">Traduzione mancante nel foglio</small>`}</button>`;
-    });
+    var lingueSel = H`<label class="fld" for="tcag-br-lingua">Lingua<select id="tcag-br-lingua" data-act="br-lingua" lang="it">${BR_LINGUE.map(function(l){
+      var ok = lingue.indexOf(l) >= 0;
+      return H`<option value="${l}"${raw(BR.lingua === l ? ' selected' : '')}${raw(ok ? '' : ' disabled')}>${ok ? BR_NOMI[l] : BR_NOMI[l] + ' (traduzione mancante)'}</option>`;
+    })}</select></label>`;
     var formati = [['v', 'Verticale'], ['o', 'Orizzontale']].map(function(f){
-      return H`<button class="br-fmt" type="button" data-act="br-formato" data-f="${f[0]}" aria-pressed="${String(BR.formato === f[0])}">${f[1]}</button>`;
+      return H`<button class="br-chip" type="button" data-act="br-formato" data-f="${f[0]}" aria-pressed="${String(BR.formato === f[0])}">${f[1]}</button>`;
     });
     var cat = BR.categoria || brCategoriaDi(BR.modello);
     var preferiti = brPrefPreferiti();
@@ -10462,27 +10501,30 @@ function findClose(){
       return H`<option value="${c[0]}"${raw(c[0] === cat ? ' selected' : '')}>${c[1]}</option>`;
     });
     if(brPrefAttivo() && preferiti.length) opzioni.unshift(H`<option value="preferiti"${raw(cat === 'preferiti' ? ' selected' : '')}>★ Preferiti</option>`);
-    var catSel = H`<div class="br-cat"><label class="br-etich" for="tcag-br-cat">Categoria</label><select id="tcag-br-cat" data-act="br-categoria">${opzioni}</select></div>`;
+    var catSel = H`<label class="fld br-cat" for="tcag-br-cat">Categoria<select id="tcag-br-cat" data-act="br-categoria">${opzioni}</select></label>`;
+    var nomeMod = (BR_MODELLI.filter(function(x){ return x.n === BR.modello; })[0] || {}).nome || '';
+    var scMod = (BR.modello + ' ' + nomeMod).trim();
+    var scLin = BR_NOMI[BR.lingua] + ' · ' + (BR.formato === 'o' ? 'Orizzontale' : 'Verticale');
     var modelli = (cat === 'preferiti' ? brPrefModelli() : brModelliDi(cat)).map(function(m){
-      var mod = H`<button class="br-mod" type="button" data-act="br-modello" data-m="${m.n}" aria-pressed="${String(BR.modello === m.n)}"><span class="br-mini br-mini-m${m.n}" aria-hidden="true"></span>${m.n + ' ' + m.nome}</button>`;
+      var mod = H`<button class="br-mod" type="button" data-act="br-modello" data-m="${m.n}" aria-pressed="${String(BR.modello === m.n)}"><span class="br-mini br-mini-m${m.n}" aria-hidden="true"></span><span class="br-mod-nome">${m.n + ' ' + m.nome}</span></button>`;
       if(!brPrefAttivo()) return mod;
       var on = brPrefPreferiti().indexOf(m.n) >= 0;
       return H`<div class="br-mod-box">${mod}<button class="br-stella" type="button" data-act="br-stella" data-m="${m.n}" aria-pressed="${String(on)}" aria-label="${on ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg></button></div>`;
     });
-    put(host, H`<div class="br-pagina">
+    put(host, H`<div class="br-pagina br-doppia">
       <div class="br-barra">
-        <button class="btn sec" type="button" data-act="br-cambia">‹ Cambia immobile</button>
+        <button class="btn sec sm" type="button" data-act="br-cambia">‹ Cambia immobile</button>
+        <span class="br-barra-imm"><b>${i.codice}</b> ${i.titolo || ''}</span>
+        <div class="br-storia" role="group" aria-label="Modifiche">${brEdBarra()}</div>
         <div class="br-azioni" role="group" aria-label="Stampa e salvataggio"><button class="btn pri" type="button" data-act="br-stampa">Stampa</button><button class="btn sec" type="button" data-act="br-pdf">Salva PDF</button><button class="btn sec" type="button" data-act="br-png">Salva immagine</button></div>
       </div>
       <p id="tcag-br-avviso" class="br-avviso" role="status" aria-live="polite" hidden>${BR.msg}</p>
       <div id="tcag-br-anteprima" class="br-anteprima">${brFoglio(i)}</div>
       <div class="br-comandi">
-        <div class="br-grp"><span class="br-etich">Lingua</span><div class="br-gruppo" role="group" aria-label="Lingua">${lingueBtn}</div></div>
-        <div class="br-grp"><span class="br-etich">Formato</span><div class="br-gruppo" role="group" aria-label="Formato">${formati}</div></div>
-        ${catSel}
-        <div class="br-grp br-grp-tutta"><span class="br-etich">Modello</span><div class="br-modelli" role="group" aria-label="Modello">${modelli}</div></div>
+        <details class="br-sez" data-sez="modello"${brSezAttr('modello')}><summary class="br-sez-tit">Modello<span class="br-sez-scelta">${' · ' + scMod}</span></summary><div class="br-sez-corpo">${catSel}<div class="br-modelli br-modelli-${BR.formato}" role="group" aria-label="Modello">${modelli}</div></div></details>
+        <details class="br-sez" data-sez="lingua"${brSezAttr('lingua')}><summary class="br-sez-tit">Lingua e formato<span class="br-sez-scelta">${' · ' + scLin}</span></summary><div class="br-sez-corpo">${lingueSel}<div class="br-gruppo" role="group" aria-label="Formato">${formati}</div></div></details>
+        ${brEdPannello(i)}
       </div>
-      ${brEdPannello(i)}
     </div>`);
     g('br-avviso').hidden = !BR.msg;
     var f = g('br-foglio');
@@ -10502,6 +10544,7 @@ function findClose(){
       brEdApplica(f);
     }
     brEdLega(host);
+    brSezLega(host);
     brScala();
   }
   function brFoglio(i){
@@ -10548,7 +10591,8 @@ function findClose(){
     var w = g(idAnteprima || 'br-anteprima'), f = g(idFoglio || 'br-foglio');
     if(!w || !f) return;
     f.style.transform = '';
-    var s = Math.min(1, w.clientWidth / f.offsetWidth);
+    var alto = parseFloat(getComputedStyle(w).maxHeight);
+    var s = isFinite(alto) && alto > 0 ? Math.min(1, w.clientWidth / f.offsetWidth, alto / f.offsetHeight) : Math.min(1, w.clientWidth / f.offsetWidth);
     f.style.transform = 'scale(' + s + ')';
     w.style.height = Math.ceil(f.offsetHeight * s) + 'px';
   }
@@ -10607,6 +10651,7 @@ function findClose(){
   function brAzione(a, el){
     switch(a){
       case 'br-scegli':
+        brSezAzzera();
         BR.codice = el.getAttribute('data-c') || '';
         BR.fotoSito = [];
         BR.categoria = '';
@@ -10614,7 +10659,9 @@ function findClose(){
         BR.dati = ris(); BR.foto = []; BR.msg = '';
         break;
       case 'br-lingua':
-        if(BR_LINGUE.indexOf(el.getAttribute('data-l')) >= 0 && !el.disabled) BR.lingua = el.getAttribute('data-l');
+        var l = el.tagName === 'SELECT' ? el.value : el.getAttribute('data-l');
+        var op = el.tagName === 'SELECT' ? el.options[el.selectedIndex] : el;
+        if(BR_LINGUE.indexOf(l) >= 0 && op && !op.disabled) BR.lingua = l;
         break;
       case 'br-formato':
         if(el.getAttribute('data-f') === 'v' || el.getAttribute('data-f') === 'o') BR.formato = el.getAttribute('data-f');
@@ -10649,6 +10696,7 @@ function findClose(){
         if(BR.codice){ BR.dati = ris(); brCarica(); } else caricaImmobili();
         break;
       case 'br-cambia':
+        brSezAzzera();
         BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.fotoSito = []; BR.msg = '';
         BR.categoria = '';
         BR.mod = null; BR.modChiave = '';
@@ -10659,6 +10707,7 @@ function findClose(){
     brRidisegna(true);
     if(a === 'br-lingua' || a === 'br-formato' || a === 'br-modello' || a === 'br-categoria') brPrefUltimaSalva();
     if(a === 'br-categoria'){ var sc = g('br-cat'); if(sc) sc.focus(); }
+    if(a === 'br-lingua'){ var sl = g('br-lingua'); if(sl) sl.focus(); }
     if(a === 'br-stella'){ var sb = $('[data-act="br-stella"][data-m="' + st + '"]'); if(sb) sb.focus(); }
   }
 
@@ -10827,6 +10876,57 @@ function findClose(){
     return { sfondo: p.sfondo, testo: p.testo, titolo: p.titolo, fascia: p.fascia };
   }
 
+  // '#rrggbb' from a computed 'rgb(...)' or 'rgba(...)' string; null when it is not a solid colour
+  function brRgbHex(s){
+    var m = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*([0-9.]+)\s*)?\)$/.exec(String(s == null ? '' : s).trim());
+    if(!m) return null;
+    if(m[4] !== undefined && Number(m[4]) === 0) return null;
+    var out = '#';
+    for(var i = 1; i <= 3; i++){
+      var c = Number(m[i]);
+      if(c > 255) return null;
+      out += (c < 16 ? '0' : '') + c.toString(16);
+    }
+    return out;
+  }
+  // the four colours of the sheet: the computed value when it is solid, else the sheet background, else the fallback
+  function brEdColoriLetti(v, ripiego){
+    var src = v || {}, out = {};
+    ['sfondo', 'testo', 'titolo', 'fascia'].forEach(function(k){
+      out[k] = brRgbHex(src[k]) || brRgbHex(src.sfondo) || ripiego[k];
+    });
+    return out;
+  }
+  // the colours shown by «Colori del modello» are the real ones of the drawn sheet (read after drawing)
+  function brEdCampioni(f){
+    if(!f || !BR.mod || BR.mod.colori !== null) return;
+    var host = g('mk-brochure');
+    if(!host) return;
+    var tit = f.querySelector('.br-titolo'), logo = f.querySelector('.br-logo');
+    var cs = getComputedStyle(f);
+    var v = {
+      sfondo: cs.backgroundColor,
+      testo: cs.color,
+      titolo: tit ? getComputedStyle(tit).color : '',
+      fascia: logo ? getComputedStyle(logo).backgroundColor : ''
+    };
+    var R = brEdColoriLetti(v, brEdColoriDa('navy-oro'));
+    $$('[data-act="br-ed-colore"]', host).forEach(function(inp){
+      var k = inp.getAttribute('data-k');
+      if(R[k]) inp.value = R[k];
+    });
+  }
+  // the starting colours of a free change: the four colour inputs on screen, when they hold a valid colour
+  function brEdColoriPagina(){
+    var base = brEdColoriDa('navy-oro'), host = g('mk-brochure');
+    if(!host) return base;
+    $$('[data-act="br-ed-colore"]', host).forEach(function(inp){
+      var k = inp.getAttribute('data-k'), v = String(inp.value || '').toLowerCase();
+      if(['sfondo', 'testo', 'titolo', 'fascia'].indexOf(k) >= 0 && brColoreOk(v)) base[k] = v;
+    });
+    return base;
+  }
+
   /* ---------- saved copy on this device ---------- */
   function brEdCarica(k){
     try {
@@ -10923,6 +11023,7 @@ function findClose(){
       img.style.transform = 'scale(' + (r.zoom / 100) + ')';
     });
     brEdAvviso();
+    brEdCampioni(f);
   }
   function brEdAvviso(){
     var box = g('br-ed-avviso');
@@ -11075,7 +11176,7 @@ function findClose(){
     var k = el.getAttribute('data-k'), v = String(el.value || '').toLowerCase();
     if(['sfondo', 'testo', 'titolo', 'fascia'].indexOf(k) < 0 || !brColoreOk(v) || !BR.mod) return;
     brEdInizio();
-    if(!BR.mod.colori) BR.mod.colori = brEdColoriDa('navy-oro');
+    if(!BR.mod.colori) BR.mod.colori = brEdColoriPagina();
     BR.mod.colori[k] = v;
     BR.mod.tavolozza = 'libera';
     if(tipo === 'input'){
@@ -11098,6 +11199,8 @@ function findClose(){
       var foglio = g('br-foglio');
       var box = foglio && foglio.querySelector(k === 'titolo' ? '.br-titolo' : '.br-descr');
       if(box) box.textContent = BR.mod.testi[BR.lingua][k];
+      var conto = g('br-conta-' + k);
+      if(conto) conto.textContent = String(BR.mod.testi[BR.lingua][k]).length + '/' + lim;
     } else if(tipo === 'change'){
       brEdFine();
     }
@@ -11153,7 +11256,7 @@ function findClose(){
   }
   function brEdApertura(el, tipo){
     if(tipo !== 'click' || !BR.mod) return;
-    var u = BR.foto[Number(el.getAttribute('data-i'))];
+    var n = BR.edSel, r = n >= 0 && BR.mod.riquadri[n] ? BR.mod.riquadri[n] : null, u = r && r.foto ? r.foto : '';
     if(!u) return;
     brPrefAperturaSalva(BR.codice, u);
     if(BR.mod.riquadri[0]) brEdCambia(function(m){ m.riquadri[0] = { foto: u, x: 50, y: 50, zoom: 100 }; }, null);
@@ -11168,65 +11271,79 @@ function findClose(){
   }
 
   /* ---------- panel ---------- */
+  // V6.36.0: the sections of the editor are native <details>; their open or closed state lives in BR_SEZ (memory only)
+  var BR_SEZ = {};
+  // true when section id is open: the stored state wins when it exists, otherwise wide screens and the first two sections
+  function brSezAperta(id, larghezza, stato){
+    if(stato && Object.prototype.hasOwnProperty.call(stato, id) && typeof stato[id] === 'boolean') return stato[id];
+    return larghezza >= 1100 || id === 'modello' || id === 'lingua';
+  }
+  function brSezAttr(id){
+    return raw(brSezAperta(id, window.innerWidth, BR_SEZ) ? ' open' : '');
+  }
+  // keeps BR_SEZ in step with the sections the agent opens or closes
+  function brSezLega(host){
+    if(!host) return;
+    $$('details.br-sez', host).forEach(function(d){
+      d.addEventListener('toggle', function(){ BR_SEZ[d.getAttribute('data-sez')] = d.open; });
+    });
+  }
+  function brSezAzzera(){
+    BR_SEZ = {};
+  }
+  // the three buttons of the bar above the sheet: undo, redo and restore
+  function brEdBarra(){
+    return H`<button class="btn sec sm" type="button" data-act="br-ed-annulla" aria-keyshortcuts="Control+Z"${raw(BR.annulla.length ? '' : ' disabled')}>Annulla</button><button class="btn sec sm" type="button" data-act="br-ed-ripeti" aria-keyshortcuts="Control+Y"${raw(BR.ripeti.length ? '' : ' disabled')}>Ripeti</button><button class="btn sec sm" type="button" data-act="br-ed-ripristina">Ripristina il modello</button>`;
+  }
+  // the name of a palette, for the title of the colours section
+  function brEdTavolozzaNome(id){
+    if(id === 'modello') return 'Colori del modello';
+    if(id === 'libera') return 'Personalizzati';
+    var p = brEdPal(id);
+    return p ? p.nome : 'Colori del modello';
+  }
   function brEdPannello(i){
     var m = BR.mod, base = brEdBase(i), n = BR.edSel;
     var sel = n >= 0 && m.riquadri[n] ? m.riquadri[n] : null;
     var cur = m.colori || brEdColoriDa('navy-oro');
     var foto = BR.foto.map(function(u, k){
-      var min = H`<button class="br-ed-min" type="button" data-act="br-ed-foto" data-i="${k}" aria-label="Foto ${k + 1}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
-      if(!brPrefAttivo()) return min;
-      return H`<div class="br-ed-fotobox">${min}<button class="br-ed-btn br-ed-apre" type="button" data-act="br-ed-apertura" data-i="${k}" aria-pressed="${String(u === brPrefApertura(BR.codice))}">★ Usa come apertura</button></div>`;
+      return H`<button class="br-ed-min" type="button" data-act="br-ed-foto" data-i="${k}" aria-label="Foto ${k + 1}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
     });
-    var copertina = brPrefApertura(BR.codice) !== '' ? H`<div class="br-ed-riga"><button class="br-ed-btn" type="button" data-act="br-ed-copertina">Torna alla copertina del sito</button></div>` : '';
+    var apertura = brPrefAttivo() ? H`<div class="br-ed-riga"><button class="btn sec sm" type="button" data-act="br-ed-apertura"${raw(sel && sel.foto ? '' : ' disabled')}>Usa la foto del riquadro scelto come apertura</button></div>` : '';
+    var copertina = brPrefApertura(BR.codice) !== '' ? H`<div class="br-ed-riga"><button class="btn sec sm" type="button" data-act="br-ed-copertina">Torna alla copertina del sito</button></div>` : '';
     var elenco = BR_PREF.dati && BR_PREF.dati.stili ? BR_PREF.dati.stili : [];
-    var stili = brPrefAttivo() ? H`<div class="br-ed-sez"><h4>I miei stili</h4><label class="br-ed-campo">Nome dello stile <input type="text" id="tcag-br-ed-stilenome" maxlength="60" autocomplete="off"></label><div class="br-ed-riga"><button class="br-ed-btn" type="button" data-act="br-ed-salvastile">Salva come mio stile</button></div><div class="br-ed-stili">${elenco.length ? elenco.map(function(s){ return H`<div class="br-ed-riga"><span>${s.nome}</span><button class="br-ed-btn" type="button" data-act="br-ed-applicastile" data-v="${s.id}">Applica</button><button class="br-ed-btn" type="button" data-act="br-ed-eliminastile" data-v="${s.id}">Elimina</button></div>`; }) : H`<p class="br-ed-nota">Nessuno stile salvato.</p>`}</div></div>` : '';
+    var stili = brPrefAttivo() ? H`<details class="br-sez" data-sez="stili"${brSezAttr('stili')}><summary class="br-sez-tit">I miei stili</summary><div class="br-sez-corpo"><label class="br-ed-campo">Nome dello stile <input type="text" id="tcag-br-ed-stilenome" maxlength="60" autocomplete="off"></label><div class="br-ed-riga"><button class="btn sec sm" type="button" data-act="br-ed-salvastile">Salva come mio stile</button></div><div class="br-ed-stili">${elenco.length ? elenco.map(function(s){ return H`<div class="br-ed-riga"><span>${s.nome}</span><button class="btn sec sm" type="button" data-act="br-ed-applicastile" data-v="${s.id}">Applica</button><button class="btn sec sm" type="button" data-act="br-ed-eliminastile" data-v="${s.id}">Elimina</button></div>`; }) : H`<p class="br-ed-nota">Nessuno stile salvato.</p>`}</div></div></details>` : '';
     var inquadratura = sel
       ? H`<div class="br-ed-riga"><label>Zoom <input type="range" min="100" max="200" step="5" value="${sel.zoom}" data-act="br-ed-zoom"></label>
           <label>Orizzontale <input type="range" min="0" max="100" value="${sel.x}" data-act="br-ed-pos" data-k="x"></label>
           <label>Verticale <input type="range" min="0" max="100" value="${sel.y}" data-act="br-ed-pos" data-k="y"></label>
-          <button class="br-ed-btn" type="button" data-act="br-ed-centra">Centra</button></div>`
-      : H`<p class="br-ed-nota">Tocca un riquadro della brochure per spostare l’inquadratura o cambiare lo zoom.</p>`;
-    var pal = [H`<button class="br-ed-btn" type="button" data-act="br-ed-tavolozza" data-v="modello" aria-pressed="${String(m.tavolozza === 'modello')}">Colori del modello</button>`]
+          <button class="btn sec sm" type="button" data-act="br-ed-centra">Centra</button></div>`
+      : H`<p class="br-ed-nota">Tocca un riquadro del foglio per cambiarne la foto, l’inquadratura o lo zoom.</p>`;
+    var pal = [H`<button class="br-chip" type="button" data-act="br-ed-tavolozza" data-v="modello" aria-pressed="${String(m.tavolozza === 'modello')}">Colori del modello</button>`]
       .concat(BR_TAVOLOZZE.map(function(t){
-        return H`<button class="br-ed-btn" type="button" data-act="br-ed-tavolozza" data-v="${t.id}" aria-pressed="${String(m.tavolozza === t.id)}">${t.nome}</button>`;
+        return H`<button class="br-chip" type="button" data-act="br-ed-tavolozza" data-v="${t.id}" aria-pressed="${String(m.tavolozza === t.id)}">${t.nome}</button>`;
       }));
     var colori = [['sfondo', 'Sfondo'], ['testo', 'Testo'], ['titolo', 'Titolo'], ['fascia', 'Fascia']].map(function(c){
       return H`<label class="br-ed-colore">${c[1]} <input type="color" data-act="br-ed-colore" data-k="${c[0]}" value="${cur[c[0]]}"></label>`;
     });
-    var campi = H`<label class="br-ed-campo">Titolo <textarea data-act="br-ed-testo" data-k="titolo" maxlength="300" rows="2">${brEdValore('titolo', base)}</textarea></label>
-      <label class="br-ed-campo">Descrizione <textarea data-act="br-ed-testo" data-k="descrizione" maxlength="5000" rows="6">${brEdValore('descrizione', base)}</textarea></label>`;
+    var nomeL = BR_NOMI[BR.lingua] || BR.lingua;
+    var tit = brEdValore('titolo', base), des = brEdValore('descrizione', base);
+    var campi = H`<label class="br-ed-campo">${'Titolo (' + nomeL + ')'} <textarea data-act="br-ed-testo" data-k="titolo" maxlength="300" rows="2">${tit}</textarea><span class="br-conta" id="tcag-br-conta-titolo">${String(tit || '').length + '/300'}</span></label>
+      <label class="br-ed-campo br-ed-lungo">${'Descrizione (' + nomeL + ')'} <textarea data-act="br-ed-testo" data-k="descrizione" maxlength="5000" rows="8">${des}</textarea><span class="br-conta" id="tcag-br-conta-descrizione">${String(des || '').length + '/5000'}</span></label>`;
     var grand = [['titolo', 'Titolo'], ['testo', 'Testo']].map(function(c){
       var bottoni = ['s', 'm', 'l'].map(function(v, k){
-        return H`<button class="br-ed-btn" type="button" data-act="br-ed-grandezza" data-k="${c[0]}" data-v="${v}" aria-pressed="${String(m.grandezze[c[0]] === v)}">${['Piccolo', 'Medio', 'Grande'][k]}</button>`;
+        return H`<button class="br-chip" type="button" data-act="br-ed-grandezza" data-k="${c[0]}" data-v="${v}" aria-pressed="${String(m.grandezze[c[0]] === v)}">${['Piccolo', 'Normale', 'Grande'][k]}</button>`;
       });
       return H`<div class="br-ed-riga"><span>${c[1]}</span>${bottoni}</div>`;
     });
     var casella = [['prezzo', 'Nascondi il prezzo'], ['descrizione', 'Nascondi la descrizione'], ['qr', 'Nascondi il QR'], ['contatti', 'Nascondi i contatti'], ['dati', 'Nascondi i dati principali']].map(function(c){
       return H`<label class="br-ed-casella"><input type="checkbox" data-act="br-ed-nascondi" data-k="${c[0]}"${raw(m.nascondi[c[0]] ? ' checked' : '')}> ${c[1]}</label>`;
     });
-    var annulla = H`<button class="br-ed-btn" type="button" data-act="br-ed-annulla" aria-keyshortcuts="Control+Z"${raw(BR.annulla.length ? '' : ' disabled')}>Annulla</button>`;
-    var ripeti = H`<button class="br-ed-btn" type="button" data-act="br-ed-ripeti" aria-keyshortcuts="Control+Y"${raw(BR.ripeti.length ? '' : ' disabled')}>Ripeti</button>`;
-    var ripristina = H`<button class="br-ed-btn" type="button" data-act="br-ed-ripristina">Ripristina il modello</button>`;
-    return H`<section id="tcag-br-ed" class="br-ed" aria-label="Modifica"><h3>Modifica</h3>
-      <div class="br-ed-sez"><h4>Foto</h4>
-        <p class="br-ed-nota">Trascina una foto su un riquadro, oppure tocca un riquadro e poi una foto.</p>
-        <div class="br-ed-striscia">${foto}</div>
-        ${copertina}
-        ${inquadratura}
-      </div>
-      <div class="br-ed-sez"><h4>Colori</h4>
-        <div class="br-ed-riga">${pal}</div>
-        <div class="br-ed-riga">${colori}</div>
-        <p id="tcag-br-ed-avviso" class="br-ed-avviso" role="status" hidden></p>
-      </div>
-      ${stili}
-      <div class="br-ed-sez"><h4>Testi</h4>
-        ${campi}
-        ${grand}
-        <div class="br-ed-caselle">${casella}</div>
-      </div>
-      <div class="br-ed-riga">${annulla}${ripeti}${ripristina}</div>
-    </section>`;
+    var coloriSez = H`<details class="br-sez" data-sez="colori"${brSezAttr('colori')}><summary class="br-sez-tit">Colori<span class="br-sez-scelta">${' · ' + brEdTavolozzaNome(m.tavolozza)}</span></summary><div class="br-sez-corpo"><div class="br-ed-riga">${pal}</div><div class="br-ed-riga">${colori}</div><p id="tcag-br-ed-avviso" class="br-ed-avviso" role="status" hidden></p></div></details>`;
+    var testi = H`<details class="br-sez" data-sez="testi"${brSezAttr('testi')}><summary class="br-sez-tit">Testi</summary><div class="br-sez-corpo">${campi}${grand}</div></details>`;
+    var fotoSez = H`<details class="br-sez" data-sez="foto"${brSezAttr('foto')}><summary class="br-sez-tit">Foto</summary><div class="br-sez-corpo"><p class="br-ed-nota">Trascina una foto su un riquadro, oppure tocca un riquadro e poi una foto.</p><div class="br-ed-striscia">${foto}</div>${apertura}${copertina}${inquadratura}</div></details>`;
+    var mostra = H`<details class="br-sez" data-sez="mostra"${brSezAttr('mostra')}><summary class="br-sez-tit">Cosa mostrare</summary><div class="br-sez-corpo"><div class="br-ed-caselle">${casella}</div></div></details>`;
+    return H`${coloriSez}${testi}${fotoSez}${mostra}${stili}`;
   }
 
   /* ---------- drag (pointer events: mouse and finger) ---------- */
@@ -16067,6 +16184,7 @@ function stucAzione(a, el){
     else if(act && act.indexOf('stu-') === 0){ stAzione(act, t); }
     else if(act && act.indexOf('br-ed-') === 0){ brEdSmista(act, t, 'change'); }
     else if(act === 'br-categoria'){ brAzione(act, t); }   // V6.20.0: brochure Category select
+    else if(act === 'br-lingua'){ brAzione(act, t); }   // V6.36.0: brochure Language select
     else if(act && act.indexOf('stua-') === 0){ if(U && U.ruolo === 'admin') stuaAzione(act, t); }
     else if(act === 'mc-casella'){ mcCasella(t); }                                              // V6.8.5: casella «Compilabile» (solo admin)
     else if(act === 'open-local' && t.files && t.files[0]){
