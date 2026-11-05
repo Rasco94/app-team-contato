@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 4d6e1d3e)
+  Guscio app Team Contato - V1.4.0 (build d25e441f)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.40.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.41.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '4d6e1d3e', blocco: 'V6.40.0' };
+window.TC_APP = { versione: '1.4.0', build: 'd25e441f', blocco: 'V6.41.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2776,7 +2776,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.40.0';
+  var VERSIONE = 'V6.41.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -10349,6 +10349,7 @@ function findClose(){
      V6.38.0: multi-page A4 book (cover + description pages), print and PDF of every page.
      V6.39.0: gallery, floor plan and property data pages (04e4e2-brochure-scheda.js, data from Apps Script V29.14.0).
      V6.40.0: zone page with the map and contacts page (04e4e3-brochure-zona.js, cancello AI 1.15.0).
+     V6.41.0: photos from Drive when the listing has them (04e4j-foto-drive.js), light thumbnails in the preview.
      =========================================================
      Page #marketing/brochure (V6.26.0; #strumenti/brochure redirects here), code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -10584,12 +10585,15 @@ function findClose(){
     var codice = BR.codice, res = BR.dati;
     res.stato = 'car';
     res.vol = brApi(codice, brSlug(i)).then(function(j){
-      if(BR.codice !== codice) return;
-      res.dati = j; res.ok = true; res.stato = 'ok'; res.err = '';
-      res.lingue = (Array.isArray(j.lingue) ? j.lingue : []).filter(function(l){ return BR_LINGUE.indexOf(l) >= 0; });
-      BR.foto = (Array.isArray(j.foto) ? j.foto : []).map(function(u){ return brFotoUrl(u); }).filter(Boolean);
-      BR.fotoSito = BR.foto.slice();
-      if(res.lingue.indexOf(BR.lingua) < 0) BR.lingua = res.lingue.length ? res.lingue[0] : 'it';
+      var sito = (Array.isArray(j.foto) ? j.foto : []).map(function(u){ return brFotoUrl(u); }).filter(Boolean);
+      return fdCarica(codice).then(function(drive){
+        if(BR.codice !== codice) return;
+        res.dati = j; res.ok = true; res.stato = 'ok'; res.err = '';
+        res.lingue = (Array.isArray(j.lingue) ? j.lingue : []).filter(function(l){ return BR_LINGUE.indexOf(l) >= 0; });
+        BR.foto = fdSorgente(drive, sito);
+        BR.fotoSito = BR.foto.slice();
+        if(res.lingue.indexOf(BR.lingua) < 0) BR.lingua = res.lingue.length ? res.lingue[0] : 'it';
+      });
     }, function(e){
       if(e && e.http === 503 && e.codice === 'brochure_spenta') dianaSegnaSpento('brochure', e.testo);
       if(BR.codice !== codice) return;
@@ -10785,7 +10789,7 @@ function findClose(){
       [brTesto(l, 'codice'), i.codice]
     ].filter(function(x){ return !brVuoto(x[1]); });
     var logo = H`<div class="br-logo"><svg class="br-logo-ico" viewBox="0 0 32 32" aria-hidden="true"><use href="#tci-logo"/></svg><span>Team Contato</span></div>`;
-    var foto = k > 0 ? H`<div class="br-foto br-n${k}">${BR.mod.riquadri.map(function(r, n){ return H`<div class="br-riq${r.foto ? '' : ' br-riq-vuoto'}" role="button" tabindex="0" data-act="br-ed-riquadro" data-i="${n}" aria-pressed="${String(BR.edSel === n)}" aria-label="${'Riquadro ' + (n + 1)}">${r.foto ? H`<img class="br-img" src="${r.foto}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>`; })}</div>` : '';
+    var foto = k > 0 ? H`<div class="br-foto br-n${k}">${BR.mod.riquadri.map(function(r, n){ var src = fdUrl(r.foto, 1200); return H`<div class="br-riq${src ? '' : ' br-riq-vuoto'}" role="button" tabindex="0" data-act="br-ed-riquadro" data-i="${n}" aria-pressed="${String(BR.edSel === n)}" aria-label="${'Riquadro ' + (n + 1)}">${src ? H`<img class="br-img" src="${src}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>`; })}</div>` : '';
     var rif = ex.rif ? H`<div class="br-rif">${ex.rif}</div>` : '';
     var linea = ex.linea ? H`<div class="br-linea">${ex.linea}</div>` : '';
     var testo = bl === null
@@ -10875,6 +10879,7 @@ function findClose(){
         brSezAzzera();
         brSchedaAzzera();
         brZonaAzzera();
+        fdAzzera();
         BR.codice = el.getAttribute('data-c') || '';
         BR.fotoSito = [];
         BR.categoria = '';
@@ -10916,12 +10921,13 @@ function findClose(){
         siSalvaImmagine({ foglio: g('br-pag-1'), tipo: 'brochure', codice: BR.codice, lingua: BR.lingua, carta: 'A4', orientamento: BR.formato, avviso: function (t) { BR.msg = t; siAvviso('br-avviso', t); } }).then(fineBr, fineBr);
         return;
       case 'br-riprova':
-        if(BR.codice){ BR.dati = ris(); brSchedaAzzera(); brZonaAzzera(); brCarica(); } else caricaImmobili();
+        if(BR.codice){ BR.dati = ris(); brSchedaAzzera(); brZonaAzzera(); fdAzzera(); brCarica(); } else caricaImmobili();
         break;
       case 'br-cambia':
         brSezAzzera();
         brSchedaAzzera();
         brZonaAzzera();
+        fdAzzera();
         BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.fotoSito = []; BR.msg = '';
         BR.categoria = '';
         BR.mod = null; BR.modChiave = '';
@@ -10938,7 +10944,7 @@ function findClose(){
 
   window.addEventListener('resize', function(){ if(S.sec === 'marketing' && S.sub === 'brochure') brScalaPagine(); });
   window.addEventListener('afterprint', brFineStampa);
-  /* BROCHURE DATA PAGES (V6.39.0): gallery, floor plans and full property data from Apps Script V29.14.0 (V6.40.0: Zona and Contatti pages from 04e4e3) */
+  /* BROCHURE DATA PAGES (V6.39.0): gallery, floor plans and full property data from Apps Script V29.14.0 (V6.40.0: Zona and Contatti pages from 04e4e3) (V6.41.0: gallery thumbnails through fdUrl) */
   var BR_MAX_PLAN = 10;
   var BR_LATO_PLAN = 1200;
   var BRS = { codice:'', scheda:null, plan:[], stato:'idle' };
@@ -11161,7 +11167,7 @@ function findClose(){
     var classeGal = BR.formato === 'o' ? 'br-gal-6' : 'br-gal-4';
     piano.galleria.forEach(function(urls){
       var n = n0 + 1 + voci.length;
-      var corpo = H`<div class="${'br-gal ' + classeGal}">${urls.map(function(u){ return H`<div class="br-gal-riq"><img class="br-gal-img" src="${u}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false"></div>`; })}</div>`;
+      var corpo = H`<div class="${'br-gal ' + classeGal}">${urls.map(function(u){ var src = fdUrl(u, 600); return src ? H`<div class="br-gal-riq"><img class="br-gal-img" src="${src}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false"></div>` : H`<div class="br-gal-riq br-riq-vuoto"></div>`; })}</div>`;
       voci.push(brPaginaExtra(i, 'br-pag-galleria', brTesto(l, 'galleria'), corpo, n, tot));
     });
     piano.planimetrie.forEach(function(u){
@@ -11393,7 +11399,9 @@ function findClose(){
     return ord.slice(0, voci.length - max).map(function(v){ return v.k; });
   }
   function brMini(u){
-    return typeof u !== 'string' ? '' : u.replace(/format=2500w/, 'format=300w');
+    if(typeof u !== 'string') return '';
+    if(u.indexOf('drive:') === 0) return fdUrl(u, 600);
+    return u.replace(/format=2500w/, 'format=300w');
   }
   function brCopia(o){
     return JSON.parse(JSON.stringify(o));
@@ -11410,7 +11418,7 @@ function findClose(){
     for(i = 0; i < n; i++){
       r = o.riquadri && o.riquadri[i];
       if(!r || typeof r !== 'object'){ riq.push(base.riquadri[i]); continue; }
-      f = typeof r.foto === 'string' && foto.indexOf(r.foto) >= 0 ? r.foto : '';
+      f = typeof r.foto === 'string' && foto.indexOf(r.foto) >= 0 ? r.foto : base.riquadri[i].foto;
       x = Math.round(Number(r.x)); if(!isFinite(x)) x = 50; x = Math.min(100, Math.max(0, x));
       y = Math.round(Number(r.y)); if(!isFinite(y)) y = 50; y = Math.min(100, Math.max(0, y));
       z = Math.round(Number(r.zoom)); if(!isFinite(z)) z = 100; z = Math.min(200, Math.max(100, z));
@@ -11924,7 +11932,8 @@ function findClose(){
     var sel = n >= 0 && m.riquadri[n] ? m.riquadri[n] : null;
     var cur = m.colori || brEdColoriDa('navy-oro');
     var foto = BR.foto.map(function(u, k){
-      return H`<button class="br-ed-min" type="button" data-act="br-ed-foto" data-i="${k}" aria-label="Foto ${k + 1}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
+      var mini = brMini(u);
+      return H`<button class="${'br-ed-min' + (mini ? '' : ' br-riq-vuoto')}" type="button" data-act="br-ed-foto" data-i="${k}" aria-label="Foto ${k + 1}">${mini ? H`<img src="${mini}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer">` : ''}</button>`;
     });
     var apertura = brPrefAttivo() ? H`<div class="br-ed-riga"><button class="btn sec sm" type="button" data-act="br-ed-apertura"${raw(sel && sel.foto ? '' : ' disabled')}>Usa la foto del riquadro scelto come apertura</button></div>` : '';
     var copertina = brPrefApertura(BR.codice) !== '' ? H`<div class="br-ed-riga"><button class="btn sec sm" type="button" data-act="br-ed-copertina">Torna alla copertina del sito</button></div>` : '';
@@ -12614,13 +12623,14 @@ function findClose(){
   function vtFoglio(i){
     var l = BR.lingua, c = vtCartello(l, i), base = vtEdBase(i);
     var titolo = vtEdValore('titolo', base), frase = vtEdValore('descrizione', base), riq = VT.mod ? VT.mod.riquadri : [];
-    var foto = (riq[0] && riq[0].foto) || brPrefApertura(BR.codice) || BR.foto[0] || '';
+    var foto = (riq[0] && riq[0].foto) || fdScelta(brPrefApertura(BR.codice), BR.foto);
     var foto2 = (riq[1] && riq[1].foto) || vtFoto2(foto, BR.foto);
+    var src1 = fdUrl(foto, 1200), src2 = fdUrl(foto2, 1200);
     var righe = vtContatti(DI.dati ? DI.dati.materiali : null);
     var cifre = c.cifre.map(function(x){ return H`<div class="vt-cifra"><b>${x[0]}</b><span>${x[1]}</span></div>`; });
     return H`<div id="tcag-vt-foglio" class="vt-foglio vt-m${VT.modello} vt-${VT.formato}${vtEdClassi()}" lang="${brLangAttr(l)}">
-      <div class="vt-foto vt-riq" data-i="0">${foto ? H`<img class="vt-img" src="${foto}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>
-      ${VT.modello === 5 ? H`<div class="vt-foto vt-foto2 vt-riq" data-i="1"><img class="vt-img" src="${foto2}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false"></div>` : ''}
+      <div class="${'vt-foto vt-riq' + (src1 ? '' : ' br-riq-vuoto')}" data-i="0">${src1 ? H`<img class="vt-img" src="${src1}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>
+      ${VT.modello === 5 ? H`<div class="${'vt-foto vt-foto2 vt-riq' + (src2 ? '' : ' br-riq-vuoto')}" data-i="1">${src2 ? H`<img class="vt-img" src="${src2}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false">` : ''}</div>` : ''}
       <div class="vt-corpo">
         <div class="vt-testa"><h1 class="vt-titolo">${titolo}</h1>${frase ? H`<p class="vt-frase">${frase}</p>` : ''}${c.prezzo ? H`<p class="vt-prezzo">${c.prezzo}</p>` : ''}</div>
         ${cifre.length ? H`<div class="vt-cifre">${cifre}</div>` : ''}
@@ -12997,6 +13007,200 @@ function findClose(){
       return false;
     });
   }
+/* PHOTOS FROM DRIVE (V6.41.0): Brochure and Vetrine use the Drive photos of the listing (Apps Script V29.14.0: immobile-media, immobile-foto) when it has them, light thumbnails kept in memory only; otherwise the site photos. */
+// Sizes of the thumbnails asked to the script (longest side in px); any other size is asked as 600
+var FD_LATI = [600, 1200, 2480, 3508, 4961];
+// Thumbnails kept in memory at once: the oldest one is revoked first
+var FD_MAX = 60;
+// Photos taken from the list of a listing: 50 strip photos + 6 frames fit in FD_MAX
+var FD_MAX_FOTO = 50;
+// How long the list may take before the page goes on with the site photos
+var FD_T_LISTA = 15000;
+// Debounce of the redraw when a thumbnail arrives
+var FD_T_RIDISEGNA = 80;
+// One object, never reassigned: only its properties change
+var FD = { codice:'', foto:[], miniature:{}, stato:'idle', ordine:[], coda:[], inCorso:'', falliti:{}, gen:0, vol:null, ridisegno:0 };
+
+// the text of an error, whatever it is
+function fdMsg(e){
+  return e && e.message ? e.message : String(e);
+}
+
+// true for a Drive reference 'drive:<id>'
+function fdDrive(rif){
+  return typeof rif === 'string' && /^drive:[A-Za-z0-9_-]{1,200}$/.test(rif);
+}
+
+// the photo references of an immobile-media answer, in order, without duplicates
+function fdLista(j){
+  var out = [];
+  if(!j || !Array.isArray(j.foto)) return out;
+  j.foto.forEach(function(f){
+    if(out.length >= FD_MAX_FOTO || !f || typeof f.id !== 'string') return;
+    if(!/^[A-Za-z0-9_-]{1,200}$/.test(f.id)) return;
+    var rif = 'drive:' + f.id;
+    if(out.indexOf(rif) < 0) out.push(rif);
+  });
+  return out;
+}
+
+// the photos to show: a copy of the Drive list when it has photos, else a copy of the site photos
+function fdSorgente(drive, sito){
+  if(Array.isArray(drive) && drive.length > 0) return drive.slice();
+  return Array.isArray(sito) ? sito.slice() : [];
+}
+
+// the photo chosen before, when it is still in the list; else the first photo; else ''
+function fdScelta(rif, lista){
+  if(!Array.isArray(lista) || lista.length === 0) return '';
+  if(lista.indexOf(rif) >= 0) return rif;
+  return lista[0];
+}
+
+// revokes every thumbnail and forgets the queue; the codice, the photos and the stato stay
+function fdLibera(){
+  Object.keys(FD.miniature).forEach(function(k){
+    URL.revokeObjectURL(FD.miniature[k]);
+  });
+  FD.miniature = {};
+  FD.ordine = [];
+  FD.coda = [];
+  FD.inCorso = '';
+  FD.falliti = {};
+  clearTimeout(FD.ridisegno);
+  FD.ridisegno = 0;
+  // a list request still in the air is forgotten: its answer is ignored (see fdCarica)
+  FD.vol = null;
+  FD.gen++;
+}
+
+// forgets everything, also the codice: used when the property changes or on Riprova
+function fdAzzera(){
+  fdLibera();
+  FD.codice = '';
+  FD.foto = [];
+  FD.stato = 'idle';
+  FD.vol = null;
+}
+
+// the list of the Drive photos of an immobile: never rejects, resolves [] on any problem
+function fdCarica(codice){
+  if(FD.codice !== codice) fdAzzera();
+  if(FD.stato === 'ok' || FD.stato === 'err') return Promise.resolve(FD.foto.slice());
+  if(FD.vol) return FD.vol;
+  FD.codice = codice;
+  FD.stato = 'car';
+  var gen = FD.gen, fatto = false, tm = 0, p;
+  var vol = new Promise(function(risolvi){
+    function fine(lista, stato){
+      if(fatto) return;
+      fatto = true;
+      clearTimeout(tm);
+      var attuale = gen === FD.gen && FD.codice === codice;
+      if(attuale){
+        FD.foto = lista;
+        FD.stato = stato;
+        FD.vol = null;
+      }
+      risolvi(attuale ? lista : []);
+    }
+    tm = setTimeout(function(){ fine([], 'err'); }, FD_T_LISTA);
+    try { p = chiama('immobile-media', { codice: codice }); }
+    catch(e){ p = Promise.reject(e); }
+    p.then(function(j){
+      fine(fdLista(j), 'ok');
+    }, function(e){
+      if(!fatto) console.warn('[Foto Drive] immobile-media: ' + fdMsg(e));
+      fine([], 'err');
+    });
+  });
+  FD.vol = vol;
+  return vol;
+}
+
+// the URL to draw now: a site URL unchanged, a Drive reference as its thumbnail, or '' while it is not in memory yet
+function fdUrl(rif, lato){
+  if(typeof rif !== 'string' || rif === '') return '';
+  if(rif.indexOf('drive:') !== 0) return rif;
+  if(!fdDrive(rif) || FD.codice === '') return '';
+  if(FD_LATI.indexOf(lato) < 0) lato = 600;
+  var key = rif.slice(6) + '@' + lato;
+  if(Object.prototype.hasOwnProperty.call(FD.miniature, key)) return FD.miniature[key];
+  if(!FD.falliti[key] && FD.inCorso !== key && FD.coda.indexOf(key) < 0){
+    FD.coda.push(key);
+    fdProssima();
+  }
+  return '';
+}
+
+// one thumbnail request at a time: the next key of the queue
+function fdProssima(){
+  if(FD.inCorso !== '' || FD.coda.length === 0) return;
+  var key = FD.coda.shift();
+  var at = key.lastIndexOf('@');
+  var id = key.slice(0, at);
+  var lato = Number(key.slice(at + 1));
+  var gen = FD.gen;
+  FD.inCorso = key;
+  var p;
+  try { p = chiama('immobile-foto', { codice: FD.codice, id: id, lato: lato }); }
+  catch(e){ p = Promise.reject(e); }
+  p.then(function(j){
+    if(gen !== FD.gen) return false;
+    // a thumbnail that cannot be turned into a blob URL fails alone: the queue goes on
+    try {
+      var b = j && j.ok ? brBlob(j.base64, j.mime) : null;
+      if(!b){
+        FD.falliti[key] = true;
+        return false;
+      }
+      fdMetti(key, URL.createObjectURL(b));
+      return true;
+    } catch(e){
+      FD.falliti[key] = true;
+      console.warn('[Foto Drive] immobile-foto: ' + fdMsg(e));
+      return false;
+    }
+  }, function(e){
+    if(gen !== FD.gen) return false;
+    FD.falliti[key] = true;
+    console.warn('[Foto Drive] immobile-foto: ' + fdMsg(e));
+    return false;
+  }).then(function(ok){
+    if(gen !== FD.gen) return;
+    FD.inCorso = '';
+    if(ok) fdPronta();
+    fdProssima();
+  });
+}
+
+// keeps a thumbnail in memory; above FD_MAX the oldest one is revoked and forgotten
+function fdMetti(key, url){
+  FD.miniature[key] = url;
+  FD.ordine.push(key);
+  while(FD.ordine.length > FD_MAX){
+    var vecchia = FD.ordine.shift();
+    URL.revokeObjectURL(FD.miniature[vecchia]);
+    delete FD.miniature[vecchia];
+  }
+}
+
+// asks for a redraw of the sheet soon, once for many thumbnails
+function fdPronta(){
+  if(FD.ridisegno) return;
+  FD.ridisegno = setTimeout(function(){
+    FD.ridisegno = 0;
+    if(S.sec === 'marketing' && (S.sub === 'brochure' || S.sub === 'vetrine')) brRidisegna(false);
+  }, FD_T_RIDISEGNA);
+}
+
+// leaving the sheets of the marketing pages frees the thumbnails from memory
+window.addEventListener('hashchange', function(){
+  if(!/^#marketing\/(brochure|vetrine)(\/|$)/.test(String(location.hash || ''))) fdLibera();
+});
+window.addEventListener('pagehide', function(){
+  fdLibera();
+});
 /* VETRINE EDITOR (T-MW1WTK9C-S2)
    Editor of the showcase sheets (Vetrine): photo choice and framing, colours, texts, what to show,
    my styles, undo and redo (50 steps), restore. It works on the VT state of 04e4h and reuses the pure
@@ -13485,7 +13689,8 @@ function vtEdPannello(i){
   var testiSez = H`<details class="br-sez" data-sez="testi"${brSezAttr('testi')}><summary class="br-sez-tit">Testi</summary><div class="br-sez-corpo"><label class="br-ed-campo">${'Titolo (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="titolo" maxlength="300" rows="2">${tit}</textarea><span class="br-conta" id="tcag-vt-conta-titolo">${String(tit || '').length + '/300'}</span></label><label class="br-ed-campo">${'Frase breve (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="frase" maxlength="160" rows="3">${fra}</textarea><span class="br-conta" id="tcag-vt-conta-frase">${String(fra || '').length + '/160'}</span></label></div></details>`;
 
   var striscia = lista.map(function(u, j){
-    return H`<button class="br-ed-min" type="button" data-act="vt-ed-foto" data-i="${j}" aria-label="Foto ${j + 1}" aria-pressed="${String(!!sel && sel.foto === u)}"><img src="${brMini(u)}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer"></button>`;
+    var mini = brMini(u);
+    return H`<button class="${'br-ed-min' + (mini ? '' : ' br-riq-vuoto')}" type="button" data-act="vt-ed-foto" data-i="${j}" aria-label="Foto ${j + 1}" aria-pressed="${String(!!sel && sel.foto === u)}">${mini ? H`<img src="${mini}" alt="" draggable="false" loading="lazy" referrerpolicy="no-referrer">` : ''}</button>`;
   });
   var riquadri = m.riquadri.length === 2
     ? H`<div class="br-ed-riga" role="group" aria-label="Riquadro">${['Foto 1', 'Foto 2'].map(function(nome, j){
