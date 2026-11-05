@@ -1,11 +1,11 @@
 {
   "app": "Team Contato",
   "versione": "1.4.0",
-  "build": "8da47b59",
-  "areaAgenti": "area-agenti.8da47b59.js",
+  "build": "732697a2",
+  "areaAgenti": "area-agenti.732697a2.js",
   "codeBlock": {
-    "versione": "V6.44.0",
-    "impronta": "0c55db37d443"
+    "versione": "V6.45.0",
+    "impronta": "0362e320d5f5"
   },
   "programma": "1.4.1"
 }

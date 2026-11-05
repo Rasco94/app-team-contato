@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 8da47b59)
+  Guscio app Team Contato - V1.4.0 (build 732697a2)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.44.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.45.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '8da47b59', blocco: 'V6.44.0' };
+window.TC_APP = { versione: '1.4.0', build: '732697a2', blocco: 'V6.45.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2802,7 +2802,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.44.0';
+  var VERSIONE = 'V6.45.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -10365,6 +10365,7 @@ function findClose(){
   }
   /* =========================================================
      BROCHURE (V6.18.0, epic T-MVXP2YEM)
+     V6.45.0: names and categories of the models from MT_MODELLI (04e4k-motore.js).
      V6.19.0: the editor lives in 04e4f-brochure-editor.js; this file only wires it.
      V6.20.0: preview on top, parameters below, Italian language names, Category select.
      V6.21.0: fonts from Bunny Fonts, server preferences (04e4g-brochure-pref.js), favourites.
@@ -10396,7 +10397,8 @@ function findClose(){
     zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租', collezione:'豪华精选', pregio:'精品房产', inquadra:'扫码查看照片和详情', volume:'体积', piano:'楼层', classe_energetica:'能效等级', anno_costruzione:'建造年份', citta:'城市', caratteristiche:'特色设施', distanze:'周边距离', galleria:'图片集', planimetria:'平面图', dati_titolo:'房产信息', dist_ospedale:'医院', dist_stazione:'火车站', dist_autostrada:'高速公路入口', dist_supermercato:'超市', dist_centro_comm:'购物中心', dist_spiaggia:'海滩', dist_parco:'游乐园', dist_museo:'博物馆', dist_porto:'港口', dist_scuola:'学校', zona_titolo:'周边区域', zona_indicativa:'大致位置' },
     ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件', inquadra:'スキャンして写真と詳細を見る', volume:'容積', piano:'階数', classe_energetica:'省エネ等級', anno_costruzione:'築年', citta:'市町村', caratteristiche:'設備', distanze:'周辺施設までの距離', galleria:'フォトギャラリー', planimetria:'間取り図', dati_titolo:'物件データ', dist_ospedale:'病院', dist_stazione:'駅', dist_autostrada:'高速道路IC', dist_supermercato:'スーパー', dist_centro_comm:'ショッピングセンター', dist_spiaggia:'ビーチ', dist_parco:'遊園地', dist_museo:'博物館', dist_porto:'港', dist_scuola:'学校', zona_titolo:'周辺エリア', zona_indicativa:'おおよその位置' }
   };
-  var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1, cat:'classici' }, { n:2, nome:'Griglia classica', foto:4, cat:'classici' }, { n:3, nome:'Magazine', foto:3, cat:'classici' }, { n:4, nome:'Minimal', foto:1, cat:'moderni' }, { n:5, nome:'Lusso scuro', foto:2, cat:'lusso' }, { n:6, nome:'Banda laterale', foto:3, cat:'moderni' }, { n:7, nome:'Mosaico', foto:6, cat:'fotografici' }, { n:8, nome:'Panorama', foto:2, cat:'moderni' }, { n:9, nome:'Scheda tecnica', foto:4, cat:'classici' }, { n:10, nome:'Doppia colonna', foto:4, cat:'classici' }, { n:11, nome:'Casa d’aste', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:12, nome:'Rivista d’architettura', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:13, nome:'Catalogo privato', foto:4, cat:'lusso', blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, nome:'Editoriale avorio', foto:4, cat:'lusso', blocchi:['occhiello','pregio'] }, { n:15, nome:'Galleria', foto:3, cat:'lusso', blocchi:['occhiello'] }, { n:16, nome:'Notturno', foto:1, cat:'lusso', blocchi:['occhiello','cifre'] }, { n:17, nome:'Monografia', foto:3, cat:'lusso', blocchi:['occhiello'] }, { n:18, nome:'Ritratto', foto:3, cat:'lusso', blocchi:['occhiello','cifre'] }];
+  // V6.45.0: name and category of each model live in MT_MODELLI (04e4k); here only the brochure fields
+  var BR_MODELLI = [{ n:1, foto:1 }, { n:2, foto:4 }, { n:3, foto:3 }, { n:4, foto:1 }, { n:5, foto:2 }, { n:6, foto:3 }, { n:7, foto:6 }, { n:8, foto:2 }, { n:9, foto:4 }, { n:10, foto:4 }, { n:11, foto:4, blocchi:['occhiello','rif'] }, { n:12, foto:4, blocchi:['occhiello','rif'] }, { n:13, foto:4, blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, foto:4, blocchi:['occhiello','pregio'] }, { n:15, foto:3, blocchi:['occhiello'] }, { n:16, foto:1, blocchi:['occhiello','cifre'] }, { n:17, foto:3, blocchi:['occhiello'] }, { n:18, foto:3, blocchi:['occhiello','cifre'] }];
   var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
@@ -10423,13 +10425,10 @@ function findClose(){
     return 1;
   }
   function brCategoriaDi(m){
-    for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].n === Number(m)) return BR_MODELLI[i].cat;
-    return 'classici';
+    var r = mtModello('br', Number(m)); return r ? r.cat : 'classici';
   }
   function brModelliDi(cat){
-    var out = [];
-    for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].cat === cat) out.push(BR_MODELLI[i]);
-    return out;
+    return mtModelliDi('br', cat);
   }
   /* V6.27.0: true only when m is the number n of a model of BR_MODELLI */
   function brModelloEsiste(m){
@@ -10751,7 +10750,7 @@ function findClose(){
     });
     if(brPrefAttivo() && preferiti.length) opzioni.unshift(H`<option value="preferiti"${raw(cat === 'preferiti' ? ' selected' : '')}>★ Preferiti</option>`);
     var catSel = H`<label class="fld br-cat" for="tcag-br-cat">Categoria<select id="tcag-br-cat" data-act="br-categoria">${opzioni}</select></label>`;
-    var nomeMod = (BR_MODELLI.filter(function(x){ return x.n === BR.modello; })[0] || {}).nome || '';
+    var nomeMod = (mtModello('br', BR.modello) || {}).nome || '';
     var scMod = (BR.modello + ' ' + nomeMod).trim();
     var scLin = BR_NOMI[BR.lingua] + ' · ' + (BR.formato === 'o' ? 'Orizzontale' : 'Verticale');
     var modelli = (cat === 'preferiti' ? brPrefModelli() : brModelliDi(cat)).map(function(m){
@@ -11546,6 +11545,7 @@ function findClose(){
     return out;
   }
   // V6.43.0: the text style of the model goes on every page of the book, with the class mt-stile; «Del modello» removes it
+  // V6.45.0: the row of the model (MT_MODELLI) goes on every page with mtApplicaRiga
   function brEdStileTesto(){
     var libro = g('br-libro');
     if(!libro || !BR.mod) return;
@@ -11558,6 +11558,7 @@ function findClose(){
       if(v) p.classList.add('mt-stile');
       else p.classList.remove('mt-stile');
       mtFontApplica(p, BR.mod.font);
+      mtApplicaRiga(p, mtModello('br', BR.modello), BR.mod);
     });
   }
 
@@ -12346,10 +12347,10 @@ function findClose(){
     return brPrefAttivo() && BR_PREF.dati ? BR_PREF.dati.preferiti.slice() : [];
   }
 
-  // the models of BR_MODELLI that are favourites, in the order of BR_MODELLI
+  // the brochure rows of MT_MODELLI that are favourites, in order of n
   function brPrefModelli(){
     var p = brPrefPreferiti();
-    return BR_MODELLI.filter(function(m){ return p.indexOf(m.n) >= 0; });
+    return MT_MODELLI.filter(function(m){ return m.doc === 'br' && p.indexOf(m.n) >= 0; });
   }
 
   // PURE: the favourites list after a failed toggle of n; undoes only that click (aggiunto = it was added by it)
@@ -12542,6 +12543,7 @@ function findClose(){
   /* VETRINE (V6.31.0, ticket T-MVZM5L21): cartelli da stampare per la vetrina dell'agenzia.
      V6.32.0: models 3-6 (Notte sul lago, Minimal, Doppia foto, QR grande).
      V6.33.0: Print, Save PDF and Save image.
+     V6.45.0: names and categories of the models from MT_MODELLI (04e4k-motore.js).
      Riusa il motore della brochure (dati, lingue, QR, font, stampa): le funzioni si chiamano, non si copiano.
      Stato: VT in memoria (formato e modello). Lingua e immobile sono quelli della brochure (BR). */
   var VT_MODELLI = [{ n:1, nome:'Vetrina classica', cat:'classici' }, { n:2, nome:'Cartello lusso', cat:'lusso' }, { n:3, nome:'Notte sul lago', cat:'lusso' }, { n:4, nome:'Minimal', cat:'moderni' }, { n:5, nome:'Doppia foto', cat:'fotografici' }, { n:6, nome:'QR grande', cat:'moderni' }];
@@ -12562,16 +12564,13 @@ function findClose(){
     if(f === 'A3o' || f === 'A4o') return 'A3o';
     return 'A3v';
   }
-  // the models of one category, in VT_MODELLI order
+  // the vetrine rows of MT_MODELLI in one category, in order of n
   function vtModelliDi(cat){
-    var out = [];
-    for(var k = 0; k < VT_MODELLI.length; k++) if(VT_MODELLI[k].cat === cat) out.push(VT_MODELLI[k]);
-    return out;
+    return mtModelliDi('vt', cat);
   }
-  // the name of a model of VT_MODELLI, empty when the model does not exist
+  // the name of a vetrine model from MT_MODELLI, empty when the model does not exist
   function vtNomeModello(m){
-    for(var k = 0; k < VT_MODELLI.length; k++) if(VT_MODELLI[k].n === m) return VT_MODELLI[k].nome;
-    return '';
+    var r = mtModello('vt', m); return r ? r.nome : '';
   }
   // the contact lines of the printed materials, in order: persona, then agency; an empty line is left out
   function vtContatti(m){
@@ -12678,7 +12677,7 @@ function findClose(){
     });
     if(VT.preferiti.length) opzioni.unshift(H`<option value="preferiti"${raw(cat === 'preferiti' ? ' selected' : '')}>★ Preferiti</option>`);
     var catSel = H`<label class="fld br-cat" for="tcag-vt-cat">Categoria<select id="tcag-vt-cat" data-act="vt-categoria">${opzioni}</select></label>`;
-    var lista = cat === 'preferiti' ? VT_MODELLI.filter(function(m){ return VT.preferiti.indexOf(m.n) >= 0; }) : vtModelliDi(cat);
+    var lista = cat === 'preferiti' ? MT_MODELLI.filter(function(m){ return m.doc === 'vt' && VT.preferiti.indexOf(m.n) >= 0; }) : vtModelliDi(cat);
     var modelli = lista.length ? H`<div class="br-modelli br-modelli-${VT.formato.charAt(2)}" role="group" aria-label="Modello">${lista.map(function(m){
       var on = VT.preferiti.indexOf(m.n) >= 0;
       return H`<div class="br-mod-box"><button class="br-mod" type="button" data-act="vt-modello" data-m="${m.n}" aria-pressed="${String(VT.modello === m.n)}"><span class="br-mini vt-mini-m${m.n}" aria-hidden="true"></span><span class="br-mod-nome">${m.n + ' ' + m.nome}</span></button><button class="br-stella" type="button" data-act="vt-stella" data-m="${m.n}" aria-pressed="${String(on)}" aria-label="${on ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg></button></div>`;
@@ -13692,12 +13691,9 @@ function vtStileApplica(mod, stileMod){
   return out;
 }
 
-// the category of a model in VT_MODELLI; an unknown model or one without a category is 'classici'
+// the category of a model from MT_MODELLI; an unknown model is 'classici'
 function vtCategoriaDi(m){
-  for(var k = 0; k < VT_MODELLI.length; k++){
-    if(VT_MODELLI[k].n === m && typeof VT_MODELLI[k].cat === 'string') return VT_MODELLI[k].cat;
-  }
-  return 'classici';
+  var r = mtModello('vt', m); return r ? r.cat : 'classici';
 }
 
 // the last choice of the showcases, as the server keeps it
@@ -13790,6 +13786,7 @@ function vtEdApplica(f){
   });
   mtFontApplica(f, VT.mod.font);
   vtEdLogoFoglio(f);
+  mtApplicaRiga(f, mtModello('vt', VT.modello), VT.mod);
   vtEdAvviso();
   vtEdCampioni(f);
 }
@@ -14182,7 +14179,7 @@ function vtEdPannello(i){
 
   return H`${coloriSez}${testiSez}${fotoSez}${mostraSez}${stiliSez}`;
 }
-/* SHARED ENGINE OF BROCHURE AND VETRINE (V6.44.0, epics T-MW2A57KR and T-MW2A583N): palettes, text styles, fonts and logo positions shared by the Brochure and Vetrine editors and by the layouts. Pure helpers: they also run in the bench (prova-motore.cjs). Since V6.43.0: palettes, text styles and font stacks; V6.44.0: logo positions (Fascia, Angolo, Firma) with automatic colour by contrast, and font choice for title and text. */
+/* SHARED ENGINE OF BROCHURE AND VETRINE (V6.45.0, epics T-MW2A57KR, T-MW2A583N and T-MW2A58O4): palettes, text styles, fonts and logo positions shared by the Brochure and Vetrine editors and by the layouts. Pure helpers: they also run in the bench (prova-motore.cjs). Since V6.43.0: palettes, text styles and font stacks; V6.44.0: logo positions (Fascia, Angolo, Firma) with automatic colour by contrast, and font choice for title and text. V6.45.0: the models as rows of MT_MODELLI (one source for name, category and default palette, text style, fonts and logo), mtModelliDi, mtModello, mtScelte, mtApplicaRiga. */
   var MT_TAVOLOZZE = [
     {id:'navy-oro', nome:'Navy e oro', sfondo:'#ffffff', testo:'#22222a', titolo:'#8a6d1f', fascia:'#0a2a5e', accento:'#c9a961'},
     {id:'bianco', nome:'Bianco classico', sfondo:'#ffffff', testo:'#222222', titolo:'#111111', fascia:'#333333', accento:'#8a8a8a'},
@@ -14229,6 +14226,33 @@ function vtEdPannello(i){
 
   var MT_LOGO = ['fascia', 'angolo', 'firma'];
   var MT_LOGO_NOMI = { fascia: 'Fascia', angolo: 'Angolo', firma: 'Firma' };
+  // the 24 models: 18 brochure (n 1..18) and 6 vetrine (n 1..6); one source for name, category, default palette, text style, fonts and logo
+  var MT_MODELLI = [
+    {doc:'br', n:1, nome:'Copertina piena', cat:'classici', classe:'br-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:2, nome:'Griglia classica', cat:'classici', classe:'br-m2', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:3, nome:'Magazine', cat:'classici', classe:'br-m3', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:4, nome:'Minimal', cat:'moderni', classe:'br-m4', tavolozza:'modello', stile:'moderno', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:5, nome:'Lusso scuro', cat:'lusso', classe:'br-m5', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:6, nome:'Banda laterale', cat:'moderni', classe:'br-m6', tavolozza:'modello', stile:'moderno', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:7, nome:'Mosaico', cat:'fotografici', classe:'br-m7', tavolozza:'modello', stile:'editoriale', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:8, nome:'Panorama', cat:'moderni', classe:'br-m8', tavolozza:'modello', stile:'moderno', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:9, nome:'Scheda tecnica', cat:'classici', classe:'br-m9', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:10, nome:'Doppia colonna', cat:'classici', classe:'br-m10', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:11, nome:'Casa d’aste', cat:'lusso', classe:'br-m11', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:12, nome:'Rivista d’architettura', cat:'lusso', classe:'br-m12', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:13, nome:'Catalogo privato', cat:'lusso', classe:'br-m13', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:14, nome:'Editoriale avorio', cat:'lusso', classe:'br-m14', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:15, nome:'Galleria', cat:'lusso', classe:'br-m15', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:16, nome:'Notturno', cat:'lusso', classe:'br-m16', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:17, nome:'Monografia', cat:'lusso', classe:'br-m17', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:18, nome:'Ritratto', cat:'lusso', classe:'br-m18', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'vt', n:1, nome:'Vetrina classica', cat:'classici', classe:'vt-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:2, nome:'Cartello lusso', cat:'lusso', classe:'vt-m2', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:3, nome:'Notte sul lago', cat:'lusso', classe:'vt-m3', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:4, nome:'Minimal', cat:'moderni', classe:'vt-m4', tavolozza:'modello', stile:'moderno', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:5, nome:'Doppia foto', cat:'fotografici', classe:'vt-m5', tavolozza:'modello', stile:'editoriale', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:6, nome:'QR grande', cat:'moderni', classe:'vt-m6', tavolozza:'modello', stile:'moderno', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'}
+  ];
 
   /* ---------- pure helpers (also run by the bench) ---------- */
   // palette by id; unknown or missing id = the first palette
@@ -14330,6 +14354,51 @@ function vtEdPannello(i){
         if(!el.classList.contains('mt-stile')) el.style.removeProperty('--mt-font-' + k);
       }
     });
+  }
+  // the model rows of one document and category, ordered by n; [] for an unknown doc or category, '' or undefined
+  function mtModelliDi(doc, cat){
+    var out = [];
+    if(!doc || !cat) return out;
+    for(var i = 0; i < MT_MODELLI.length; i++) if(MT_MODELLI[i].doc === doc && MT_MODELLI[i].cat === cat) out.push(MT_MODELLI[i]);
+    return out.sort(function(a, b){ return a.n - b.n; });
+  }
+  // the model row with this doc and number n (strict: n must be a number); null when there is none
+  function mtModello(doc, n){
+    if(typeof n !== 'number') return null;
+    for(var i = 0; i < MT_MODELLI.length; i++) if(MT_MODELLI[i].doc === doc && MT_MODELLI[i].n === n) return MT_MODELLI[i];
+    return null;
+  }
+  // the choice of a sheet: the editors' value wins over the row's default; an unknown or empty value keeps the row's own value
+  // missing or invalid fields of the row fall back to the base row
+  function mtScelte(riga, mod){
+    var base = { tavolozza: 'modello', stile: 'classico', font: { titolo: 'playfair', testo: 'inter' }, logo: 'fascia' };
+    var r = riga && typeof riga === 'object' ? riga : base;
+    var m = mod && typeof mod === 'object' ? mod : {};
+    function cercaId(lista, v){
+      for(var i = 0; i < lista.length; i++) if(lista[i].id === v) return v;
+      return '';
+    }
+    var f = m.font && typeof m.font === 'object' ? m.font : {};
+    var rf = r.font && typeof r.font === 'object' ? r.font : base.font;
+    var tavolozza = cercaId(MT_TAVOLOZZE, m.tavolozza) || (r.tavolozza === 'modello' ? 'modello' : cercaId(MT_TAVOLOZZE, r.tavolozza)) || base.tavolozza;
+    var stile = cercaId(MT_STILI_TESTO, m.stile) || cercaId(MT_STILI_TESTO, r.stile) || base.stile;
+    var logo = MT_LOGO.indexOf(m.logo) >= 0 ? m.logo : (MT_LOGO.indexOf(r.logo) >= 0 ? r.logo : base.logo);
+    return {
+      tavolozza: tavolozza,
+      stile: stile,
+      font: {
+        titolo: mtFontValido(f.titolo) || mtFontValido(rf.titolo) || base.font.titolo,
+        testo: mtFontValido(f.testo) || mtFontValido(rf.testo) || base.font.testo
+      },
+      logo: logo
+    };
+  }
+  // applies a row to a sheet: the logo always; the palette and text style only for rows with a palette (not 'modello'), so the sheets of today do not change
+  function mtApplicaRiga(el, riga, mod){
+    if(!el || !el.style || typeof el.setAttribute !== 'function' || !riga || typeof riga !== 'object') return;
+    var s = mtScelte(riga, mod);
+    el.setAttribute('data-logo', s.logo);
+    if(riga.tavolozza !== 'modello') mtApplica(el, s);
   }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
