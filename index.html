@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build d25e441f)
+  Guscio app Team Contato - V1.4.0 (build 1c529746)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.41.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.42.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'd25e441f', blocco: 'V6.41.0' };
+window.TC_APP = { versione: '1.4.0', build: '1c529746', blocco: 'V6.42.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2776,7 +2776,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.41.0';
+  var VERSIONE = 'V6.42.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -10350,6 +10350,7 @@ function findClose(){
      V6.39.0: gallery, floor plan and property data pages (04e4e2-brochure-scheda.js, data from Apps Script V29.14.0).
      V6.40.0: zone page with the map and contacts page (04e4e3-brochure-zona.js, cancello AI 1.15.0).
      V6.41.0: photos from Drive when the listing has them (04e4j-foto-drive.js), light thumbnails in the preview.
+     V6.42.0: Print, Save PDF and Save image load the Drive photos at 300 dpi of each frame first (siSalvaAlta in 04e4i), Save image saves one PNG per page.
      =========================================================
      Page #marketing/brochure (V6.26.0; #strumenti/brochure redirects here), code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -10823,6 +10824,8 @@ function findClose(){
   }
 
   /* ---------- print ---------- */
+  // the state line of the brochure page
+  function brAvvisa(t){ BR.msg = t; siAvviso('br-avviso', t); }
   function brStampa(f, css, avviso){
     f = f || g('br-libro');
     css = css || brStileStampa(BR.formato, 'A4', '', f ? $$('.br-pag', f).length : 1);
@@ -10908,17 +10911,13 @@ function findClose(){
         if(brModelliDi(c).length > 0 || (c === 'preferiti' && brPrefPreferiti().length > 0)){ BR.categoria = c; break; }
         return;
       case 'br-stampa':
-        brStampa();
+        siSalvaAlta({ modo: 'stampa', bottone: el, radice: g('br-libro'), carta: 'A4', orientamento: BR.formato, idAvviso: 'br-avviso', avviso: brAvvisa, msg: '', stampa: brStampa });
         return;
       case 'br-pdf':
-        BR.msg = SI_MSG_PDF;
-        siAvviso('br-avviso', BR.msg);
-        brStampa();
+        siSalvaAlta({ modo: 'stampa', bottone: el, radice: g('br-libro'), carta: 'A4', orientamento: BR.formato, idAvviso: 'br-avviso', avviso: brAvvisa, msg: SI_MSG_PDF, stampa: brStampa });
         return;
       case 'br-png':
-        var fineBr = function () { siOccupa(el, false); };
-        siOccupa(el, true);
-        siSalvaImmagine({ foglio: g('br-pag-1'), tipo: 'brochure', codice: BR.codice, lingua: BR.lingua, carta: 'A4', orientamento: BR.formato, avviso: function (t) { BR.msg = t; siAvviso('br-avviso', t); } }).then(fineBr, fineBr);
+        siSalvaAlta({ modo: 'png', bottone: el, radice: g('br-libro'), foglio: g('br-pag-1'), fogli: $$('.br-pag', g('br-libro')), tipo: 'brochure', codice: BR.codice, lingua: BR.lingua, carta: 'A4', orientamento: BR.formato, idAvviso: 'br-avviso', avviso: brAvvisa });
         return;
       case 'br-riprova':
         if(BR.codice){ BR.dati = ris(); brSchedaAzzera(); brZonaAzzera(); fdAzzera(); brCarica(); } else caricaImmobili();
@@ -12643,6 +12642,8 @@ function findClose(){
     </div>`;
   }
 
+  // the state line of the Vetrine page
+  function vtAvvisa(t){ VT.msg = t; siAvviso('vt-avviso', t); }
   // print: the same engine as the brochure, with the sheet of the Vetrine and its own paper size
   function vtStampa(){
     var f = g('vt-foglio');
@@ -12682,17 +12683,13 @@ function findClose(){
         });
         break;
       case 'vt-stampa':
-        vtStampa();
+        siSalvaAlta({ modo: 'stampa', bottone: el, radice: g('vt-foglio'), carta: VT.formato.slice(0, 2), orientamento: VT.formato.charAt(2), idAvviso: 'vt-avviso', avviso: vtAvvisa, msg: '', stampa: vtStampa });
         return;
       case 'vt-pdf':
-        VT.msg = SI_MSG_PDF;
-        siAvviso('vt-avviso', VT.msg);
-        vtStampa();
+        siSalvaAlta({ modo: 'stampa', bottone: el, radice: g('vt-foglio'), carta: VT.formato.slice(0, 2), orientamento: VT.formato.charAt(2), idAvviso: 'vt-avviso', avviso: vtAvvisa, msg: SI_MSG_PDF, stampa: vtStampa });
         return;
       case 'vt-png':
-        var fineVt = function () { siOccupa(el, false); };
-        siOccupa(el, true);
-        siSalvaImmagine({ foglio: g('vt-foglio'), tipo: 'vetrina', codice: BR.codice, lingua: BR.lingua, carta: VT.formato.slice(0, 2), orientamento: VT.formato.charAt(2), avviso: function (t) { VT.msg = t; siAvviso('vt-avviso', t); } }).then(fineVt, fineVt);
+        siSalvaAlta({ modo: 'png', bottone: el, radice: g('vt-foglio'), foglio: g('vt-foglio'), tipo: 'vetrina', codice: BR.codice, lingua: BR.lingua, carta: VT.formato.slice(0, 2), orientamento: VT.formato.charAt(2), idAvviso: 'vt-avviso', avviso: vtAvvisa });
         return;
       default:
         return;
@@ -12701,12 +12698,19 @@ function findClose(){
   }
 
   window.addEventListener('resize', function(){ if(S.sec === 'marketing' && S.sub === 'vetrine') brScala('vt-anteprima', 'vt-foglio'); });
-  /* SAVE AS IMAGE AND PDF (V6.33.0, epic T-MVZM5M80): PNG of the brochure or Vetrine sheet at 150 dpi, no library: clone -> SVG foreignObject -> canvas -> toBlob. Photos and Bunny fonts become data URLs first. */
-  var SI_DPI = 150;
+  /* SAVE AS IMAGE AND PDF (V6.33.0, epic T-MVZM5M80): PNG of the brochure or Vetrine sheet at 300 dpi, no library: clone -> SVG foreignObject -> canvas -> toBlob. Photos and Bunny fonts become data URLs first. V6.42.0: full-size Drive photos (300 dpi of the frame) before Print, Save PDF and Save image, with progress and Cancel; PNG at 300 dpi, one PNG per brochure page. */
+  var SI_DPI = 300;
   var SI_T_MAX = 60000;
   var SI_MSG_NO = 'Non riesco a creare l’immagine da questo browser: usa “Salva PDF”';
   var SI_MSG_PDF = 'Scegli “Salva come PDF” come stampante';
+  var SI_MSG_ANNULLATO = 'Salvataggio annullato';
+  var SI_T_PAUSA = 400;
+  var SI_PX_MAX = 16777216;
+  var SI_MSG_IN_CORSO = 'Salvataggio già in corso';
+  var SI_MSG_DPI_RIDOTTI = 'risoluzione ridotta per questo browser';
   var siLavoro = false;
+  var siPreparo = false;
+  var siRipristinaPendente = null;
 
   /* ---------- pure helpers (also run by the bench) ---------- */
   // size in pixels of a sheet: A3 unless A4; dpi not valid = SI_DPI; 'o' swaps width and height
@@ -12720,12 +12724,69 @@ function findClose(){
   }
 
   // file name: every part keeps only letters, digits and dashes
-  function siNomeFile(tipo, codice, lingua) {
+  function siNomeFile(tipo, codice, lingua, pagina) {
     var pulito = function (x) { return String(x == null ? '' : x).replace(/[^A-Za-z0-9-]/g, ''); };
     var t = pulito(tipo) === 'vetrina' ? 'vetrina' : 'brochure';
     var c = pulito(codice) || 'immobile';
     var l = pulito(lingua) || 'it';
-    return t + '-' + c + '-' + l + '.png';
+    // a page number from 1 up adds -pN before the extension (one PNG per page)
+    var p = typeof pagina === 'number' && isFinite(pagina) && pagina >= 1 && Math.floor(pagina) === pagina ? '-p' + pagina : '';
+    return t + '-' + c + '-' + l + p + '.png';
+  }
+
+  // side in px of a full-size photo for a frame of mmRiquadro mm at zoom % (300 dpi): the first size of the list that covers it
+  function siLatoFoto(mmRiquadro, zoom) {
+    var lati = [600, 1200, 2480, 3508, 4961];
+    var mm = typeof mmRiquadro === 'number' && isFinite(mmRiquadro) && mmRiquadro > 0 ? mmRiquadro : 0;
+    var z = typeof zoom === 'number' && isFinite(zoom) && zoom >= 100 ? zoom : 100;
+    var px = Math.ceil(mm / 25.4 * 300 * z / 100);
+    for (var k = 0; k < lati.length; k++) {
+      if (lati[k] >= px) return lati[k];
+    }
+    return lati[lati.length - 1];
+  }
+
+  // zoom in percent of a CSS transform 'scale(1.5)' (150); no scale, or under 100, is 100
+  function siZoomDi(transform) {
+    var m = /scale\(\s*([0-9.]+)\s*\)/.exec(String(transform == null ? '' : transform));
+    if (!m) return 100;
+    var z = Math.round(Number(m[1]) * 100);
+    return isFinite(z) && z >= 100 ? z : 100;
+  }
+
+  // size in mm of a photo side: latoPx on a page of paginaPx pixels that is paginaMm wide; 0 when the page is not valid
+  function siMmLato(latoPx, paginaPx, paginaMm) {
+    var pagPx = typeof paginaPx === 'number' && isFinite(paginaPx) && paginaPx > 0;
+    var pagMm = typeof paginaMm === 'number' && isFinite(paginaMm) && paginaMm > 0;
+    if (!pagPx || !pagMm) return 0;
+    return latoPx / paginaPx * paginaMm;
+  }
+
+  // the note about the photos kept at thumbnail size: '' when there are none
+  function siMsgRidotte(n) {
+    if (typeof n !== 'number' || !isFinite(n) || n <= 0 || Math.floor(n) !== n) return '';
+    return n + ' foto in qualità ridotta';
+  }
+
+  // the largest dpi, not above dpi, whose sheet has at most pxMax pixels (pxMax not valid = no limit)
+  function siDpiMassimo(formato, orientamento, dpi, pxMax) {
+    var d = typeof dpi === 'number' && isFinite(dpi) && dpi > 0 ? dpi : SI_DPI;
+    d = Math.floor(d);
+    if (typeof pxMax !== 'number' || !isFinite(pxMax) || pxMax <= 0) return d;
+    while (d > 1) {
+      var p = siPixel(formato, orientamento, d);
+      if (p.w * p.h <= pxMax) return d;
+      d--;
+    }
+    return d;
+  }
+
+  // the note of a save that stopped after some pages: '' unless 0 < salvate < totale
+  function siMsgParziale(salvate, totale) {
+    var interi = typeof salvate === 'number' && isFinite(salvate) && Math.floor(salvate) === salvate &&
+      typeof totale === 'number' && isFinite(totale) && Math.floor(totale) === totale;
+    if (!interi || !(salvate > 0 && salvate < totale)) return '';
+    return 'Salvate ' + salvate + ' di ' + totale + ' pagine';
   }
 
   // true when the text has at least one character inside the unicode-range (empty range = all)
@@ -12914,6 +12975,8 @@ function findClose(){
           canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
           canvas.toBlob(function (b) {
+            canvas.width = 0;
+            canvas.height = 0;
             if (b && b.size > 0) risolvi(b);
             else rifiuta(new Error('vuoto'));
           }, 'image/png');
@@ -12968,33 +13031,64 @@ function findClose(){
   }
 
   /* ---------- entry point ---------- */
-  // o = { foglio, tipo: 'brochure'|'vetrina', codice, lingua, carta: 'A3'|'A4', orientamento: 'v'|'o', avviso(testo) }
+  // o = { foglio | fogli, tipo: 'brochure'|'vetrina', codice, lingua, carta: 'A3'|'A4', orientamento: 'v'|'o', avviso(testo), nota }
+  // fogli: several sheets, one PNG each, one page at a time; foglio: one sheet (as before)
   // resolves true when the file is saved; any error shows SI_MSG_NO and resolves false (no empty file)
   function siSalvaImmagine(o) {
-    if (siLavoro || !o || !o.foglio) return Promise.resolve(false);
+    var fogli = o && Array.isArray(o.fogli) && o.fogli.length > 0 ? o.fogli : (o && o.foglio ? [o.foglio] : []);
+    if (siLavoro || !o || fogli.length === 0) return Promise.resolve(false);
     siLavoro = true;
+    var interrotto = false, salvate = 0, ridotta = false;
     var avviso = typeof o.avviso === 'function' ? o.avviso : function () {};
     var ctl = window.AbortController ? new AbortController() : null;
     var segnale = ctl ? ctl.signal : undefined;
     var tm = 0;
     var scadenza = new Promise(function (ok, no) {
       tm = setTimeout(function () {
+        interrotto = true;
         if (ctl) ctl.abort();
         no(new Error('tempo scaduto'));
-      }, SI_T_MAX);
+      }, SI_T_MAX * fogli.length);
     });
-    var foglio = o.foglio;
-    var lavoro = siFotoDati(siFotoUniche(foglio), avviso, segnale).then(function (dati) {
-      return siFontCss(o.lingua, foglio.textContent, segnale).then(function (fontCss) {
-        var dim = siPixel(o.carta, o.orientamento, SI_DPI);
-        return siPng(siSvg(foglio, dim.w, dim.h, fontCss, dati), dim.w, dim.h);
+    var testo, dim, lavoro;
+    try {
+      testo = fogli.map(function (f) { return f.textContent; }).join('\n');
+      dim = siPixel(o.carta, o.orientamento, SI_DPI);
+      // the A3 at 300 dpi is over the canvas limit of some browsers: then a smaller size, shown in the note; the A4 stays at 300 dpi
+      var dpiR = siDpiMassimo(o.carta, o.orientamento, SI_DPI, SI_PX_MAX);
+      var dimR = dpiR < SI_DPI ? siPixel(o.carta, o.orientamento, dpiR) : null;
+      lavoro = siFontCss(o.lingua, testo, segnale).then(function (fontCss) {
+        // one sheet at a time: its PNG is saved, then a short pause before the next one
+        function pagina(k) {
+          return siPaginaPng(fogli[k], fontCss, dim, dimR, segnale, avviso).then(function (res) {
+            // a save already given up by the time limit does not download anything more
+            if (interrotto) throw new Error('tempo scaduto');
+            if (res.ridotta) ridotta = true;
+            siScarica(res.blob, siNomeFile(o.tipo, o.codice, o.lingua, fogli.length > 1 ? k + 1 : 0));
+            salvate++;
+            if (k + 1 >= fogli.length) return true;
+            return new Promise(function (ok) { setTimeout(ok, SI_T_PAUSA); }).then(function () {
+              if (interrotto) throw new Error('tempo scaduto');
+              return pagina(k + 1);
+            });
+          });
+        }
+        return pagina(0);
+      }).then(function () {
+        var riepilogo = fogli.length === 1
+          ? 'Immagine salvata: ' + siNomeFile(o.tipo, o.codice, o.lingua, 0)
+          : 'Immagini salvate: ' + fogli.length + ' pagine';
+        avviso(riepilogo + (ridotta ? ' · ' + SI_MSG_DPI_RIDOTTI : '') + (o.nota ? ' · ' + o.nota : ''));
+        return true;
       });
-    }).then(function (blob) {
-      var nome = siNomeFile(o.tipo, o.codice, o.lingua);
-      siScarica(blob, nome);
-      avviso('Immagine salvata: ' + nome);
-      return true;
-    });
+    } catch (e) {
+      clearTimeout(tm);
+      siLavoro = false;
+      if (ctl) ctl.abort();
+      console.warn('[Salva immagine] ' + (e && e.message ? e.message : String(e)));
+      avviso([SI_MSG_NO, siMsgParziale(salvate, fogli.length)].filter(Boolean).join(' · '));
+      return Promise.resolve(false);
+    }
     return Promise.race([lavoro, scadenza]).then(function (ok) {
       clearTimeout(tm);
       siLavoro = false;
@@ -13003,11 +13097,177 @@ function findClose(){
       clearTimeout(tm);
       siLavoro = false;
       if (ctl) ctl.abort();
-      avviso(SI_MSG_NO);
+      avviso([SI_MSG_NO, siMsgParziale(salvate, fogli.length)].filter(Boolean).join(' · '));
       return false;
     });
   }
-/* PHOTOS FROM DRIVE (V6.41.0): Brochure and Vetrine use the Drive photos of the listing (Apps Script V29.14.0: immobile-media, immobile-foto) when it has them, light thumbnails kept in memory only; otherwise the site photos. */
+
+  // one sheet as a PNG blob: its photos as data URLs first, then the SVG drawn at the size dim;
+  // when the canvas is refused and dimRipiego is given, once more at that smaller size
+  // resolves { blob, ridotta }
+  function siPaginaPng(foglio, fontCss, dim, dimRipiego, segnale, avviso) {
+    return siFotoDati(siFotoUniche(foglio), avviso, segnale).then(function (dati) {
+      return siPng(siSvg(foglio, dim.w, dim.h, fontCss, dati), dim.w, dim.h).then(function (b) {
+        return { blob: b, ridotta: false };
+      }, function (e) {
+        if (!dimRipiego) throw e;
+        console.warn('[Salva immagine] canvas: ' + (e && e.message ? e.message : String(e)));
+        return siPng(siSvg(foglio, dimRipiego.w, dimRipiego.h, fontCss, dati), dimRipiego.w, dimRipiego.h).then(function (b) {
+          return { blob: b, ridotta: true };
+        });
+      });
+    });
+  }
+
+  // the page that holds a photo: its .br-pag or .vt-foglio, or the whole radice when there is none
+  function siPaginaDi(img, radice) {
+    var p = typeof img.closest === 'function' ? img.closest('.br-pag, .vt-foglio') : null;
+    return p || radice;
+  }
+
+  // the Drive thumbnails of the sheet (drive:ID) swapped, one at a time, for full-size photos; ripristina() gives the old src back
+  // o = { radice, carta: 'A3'|'A4', orientamento: 'v'|'o', idAvviso, avviso(testo) }; never rejects
+  // resolves { annullato, ridotte: photos kept at thumbnail size, ripristina }
+  function siPrepara(o) {
+    var vuoto = function () {};
+    // while a save is still running the photos stay as they are: the call is refused and the pending restore waits
+    if (siPreparo || siLavoro) {
+      if (o && typeof o.avviso === 'function') o.avviso(SI_MSG_IN_CORSO);
+      return Promise.resolve({ annullato: true, ridotte: 0, ripristina: vuoto });
+    }
+    if (typeof siRipristinaPendente === 'function') {
+      var precedente = siRipristinaPendente;
+      siRipristinaPendente = null;
+      precedente();
+    }
+    if (!o || !o.radice) return Promise.resolve({ annullato: false, ridotte: 0, ripristina: vuoto });
+    var avviso = typeof o.avviso === 'function' ? o.avviso : function () {};
+    var tutte = o.radice.querySelectorAll('img');
+    var foto = [];
+    for (var i = 0; i < tutte.length; i++) {
+      var src = tutte[i].getAttribute('src') || '';
+      var rif = fdRifDi(src);
+      if (rif !== '') foto.push({ img: tutte[i], rif: rif, src: src });
+    }
+    if (foto.length === 0) return Promise.resolve({ annullato: false, ridotte: 0, ripristina: vuoto });
+    siPreparo = true;
+    var annullato = false, ridotte = 0, fatto = false, cambi = [], blobs = [];
+    var fermaAnnulla = function () {};
+    var fermo = new Promise(function (ok) { fermaAnnulla = ok; });
+    function ripristina() {
+      if (fatto) return;
+      fatto = true;
+      for (var k = 0; k < cambi.length; k++) cambi[k].img.setAttribute('src', cambi[k].vecchio);
+      for (var j = 0; j < blobs.length; j++) URL.revokeObjectURL(blobs[j]);
+    }
+    function passo(k) {
+      if (annullato || k >= foto.length) return Promise.resolve();
+      var f = foto[k];
+      avviso('Preparo le foto ' + (k + 1) + ' di ' + foto.length);
+      // a photo taken off the sheet by a redraw is not put back: it stays as it was
+      if (!f.img.parentNode || f.img.isConnected === false) {
+        ridotte++;
+        return passo(k + 1);
+      }
+      var r = f.img.parentNode.getBoundingClientRect();
+      var p = siPaginaDi(f.img, o.radice).getBoundingClientRect();
+      var mm = siMmLato(Math.max(r.width, r.height), p.width, siPixel(o.carta, o.orientamento, 25.4).w);
+      var pr = fdFotoAlta(f.rif, siLatoFoto(mm, siZoomDi(f.img.style.transform)));
+      pr.then(function (u) { if (annullato && u) URL.revokeObjectURL(u); });
+      return Promise.race([pr, fermo]).then(function (u) {
+        if (u) {
+          cambi.push({ img: f.img, vecchio: f.src });
+          blobs.push(u);
+          f.img.setAttribute('src', u);
+        } else if (!annullato) {
+          ridotte++;
+        }
+        return passo(k + 1);
+      });
+    }
+    var el = g(o.idAvviso);
+    var btn = null;
+    if (el) {
+      btn = document.createElement('button');
+      btn.setAttribute('id', 'tcag-si-annulla');
+      btn.className = 'btn sec sm';
+      btn.type = 'button';
+      btn.textContent = 'Annulla';
+      if (btn.style) {
+        btn.style.gridColumn = '1 / -1';
+        btn.style.justifySelf = 'start';
+        btn.style.marginTop = '8px';
+      }
+      btn.addEventListener('click', function () {
+        annullato = true;
+        fermaAnnulla('');
+      });
+      el.parentNode.insertBefore(btn, el.nextSibling);
+    }
+    function fine() {
+      siPreparo = false;
+      if (btn && btn.parentNode) btn.parentNode.removeChild(btn);
+    }
+    return Promise.resolve().then(function () { return passo(0); }).then(function () {
+      fine();
+      if (annullato) {
+        ripristina();
+        avviso(SI_MSG_ANNULLATO);
+        return { annullato: true, ridotte: ridotte, ripristina: ripristina };
+      }
+      siRipristinaPendente = ripristina;
+      return { annullato: false, ridotte: ridotte, ripristina: ripristina };
+    }, function (e) {
+      fine();
+      ripristina();
+      console.warn('[Salva immagine] foto: ' + (e && e.message ? e.message : String(e)));
+      avviso(SI_MSG_NO);
+      return { annullato: true, ridotte: ridotte, ripristina: ripristina };
+    });
+  }
+
+  // one save from the Brochure or the Vetrine: full-size photos, then the print or the PNG, then the photos back as they were
+  // o = { modo: 'stampa'|'png', bottone, radice, foglio, fogli, tipo, codice, lingua, carta, orientamento, idAvviso, avviso, msg, stampa }
+  // resolves true when the print or the file has started; never rejects
+  function siSalvaAlta(o) {
+    siOccupa(o.bottone, true);
+    return siPrepara({ radice: o.radice, carta: o.carta, orientamento: o.orientamento, idAvviso: o.idAvviso, avviso: o.avviso }).then(function (r) {
+      if (r.annullato) {
+        siOccupa(o.bottone, false);
+        return false;
+      }
+      var nota = siMsgRidotte(r.ridotte);
+      if (o.modo === 'png') {
+        return siSalvaImmagine({ foglio: o.foglio, fogli: o.fogli, tipo: o.tipo, codice: o.codice, lingua: o.lingua, carta: o.carta, orientamento: o.orientamento, avviso: o.avviso, nota: nota }).then(function (ok) {
+          r.ripristina();
+          siRipristinaPendente = null;
+          siOccupa(o.bottone, false);
+          return ok;
+        }, function (e) {
+          console.warn('[Salva immagine] ' + (e && e.message ? e.message : String(e)));
+          r.ripristina();
+          siRipristinaPendente = null;
+          siOccupa(o.bottone, false);
+          return false;
+        });
+      }
+      o.avviso([o.msg || '', nota].filter(Boolean).join(' · '));
+      window.addEventListener('afterprint', r.ripristina, { once: true });
+      try {
+        o.stampa();
+      } catch (e) {
+        r.ripristina();
+        console.warn('[Stampa] ' + (e && e.message ? e.message : String(e)));
+      }
+      siOccupa(o.bottone, false);
+      return true;
+    }).then(null, function (e) {
+      console.warn('[Salva immagine] ' + (e && e.message ? e.message : String(e)));
+      siOccupa(o.bottone, false);
+      return false;
+    });
+  }
+/* PHOTOS FROM DRIVE (V6.41.0): Brochure and Vetrine use the Drive photos of the listing (Apps Script V29.14.0: immobile-media, immobile-foto) when it has them, light thumbnails kept in memory only; otherwise the site photos. V6.42.0: fdFotoAlta and fdRifDi give the full-size photos used by Print, Save PDF and Save image. */
 // Sizes of the thumbnails asked to the script (longest side in px); any other size is asked as 600
 var FD_LATI = [600, 1200, 2480, 3508, 4961];
 // Thumbnails kept in memory at once: the oldest one is revoked first
@@ -13018,6 +13278,8 @@ var FD_MAX_FOTO = 50;
 var FD_T_LISTA = 15000;
 // Debounce of the redraw when a thumbnail arrives
 var FD_T_RIDISEGNA = 80;
+// How long one full-size photo for the save may take before the thumbnail is kept
+var FD_T_ALTA = 30000;
 // One object, never reassigned: only its properties change
 var FD = { codice:'', foto:[], miniature:{}, stato:'idle', ordine:[], coda:[], inCorso:'', falliti:{}, gen:0, vol:null, ridisegno:0 };
 
@@ -13133,6 +13395,53 @@ function fdUrl(rif, lato){
   return '';
 }
 
+// the Drive reference ('drive:<id>') of a thumbnail blob URL in memory; '' when the URL is not one of them
+function fdRifDi(url){
+  if(typeof url !== 'string' || url === '') return '';
+  var chiavi = Object.keys(FD.miniature);
+  for(var i = 0; i < chiavi.length; i++){
+    if(FD.miniature[chiavi[i]] === url){
+      var at = chiavi[i].lastIndexOf('@');
+      if(at < 1) return '';
+      return 'drive:' + chiavi[i].slice(0, at);
+    }
+  }
+  return '';
+}
+
+// one full-size photo of a Drive listing for the save: never rejects, resolves '' when it cannot be had
+function fdFotoAlta(rif, lato){
+  if(!fdDrive(rif) || FD.codice === '') return Promise.resolve('');
+  if(FD_LATI.indexOf(lato) < 0) lato = 600;
+  var gen = FD.gen, fatto = false, tm = 0, p;
+  return new Promise(function(risolvi){
+    function fine(u){
+      if(fatto) return;
+      fatto = true;
+      clearTimeout(tm);
+      risolvi(u);
+    }
+    tm = setTimeout(function(){ fine(''); }, FD_T_ALTA);
+    try { p = chiama('immobile-foto', { codice: FD.codice, id: rif.slice(6), lato: lato }); }
+    catch(e){ p = Promise.reject(e); }
+    p.then(function(j){
+      // a late answer, or one for a previous immobile, never makes a blob URL
+      if(fatto || gen !== FD.gen) return fine('');
+      var b = null;
+      try { b = j && j.ok ? brBlob(j.base64, j.mime) : null; }
+      catch(e){
+        console.warn('[Foto Drive] immobile-foto: ' + fdMsg(e));
+        return fine('');
+      }
+      if(!b) return fine('');
+      fine(URL.createObjectURL(b));
+    }, function(e){
+      if(!fatto) console.warn('[Foto Drive] immobile-foto: ' + fdMsg(e));
+      fine('');
+    });
+  });
+}
+
 // one thumbnail request at a time: the next key of the queue
 function fdProssima(){
   if(FD.inCorso !== '' || FD.coda.length === 0) return;
@@ -13188,10 +13497,18 @@ function fdMetti(key, url){
 // asks for a redraw of the sheet soon, once for many thumbnails
 function fdPronta(){
   if(FD.ridisegno) return;
-  FD.ridisegno = setTimeout(function(){
-    FD.ridisegno = 0;
-    if(S.sec === 'marketing' && (S.sub === 'brochure' || S.sub === 'vetrine')) brRidisegna(false);
-  }, FD_T_RIDISEGNA);
+  FD.ridisegno = setTimeout(fdRidisegnaOra, FD_T_RIDISEGNA);
+}
+
+// the redraw of the sheet, now; during a save it waits, so the big photos are not put on detached images
+function fdRidisegnaOra(){
+  FD.ridisegno = 0;
+  // a save in progress keeps the sheet as it is: a redraw would detach the big photos it has swapped in
+  if((typeof siPreparo !== 'undefined' && siPreparo) || (typeof siLavoro !== 'undefined' && siLavoro)){
+    FD.ridisegno = setTimeout(fdRidisegnaOra, FD_T_RIDISEGNA);
+    return;
+  }
+  if(S.sec === 'marketing' && (S.sub === 'brochure' || S.sub === 'vetrine')) brRidisegna(false);
 }
 
 // leaving the sheets of the marketing pages frees the thumbnails from memory
