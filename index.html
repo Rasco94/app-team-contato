@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 73070b1c)
+  Guscio app Team Contato - V1.4.0 (build 60383e61)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.37.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.38.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '73070b1c', blocco: 'V6.37.0' };
+window.TC_APP = { versione: '1.4.0', build: '60383e61', blocco: 'V6.38.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2650,6 +2650,33 @@ html.tc-guscio body{margin:0}
 }
 @media print{#tcag #tcag-vt-anteprima .vt-foglio{outline:0}
 }
+#tcag .br-anteprima-libro{display:flex;flex-direction:column;align-items:center;overflow-y:auto;overflow-x:hidden}
+#tcag .br-doppia>.br-anteprima.br-anteprima-libro{display:flex;flex-direction:column;align-items:center;overflow-y:auto;overflow-x:hidden}
+#tcag .br-libro{display:flex;flex-direction:column;gap:24px;width:100%}
+#tcag .br-pag-eti{margin:0 0 8px;font:700 11px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--tenue);align-self:stretch}
+#tcag .br-pag-box{display:flex;justify-content:center;overflow:hidden;width:100%;max-height:60vh}
+@media (max-width:767px){#tcag .br-pag-box{max-height:46vh}
+}
+#tcag .br-pag{flex:0 0 auto;box-sizing:border-box;position:relative;overflow:hidden;background:var(--bianco);color:var(--testo);font-family:var(--br-sans);font-size:11pt;line-height:1.5;transform-origin:top center;box-shadow:var(--ombra);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#tcag .br-pag.br-A4v{width:210mm;height:297mm}
+#tcag .br-pag.br-A4o{width:297mm;height:210mm}
+#tcag .br-pag-copertina>.br-foglio{zoom:.70711}
+#tcag .br-pag-copertina .br-descr{display:none}
+#tcag .br-pag-testo{display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:20mm 20mm 14mm}
+#tcag .br-pag-testo.br-A4o{padding:16mm 22mm 12mm}
+#tcag .br-pag-testa{margin:0 0 9mm;padding-bottom:3mm;border-bottom:.3mm solid var(--oro);font:600 14pt/1.15 var(--br-serif);color:var(--nv)}
+#tcag .br-pag-corpo{min-height:0;overflow:hidden;max-width:65ch;font-family:var(--br-sans);font-size:11pt;line-height:1.6;color:var(--testo);text-align:left;overflow-wrap:break-word}
+#tcag .br-pag-testo.br-A4o .br-pag-corpo{max-width:none;column-count:2;column-gap:12mm;column-fill:auto}
+#tcag .br-pag-par{margin:0 0 3.5mm}
+#tcag .br-pag-par:last-child{margin-bottom:0}
+#tcag .br-pag-piede{display:flex;justify-content:space-between;align-items:baseline;gap:6mm;padding-top:3mm;border-top:.3mm solid var(--bordo);font-family:var(--br-sans);font-size:8pt;color:var(--tenue);font-variant-numeric:tabular-nums}
+#tcag .br-pag-num{font-weight:700}
+#tcag .br-pag-cod{font-weight:400}
+#tcag .br-pag-testo:lang(zh) .br-pag-testa{font-family:'Noto Serif SC',var(--br-serif)}
+#tcag .br-pag-testo:lang(ja) .br-pag-testa{font-family:'Noto Serif JP',var(--br-serif)}
+#tcag .br-misura{position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none}
+@media print{#tcag .br-pag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -2685,7 +2712,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.37.0';
+  var VERSIONE = 'V6.38.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -10255,6 +10282,7 @@ function findClose(){
      V6.30.0: luxury models 17 «Monografia» and 18 «Ritratto».
      V6.31.0: print, QR and preview scale take a sheet id and a paper size (used by the Vetrine).
      V6.33.0: Print, Save PDF and Save image buttons (04e4i-salva-immagine.js).
+     V6.38.0: multi-page A4 book (cover + description pages), print and PDF of every page.
      =========================================================
      Page #marketing/brochure (V6.26.0; #strumenti/brochure redirects here), code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -10354,7 +10382,75 @@ function findClose(){
     if(x.protocol !== 'https:') return '';
     return u + (u.indexOf('?') < 0 ? '?' : '&') + 'format=2500w';
   }
-  function brStileStampa(formato, carta, idFoglio){
+  /* V6.38.0: the brochure book: paragraphs, text pages, footer, page size (A4 pages, print of every page) */
+  function brParagrafi(testo){
+    return String(testo == null ? '' : testo).split(/\n+/).map(function(p){ return p.trim(); }).filter(function(p){ return p !== ''; });
+  }
+  function brImpagina(paragrafi, cabe){
+    if(!Array.isArray(paragrafi)) return [];
+    var pagine = [], cur = [];
+    paragrafi.forEach(function(p){
+      var t = String(p == null ? '' : p).trim();
+      if(t === '') return;
+      if(cabe(cur.concat([t]))){ cur.push(t); return; }
+      if(cur.length > 0 && cabe([t])){ pagine.push(cur); cur = [t]; return; }
+      if(cur.length > 0){ pagine.push(cur); cur = []; }
+      var parole = t.split(/\s+/);
+      while(parole.length){
+        if(cabe([parole.join(' ')])){ cur = [parole.join(' ')]; break; }
+        var lo = 1, hi = parole.length - 1, k = 1;
+        while(lo <= hi){
+          var mid = Math.floor((lo + hi) / 2);
+          if(cabe([parole.slice(0, mid).join(' ')])){ k = mid; lo = mid + 1; }
+          else hi = mid - 1;
+        }
+        pagine.push([parole.slice(0, k).join(' ')]);
+        parole = parole.slice(k);
+      }
+    });
+    if(cur.length > 0) pagine.push(cur);
+    return pagine;
+  }
+  function brPiede(n, tot, lingua, codice){
+    return { num: n + ' / ' + tot, cod: brVuoto(codice) ? '' : brTesto(lingua, 'codice') + ' ' + codice };
+  }
+  function brPagTesto(i, testi, n, tot){
+    var l = BR.lingua, base = brEdBase(i);
+    var titolo = brEdValore('titolo', base);
+    var p = brPiede(n, tot, l, i.codice);
+    return H`<div id="${'tcag-br-pag-' + n}" class="${'br-pag br-pag-testo br-A4' + (BR.formato === 'o' ? 'o' : 'v')}" lang="${brLangAttr(l)}"><p class="br-pag-testa">${titolo}</p><div class="br-pag-corpo">${testi.map(function(t){ return H`<p class="br-pag-par">${t}</p>`; })}</div><div class="br-pag-piede"><span class="br-pag-num">${p.num}</span><span class="br-pag-cod">${p.cod}</span></div></div>`;
+  }
+  function brPagineTesto(i, dove){
+    var paragrafi = BR.mod && BR.mod.nascondi && BR.mod.nascondi.descrizione ? [] : brParagrafi(brEdValore('descrizione', brEdBase(i)));
+    if(!paragrafi.length) return [];
+    var misura = document.createElement('div');
+    misura.className = 'br-misura';
+    misura.setAttribute('aria-hidden', 'true');
+    dove.appendChild(misura);
+    function cabe(testi){
+      put(misura, brPagTesto(i, testi, 0, 0));
+      var pag = misura.querySelector('.br-pag');
+      if(pag) pag.style.fontFamily = brFont(BR.lingua);
+      var c = misura.querySelector('.br-pag-corpo');
+      return !!c && c.scrollHeight <= c.clientHeight && c.scrollWidth <= c.clientWidth;
+    }
+    try { return brImpagina(paragrafi, cabe); }
+    finally { if(misura.parentNode) misura.parentNode.removeChild(misura); }
+  }
+  function brScalaPagine(){
+    var libro = g('br-libro');
+    if(!libro) return;
+    var n = $$('.br-pag', libro).length;
+    for(var k = 1; k <= n; k++) brScala('br-box-' + k, 'br-pag-' + k);
+  }
+  function brStileStampa(formato, carta, idFoglio, pagine){
+    if(!idFoglio){
+      var libroO = formato === 'o';
+      var np = Math.max(1, Math.floor(Number(pagine)) || 1);
+      var wl = libroO ? '297mm' : '210mm';
+      var hl = np * (libroO ? 210 : 297);
+      return '@page { size: A4 ' + (libroO ? 'landscape' : 'portrait') + '; margin: 0 }' + '\n' + '@media print { html.tcag-br-stampa, html.tcag-br-stampa body { width: ' + wl + '; height: ' + hl + 'mm; margin: 0; padding: 0; overflow: hidden } html.tcag-br-stampa body * { visibility: hidden !important } html.tcag-br-stampa *:has(#tcag-br-libro) { position: static !important; transform: none !important; overflow: visible !important; max-height: none !important } html.tcag-br-stampa #tcag-br-libro, html.tcag-br-stampa #tcag-br-libro * { visibility: visible !important } html.tcag-br-stampa #tcag-br-libro { position: absolute; left: 0; top: 0; margin: 0; padding: 0; gap: 0; display: block } html.tcag-br-stampa .br-pag-eti { display: none !important } html.tcag-br-stampa .br-pag-box { display: block !important; height: auto !important; max-height: none !important; overflow: visible !important; margin: 0 !important; padding: 0 !important } html.tcag-br-stampa .br-pag { transform: none !important; margin: 0 !important; box-shadow: none !important; break-after: page } html.tcag-br-stampa .br-pag-box:last-child .br-pag { break-after: auto } }';
+    }
     var o = formato === 'o';
     var a4 = carta === 'A4', id = idFoglio || 'tcag-br-foglio';
     var media = '@media print { html.tcag-br-stampa, html.tcag-br-stampa body { width: %W; height: %H; margin: 0; padding: 0; overflow: hidden } html.tcag-br-stampa body * { visibility: hidden !important } html.tcag-br-stampa #tcag-br-foglio, html.tcag-br-stampa #tcag-br-foglio * { visibility: visible !important } html.tcag-br-stampa #tcag-br-foglio { position: fixed; left: 0; top: 0; margin: 0; transform: none !important } }';
@@ -10529,6 +10625,12 @@ function findClose(){
       return;
     }
     brEdPrepara();
+    var pagTesti = brPagineTesto(i, host);
+    var tot = 1 + pagTesti.length;
+    var libro = [H`<p class="br-pag-eti">${'Pagina 1 di ' + tot}</p><div id="tcag-br-box-1" class="br-pag-box"><div id="tcag-br-pag-1" class="${'br-pag br-pag-copertina br-A4' + (BR.formato === 'o' ? 'o' : 'v')}">${brFoglio(i)}</div></div>`];
+    pagTesti.forEach(function(testi, k){
+      libro.push(H`<p class="br-pag-eti">${'Pagina ' + (k + 2) + ' di ' + tot}</p><div id="${'tcag-br-box-' + (k + 2)}" class="br-pag-box">${brPagTesto(i, testi, k + 2, tot)}</div>`);
+    });
     var lingue = D.lingue || [];
     var lingueSel = H`<label class="fld" for="tcag-br-lingua">Lingua<select id="tcag-br-lingua" data-act="br-lingua" lang="it">${BR_LINGUE.map(function(l){
       var ok = lingue.indexOf(l) >= 0;
@@ -10562,7 +10664,7 @@ function findClose(){
         <div class="br-azioni" role="group" aria-label="Stampa e salvataggio"><button class="btn pri" type="button" data-act="br-stampa">Stampa</button><button class="btn sec" type="button" data-act="br-pdf">Salva PDF</button><button class="btn sec" type="button" data-act="br-png">Salva immagine</button></div>
       </div>
       <p id="tcag-br-avviso" class="br-avviso" role="status" aria-live="polite" hidden>${BR.msg}</p>
-      <div id="tcag-br-anteprima" class="br-anteprima">${brFoglio(i)}</div>
+      <div id="tcag-br-anteprima" class="br-anteprima br-anteprima-libro"><div id="tcag-br-libro" class="br-libro">${libro}</div></div>
       <div class="br-comandi">
         <details class="br-sez" data-sez="modello"${brSezAttr('modello')}><summary class="br-sez-tit">Modello<span class="br-sez-scelta">${' · ' + scMod}</span></summary><div class="br-sez-corpo">${catSel}<div class="br-modelli br-modelli-${BR.formato}" role="group" aria-label="Modello">${modelli}</div></div></details>
         <details class="br-sez" data-sez="lingua"${brSezAttr('lingua')}><summary class="br-sez-tit">Lingua e formato<span class="br-sez-scelta">${' · ' + scLin}</span></summary><div class="br-sez-corpo">${lingueSel}<div class="br-gruppo" role="group" aria-label="Formato">${formati}</div></div></details>
@@ -10570,6 +10672,7 @@ function findClose(){
       </div>
     </div>`);
     g('br-avviso').hidden = !BR.msg;
+    $$('.br-pag', g('br-libro')).forEach(function(p){ p.style.fontFamily = brFont(BR.lingua); });
     var f = g('br-foglio');
     if(f){
       f.style.fontFamily = brFont(BR.lingua);
@@ -10588,7 +10691,7 @@ function findClose(){
     }
     brEdLega(host);
     brSezLega(host);
-    brScala();
+    brScalaPagine();
   }
   function brFoglio(i){
     var l = BR.lingua, base = brEdBase(i);
@@ -10642,8 +10745,8 @@ function findClose(){
 
   /* ---------- print ---------- */
   function brStampa(f, css, avviso){
-    f = f || g('br-foglio');
-    css = css || brStileStampa(BR.formato);
+    f = f || g('br-libro');
+    css = css || brStileStampa(BR.formato, 'A4', '', f ? $$('.br-pag', f).length : 1);
     if(!f || brStampando) return;
     brStampando = true;
     var st = document.getElementById('tcag-br-page');
@@ -10733,7 +10836,7 @@ function findClose(){
       case 'br-png':
         var fineBr = function () { siOccupa(el, false); };
         siOccupa(el, true);
-        siSalvaImmagine({ foglio: g('br-foglio'), tipo: 'brochure', codice: BR.codice, lingua: BR.lingua, carta: 'A3', orientamento: BR.formato, avviso: function (t) { BR.msg = t; siAvviso('br-avviso', t); } }).then(fineBr, fineBr);
+        siSalvaImmagine({ foglio: g('br-pag-1'), tipo: 'brochure', codice: BR.codice, lingua: BR.lingua, carta: 'A4', orientamento: BR.formato, avviso: function (t) { BR.msg = t; siAvviso('br-avviso', t); } }).then(fineBr, fineBr);
         return;
       case 'br-riprova':
         if(BR.codice){ BR.dati = ris(); brCarica(); } else caricaImmobili();
@@ -10754,7 +10857,7 @@ function findClose(){
     if(a === 'br-stella'){ var sb = $('[data-act="br-stella"][data-m="' + st + '"]'); if(sb) sb.focus(); }
   }
 
-  window.addEventListener('resize', function(){ if(S.sec === 'marketing' && S.sub === 'brochure') brScala(); });
+  window.addEventListener('resize', function(){ if(S.sec === 'marketing' && S.sub === 'brochure') brScalaPagine(); });
   window.addEventListener('afterprint', brFineStampa);
 /* BROCHURE EDITOR (V6.21.0, epic T-MVZLX6RU)
    V6.21.0: my styles on the server, opening photo
