@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build c5a1da68)
+  Guscio app Team Contato - V1.4.0 (build 8da47b59)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.43.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.44.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'c5a1da68', blocco: 'V6.43.0' };
+window.TC_APP = { versione: '1.4.0', build: '8da47b59', blocco: 'V6.44.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2748,6 +2748,25 @@ html.tc-guscio body{margin:0}
 #tcag .br-pag-contatti:lang(ja) .br-ct-nome{font-family:'Noto Serif JP',var(--br-serif)}
 @media print{#tcag .br-zona-img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+#tcag .br-pag-copertina.mt-logo[data-logo="fascia"] .br-logo{position:absolute;z-index:3;grid-area:auto;margin:0;width:auto;order:0;border:0;color:var(--mt-logo-colore);background:var(--mt-logo-fondo);top:0;left:0;right:0;bottom:auto;flex-direction:row;justify-content:flex-start;gap:3mm;padding:4mm 12mm;border-radius:0;border-bottom:.25mm solid var(--mt-logo-colore);font-size:12pt;font-weight:600}
+#tcag .br-pag-copertina.mt-logo[data-logo="fascia"] .br-logo .br-logo-ico{width:10mm;height:10mm;flex:0 0 auto}
+#tcag .br-pag-copertina.mt-logo[data-logo="angolo"] .br-logo{position:absolute;z-index:3;grid-area:auto;margin:0;width:auto;order:0;border:0;color:var(--mt-logo-colore);background:var(--mt-logo-fondo);top:8mm;left:8mm;right:auto;bottom:auto;gap:2mm;padding:2.5mm 4mm;border-radius:2mm;font-size:10pt;font-weight:600}
+#tcag .br-pag-copertina.mt-logo[data-logo="angolo"] .br-logo .br-logo-ico{width:8mm;height:8mm;flex:0 0 auto}
+#tcag .br-pag-copertina.mt-logo[data-logo="firma"] .br-logo{position:absolute;z-index:3;grid-area:auto;margin:0;width:auto;order:0;border:0;color:var(--mt-logo-colore);background:var(--mt-logo-fondo);top:auto;right:auto;left:50%;bottom:6mm;transform:translateX(-50%);flex-direction:column;align-items:center;gap:1.5mm;padding:2mm 4mm;border-radius:2mm;font-size:10pt;font-weight:600;letter-spacing:.04em;text-align:center}
+#tcag .br-pag-copertina.mt-logo[data-logo="firma"] .br-logo .br-logo-ico{width:12mm;height:12mm;flex:0 0 auto}
+#tcag .vt-foglio.mt-logo[data-logo="fascia"] .vt-logo{position:absolute;z-index:3;grid-column:auto;grid-row:auto;order:0;width:auto;box-sizing:border-box;margin:0;border:0;color:var(--mt-logo-colore);background:var(--mt-logo-fondo);top:0;left:0;right:0;bottom:auto;justify-content:flex-start;gap:calc(1.2 * var(--vt-u));padding:calc(2 * var(--vt-u)) calc(4 * var(--vt-u));border-radius:0;border-bottom:.4mm solid var(--mt-logo-colore);font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-foglio.mt-logo[data-logo="fascia"] .vt-logo .vt-logo-ico{width:calc(5 * var(--vt-u));height:calc(5 * var(--vt-u));flex:0 0 auto}
+#tcag .vt-foglio.mt-logo[data-logo="angolo"] .vt-logo{position:absolute;z-index:3;grid-column:auto;grid-row:auto;order:0;width:auto;box-sizing:border-box;margin:0;border:0;color:var(--mt-logo-colore);background:var(--mt-logo-fondo);top:calc(4 * var(--vt-u));left:calc(4 * var(--vt-u));right:auto;bottom:auto;gap:calc(1.2 * var(--vt-u));padding:calc(1.5 * var(--vt-u)) calc(2.5 * var(--vt-u));border-radius:999px;font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-foglio.mt-logo[data-logo="angolo"] .vt-logo .vt-logo-ico{width:calc(4 * var(--vt-u));height:calc(4 * var(--vt-u));flex:0 0 auto}
+#tcag .vt-foglio.mt-logo[data-logo="firma"] .vt-logo{position:absolute;z-index:3;grid-column:auto;grid-row:auto;order:0;width:auto;box-sizing:border-box;margin:0;border:0;color:var(--mt-logo-colore);background:var(--mt-logo-fondo);top:auto;right:auto;left:50%;bottom:calc(4 * var(--vt-u));transform:translateX(-50%);flex-direction:column;align-items:center;gap:calc(.8 * var(--vt-u));padding:calc(1.5 * var(--vt-u)) calc(3 * var(--vt-u));border-radius:0;font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-foglio.mt-logo[data-logo="firma"] .vt-logo .vt-logo-ico{width:calc(6 * var(--vt-u));height:calc(6 * var(--vt-u));flex:0 0 auto}
+#tcag .br-pag.mt-font-titolo .br-titolo,
+#tcag .br-pag.mt-font-titolo .br-pag-testa,
+#tcag .vt-foglio.mt-font-titolo .vt-titolo{font-family:var(--mt-font-titolo)}
+#tcag .br-pag.mt-font-testo .br-descr,
+#tcag .br-pag.mt-font-testo .br-pag-corpo,
+#tcag .br-pag.mt-font-testo .br-sc-corpo,
+#tcag .vt-foglio.mt-font-testo .vt-frase{font-family:var(--mt-font-testo)}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -2783,7 +2802,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.43.0';
+  var VERSIONE = 'V6.44.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -11410,7 +11429,7 @@ function findClose(){
   function brModBase(foto, n){
     var riq = [];
     for(var i = 0; i < n; i++) riq.push({ foto: typeof foto[i] === 'string' ? foto[i] : '', x: 50, y: 50, zoom: 100 });
-    return { riquadri: riq, colori: null, tavolozza: 'modello', stile: '', testi: {}, grandezze: { titolo: 'm', testo: 'm' }, nascondi: { prezzo: false, descrizione: false, qr: false, contatti: false, dati: false } };
+    return { riquadri: riq, colori: null, tavolozza: 'modello', stile: '', font: { titolo: '', testo: '' }, logo: '', testi: {}, grandezze: { titolo: 'm', testo: 'm' }, nascondi: { prezzo: false, descrizione: false, qr: false, contatti: false, dati: false } };
   }
   function brModPulito(o, foto, n){
     var base = brModBase(foto, n);
@@ -11436,6 +11455,7 @@ function findClose(){
     }
     var st = '';
     for(k = 0; k < MT_STILI_TESTO.length; k++) if(MT_STILI_TESTO[k].id === o.stile) st = o.stile;
+    var ff = o.font && typeof o.font === 'object' ? o.font : {};
     var t = o.testi && typeof o.testi === 'object' ? o.testi : {}, testi = {};
     Object.keys(t).forEach(function(l){
       var v = t[l];
@@ -11452,6 +11472,8 @@ function findClose(){
       colori: colori,
       tavolozza: tav,
       stile: st,
+      font: { titolo: mtFontValido(ff.titolo), testo: mtFontValido(ff.testo) },
+      logo: MT_LOGO.indexOf(o.logo) >= 0 ? o.logo : '',
       testi: testi,
       grandezze: { titolo: ['s', 'm', 'l'].indexOf(gg.titolo) >= 0 ? gg.titolo : 'm', testo: ['s', 'm', 'l'].indexOf(gg.testo) >= 0 ? gg.testo : 'm' },
       nascondi: { prezzo: nn.prezzo === true, descrizione: nn.descrizione === true, qr: nn.qr === true, contatti: nn.contatti === true, dati: nn.dati === true }
@@ -11469,7 +11491,14 @@ function findClose(){
   // V6.21.0: the part of a model that a saved style keeps (no photos, no texts)
   function brStileMod(mod){
     var m = mod && typeof mod === 'object' ? mod : {};
-    return JSON.parse(JSON.stringify({ colori: m.colori, tavolozza: m.tavolozza, grandezze: m.grandezze, nascondi: m.nascondi }));
+    var out = { colori: m.colori, tavolozza: m.tavolozza, grandezze: m.grandezze, nascondi: m.nascondi };
+    var ff = m.font && typeof m.font === 'object' ? m.font : {}, fo = {};
+    ['titolo', 'testo'].forEach(function(k){
+      var id = mtFontValido(ff[k]); if(id) fo[k] = id;
+    });
+    if(Object.keys(fo).length) out.font = fo;
+    if(['fascia', 'angolo', 'firma'].indexOf(m.logo) >= 0) out.logo = m.logo;
+    return JSON.parse(JSON.stringify(out));
   }
   // V6.21.0: applies a saved style to a model: photos and texts stay, invalid colours become null
   function brStileApplica(mod, stileMod){
@@ -11485,6 +11514,9 @@ function findClose(){
     if(s.nascondi && typeof s.nascondi === 'object'){
       out.nascondi = { prezzo: s.nascondi.prezzo === true, descrizione: s.nascondi.descrizione === true, qr: s.nascondi.qr === true, contatti: s.nascondi.contatti === true, dati: s.nascondi.dati === true };
     }
+    var sf = s.font && typeof s.font === 'object' ? s.font : {};
+    out.font = { titolo: mtFontValido(sf.titolo), testo: mtFontValido(sf.testo) };
+    out.logo = ['fascia', 'angolo', 'firma'].indexOf(s.logo) >= 0 ? s.logo : '';
     return out;
   }
   // V6.21.0: a style name: trimmed, 1 to 60 characters, no control characters; otherwise ''
@@ -11505,11 +11537,11 @@ function findClose(){
     return { sfondo: p.sfondo, testo: p.testo, titolo: p.titolo, fascia: p.fascia };
   }
   // V6.43.0: the nine text-style variables of a style id of MT_STILI_TESTO; null when the id is not a style
-  function brEdStileVar(id){
+  function brEdStileVar(id, font){
     var ok = false;
     for(var k = 0; k < MT_STILI_TESTO.length; k++) if(MT_STILI_TESTO[k].id === id) ok = true;
     if(!ok) return null;
-    var v = mtVariabili({ stile: id, font: {} }), out = {};
+    var v = mtVariabili({ stile: id, font: font && typeof font === 'object' ? font : {} }), out = {};
     for(var i = 0; i < BR_ED_MT_TESTO.length; i++) out[BR_ED_MT_TESTO[i]] = v[BR_ED_MT_TESTO[i]];
     return out;
   }
@@ -11517,7 +11549,7 @@ function findClose(){
   function brEdStileTesto(){
     var libro = g('br-libro');
     if(!libro || !BR.mod) return;
-    var v = brEdStileVar(BR.mod.stile), i;
+    var v = brEdStileVar(BR.mod.stile, BR.mod.font), i;
     $$('.br-pag', libro).forEach(function(p){
       for(i = 0; i < BR_ED_MT_TESTO.length; i++){
         if(v) p.style.setProperty(BR_ED_MT_TESTO[i], v[BR_ED_MT_TESTO[i]]);
@@ -11525,9 +11557,19 @@ function findClose(){
       }
       if(v) p.classList.add('mt-stile');
       else p.classList.remove('mt-stile');
+      mtFontApplica(p, BR.mod.font);
     });
   }
 
+  // V6.44.0: the logo of the cover gets its position, its class and its colours from the chosen logo and the sheet colours
+  function brEdLogoFoglio(f){
+    if(!f || !BR.mod || typeof f.closest !== 'function') return;
+    var pag = f.closest('.br-pag-copertina');
+    if(!pag) return;
+    var sfondo = BR.mod.colori ? BR.mod.colori.sfondo : (typeof getComputedStyle === 'function' ? brRgbHex(getComputedStyle(f).backgroundColor) : null) || '#ffffff';
+    var fascia = BR.mod.colori ? BR.mod.colori.fascia : '#0a2a5e';
+    mtLogoApplica(pag, BR.mod.logo, 'br', sfondo, fascia);
+  }
   // '#rrggbb' from a computed 'rgb(...)' or 'rgba(...)' string; null when it is not a solid colour
   function brRgbHex(s){
     var m = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*([0-9.]+)\s*)?\)$/.exec(String(s == null ? '' : s).trim());
@@ -11675,6 +11717,7 @@ function findClose(){
       img.style.transform = 'scale(' + (r.zoom / 100) + ')';
     });
     brEdStileTesto();
+    brEdLogoFoglio(f);
     brEdAvviso();
     brEdCampioni(f);
   }
@@ -11879,6 +11922,23 @@ function findClose(){
     brEdCambia(function(m){ m.stile = v; }, el);
   }
 
+  // V6.44.0: the font selects: a font id of MT_FONT, or '' for «Del modello»
+  function brEdFont(el, tipo){
+    if(tipo !== 'change' || !BR.mod) return;
+    var k = el.getAttribute('data-k');
+    if(k !== 'titolo' && k !== 'testo') return;
+    var v = String(el.value || '');
+    if(v !== '' && !mtFontValido(v)) return;
+    brEdCambia(function(m){ m.font[k] = v; }, el);
+  }
+  // V6.44.0: the logo select: a value of MT_LOGO, or '' for «Del modello»
+  function brEdLogo(el, tipo){
+    if(tipo !== 'change' || !BR.mod) return;
+    var v = String(el.value || '');
+    if(v !== '' && MT_LOGO.indexOf(v) < 0) return;
+    brEdCambia(function(m){ m.logo = v; }, el);
+  }
+
   /* ---------- my styles and opening photo (V6.21.0) ---------- */
   function brEdStileDi(id){
     var l = BR_PREF.dati && BR_PREF.dati.stili ? BR_PREF.dati.stili : [];
@@ -11906,6 +11966,7 @@ function findClose(){
     brEdCambia(function(m){
       var n = brStileApplica(m, s.mod);
       m.colori = n.colori; m.tavolozza = n.tavolozza; m.grandezze = n.grandezze; m.nascondi = n.nascondi;
+      m.font = n.font; m.logo = n.logo;
     }, el);
   }
   function brEdEliminaStile(el, tipo){
@@ -11993,6 +12054,11 @@ function findClose(){
       <label class="br-ed-campo br-ed-lungo">${'Descrizione (' + nomeL + ')'} <textarea data-act="br-ed-testo" data-k="descrizione" maxlength="5000" rows="8">${des}</textarea><span class="br-conta" id="tcag-br-conta-descrizione">${String(des || '').length + '/5000'}</span></label>`;
     var stileNome = m.stile ? mtStile(m.stile).nome : '';
     var stileSel = H`<label class="fld" for="tcag-br-ed-stile">Stile del testo<select id="tcag-br-ed-stile" data-act="br-ed-stile"><option value=""${raw(m.stile ? '' : ' selected')}>Del modello</option>${MT_STILI_TESTO.map(function(s){ return H`<option value="${s.id}"${raw(m.stile === s.id ? ' selected' : '')}>${s.nome}</option>`; })}</select></label>`;
+    var fontSel = [['titolo', 'Carattere del titolo'], ['testo', 'Carattere del testo']].map(function(c){
+      var sc = m.font[c[0]];
+      return H`<label class="fld" for="${'tcag-br-ed-font-' + c[0]}">${c[1]}<select id="${'tcag-br-ed-font-' + c[0]}" data-act="br-ed-font" data-k="${c[0]}"><option value=""${raw(sc ? '' : ' selected')}>Del modello</option>${MT_FONT.map(function(f){ return H`<option value="${f.id}"${raw(sc === f.id ? ' selected' : '')}>${f.nome}</option>`; })}</select></label>`;
+    });
+    var logoSel = H`<label class="fld" for="tcag-br-ed-logo">Logo<select id="tcag-br-ed-logo" data-act="br-ed-logo"><option value=""${raw(m.logo ? '' : ' selected')}>Del modello</option>${MT_LOGO.map(function(v){ return H`<option value="${v}"${raw(m.logo === v ? ' selected' : '')}>${MT_LOGO_NOMI[v]}</option>`; })}</select></label>`;
     var grand = [['titolo', 'Titolo'], ['testo', 'Testo']].map(function(c){
       var bottoni = ['s', 'm', 'l'].map(function(v, k){
         return H`<button class="br-chip" type="button" data-act="br-ed-grandezza" data-k="${c[0]}" data-v="${v}" aria-pressed="${String(m.grandezze[c[0]] === v)}">${['Piccolo', 'Normale', 'Grande'][k]}</button>`;
@@ -12003,9 +12069,9 @@ function findClose(){
       return H`<label class="br-ed-casella"><input type="checkbox" data-act="br-ed-nascondi" data-k="${c[0]}"${raw(m.nascondi[c[0]] ? ' checked' : '')}> ${c[1]}</label>`;
     });
     var coloriSez = H`<details class="br-sez" data-sez="colori"${brSezAttr('colori')}><summary class="br-sez-tit">Colori<span class="br-sez-scelta">${' · ' + brEdTavolozzaNome(m.tavolozza)}</span></summary><div class="br-sez-corpo"><div class="br-ed-riga">${pal}</div><div class="br-ed-riga">${colori}</div><p id="tcag-br-ed-avviso" class="br-ed-avviso" role="status" hidden></p></div></details>`;
-    var testi = H`<details class="br-sez" data-sez="testi"${brSezAttr('testi')}><summary class="br-sez-tit">Testi${stileNome ? H`<span class="br-sez-scelta"> · ${stileNome}</span>` : ''}</summary><div class="br-sez-corpo">${stileSel}${campi}${grand}</div></details>`;
+    var testi = H`<details class="br-sez" data-sez="testi"${brSezAttr('testi')}><summary class="br-sez-tit">Testi${stileNome ? H`<span class="br-sez-scelta"> · ${stileNome}</span>` : ''}</summary><div class="br-sez-corpo">${stileSel}${fontSel}${campi}${grand}</div></details>`;
     var fotoSez = H`<details class="br-sez" data-sez="foto"${brSezAttr('foto')}><summary class="br-sez-tit">Foto</summary><div class="br-sez-corpo"><p class="br-ed-nota">Trascina una foto su un riquadro, oppure tocca un riquadro e poi una foto.</p><div class="br-ed-striscia">${foto}</div>${apertura}${copertina}${inquadratura}</div></details>`;
-    var mostra = H`<details class="br-sez" data-sez="mostra"${brSezAttr('mostra')}><summary class="br-sez-tit">Cosa mostrare</summary><div class="br-sez-corpo"><div class="br-ed-caselle">${casella}</div></div></details>`;
+    var mostra = H`<details class="br-sez" data-sez="mostra"${brSezAttr('mostra')}><summary class="br-sez-tit">Cosa mostrare</summary><div class="br-sez-corpo">${logoSel}<div class="br-ed-caselle">${casella}</div></div></details>`;
     return H`${coloriSez}${testi}${fotoSez}${mostra}${stili}`;
   }
 
@@ -13601,17 +13667,22 @@ function vtModPulito(o, foto, n){
 function vtStileMod(mod){
   var m = mod && typeof mod === 'object' ? mod : {};
   var n = m.nascondi && typeof m.nascondi === 'object' ? m.nascondi : {};
-  return brCopia({
+  var out = brCopia({
     colori: m.colori || null,
     tavolozza: m.tavolozza,
     nascondi: { prezzo: n.prezzo === true, dati: n.cifre === true, qr: n.qr === true }
   });
+  // the font and the logo follow the rules of brStileMod: only valid values are kept
+  var base = brStileMod(m);
+  if(base.font) out.font = base.font;
+  if(base.logo) out.logo = base.logo;
+  return out;
 }
 
 // applies a saved showcase style: photos and texts stay, zone, code and logo stay as they are
 function vtStileApplica(mod, stileMod){
   var s = stileMod && typeof stileMod === 'object' ? stileMod : {};
-  var out = brStileApplica(mod, { colori: s.colori, tavolozza: s.tavolozza });
+  var out = brStileApplica(mod, { colori: s.colori, tavolozza: s.tavolozza, font: s.font, logo: s.logo });
   out.nascondi = vtNascondi(mod && mod.nascondi);
   if(s.nascondi && typeof s.nascondi === 'object'){
     out.nascondi.prezzo = s.nascondi.prezzo === true;
@@ -13717,8 +13788,18 @@ function vtEdApplica(f){
     img.style.transformOrigin = r.x + '% ' + r.y + '%';
     img.style.transform = 'scale(' + (r.zoom / 100) + ')';
   });
+  mtFontApplica(f, VT.mod.font);
+  vtEdLogoFoglio(f);
   vtEdAvviso();
   vtEdCampioni(f);
+}
+
+// the logo of the showcase sheet gets its position, its class and its colours from the chosen logo and the sheet colours
+function vtEdLogoFoglio(f){
+  if(!f || !VT.mod) return;
+  var sfondo = VT.mod.colori ? VT.mod.colori.sfondo : (typeof getComputedStyle === 'function' ? brRgbHex(getComputedStyle(f).backgroundColor) : null) || '#ffffff';
+  var fascia = VT.mod.colori ? VT.mod.colori.fascia : '#0a2a5e';
+  mtLogoApplica(f, VT.mod.logo, 'vt', sfondo, fascia);
 }
 
 // the warning under the colours when the text is hard to read on its background
@@ -14002,6 +14083,24 @@ function vtEdEliminaStile(el, tipo){
   brPrefStileElimina(id).then(function(){ renderVetrine(true); }, function(e){ vtPrefAvvisa(e); });
 }
 
+// the font select of the showcase: a font id of MT_FONT, or '' for «Del modello»
+function vtEdFont(el, tipo){
+  if(tipo !== 'change' || !VT.mod) return;
+  var k = el.getAttribute('data-k');
+  if(k !== 'titolo' && k !== 'testo') return;
+  var v = String(el.value || '');
+  if(v !== '' && !mtFontValido(v)) return;
+  vtEdCambia(function(m){ m.font[k] = v; }, el);
+}
+
+// the logo select of the showcase: a value of MT_LOGO, or '' for «Del modello»
+function vtEdLogo(el, tipo){
+  if(tipo !== 'change' || !VT.mod) return;
+  var v = String(el.value || '');
+  if(v !== '' && MT_LOGO.indexOf(v) < 0) return;
+  vtEdCambia(function(m){ m.logo = v; }, el);
+}
+
 // keys of the editor: Ctrl/Cmd+Z undo, Ctrl/Cmd+Y or Ctrl/Cmd+Shift+Z redo, on the Vetrine page only
 function vtEdTasto(e){
   if(e.altKey) return false;
@@ -14040,8 +14139,13 @@ function vtEdPannello(i){
   });
   var coloriSez = H`<details class="br-sez" data-sez="colori"${brSezAttr('colori')}><summary class="br-sez-tit">Colori<span class="br-sez-scelta">${' · ' + brEdTavolozzaNome(m.tavolozza)}</span></summary><div class="br-sez-corpo"><div class="br-ed-riga">${pal}</div><div class="br-ed-riga">${colori}</div><p id="tcag-vt-ed-avviso" class="br-ed-avviso" role="status" hidden></p></div></details>`;
 
+  var fontSel = [['titolo', 'Carattere del titolo'], ['testo', 'Carattere del testo']].map(function(c){
+    var sc = m.font[c[0]];
+    return H`<label class="fld" for="${'tcag-vt-ed-font-' + c[0]}">${c[1]}<select id="${'tcag-vt-ed-font-' + c[0]}" data-act="vt-ed-font" data-k="${c[0]}"><option value=""${raw(sc ? '' : ' selected')}>Del modello</option>${MT_FONT.map(function(f){ return H`<option value="${f.id}"${raw(sc === f.id ? ' selected' : '')}>${f.nome}</option>`; })}</select></label>`;
+  });
+  var logoSel = H`<label class="fld" for="tcag-vt-ed-logo">Logo<select id="tcag-vt-ed-logo" data-act="vt-ed-logo"><option value=""${raw(m.logo ? '' : ' selected')}>Del modello</option>${MT_LOGO.map(function(v){ return H`<option value="${v}"${raw(m.logo === v ? ' selected' : '')}>${MT_LOGO_NOMI[v]}</option>`; })}</select></label>`;
   var tit = vtEdValore('titolo', base), fra = vtEdValore('descrizione', base);
-  var testiSez = H`<details class="br-sez" data-sez="testi"${brSezAttr('testi')}><summary class="br-sez-tit">Testi</summary><div class="br-sez-corpo"><label class="br-ed-campo">${'Titolo (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="titolo" maxlength="300" rows="2">${tit}</textarea><span class="br-conta" id="tcag-vt-conta-titolo">${String(tit || '').length + '/300'}</span></label><label class="br-ed-campo">${'Frase breve (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="frase" maxlength="160" rows="3">${fra}</textarea><span class="br-conta" id="tcag-vt-conta-frase">${String(fra || '').length + '/160'}</span></label></div></details>`;
+  var testiSez = H`<details class="br-sez" data-sez="testi"${brSezAttr('testi')}><summary class="br-sez-tit">Testi</summary><div class="br-sez-corpo">${fontSel}<label class="br-ed-campo">${'Titolo (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="titolo" maxlength="300" rows="2">${tit}</textarea><span class="br-conta" id="tcag-vt-conta-titolo">${String(tit || '').length + '/300'}</span></label><label class="br-ed-campo">${'Frase breve (' + nomeL + ')'} <textarea data-act="vt-ed-testo" data-k="frase" maxlength="160" rows="3">${fra}</textarea><span class="br-conta" id="tcag-vt-conta-frase">${String(fra || '').length + '/160'}</span></label></div></details>`;
 
   var striscia = lista.map(function(u, j){
     var mini = brMini(u);
@@ -14067,7 +14171,7 @@ function vtEdPannello(i){
     return H`<label class="br-ed-casella"><input type="checkbox" data-act="vt-ed-mostra" data-k="${c[0]}"${raw(acceso ? ' checked' : '')}> ${c[1]}${c[2] ? H` <span class="br-conta">non entra negli stili</span>` : ''}</label>`;
   });
   var visibili = etichette.filter(function(c){ return m.nascondi[c[0]] !== true; }).length;
-  var mostraSez = H`<details class="br-sez" data-sez="mostra"${brSezAttr('mostra')}><summary class="br-sez-tit">Cosa mostrare<span class="br-sez-scelta">${' · ' + visibili + ' di 6 elementi'}</span></summary><div class="br-sez-corpo"><div class="br-ed-caselle">${caselle}</div></div></details>`;
+  var mostraSez = H`<details class="br-sez" data-sez="mostra"${brSezAttr('mostra')}><summary class="br-sez-tit">Cosa mostrare<span class="br-sez-scelta">${' · ' + visibili + ' di 6 elementi'}</span></summary><div class="br-sez-corpo">${logoSel}<div class="br-ed-caselle">${caselle}</div></div></details>`;
 
   var elenco = vtPrefAttivo() && BR_PREF.dati && BR_PREF.dati.stiliVt ? BR_PREF.dati.stiliVt : [];
   var stiliSez = vtPrefAttivo()
@@ -14078,7 +14182,7 @@ function vtEdPannello(i){
 
   return H`${coloriSez}${testiSez}${fotoSez}${mostraSez}${stiliSez}`;
 }
-/* SHARED ENGINE OF BROCHURE AND VETRINE (V6.43.0, epic T-MW2A57KR): palettes, text styles, fonts and logo positions shared by the Brochure and Vetrine editors and by the layouts. Pure helpers: they also run in the bench (prova-motore.cjs). */
+/* SHARED ENGINE OF BROCHURE AND VETRINE (V6.44.0, epics T-MW2A57KR and T-MW2A583N): palettes, text styles, fonts and logo positions shared by the Brochure and Vetrine editors and by the layouts. Pure helpers: they also run in the bench (prova-motore.cjs). Since V6.43.0: palettes, text styles and font stacks; V6.44.0: logo positions (Fascia, Angolo, Firma) with automatic colour by contrast, and font choice for title and text. */
   var MT_TAVOLOZZE = [
     {id:'navy-oro', nome:'Navy e oro', sfondo:'#ffffff', testo:'#22222a', titolo:'#8a6d1f', fascia:'#0a2a5e', accento:'#c9a961'},
     {id:'bianco', nome:'Bianco classico', sfondo:'#ffffff', testo:'#222222', titolo:'#111111', fascia:'#333333', accento:'#8a8a8a'},
@@ -14124,6 +14228,7 @@ function vtEdPannello(i){
   ];
 
   var MT_LOGO = ['fascia', 'angolo', 'firma'];
+  var MT_LOGO_NOMI = { fascia: 'Fascia', angolo: 'Angolo', firma: 'Firma' };
 
   /* ---------- pure helpers (also run by the bench) ---------- */
   // palette by id; unknown or missing id = the first palette
@@ -14168,6 +14273,63 @@ function vtEdPannello(i){
     if(!el || !el.style) return;
     var v = mtVariabili(scelte);
     Object.keys(v).forEach(function(k){ el.style.setProperty(k, v[k]); });
+  }
+
+  // font id when it is the id of an entry of MT_FONT, otherwise ''
+  function mtFontValido(id){
+    for(var i = 0; i < MT_FONT.length; i++) if(MT_FONT[i].id === id) return MT_FONT[i].id;
+    return '';
+  }
+  // logo position: the choice when it is one of MT_LOGO; otherwise angolo on the Vetrine, fascia on the Brochure
+  function mtLogoPosizione(scelta, doc){
+    if(MT_LOGO.indexOf(scelta) >= 0) return scelta;
+    return doc === 'vt' ? 'angolo' : 'fascia';
+  }
+  // a '#rrggbb' colour, in any case: true only for a valid string
+  function mtHexOk(s){ return typeof s === 'string' && /^#[0-9a-f]{6}$/i.test(s); }
+  // relative luminance of a valid '#rrggbb' colour (0 = black, 1 = white)
+  function mtLuminanza(hex){
+    var c = [0, 2, 4].map(function(i){
+      var x = parseInt(hex.substr(1 + i, 2), 16) / 255;
+      return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  // true when the sheet background is dark enough for white logo text (relative luminance below 0.4)
+  function mtLogoChiaro(sfondo){
+    return mtHexOk(sfondo) && mtLuminanza(sfondo) < 0.4;
+  }
+  // logo of a sheet: the position always; for a chosen position the class and the colours, white or the band colour, whichever has the higher contrast on the background
+  function mtLogoApplica(el, scelta, doc, sfondo, fascia){
+    if(!el || !el.style || !el.classList || typeof el.setAttribute !== 'function') return;
+    el.setAttribute('data-logo', mtLogoPosizione(scelta, doc));
+    if(MT_LOGO.indexOf(scelta) >= 0){
+      var fondo = mtHexOk(sfondo) ? sfondo : '#ffffff';
+      var scuro = mtHexOk(fascia) ? fascia : '#0a2a5e';
+      var lf = mtLuminanza(fondo), rb = 1.05 / (lf + 0.05), ls = mtLuminanza(scuro), rs = (Math.max(lf, ls) + 0.05) / (Math.min(lf, ls) + 0.05);
+      el.classList.add('mt-logo');
+      el.style.setProperty('--mt-logo-fondo', fondo);
+      el.style.setProperty('--mt-logo-colore', rb >= rs ? '#ffffff' : scuro);
+    } else {
+      el.classList.remove('mt-logo');
+      el.style.removeProperty('--mt-logo-fondo');
+      el.style.removeProperty('--mt-logo-colore');
+    }
+  }
+  // font choice of a sheet: a class and a variable for the title and for the text; without a choice the model's font stays
+  function mtFontApplica(el, font){
+    if(!el || !el.style || !el.classList) return;
+    var f = font && typeof font === 'object' ? font : {};
+    ['titolo', 'testo'].forEach(function(k){
+      var id = mtFontValido(f[k]);
+      if(id){
+        el.style.setProperty('--mt-font-' + k, mtFontPila(id));
+        el.classList.add('mt-font-' + k);
+      } else {
+        el.classList.remove('mt-font-' + k);
+        if(!el.classList.contains('mt-stile')) el.style.removeProperty('--mt-font-' + k);
+      }
+    });
   }
   /* =========================================================
      ALTRO: "Preferenze cookie"  (V6.4)
@@ -18131,6 +18293,8 @@ function stucAzione(a, el){
       case 'br-ed-grandezza': brEdGrandezza(el, tipo); break;
       case 'br-ed-nascondi': brEdNascondi(el, tipo); break;
       case 'br-ed-stile': brEdStile(el, tipo); break;
+      case 'br-ed-font': brEdFont(el, tipo); break;
+      case 'br-ed-logo': brEdLogo(el, tipo); break;
       case 'br-ed-annulla': brEdAnnulla(el, tipo); break;
       case 'br-ed-ripeti': brEdRipeti(el, tipo); break;
       case 'br-ed-ripristina': brEdRipristina(el, tipo); break;
@@ -18154,6 +18318,8 @@ function stucAzione(a, el){
       case 'vt-ed-colore': vtEdColore(el, tipo); break;
       case 'vt-ed-testo': vtEdTestoCampo(el, tipo); break;
       case 'vt-ed-mostra': vtEdMostra(el, tipo); break;
+      case 'vt-ed-font': vtEdFont(el, tipo); break;
+      case 'vt-ed-logo': vtEdLogo(el, tipo); break;
       case 'vt-ed-annulla': vtEdAnnulla(el, tipo); break;
       case 'vt-ed-ripeti': vtEdRipeti(el, tipo); break;
       case 'vt-ed-ripristina': vtEdRipristina(el, tipo); break;
