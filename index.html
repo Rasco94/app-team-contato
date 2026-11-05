@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 60383e61)
+  Guscio app Team Contato - V1.4.0 (build 5cc58f80)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.38.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.39.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '60383e61', blocco: 'V6.38.0' };
+window.TC_APP = { versione: '1.4.0', build: '5cc58f80', blocco: 'V6.39.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -2677,6 +2677,41 @@ html.tc-guscio body{margin:0}
 #tcag .br-misura{position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none}
 @media print{#tcag .br-pag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+#tcag .br-pag-galleria,
+#tcag .br-pag-plan,
+#tcag .br-pag-dati{display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:20mm 20mm 14mm}
+#tcag .br-pag-galleria.br-A4o,
+#tcag .br-pag-plan.br-A4o,
+#tcag .br-pag-dati.br-A4o{padding:16mm 22mm 12mm}
+#tcag .br-gal{display:grid;gap:4mm;min-height:0;margin-bottom:6mm}
+#tcag .br-gal-4{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+#tcag .br-gal-6{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+#tcag .br-gal-riq{min-height:0;overflow:hidden;background:var(--avorio);border-radius:1.5mm}
+#tcag .br-gal-img{display:block;width:100%;height:100%;object-fit:cover}
+#tcag .br-plan{min-height:0;display:flex;align-items:center;justify-content:center;margin-bottom:6mm}
+#tcag .br-plan-img{display:block;width:100%;height:100%;object-fit:contain}
+#tcag .br-sc-corpo{min-height:0;overflow:hidden;font-family:var(--br-sans);font-size:10pt;line-height:1.35;color:var(--testo)}
+#tcag .br-sc-lista{margin:0 0 6mm;padding:0}
+#tcag .br-sc-riga{display:flex;justify-content:space-between;gap:6mm;padding:1.2mm 0;border-bottom:.3mm solid var(--bordo);break-inside:avoid}
+#tcag .br-sc-riga dt{font-size:9pt;color:var(--tenue)}
+#tcag .br-sc-riga dd{margin:0;font-weight:600;text-align:right}
+#tcag .br-sc-sez{margin:0 0 6mm;break-inside:avoid-column}
+#tcag .br-sc-tit{margin:0 0 3mm;font:600 12pt/1.15 var(--br-serif);color:var(--nv)}
+#tcag .br-sc-car{margin:0;padding:0;list-style:none;column-count:2;column-gap:8mm}
+#tcag .br-sc-car li{padding:1mm 0;break-inside:avoid}
+#tcag .br-sc-dist{column-count:2;column-gap:8mm}
+#tcag .br-pag-dati.br-A4o .br-sc-corpo{column-count:2;column-gap:12mm}
+#tcag .br-pag-galleria:lang(zh) .br-pag-testa,
+#tcag .br-pag-plan:lang(zh) .br-pag-testa,
+#tcag .br-pag-dati:lang(zh) .br-pag-testa,
+#tcag .br-pag-dati:lang(zh) .br-sc-tit{font-family:'Noto Serif SC',var(--br-serif)}
+#tcag .br-pag-galleria:lang(ja) .br-pag-testa,
+#tcag .br-pag-plan:lang(ja) .br-pag-testa,
+#tcag .br-pag-dati:lang(ja) .br-pag-testa,
+#tcag .br-pag-dati:lang(ja) .br-sc-tit{font-family:'Noto Serif JP',var(--br-serif)}
+@media print{#tcag .br-gal-img,
+#tcag .br-plan-img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -2712,7 +2747,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.38.0';
+  var VERSIONE = 'V6.39.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -10283,6 +10318,7 @@ function findClose(){
      V6.31.0: print, QR and preview scale take a sheet id and a paper size (used by the Vetrine).
      V6.33.0: Print, Save PDF and Save image buttons (04e4i-salva-immagine.js).
      V6.38.0: multi-page A4 book (cover + description pages), print and PDF of every page.
+     V6.39.0: gallery, floor plan and property data pages (04e4e2-brochure-scheda.js, data from Apps Script V29.14.0).
      =========================================================
      Page #marketing/brochure (V6.26.0; #strumenti/brochure redirects here), code only, no AI, nothing on the device.
      The listing data come from the brochure route of the AI gateway (origin from AI_URL, never written here):
@@ -10292,15 +10328,15 @@ function findClose(){
   var BR_LINGUE = ['it', 'en', 'de', 'fr', 'es', 'ru', 'pl', 'zh', 'ja'];
   var BR_NOMI = { it:'Italiano', en:'Inglese', de:'Tedesco', fr:'Francese', es:'Spagnolo', ru:'Russo', pl:'Polacco', zh:'Cinese', ja:'Giapponese' };
   var BR_TESTI = {
-    it: { prezzo:'Prezzo', prezzo_riservato:'Prezzo riservato', superficie:'Superficie', camere:'Camere', bagni:'Bagni', tipo:'Tipologia', contratto:'Contratto', zona:'Zona', codice:'Codice immobile', scansiona:'Scansiona per vedere l’annuncio', contatti:'Contatti', vendita:'Vendita', affitto:'Affitto', collezione:'Collezione Lusso', pregio:'Immobili di pregio', inquadra:'Inquadra per vedere foto e dettagli' },
-    en: { prezzo:'Price', prezzo_riservato:'Price on request', superficie:'Floor area', camere:'Bedrooms', bagni:'Bathrooms', tipo:'Property type', contratto:'Contract', zona:'Area', codice:'Property code', scansiona:'Scan to view the listing', contatti:'Contacts', vendita:'For sale', affitto:'For rent', collezione:'Luxury Collection', pregio:'Prestige properties', inquadra:'Scan to see photos and details' },
-    de: { prezzo:'Preis', prezzo_riservato:'Preis auf Anfrage', superficie:'Wohnfläche', camere:'Zimmer', bagni:'Badezimmer', tipo:'Objektart', contratto:'Vertrag', zona:'Lage', codice:'Objektnummer', scansiona:'Scannen, um das Inserat zu sehen', contatti:'Kontakt', vendita:'Kauf', affitto:'Miete', collezione:'Luxuskollektion', pregio:'Exklusive Immobilien', inquadra:'Scannen für Fotos und Details' },
-    fr: { prezzo:'Prix', prezzo_riservato:'Prix sur demande', superficie:'Surface', camere:'Chambres', bagni:'Salles de bains', tipo:'Type de bien', contratto:'Contrat', zona:'Quartier', codice:'Référence du bien', scansiona:'Scannez pour voir l’annonce', contatti:'Contacts', vendita:'Vente', affitto:'Location', collezione:'Collection Luxe', pregio:'Biens de prestige', inquadra:'Scannez pour voir photos et détails' },
-    es: { prezzo:'Precio', prezzo_riservato:'Precio a consultar', superficie:'Superficie', camere:'Habitaciones', bagni:'Baños', tipo:'Tipo de inmueble', contratto:'Contrato', zona:'Zona', codice:'Referencia del inmueble', scansiona:'Escanea para ver el anuncio', contatti:'Contacto', vendita:'Venta', affitto:'Alquiler', collezione:'Colección de Lujo', pregio:'Inmuebles de prestigio', inquadra:'Escanea para ver fotos y detalles' },
-    ru: { prezzo:'Цена', prezzo_riservato:'Цена по запросу', superficie:'Площадь', camere:'Спальни', bagni:'Ванные комнаты', tipo:'Тип объекта', contratto:'Договор', zona:'Район', codice:'Код объекта', scansiona:'Отсканируйте, чтобы открыть объявление', contatti:'Контакты', vendita:'Продажа', affitto:'Аренда', collezione:'Коллекция люкс', pregio:'Элитная недвижимость', inquadra:'Отсканируйте, чтобы увидеть фото и детали' },
-    pl: { prezzo:'Cena', prezzo_riservato:'Cena na zapytanie', superficie:'Powierzchnia', camere:'Sypialnie', bagni:'Łazienki', tipo:'Rodzaj nieruchomości', contratto:'Umowa', zona:'Okolica', codice:'Kod nieruchomości', scansiona:'Zeskanuj, aby zobaczyć ogłoszenie', contatti:'Kontakt', vendita:'Sprzedaż', affitto:'Wynajem', collezione:'Kolekcja luksusowa', pregio:'Nieruchomości prestiżowe', inquadra:'Zeskanuj, aby zobaczyć zdjęcia i szczegóły' },
-    zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租', collezione:'豪华精选', pregio:'精品房产', inquadra:'扫码查看照片和详情' },
-    ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件', inquadra:'スキャンして写真と詳細を見る' }
+    it: { prezzo:'Prezzo', prezzo_riservato:'Prezzo riservato', superficie:'Superficie', camere:'Camere', bagni:'Bagni', tipo:'Tipologia', contratto:'Contratto', zona:'Zona', codice:'Codice immobile', scansiona:'Scansiona per vedere l’annuncio', contatti:'Contatti', vendita:'Vendita', affitto:'Affitto', collezione:'Collezione Lusso', pregio:'Immobili di pregio', inquadra:'Inquadra per vedere foto e dettagli', volume:'Volumetria', piano:'Piano', classe_energetica:'Classe energetica', anno_costruzione:'Anno di costruzione', citta:'Città', caratteristiche:'Caratteristiche', distanze:'Distanze', galleria:'Galleria fotografica', planimetria:'Planimetria', dati_titolo:'Dati dell’immobile', dist_ospedale:'Ospedale', dist_stazione:'Stazione ferroviaria', dist_autostrada:'Casello autostradale', dist_supermercato:'Supermercato', dist_centro_comm:'Centro commerciale', dist_spiaggia:'Spiaggia', dist_parco:'Parco divertimenti', dist_museo:'Museo', dist_porto:'Porto', dist_scuola:'Scuola' },
+    en: { prezzo:'Price', prezzo_riservato:'Price on request', superficie:'Floor area', camere:'Bedrooms', bagni:'Bathrooms', tipo:'Property type', contratto:'Contract', zona:'Area', codice:'Property code', scansiona:'Scan to view the listing', contatti:'Contacts', vendita:'For sale', affitto:'For rent', collezione:'Luxury Collection', pregio:'Prestige properties', inquadra:'Scan to see photos and details', volume:'Volume', piano:'Floor', classe_energetica:'Energy class', anno_costruzione:'Year built', citta:'Town', caratteristiche:'Features', distanze:'Distances', galleria:'Photo gallery', planimetria:'Floor plan', dati_titolo:'Property details', dist_ospedale:'Hospital', dist_stazione:'Railway station', dist_autostrada:'Motorway exit', dist_supermercato:'Supermarket', dist_centro_comm:'Shopping centre', dist_spiaggia:'Beach', dist_parco:'Amusement park', dist_museo:'Museum', dist_porto:'Harbour', dist_scuola:'School' },
+    de: { prezzo:'Preis', prezzo_riservato:'Preis auf Anfrage', superficie:'Wohnfläche', camere:'Zimmer', bagni:'Badezimmer', tipo:'Objektart', contratto:'Vertrag', zona:'Lage', codice:'Objektnummer', scansiona:'Scannen, um das Inserat zu sehen', contatti:'Kontakt', vendita:'Kauf', affitto:'Miete', collezione:'Luxuskollektion', pregio:'Exklusive Immobilien', inquadra:'Scannen für Fotos und Details', volume:'Volumen', piano:'Etage', classe_energetica:'Energieklasse', anno_costruzione:'Baujahr', citta:'Ort', caratteristiche:'Ausstattung', distanze:'Entfernungen', galleria:'Fotogalerie', planimetria:'Grundriss', dati_titolo:'Objektdaten', dist_ospedale:'Krankenhaus', dist_stazione:'Bahnhof', dist_autostrada:'Autobahnauffahrt', dist_supermercato:'Supermarkt', dist_centro_comm:'Einkaufszentrum', dist_spiaggia:'Strand', dist_parco:'Freizeitpark', dist_museo:'Museum', dist_porto:'Hafen', dist_scuola:'Schule' },
+    fr: { prezzo:'Prix', prezzo_riservato:'Prix sur demande', superficie:'Surface', camere:'Chambres', bagni:'Salles de bains', tipo:'Type de bien', contratto:'Contrat', zona:'Quartier', codice:'Référence du bien', scansiona:'Scannez pour voir l’annonce', contatti:'Contacts', vendita:'Vente', affitto:'Location', collezione:'Collection Luxe', pregio:'Biens de prestige', inquadra:'Scannez pour voir photos et détails', volume:'Volume', piano:'Étage', classe_energetica:'Classe énergétique', anno_costruzione:'Année de construction', citta:'Ville', caratteristiche:'Équipements', distanze:'Distances', galleria:'Galerie photos', planimetria:'Plan', dati_titolo:'Caractéristiques du bien', dist_ospedale:'Hôpital', dist_stazione:'Gare', dist_autostrada:'Accès autoroute', dist_supermercato:'Supermarché', dist_centro_comm:'Centre commercial', dist_spiaggia:'Plage', dist_parco:'Parc d’attractions', dist_museo:'Musée', dist_porto:'Port', dist_scuola:'École' },
+    es: { prezzo:'Precio', prezzo_riservato:'Precio a consultar', superficie:'Superficie', camere:'Habitaciones', bagni:'Baños', tipo:'Tipo de inmueble', contratto:'Contrato', zona:'Zona', codice:'Referencia del inmueble', scansiona:'Escanea para ver el anuncio', contatti:'Contacto', vendita:'Venta', affitto:'Alquiler', collezione:'Colección de Lujo', pregio:'Inmuebles de prestigio', inquadra:'Escanea para ver fotos y detalles', volume:'Volumen', piano:'Planta', classe_energetica:'Clase energética', anno_costruzione:'Año de construcción', citta:'Ciudad', caratteristiche:'Características', distanze:'Distancias', galleria:'Galería de fotos', planimetria:'Plano', dati_titolo:'Datos del inmueble', dist_ospedale:'Hospital', dist_stazione:'Estación de tren', dist_autostrada:'Acceso a autopista', dist_supermercato:'Supermercado', dist_centro_comm:'Centro comercial', dist_spiaggia:'Playa', dist_parco:'Parque de atracciones', dist_museo:'Museo', dist_porto:'Puerto', dist_scuola:'Escuela' },
+    ru: { prezzo:'Цена', prezzo_riservato:'Цена по запросу', superficie:'Площадь', camere:'Спальни', bagni:'Ванные комнаты', tipo:'Тип объекта', contratto:'Договор', zona:'Район', codice:'Код объекта', scansiona:'Отсканируйте, чтобы открыть объявление', contatti:'Контакты', vendita:'Продажа', affitto:'Аренда', collezione:'Коллекция люкс', pregio:'Элитная недвижимость', inquadra:'Отсканируйте, чтобы увидеть фото и детали', volume:'Объём', piano:'Этаж', classe_energetica:'Класс энергоэффективности', anno_costruzione:'Год постройки', citta:'Город', caratteristiche:'Особенности', distanze:'Расстояния', galleria:'Фотогалерея', planimetria:'Планировка', dati_titolo:'Данные объекта', dist_ospedale:'Больница', dist_stazione:'Вокзал', dist_autostrada:'Въезд на автомагистраль', dist_supermercato:'Супермаркет', dist_centro_comm:'Торговый центр', dist_spiaggia:'Пляж', dist_parco:'Парк развлечений', dist_museo:'Музей', dist_porto:'Порт', dist_scuola:'Школа' },
+    pl: { prezzo:'Cena', prezzo_riservato:'Cena na zapytanie', superficie:'Powierzchnia', camere:'Sypialnie', bagni:'Łazienki', tipo:'Rodzaj nieruchomości', contratto:'Umowa', zona:'Okolica', codice:'Kod nieruchomości', scansiona:'Zeskanuj, aby zobaczyć ogłoszenie', contatti:'Kontakt', vendita:'Sprzedaż', affitto:'Wynajem', collezione:'Kolekcja luksusowa', pregio:'Nieruchomości prestiżowe', inquadra:'Zeskanuj, aby zobaczyć zdjęcia i szczegóły', volume:'Kubatura', piano:'Piętro', classe_energetica:'Klasa energetyczna', anno_costruzione:'Rok budowy', citta:'Miejscowość', caratteristiche:'Wyposażenie', distanze:'Odległości', galleria:'Galeria zdjęć', planimetria:'Rzut', dati_titolo:'Dane nieruchomości', dist_ospedale:'Szpital', dist_stazione:'Dworzec kolejowy', dist_autostrada:'Wjazd na autostradę', dist_supermercato:'Supermarket', dist_centro_comm:'Centrum handlowe', dist_spiaggia:'Plaża', dist_parco:'Park rozrywki', dist_museo:'Muzeum', dist_porto:'Port', dist_scuola:'Szkoła' },
+    zh: { prezzo:'价格', prezzo_riservato:'价格面议', superficie:'面积', camere:'卧室', bagni:'浴室', tipo:'房产类型', contratto:'合同', zona:'区域', codice:'房源编号', scansiona:'扫码查看房源', contatti:'联系方式', vendita:'出售', affitto:'出租', collezione:'豪华精选', pregio:'精品房产', inquadra:'扫码查看照片和详情', volume:'体积', piano:'楼层', classe_energetica:'能效等级', anno_costruzione:'建造年份', citta:'城市', caratteristiche:'特色设施', distanze:'周边距离', galleria:'图片集', planimetria:'平面图', dati_titolo:'房产信息', dist_ospedale:'医院', dist_stazione:'火车站', dist_autostrada:'高速公路入口', dist_supermercato:'超市', dist_centro_comm:'购物中心', dist_spiaggia:'海滩', dist_parco:'游乐园', dist_museo:'博物馆', dist_porto:'港口', dist_scuola:'学校' },
+    ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件', inquadra:'スキャンして写真と詳細を見る', volume:'容積', piano:'階数', classe_energetica:'省エネ等級', anno_costruzione:'築年', citta:'市町村', caratteristiche:'設備', distanze:'周辺施設までの距離', galleria:'フォトギャラリー', planimetria:'間取り図', dati_titolo:'物件データ', dist_ospedale:'病院', dist_stazione:'駅', dist_autostrada:'高速道路IC', dist_supermercato:'スーパー', dist_centro_comm:'ショッピングセンター', dist_spiaggia:'ビーチ', dist_parco:'遊園地', dist_museo:'博物館', dist_porto:'港', dist_scuola:'学校' }
   };
   var BR_MODELLI = [{ n:1, nome:'Copertina piena', foto:1, cat:'classici' }, { n:2, nome:'Griglia classica', foto:4, cat:'classici' }, { n:3, nome:'Magazine', foto:3, cat:'classici' }, { n:4, nome:'Minimal', foto:1, cat:'moderni' }, { n:5, nome:'Lusso scuro', foto:2, cat:'lusso' }, { n:6, nome:'Banda laterale', foto:3, cat:'moderni' }, { n:7, nome:'Mosaico', foto:6, cat:'fotografici' }, { n:8, nome:'Panorama', foto:2, cat:'moderni' }, { n:9, nome:'Scheda tecnica', foto:4, cat:'classici' }, { n:10, nome:'Doppia colonna', foto:4, cat:'classici' }, { n:11, nome:'Casa d’aste', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:12, nome:'Rivista d’architettura', foto:4, cat:'lusso', blocchi:['occhiello','rif'] }, { n:13, nome:'Catalogo privato', foto:4, cat:'lusso', blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, nome:'Editoriale avorio', foto:4, cat:'lusso', blocchi:['occhiello','pregio'] }, { n:15, nome:'Galleria', foto:3, cat:'lusso', blocchi:['occhiello'] }, { n:16, nome:'Notturno', foto:1, cat:'lusso', blocchi:['occhiello','cifre'] }, { n:17, nome:'Monografia', foto:3, cat:'lusso', blocchi:['occhiello'] }, { n:18, nome:'Ritratto', foto:3, cat:'lusso', blocchi:['occhiello','cifre'] }];
   var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
@@ -10626,10 +10662,16 @@ function findClose(){
     }
     brEdPrepara();
     var pagTesti = brPagineTesto(i, host);
-    var tot = 1 + pagTesti.length;
+    if(BRS.codice !== BR.codice) brSchedaCarica(BR.codice);
+    var piano = brPianoExtra(i);
+    var tot = 1 + pagTesti.length + piano.pagine;
     var libro = [H`<p class="br-pag-eti">${'Pagina 1 di ' + tot}</p><div id="tcag-br-box-1" class="br-pag-box"><div id="tcag-br-pag-1" class="${'br-pag br-pag-copertina br-A4' + (BR.formato === 'o' ? 'o' : 'v')}">${brFoglio(i)}</div></div>`];
     pagTesti.forEach(function(testi, k){
       libro.push(H`<p class="br-pag-eti">${'Pagina ' + (k + 2) + ' di ' + tot}</p><div id="${'tcag-br-box-' + (k + 2)}" class="br-pag-box">${brPagTesto(i, testi, k + 2, tot)}</div>`);
+    });
+    brPagineExtra(i, piano, 1 + pagTesti.length, tot).forEach(function(pag, k){
+      var n = pagTesti.length + 2 + k;
+      libro.push(H`<p class="br-pag-eti">${'Pagina ' + n + ' di ' + tot}</p><div id="${'tcag-br-box-' + n}" class="br-pag-box">${pag}</div>`);
     });
     var lingue = D.lingue || [];
     var lingueSel = H`<label class="fld" for="tcag-br-lingua">Lingua<select id="tcag-br-lingua" data-act="br-lingua" lang="it">${BR_LINGUE.map(function(l){
@@ -10798,6 +10840,7 @@ function findClose(){
     switch(a){
       case 'br-scegli':
         brSezAzzera();
+        brSchedaAzzera();
         BR.codice = el.getAttribute('data-c') || '';
         BR.fotoSito = [];
         BR.categoria = '';
@@ -10839,10 +10882,11 @@ function findClose(){
         siSalvaImmagine({ foglio: g('br-pag-1'), tipo: 'brochure', codice: BR.codice, lingua: BR.lingua, carta: 'A4', orientamento: BR.formato, avviso: function (t) { BR.msg = t; siAvviso('br-avviso', t); } }).then(fineBr, fineBr);
         return;
       case 'br-riprova':
-        if(BR.codice){ BR.dati = ris(); brCarica(); } else caricaImmobili();
+        if(BR.codice){ BR.dati = ris(); brSchedaAzzera(); brCarica(); } else caricaImmobili();
         break;
       case 'br-cambia':
         brSezAzzera();
+        brSchedaAzzera();
         BR.codice = ''; BR.dati = ris(); BR.foto = []; BR.fotoSito = []; BR.msg = '';
         BR.categoria = '';
         BR.mod = null; BR.modChiave = '';
@@ -10859,6 +10903,240 @@ function findClose(){
 
   window.addEventListener('resize', function(){ if(S.sec === 'marketing' && S.sub === 'brochure') brScalaPagine(); });
   window.addEventListener('afterprint', brFineStampa);
+  /* BROCHURE DATA PAGES (V6.39.0): gallery, floor plans and full property data from Apps Script V29.14.0 */
+  var BR_MAX_PLAN = 10;
+  var BR_LATO_PLAN = 1200;
+  var BRS = { codice:'', scheda:null, plan:[], stato:'idle' };
+  var BR_CARATT = {
+    'Garage': { en:'Garage', de:'Garage', fr:'Garage', es:'Garaje', ru:'Гараж', pl:'Garaż', zh:'车库', ja:'ガレージ' },
+    'Posto Auto': { en:'Parking space', de:'Stellplatz', fr:'Place de parking', es:'Plaza de aparcamiento', ru:'Парковочное место', pl:'Miejsce parkingowe', zh:'停车位', ja:'駐車場' },
+    'Terrazzo': { en:'Terrace', de:'Terrasse', fr:'Terrasse', es:'Terraza', ru:'Терраса', pl:'Taras', zh:'露台', ja:'テラス' },
+    'Balcone': { en:'Balcony', de:'Balkon', fr:'Balcon', es:'Balcón', ru:'Балкон', pl:'Balkon', zh:'阳台', ja:'バルコニー' },
+    'Giardino': { en:'Garden', de:'Garten', fr:'Jardin', es:'Jardín', ru:'Сад', pl:'Ogród', zh:'花园', ja:'庭' },
+    'Piscina': { en:'Swimming pool', de:'Pool', fr:'Piscine', es:'Piscina', ru:'Бассейн', pl:'Basen', zh:'游泳池', ja:'プール' },
+    'Ascensore': { en:'Elevator', de:'Aufzug', fr:'Ascenseur', es:'Ascensor', ru:'Лифт', pl:'Winda', zh:'电梯', ja:'エレベーター' },
+    'Aria Condizionata': { en:'Air conditioning', de:'Klimaanlage', fr:'Climatisation', es:'Aire acondicionado', ru:'Кондиционер', pl:'Klimatyzacja', zh:'空调', ja:'エアコン' },
+    'Riscaldamento Autonomo': { en:'Independent heating', de:'Eigene Heizung', fr:'Chauffage autonome', es:'Calefacción autónoma', ru:'Автономное отопление', pl:'Ogrzewanie indywidualne', zh:'独立供暖', ja:'独立暖房' },
+    'Cantina': { en:'Cellar', de:'Keller', fr:'Cave', es:'Bodega', ru:'Погреб', pl:'Piwnica', zh:'储藏室', ja:'地下収納' },
+    'Arredato': { en:'Furnished', de:'Möbliert', fr:'Meublé', es:'Amueblado', ru:'С мебелью', pl:'Umeblowane', zh:'带家具', ja:'家具付き' },
+    'Lavastoviglie': { en:'Dishwasher', de:'Geschirrspüler', fr:'Lave-vaisselle', es:'Lavavajillas', ru:'Посудомоечная машина', pl:'Zmywarka', zh:'洗碗机', ja:'食洗機' },
+    'Lavatrice': { en:'Washing machine', de:'Waschmaschine', fr:'Lave-linge', es:'Lavadora', ru:'Стиральная машина', pl:'Pralka', zh:'洗衣机', ja:'洗濯機' },
+    'Vista Lago': { en:'Lake view', de:'Seeblick', fr:'Vue sur le lac', es:'Vistas al lago', ru:'Вид на озеро', pl:'Widok na jezioro', zh:'湖景', ja:'湖の眺め' },
+    'Accesso Diretto Lago': { en:'Direct lake access', de:'Direkter Seezugang', fr:'Accès direct au lac', es:'Acceso directo al lago', ru:'Прямой выход к озеру', pl:'Bezpośredni dostęp do jeziora', zh:'直达湖边', ja:'湖へ直接アクセス' },
+    'Porta Blindata': { en:'Armored door', de:'Sicherheitstür', fr:'Porte blindée', es:'Puerta blindada', ru:'Бронированная дверь', pl:'Drzwi antywłamaniowe', zh:'防盗门', ja:'防犯ドア' },
+    'Videocitofono': { en:'Video intercom', de:'Videogegensprechanlage', fr:'Interphone vidéo', es:'Videoportero', ru:'Видеодомофон', pl:'Wideodomofon', zh:'可视对讲', ja:'ビデオインターホン' },
+    'Fibra Ottica': { en:'Fiber optic', de:'Glasfaser', fr:'Fibre optique', es:'Fibra óptica', ru:'Оптоволокно', pl:'Światłowód', zh:'光纤', ja:'光ファイバー' },
+    'Pannelli Solari': { en:'Solar panels', de:'Solarpanels', fr:'Panneaux solaires', es:'Paneles solares', ru:'Солнечные панели', pl:'Panele słoneczne', zh:'太阳能板', ja:'ソーラーパネル' },
+    'Camino': { en:'Fireplace', de:'Kamin', fr:'Cheminée', es:'Chimenea', ru:'Камин', pl:'Kominek', zh:'壁炉', ja:'暖炉' },
+    'Posto Auto Coperto': { en:'Covered parking space', de:'Überdachter Stellplatz', fr:'Place de parking couverte', es:'Plaza de aparcamiento cubierta', ru:'Крытое парковочное место', pl:'Zadaszone miejsce parkingowe', zh:'有顶停车位', ja:'屋根付き駐車場' },
+    'Portico': { en:'Porch', de:'Vordach', fr:'Portique', es:'Pórtico', ru:'Портик', pl:'Portyk', zh:'门廊', ja:'ポーチ' },
+    'Predisposizione Clima': { en:'Air conditioning prep', de:'Klimavorrüstung', fr:'Préinstallation climatisation', es:'Preinstalación de aire acondicionado', ru:'Подготовка под кондиционер', pl:'Przygotowanie pod klimatyzację', zh:'空调预留', ja:'エアコン配管済み' },
+    'Predisposizione Tv Satellitare': { en:'Satellite TV prep', de:'Satelliten-TV-Vorrüstung', fr:'Préinstallation TV satellite', es:'Preinstalación TV satélite', ru:'Подготовка под спутниковое ТВ', pl:'Przygotowanie pod TV satelitarną', zh:'卫星电视预留', ja:'衛星TV配線済み' },
+    'Riscaldamento Pavimento': { en:'Underfloor heating', de:'Fußbodenheizung', fr:'Chauffage au sol', es:'Suelo radiante', ru:'Теплый пол', pl:'Ogrzewanie podłogowe', zh:'地暖', ja:'床暖房' },
+    'Riscaldamento Pompa di Calore': { en:'Heat pump heating', de:'Wärmepumpenheizung', fr:'Chauffage à pompe à chaleur', es:'Calefacción por bomba de calor', ru:'Отопление тепловым насосом', pl:'Ogrzewanie pompą ciepła', zh:'热泵供暖', ja:'ヒートポンプ暖房' },
+    'Riscaldamento Radiatori': { en:'Radiator heating', de:'Heizkörper', fr:'Chauffage par radiateurs', es:'Calefacción por radiadores', ru:'Радиаторное отопление', pl:'Ogrzewanie grzejnikowe', zh:'散热器供暖', ja:'ラジエーター暖房' },
+    'Riscaldamento Centralizzato': { en:'Central heating', de:'Zentralheizung', fr:'Chauffage central', es:'Calefacción central', ru:'Центральное отопление', pl:'Ogrzewanie centralne', zh:'集中供暖', ja:'セントラルヒーティング' },
+    'Pannelli Fotovoltaici': { en:'Photovoltaic panels', de:'Photovoltaikanlage', fr:'Panneaux photovoltaïques', es:'Paneles fotovoltaicos', ru:'Фотоэлектрические панели', pl:'Panele fotowoltaiczne', zh:'光伏板', ja:'太陽光パネル' }
+  };
+
+  /* pure helpers: the bench runs them without the page */
+  function brGruppi(n, perPagina){
+    var tot = Number(n);
+    if(!isFinite(tot) || tot <= 0) return [];
+    var per = Math.max(1, Math.floor(perPagina) || 1);
+    var out = [];
+    for(var k = 0; k < tot; k += per){
+      var pag = [];
+      for(var j = k; j < k + per && j < tot; j++) pag.push(j);
+      out.push(pag);
+    }
+    return out;
+  }
+  function brFotoGalleria(foto, copertina){
+    if(!Array.isArray(foto)) return [];
+    var out = [];
+    foto.forEach(function(u){
+      if(typeof u !== 'string' || u === '' || u === copertina) return;
+      if(out.indexOf(u) < 0) out.push(u);
+    });
+    return out;
+  }
+  function brCaratt(lingua, nome){
+    var s = String(nome == null ? '' : nome).trim();
+    if(lingua === 'it' || !Object.prototype.hasOwnProperty.call(BR_CARATT, s)) return s;
+    var t = BR_CARATT[s];
+    return Object.prototype.hasOwnProperty.call(t, lingua) && typeof t[lingua] === 'string' && t[lingua] ? t[lingua] : s;
+  }
+  function brPieno(v){
+    return !brVuoto(v) && String(v).trim() !== '';
+  }
+  function brSchedaUnisci(i, s){
+    var base = i || {};
+    var ok = !!s && typeof s === 'object';
+    var sx = ok ? s : {};
+    var out = {};
+    ['tipo', 'contratto', 'prezzo', 'prezzoRiservato', 'mq', 'camere', 'bagni', 'zona', 'citta', 'codice'].forEach(function(k){
+      out[k] = brPieno(sx[k]) ? sx[k] : base[k];
+    });
+    out.m3 = sx.m3;
+    out.piano = sx.piano;
+    out.totalePiani = sx.totalePiani;
+    out.classe = sx.classe;
+    out.anno = sx.anno;
+    out.caratteristiche = Array.isArray(sx.caratteristiche) ? sx.caratteristiche : [];
+    out.distanze = sx.distanze && typeof sx.distanze === 'object' && !Array.isArray(sx.distanze) ? sx.distanze : {};
+    return out;
+  }
+  function brRigheDati(lingua, d){
+    var x = d && typeof d === 'object' ? d : {};
+    var dati = [], car = [], dist = [];
+    function riga(chiave, valore){
+      var v = valore == null ? '' : String(valore).trim();
+      if(v !== '') dati.push([brTesto(lingua, chiave), v]);
+    }
+    riga('tipo', x.tipo);
+    riga('contratto', brContratto(lingua, x.contratto));
+    riga('prezzo', brVuoto(x.prezzo) && !x.prezzoRiservato ? '' : brPrezzo(lingua, x));
+    riga('superficie', brVuoto(x.mq) ? '' : x.mq + ' m²');
+    riga('volume', brVuoto(x.m3) ? '' : x.m3 + ' m³');
+    riga('camere', x.camere);
+    riga('bagni', x.bagni);
+    var piano = brPieno(x.piano) ? String(x.piano).trim() : '';
+    var tot = brPieno(x.totalePiani) ? String(x.totalePiani).trim() : '';
+    riga('piano', piano && tot ? piano + ' / ' + tot : piano);
+    riga('classe_energetica', x.classe);
+    riga('anno_costruzione', x.anno);
+    riga('zona', x.zona);
+    var zona = String(x.zona == null ? '' : x.zona).trim();
+    var citta = String(x.citta == null ? '' : x.citta).trim();
+    if(citta !== zona) riga('citta', citta);
+    (Array.isArray(x.caratteristiche) ? x.caratteristiche : []).forEach(function(c){
+      if(!c || typeof c !== 'object') return;
+      var nome = String(c.nome == null ? '' : c.nome).trim();
+      var valore = String(c.valore == null ? '' : c.valore).trim();
+      if(nome === '' || valore === '' || /^(no|false|0)$/i.test(valore)) return;
+      car.push([brCaratt(lingua, nome), /^(s[iì]|x|true|1|yes)$/i.test(valore) ? '' : valore]);
+    });
+    var dd = x.distanze && typeof x.distanze === 'object' ? x.distanze : {};
+    [['ospedale', 'dist_ospedale'], ['stazione', 'dist_stazione'], ['autostrada', 'dist_autostrada'], ['supermercato', 'dist_supermercato'], ['centroComm', 'dist_centro_comm'], ['spiaggia', 'dist_spiaggia'], ['parco', 'dist_parco'], ['museo', 'dist_museo'], ['porto', 'dist_porto'], ['scuola', 'dist_scuola']].forEach(function(c){
+      var v = dd[c[0]] == null ? '' : String(dd[c[0]]).trim();
+      if(v !== '') dist.push([brTesto(lingua, c[1]), v]);
+    });
+    return { dati: dati, caratteristiche: car, distanze: dist };
+  }
+  function brPlanPronte(plan){
+    if(!Array.isArray(plan)) return [];
+    var out = [];
+    plan.forEach(function(p){
+      if(p && typeof p.url === 'string' && p.url.indexOf('blob:') === 0) out.push(p.url);
+    });
+    return out;
+  }
+  function brBlob(base64, mime){
+    if(['image/jpeg', 'image/png', 'image/webp', 'image/gif'].indexOf(mime) < 0) return null;
+    var bin;
+    try { bin = atob(String(base64 == null ? '' : base64)); }
+    catch(e){ return null; }
+    var bytes = new Uint8Array(bin.length);
+    for(var k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+    return new Blob([bytes], { type: mime });
+  }
+  function brSchedaAzzera(){
+    BRS.plan.forEach(function(p){
+      if(p && typeof p.url === 'string' && p.url.indexOf('blob:') === 0) URL.revokeObjectURL(p.url);
+    });
+    BRS.codice = '';
+    BRS.scheda = null;
+    BRS.plan = [];
+    BRS.stato = 'idle';
+  }
+  function brAvvisoChiamata(azione, e){
+    console.warn('[Brochure] ' + azione + ': ' + (e && e.message ? e.message : String(e)));
+    return null;
+  }
+  // one floor plan at a time; stops and leaves no blob behind when the property changes
+  function brPianiCarica(codice, voci, k){
+    if(k >= voci.length || BRS.codice !== codice || BRS.plan !== voci) return Promise.resolve();
+    var voce = voci[k];
+    return chiama('immobile-foto', { codice: codice, id: voce.id, lato: BR_LATO_PLAN }).then(function(j){
+      if(BRS.codice !== codice || BRS.plan !== voci) return;
+      var b = j && j.ok ? brBlob(j.base64, j.mime) : null;
+      if(b) voce.url = URL.createObjectURL(b);
+    }, function(e){
+      brAvvisoChiamata('immobile-foto', e);
+    }).then(function(){ return brPianiCarica(codice, voci, k + 1); });
+  }
+  function brSchedaCarica(codice){
+    brSchedaAzzera();
+    BRS.codice = codice;
+    BRS.stato = 'car';
+    return Promise.all([
+      chiama('immobile-scheda', { codice: codice }).catch(function(e){ return brAvvisoChiamata('immobile-scheda', e); }),
+      chiama('immobile-media', { codice: codice }).catch(function(e){ return brAvvisoChiamata('immobile-media', e); })
+    ]).then(function(r){
+      if(BRS.codice !== codice) return null;
+      var j = r[0], j2 = r[1];
+      var piani = j2 && Array.isArray(j2.planimetrie) ? j2.planimetrie : [];
+      BRS.scheda = j && j.ok ? j : null;
+      BRS.plan = [];
+      piani.forEach(function(p){
+        if(BRS.plan.length < BR_MAX_PLAN && p && typeof p.id === 'string' && p.id !== '') BRS.plan.push({ id: p.id, url: '' });
+      });
+      return brPianiCarica(codice, BRS.plan, 0);
+    }).then(function(){
+      if(BRS.codice !== codice) return;
+      BRS.stato = 'ok';
+      if((BRS.scheda || brPlanPronte(BRS.plan).length) && BR.codice === codice && S.sec === 'marketing' && S.sub === 'brochure') renderBrochure(true);
+    }).catch(function(e){
+      console.warn('[Brochure] ' + (e && e.message ? e.message : String(e)));
+      BRS.stato = 'ok';
+    });
+  }
+  function brPianoExtra(i){
+    var cop = BR.mod && BR.mod.riquadri && BR.mod.riquadri[0] && BR.mod.riquadri[0].foto || '';
+    var foto = brFotoGalleria(BR.foto, cop);
+    var per = BR.formato === 'o' ? 6 : 4;
+    var galleria = brGruppi(foto.length, per).map(function(grp){
+      return grp.map(function(k){ return foto[k]; });
+    });
+    var usaBrs = BRS.codice === BR.codice;
+    var planimetrie = brPlanPronte(usaBrs ? BRS.plan : []);
+    var righe = brRigheDati(BR.lingua, brSchedaUnisci(i, usaBrs ? BRS.scheda : null));
+    var conDati = righe.dati.length > 0 || righe.caratteristiche.length > 0 || righe.distanze.length > 0;
+    return { galleria: galleria, planimetrie: planimetrie, righe: righe, conDati: conDati, pagine: galleria.length + planimetrie.length + (conDati ? 1 : 0) };
+  }
+  function brRigheHtml(righe){
+    return righe.map(function(r){ return H`<div class="br-sc-riga"><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`; });
+  }
+  function brCorpoDati(righe, l){
+    var car = righe.caratteristiche.length ? H`<section class="br-sc-sez"><h2 class="br-sc-tit">${brTesto(l, 'caratteristiche')}</h2><ul class="br-sc-car">${righe.caratteristiche.map(function(c){ return H`<li>${c[1] ? c[0] + ': ' + c[1] : c[0]}</li>`; })}</ul></section>` : '';
+    var dist = righe.distanze.length ? H`<section class="br-sc-sez"><h2 class="br-sc-tit">${brTesto(l, 'distanze')}</h2><dl class="br-sc-lista br-sc-dist">${brRigheHtml(righe.distanze)}</dl></section>` : '';
+    return H`<div class="br-sc-corpo"><dl class="br-sc-lista">${brRigheHtml(righe.dati)}</dl>${car}${dist}</div>`;
+  }
+  function brPaginaExtra(i, tipo, titolo, corpo, n, tot){
+    var p = brPiede(n, tot, BR.lingua, i.codice);
+    var formato = BR.formato === 'o' ? 'o' : 'v';
+    return H`<div id="${'tcag-br-pag-' + n}" class="${'br-pag ' + tipo + ' br-A4' + formato}" lang="${brLangAttr(BR.lingua)}"><p class="br-pag-testa">${titolo}</p>${corpo}<div class="br-pag-piede"><span class="br-pag-num">${p.num}</span><span class="br-pag-cod">${p.cod}</span></div></div>`;
+  }
+  function brPagineExtra(i, piano, n0, tot){
+    var voci = [], l = BR.lingua;
+    var classeGal = BR.formato === 'o' ? 'br-gal-6' : 'br-gal-4';
+    piano.galleria.forEach(function(urls){
+      var n = n0 + 1 + voci.length;
+      var corpo = H`<div class="${'br-gal ' + classeGal}">${urls.map(function(u){ return H`<div class="br-gal-riq"><img class="br-gal-img" src="${u}" alt="" decoding="async" referrerpolicy="no-referrer" draggable="false"></div>`; })}</div>`;
+      voci.push(brPaginaExtra(i, 'br-pag-galleria', brTesto(l, 'galleria'), corpo, n, tot));
+    });
+    piano.planimetrie.forEach(function(u){
+      var n = n0 + 1 + voci.length;
+      var corpo = H`<div class="br-plan"><img class="br-plan-img" src="${u}" alt="${brTesto(l, 'planimetria')}"></div>`;
+      voci.push(brPaginaExtra(i, 'br-pag-plan', brTesto(l, 'planimetria'), corpo, n, tot));
+    });
+    if(piano.conDati){
+      var nd = n0 + 1 + voci.length;
+      voci.push(brPaginaExtra(i, 'br-pag-dati', brTesto(l, 'dati_titolo'), brCorpoDati(piano.righe, l), nd, tot));
+    }
+    return voci;
+  }
 /* BROCHURE EDITOR (V6.21.0, epic T-MVZLX6RU)
    V6.21.0: my styles on the server, opening photo
    =========================================================
