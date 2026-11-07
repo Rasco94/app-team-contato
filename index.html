@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 8e94f7bf)
+  Guscio app Team Contato - V1.4.0 (build 2ddcad1d)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.57.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.58.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '8e94f7bf', blocco: 'V6.57.0' };
+window.TC_APP = { versione: '1.4.0', build: '2ddcad1d', blocco: 'V6.58.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -1360,7 +1360,7 @@ html.tc-guscio body{margin:0}
 #tcag .dg-tabs{margin-bottom:14px}
 #tcag .dg-vai{margin-bottom:16px}
 #tcag .dg-vai .btn{white-space:normal;font-size:15px;font-weight:600;line-height:1.3;min-height:44px;padding:12px 20px;justify-content:flex-start;text-align:left}
-#tcag .dg-vai-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+#tcag .dg-vai-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:10px}
 #tcag .dg-tabs .chip{min-height:44px}
 #tcag .dg-pt{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--rosso);vertical-align:middle;margin-left:2px}
 #tcag .dg-body{display:block;max-width:1500px}
@@ -1638,8 +1638,11 @@ html.tc-guscio body{margin:0}
 #tcag .ren-tieni{display:flex;align-items:center;gap:12px;min-height:56px;font-size:16px;margin-top:12px;cursor:pointer}
 #tcag .ren-tieni input{width:24px;height:24px;flex:none;margin:0}
 #tcag .ren-tieni + .ren-nota{font-size:16px}
-#tcag .ib.adm{width:auto;padding:0 10px;gap:6px;font:500 14px var(--sans)}
+#tcag .ib.adm{width:auto;padding:0 10px;gap:6px;font:500 14px var(--sans);position:relative}
 #tcag .ib.adm .adm-l{white-space:nowrap}
+#tcag .ib.adm .bdg{position:absolute;top:-6px;right:-6px}
+@media (min-width:1100px){#tcag .ib.adm{padding-right:28px}
+}
 @media (max-width:1099px){#tcag .ib.adm{width:40px;padding:0}
 #tcag .ib.adm .adm-l{display:none}
 }
@@ -3246,6 +3249,88 @@ html.tc-guscio body{margin:0}
 #tcag .br-m54 .br-qr span{font-size:9pt;color:var(--mt-sfondo,var(--testo))}
 #tcag .br-libro:has(.br-foglio.br-m54) .br-gal{gap:6mm}
 #tcag .br-libro:has(.br-foglio.br-m54) .br-gal-riq{border-radius:0}
+#tcag .br-m55{background:var(--mt-sfondo,var(--bianco));color:var(--mt-testo,var(--testo))}
+#tcag .br-m55.br-v{padding:0;grid-template-areas:"foto foto" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 44mm;grid-template-rows:300mm minmax(0,1fr) auto;gap:8mm 8mm}
+#tcag .br-m55.br-o{padding:0;grid-template-areas:"foto dati" "foto contatti" "foto qr";grid-template-columns:270mm minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto auto;gap:8mm 8mm}
+#tcag .br-m55 .br-foto{grid-row:1/-1;grid-column:1/-1;position:relative}
+#tcag .br-m55 .br-foto::before{content:'';position:absolute;inset:50% 0 0 0;z-index:1;pointer-events:none;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.45))}
+#tcag .br-m55 .br-foto::after{content:'';position:absolute;inset:50% 0 0 0;z-index:1;pointer-events:none;background:color-mix(in srgb,var(--mt-fascia,var(--nv)) 55%,transparent)}
+#tcag .br-m55 .br-testo{grid-area:foto;align-self:end;position:relative;z-index:2;padding:0 18mm 16mm}
+#tcag .br-m55.br-o .br-testo{padding:0 16mm 14mm}
+#tcag .br-m55 .br-dati,
+#tcag .br-m55 .br-contatti,
+#tcag .br-m55 .br-qr{position:relative;z-index:1}
+#tcag .br-m55 .br-dati,
+#tcag .br-m55 .br-contatti{padding:0 18mm}
+#tcag .br-m55.br-o .br-dati{padding:18mm 18mm 4mm 6mm;background:var(--mt-fascia,var(--nv))}
+#tcag .br-m55.br-o .br-contatti{padding:4mm 18mm 4mm 6mm;background:var(--mt-fascia,var(--nv))}
+#tcag .br-m55 .br-qr{margin:0 18mm 14mm 0;background:var(--mt-sfondo,var(--bianco));padding:2mm;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m55 .br-qr span{font-size:9pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-m55 .br-titolo{font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(26pt * var(--mt-titolo-scala,1));font-weight:600;text-transform:uppercase;letter-spacing:.16em;line-height:1.2;color:var(--mt-sfondo,var(--bianco));text-shadow:0 .3mm 1.5mm rgba(0,0,0,.5);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m55 .br-prezzo{color:var(--mt-sfondo,var(--bianco))}
+#tcag .br-m55 .br-prezzo span{font-family:var(--mt-font-testo,var(--br-sans));font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-sfondo,var(--bianco))}
+#tcag .br-m55 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:20pt;font-weight:700;white-space:nowrap;color:var(--mt-sfondo,var(--bianco))}
+#tcag .br-m55 .br-descr{font-family:var(--mt-font-testo,var(--br-sans));font-size:11pt;line-height:1.5;max-width:65ch;color:var(--mt-sfondo,var(--bianco));display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m55 .br-dati{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 6mm;align-content:start;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m55 .br-dato{border-bottom:.2mm solid color-mix(in srgb,var(--mt-sfondo,var(--bianco)) 35%,transparent)}
+#tcag .br-m55 .br-dato dt{font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-sfondo,var(--bianco))}
+#tcag .br-m55 .br-dato dd{font-size:10pt;font-weight:600;color:var(--mt-sfondo,var(--bianco))}
+#tcag .br-m55 .br-contatti{font-family:var(--mt-font-testo,var(--br-sans));font-size:10pt;color:var(--mt-sfondo,var(--bianco))}
+#tcag .br-m55 .br-contatti b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:13pt;font-weight:700;color:var(--mt-sfondo,var(--bianco))}
+#tcag .br-m55 .br-logo{position:absolute;top:12mm;left:18mm;z-index:3;background:none;color:var(--mt-sfondo,var(--bianco));padding:0;border-radius:0}
+#tcag .br-libro:has(.br-foglio.br-m55) .br-pag-testa{background:color-mix(in srgb,var(--mt-fascia,var(--nv)) 55%,var(--mt-testo,var(--testo)));color:var(--mt-sfondo,var(--bianco));box-shadow:0 0 0 3mm color-mix(in srgb,var(--mt-fascia,var(--nv)) 55%,var(--mt-testo,var(--testo)));border-bottom-color:rgba(0,0,0,0)}
+#tcag .br-libro:has(.br-foglio.br-m55) .br-gal-riq{border-radius:0}
+#tcag .br-m56{background:var(--mt-sfondo,var(--avorio));color:var(--mt-testo,var(--testo))}
+#tcag .br-m56.br-v{padding:30mm 30mm 16mm;grid-template-areas:"foto foto" "testo testo" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 44mm;grid-template-rows:250mm auto minmax(0,1fr) auto;gap:8mm 8mm}
+#tcag .br-m56.br-o{padding:28mm;grid-template-areas:"foto testo" "foto dati" "foto contatti" "foto qr";grid-template-columns:236mm minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto;gap:6mm 14mm}
+#tcag .br-m56 .br-foto{position:relative;padding:0;box-shadow:0 1mm 3mm rgba(0,0,0,.2)}
+#tcag .br-m56 .br-riq{border-radius:0}
+#tcag .br-m56 .br-foto::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(135deg,var(--mt-accento,var(--oro)) 0 6mm,rgba(0,0,0,0) 6mm),linear-gradient(225deg,var(--mt-accento,var(--oro)) 0 6mm,rgba(0,0,0,0) 6mm)}
+#tcag .br-m56 .br-foto::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(45deg,var(--mt-accento,var(--oro)) 0 6mm,rgba(0,0,0,0) 6mm),linear-gradient(315deg,var(--mt-accento,var(--oro)) 0 6mm,rgba(0,0,0,0) 6mm)}
+#tcag .br-m56 .br-testo{align-items:flex-start;text-align:left}
+#tcag .br-m56 .br-logo{position:absolute;bottom:8mm;left:50%;transform:translateX(-50%);z-index:3;background:none;color:var(--mt-titolo,var(--nv));padding:0;border-radius:0}
+#tcag .br-m56 .br-titolo{font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(30pt * var(--mt-titolo-scala,1));font-weight:400;font-style:italic;line-height:1.15;color:var(--mt-titolo,var(--nv));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m56 .br-prezzo{color:var(--mt-testo,var(--testo))}
+#tcag .br-m56 .br-prezzo span{font-family:var(--mt-font-testo,var(--br-sans));font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m56 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:20pt;font-weight:700;white-space:nowrap;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m56 .br-descr{font-family:var(--mt-font-testo,var(--br-sans));font-size:10pt;line-height:1.5;color:var(--mt-testo,var(--testo))}
+#tcag .br-m56 .br-dati{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 6mm;align-content:start;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m56 .br-dato{border-bottom:.2mm solid color-mix(in srgb,var(--mt-testo,var(--testo)) 20%,transparent)}
+#tcag .br-m56 .br-dato dt{font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m56 .br-dato dd{font-size:10pt;font-weight:600;color:var(--mt-testo,var(--testo))}
+#tcag .br-m56 .br-contatti{border-top:.3mm solid var(--mt-accento,var(--oro));padding-top:4mm;font-family:var(--mt-font-testo,var(--br-sans));font-size:10pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-m56 .br-contatti b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:13pt;font-weight:700;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m56 .br-qr{font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m56 .br-qr span{font-size:9pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-libro:has(.br-foglio.br-m56) .br-gal-riq{position:relative;border-radius:0}
+#tcag .br-libro:has(.br-foglio.br-m56) .br-gal-riq::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,var(--mt-accento,var(--oro)) 0 4mm,rgba(0,0,0,0) 4mm),linear-gradient(225deg,var(--mt-accento,var(--oro)) 0 4mm,rgba(0,0,0,0) 4mm),linear-gradient(45deg,var(--mt-accento,var(--oro)) 0 4mm,rgba(0,0,0,0) 4mm),linear-gradient(315deg,var(--mt-accento,var(--oro)) 0 4mm,rgba(0,0,0,0) 4mm)}
+#tcag .br-m57{background:var(--mt-sfondo,var(--bianco));color:var(--mt-testo,var(--testo))}
+#tcag .br-m57.br-v{padding:30mm 0 16mm;grid-template-areas:"foto foto" "testo testo" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 44mm;grid-template-rows:99mm auto auto minmax(0,1fr);gap:8mm}
+#tcag .br-m57.br-o{padding:24mm 0 14mm;grid-template-areas:"foto foto" "testo testo" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 44mm;grid-template-rows:140mm auto auto minmax(0,1fr);gap:6mm 8mm}
+#tcag .br-m57 .br-foto .br-riq{border-radius:0}
+#tcag .br-m57.br-v .br-foto:not(.br-n1){grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(2,minmax(0,1fr))}
+#tcag .br-m57 .br-testo,
+#tcag .br-m57 .br-dati{padding:0 18mm}
+#tcag .br-m57 .br-contatti{padding:0 0 0 18mm;align-self:end}
+#tcag .br-m57 .br-qr{margin:0 18mm 0 0;align-self:end;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m57 .br-testo{flex-direction:row;align-items:baseline;justify-content:space-between;gap:8mm}
+#tcag .br-m57 .br-titolo{flex:1;min-width:0;font-family:var(--mt-font-titolo,var(--br-sans));font-size:calc(32pt * var(--mt-titolo-scala,1));font-weight:600;letter-spacing:-.02em;line-height:1.1;color:var(--mt-titolo,var(--nv));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m57 .br-titolo::before{content:'';display:block;width:18mm;height:.3mm;margin-bottom:3mm;background:var(--mt-accento,var(--oro))}
+#tcag .br-m57.br-o .br-titolo{font-size:calc(28pt * var(--mt-titolo-scala,1))}
+#tcag .br-m57 .br-descr{display:none}
+#tcag .br-m57 .br-prezzo{flex:0 0 auto;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m57 .br-prezzo span{font-family:var(--mt-font-testo,var(--br-sans));font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m57 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-sans));font-size:20pt;font-weight:700;white-space:nowrap;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m57 .br-dati{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:0 6mm;align-content:start;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m57 .br-dato{flex-direction:column;justify-content:flex-start;gap:1mm;border-bottom:.2mm solid color-mix(in srgb,var(--mt-testo,var(--testo)) 20%,transparent)}
+#tcag .br-m57 .br-dato dt{font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m57 .br-dato dd{font-size:10pt;font-weight:600;text-align:left;color:var(--mt-testo,var(--testo))}
+#tcag .br-m57 .br-contatti{font-family:var(--mt-font-testo,var(--br-sans));font-size:10pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-m57 .br-contatti b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:13pt;font-weight:700;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m57 .br-qr span{font-size:9pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-m57 .br-logo{position:absolute;top:10mm;left:18mm;z-index:3;background:none;color:var(--mt-titolo,var(--nv));padding:0;border-radius:0}
+#tcag .br-libro:has(.br-foglio.br-m57) .br-gal{grid-auto-rows:minmax(0,1fr);gap:3mm}
+#tcag .br-libro:has(.br-foglio.br-m57) .br-gal-riq{grid-column:1/-1;border-radius:0}
 #tcag .br-mini-m28{background:linear-gradient(var(--nv),var(--nv)) 50% 14%/50% 3px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 55%/40% 20% no-repeat,var(--avorio)}
 #tcag .br-mini-m29{background:repeating-linear-gradient(transparent 0 6px,var(--bordo) 6px 7px) 0 85%/100% 30% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 8%/86% 56% no-repeat,var(--avorio)}
 #tcag .br-mini-m30{background:linear-gradient(var(--nv),var(--nv)) 0 0/100% 6% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 30%/88% 48% no-repeat,var(--avorio)}
@@ -3273,6 +3358,9 @@ html.tc-guscio body{margin:0}
 #tcag .br-mini-m52{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 20%/70% 46% no-repeat,linear-gradient(var(--bianco),var(--bianco)) 50% 26%/82% 66% no-repeat,var(--avorio)}
 #tcag .br-mini-m53{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/50% 100% no-repeat,linear-gradient(var(--nv),var(--nv)) 86% 30%/36% 6% no-repeat,var(--bianco)}
 #tcag .br-mini-m54{background:linear-gradient(var(--avorio),var(--avorio)) 50% 88%/40% 3px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 10%/84% 66% no-repeat,var(--nv)}
+#tcag .br-mini-m55{background:linear-gradient(var(--nv),var(--nv)) 0 100%/100% 45% no-repeat,var(--mini-foto)}
+#tcag .br-mini-m56{background:linear-gradient(135deg,var(--oro) 0 4px,rgba(0,0,0,0) 4px) 18% 12%/64% 50% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 20%/64% 50% no-repeat,var(--avorio)}
+#tcag .br-mini-m57{background:linear-gradient(var(--nv),var(--nv)) 12% 62%/76% 6% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 0 18%/100% 30% no-repeat,var(--bianco)}
 #tcag .adm-largo{max-width:1800px}
 #tcag .bp-colonne{display:flex;flex-direction:column;gap:16px;min-width:0}
 #tcag .bp-col{display:flex;flex-direction:column;gap:16px;min-width:0}
@@ -3347,6 +3435,22 @@ html.tc-guscio body{margin:0}
 }
 @media (min-width:1100px){#tcag .stua-prova{grid-template-columns:minmax(320px,440px) minmax(0,1fr);gap:24px;align-items:start}
 }
+#tcag .chips.adm-tabs,
+#tcag .chips.dg-tabs,
+#tcag .chips.stua-sezioni{flex-wrap:wrap;max-width:100%;min-width:0}
+#tcag .chips.adm-tabs .chip,
+#tcag .chips.dg-tabs .chip,
+#tcag .chips.stua-sezioni .chip{max-width:100%;white-space:normal;text-align:left;min-height:44px}
+#tcag #tcag-rq-chips{flex-wrap:wrap;overflow-x:visible}
+#tcag #tcag-rq-chips .chip{white-space:normal;max-width:100%;min-height:44px}
+@media (max-width:899px){#tcag .rq-msg{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+}
+#tcag .stua-prova .stua-nota{margin-bottom:16px}
+#tcag .stua-prova select{font:inherit;font-size:15px;min-height:44px;border:1px solid var(--bordo);border-radius:var(--raggio);padding:0 12px}
+#tcag .stua-prova select:focus{border-color:var(--nv)}
+#tcag .stua-sezioni{border-bottom:1px solid var(--bordo);margin-bottom:24px}
+#tcag .stua-sezioni .chip{background:none;border:0;border-bottom:2px solid transparent;border-radius:0;padding:10px 4px;margin-right:24px;font-size:15px;color:var(--testo);min-height:44px}
+#tcag .stua-sezioni .chip[aria-pressed=true]{background:none;border-bottom-color:var(--nv);color:var(--nv);font-weight:600}
 #tcag .vt-foglio.vt-A3v{width:297mm;height:420mm;--vt-u:2.97mm;--vt-k:1.4142;--vt-qr:50mm}
 #tcag .vt-foglio.vt-A3o{width:420mm;height:297mm;--vt-u:4.2mm;--vt-k:1.4142;--vt-qr:50mm}
 #tcag .vt-foglio.vt-A4v{width:210mm;height:297mm;--vt-u:2.1mm;--vt-k:1;--vt-qr:36mm}
@@ -3708,7 +3812,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.57.0';
+  var VERSIONE = 'V6.58.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -11271,6 +11375,7 @@ function findClose(){
   }
   /* =========================================================
      BROCHURE (V6.18.0, epic T-MVXP2YEM)
+     V6.58.0: Fotografici layouts 55 Velatura, 56 Album, 57 Panorama in BR_MODELLI; the model check reads the list, so 58 is refused.
      V6.57.0: Fotografici layouts 52 Polaroid, 53 Doppia pagina, 54 Dettaglio in BR_MODELLI; the model check reads the list, so 55 is refused.
      V6.56.0: Fotografici layouts 49 A tutta pagina, 50 Striscia, 51 Finestra in BR_MODELLI; the model check reads the list, so 52 is refused.
      V6.55.0: Moderni layouts 46 Pannelli, 47 Etichetta, 48 Essenziale in BR_MODELLI; the model check reads the list, so 49 is refused.
@@ -11311,7 +11416,7 @@ function findClose(){
     ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件', inquadra:'スキャンして写真と詳細を見る', volume:'容積', piano:'階数', classe_energetica:'省エネ等級', anno_costruzione:'築年', citta:'市町村', caratteristiche:'設備', distanze:'周辺施設までの距離', galleria:'フォトギャラリー', planimetria:'間取り図', dati_titolo:'物件データ', dist_ospedale:'病院', dist_stazione:'駅', dist_autostrada:'高速道路IC', dist_supermercato:'スーパー', dist_centro_comm:'ショッピングセンター', dist_spiaggia:'ビーチ', dist_parco:'遊園地', dist_museo:'博物館', dist_porto:'港', dist_scuola:'学校', zona_titolo:'周辺エリア', zona_indicativa:'おおよその位置' }
   };
   // V6.45.0: name and category of each model live in MT_MODELLI (04e4k); here only the brochure fields
-  var BR_MODELLI = [{ n:1, foto:1 }, { n:2, foto:4 }, { n:3, foto:3 }, { n:4, foto:1 }, { n:5, foto:2 }, { n:6, foto:3 }, { n:7, foto:6 }, { n:8, foto:2 }, { n:9, foto:4 }, { n:10, foto:4 }, { n:11, foto:4, blocchi:['occhiello','rif'] }, { n:12, foto:4, blocchi:['occhiello','rif'] }, { n:13, foto:4, blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, foto:4, blocchi:['occhiello','pregio'] }, { n:15, foto:3, blocchi:['occhiello'] }, { n:16, foto:1, blocchi:['occhiello','cifre'] }, { n:17, foto:3, blocchi:['occhiello'] }, { n:18, foto:3, blocchi:['occhiello','cifre'] }, { n:19, foto:1 }, { n:20, foto:1 }, { n:21, foto:1 }, { n:22, foto:1 }, { n:23, foto:2 }, { n:24, foto:1 }, { n:25, foto:1 }, { n:26, foto:3 }, { n:27, foto:1 }, { n:28, foto:2 }, { n:29, foto:1 }, { n:30, foto:1 }, { n:31, foto:1 }, { n:32, foto:2 }, { n:33, foto:1 }, { n:34, foto:1 }, { n:35, foto:1 }, { n:36, foto:1 }, { n:37, foto:1 }, { n:38, foto:1 }, { n:39, foto:2 }, { n:40, foto:1 }, { n:41, foto:1 }, { n:42, foto:1 }, { n:43, foto:1 }, { n:44, foto:1 }, { n:45, foto:1 }, { n:46, foto:1 }, { n:47, foto:1 }, { n:48, foto:1 }, { n:49, foto:1 }, { n:50, foto:1 }, { n:51, foto:2 }, { n:52, foto:1 }, { n:53, foto:1 }, { n:54, foto:3 }];
+  var BR_MODELLI = [{ n:1, foto:1 }, { n:2, foto:4 }, { n:3, foto:3 }, { n:4, foto:1 }, { n:5, foto:2 }, { n:6, foto:3 }, { n:7, foto:6 }, { n:8, foto:2 }, { n:9, foto:4 }, { n:10, foto:4 }, { n:11, foto:4, blocchi:['occhiello','rif'] }, { n:12, foto:4, blocchi:['occhiello','rif'] }, { n:13, foto:4, blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, foto:4, blocchi:['occhiello','pregio'] }, { n:15, foto:3, blocchi:['occhiello'] }, { n:16, foto:1, blocchi:['occhiello','cifre'] }, { n:17, foto:3, blocchi:['occhiello'] }, { n:18, foto:3, blocchi:['occhiello','cifre'] }, { n:19, foto:1 }, { n:20, foto:1 }, { n:21, foto:1 }, { n:22, foto:1 }, { n:23, foto:2 }, { n:24, foto:1 }, { n:25, foto:1 }, { n:26, foto:3 }, { n:27, foto:1 }, { n:28, foto:2 }, { n:29, foto:1 }, { n:30, foto:1 }, { n:31, foto:1 }, { n:32, foto:2 }, { n:33, foto:1 }, { n:34, foto:1 }, { n:35, foto:1 }, { n:36, foto:1 }, { n:37, foto:1 }, { n:38, foto:1 }, { n:39, foto:2 }, { n:40, foto:1 }, { n:41, foto:1 }, { n:42, foto:1 }, { n:43, foto:1 }, { n:44, foto:1 }, { n:45, foto:1 }, { n:46, foto:1 }, { n:47, foto:1 }, { n:48, foto:1 }, { n:49, foto:1 }, { n:50, foto:1 }, { n:51, foto:2 }, { n:52, foto:1 }, { n:53, foto:1 }, { n:54, foto:3 }, { n:55, foto:1 }, { n:56, foto:1 }, { n:57, foto:1 }];
   var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
@@ -11343,7 +11448,7 @@ function findClose(){
   function brModelliDi(cat){
     return mtModelliDi('br', cat);
   }
-  /* V6.27.0: true only when m is the number n of a model of BR_MODELLI (V6.57.0: 52-54 accepted, 55 refused, read from the list, never a fixed 30) */
+  /* V6.27.0: true only when m is the number n of a model of BR_MODELLI (V6.58.0: 55-57 accepted, 58 refused, read from the list, never a fixed 30) */
   function brModelloEsiste(m){
     if(typeof m !== 'number') return false;
     for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].n === m) return true;
@@ -13081,7 +13186,7 @@ function findClose(){
   var BR_T_FONT = 5000;
   var BR_PREF_T_API = 30000;
   var BR_PREF_ATTESA = 2000;
-  var BR_PREF_MODELLO_MAX = 54;
+  var BR_PREF_MODELLO_MAX = 57;
   var BR_PREF = { stato:'idle', dati:null, toccato:false, timer:0, vtTimer:0 };
 
   // adds the Bunny Fonts stylesheets of the sheet, each one once: Playfair Display and Inter, plus Noto for Chinese and Japanese
@@ -15139,7 +15244,7 @@ function vtEdPannello(i){
 
   var MT_LOGO = ['fascia', 'angolo', 'firma'];
   var MT_LOGO_NOMI = { fascia: 'Fascia', angolo: 'Angolo', firma: 'Firma' };
-  // the 60 models: 54 brochure (n 1..54) and 6 vetrine (n 1..6); one source for name, category, default palette, text style, fonts and logo
+  // the 63 models: 57 brochure (n 1..57) and 6 vetrine (n 1..6); one source for name, category, default palette, text style, fonts and logo
   var MT_MODELLI = [
     {doc:'br', n:1, nome:'Copertina piena', cat:'classici', classe:'br-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
     {doc:'br', n:2, nome:'Griglia classica', cat:'classici', classe:'br-m2', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
@@ -15195,6 +15300,9 @@ function vtEdPannello(i){
     {doc:'br', n:52, nome:'Polaroid', cat:'fotografici', classe:'br-m52', tavolozza:'sabbia', stile:'raffinato', font:{titolo:'georgia', testo:'inter'}, logo:'firma'},
     {doc:'br', n:53, nome:'Doppia pagina', cat:'fotografici', classe:'br-m53', tavolozza:'bianco', stile:'editoriale', font:{titolo:'playfair', testo:'georgia'}, logo:'angolo'},
     {doc:'br', n:54, nome:'Dettaglio', cat:'fotografici', classe:'br-m54', tavolozza:'grafite', stile:'minimale', font:{titolo:'inter', testo:'inter'}, logo:'angolo'},
+    {doc:'br', n:55, nome:'Velatura', cat:'fotografici', classe:'br-m55', tavolozza:'lago', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
+    {doc:'br', n:56, nome:'Album', cat:'fotografici', classe:'br-m56', tavolozza:'salvia', stile:'raffinato', font:{titolo:'georgia', testo:'georgia'}, logo:'firma'},
+    {doc:'br', n:57, nome:'Panorama', cat:'fotografici', classe:'br-m57', tavolozza:'mare', stile:'moderno', font:{titolo:'inter', testo:'inter'}, logo:'fascia'},
     {doc:'vt', n:1, nome:'Vetrina classica', cat:'classici', classe:'vt-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:2, nome:'Cartello lusso', cat:'lusso', classe:'vt-m2', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:3, nome:'Notte sul lago', cat:'lusso', classe:'vt-m3', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
