@@ -1,5 +1,5 @@
 /*
- * Service worker dell'app Team Contato - V1.4.0 (build 580977c5)
+ * Service worker dell'app Team Contato - V1.4.0 (build 8e94f7bf)
  * Generato da strumenti/costruisci-app.cjs. Non modificare a mano: modificare sorgenti/shell/sw.template.js.
  *
  * Regole:
@@ -25,7 +25,7 @@
  */
 'use strict';
 const VERSIONE = '1.4.0';
-const BUILD = '580977c5';
+const BUILD = '8e94f7bf';
 const CACHE = 'tc-app-' + BUILD;
 const PRECACHE = [
   "offline.html",
