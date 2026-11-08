@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 7f0db335)
+  Guscio app Team Contato - V1.4.0 (build 6baee361)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.61.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.62.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '7f0db335', blocco: 'V6.61.0' };
+window.TC_APP = { versione: '1.4.0', build: '6baee361', blocco: 'V6.62.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -523,7 +523,7 @@ html.tc-guscio body{margin:0}
 #tcag .card h3{font:600 18px var(--serif);color:var(--nv);margin:0 0 10px}
 #tcag .sec-h{font:600 13px var(--sans);text-transform:uppercase!important;letter-spacing:.06em!important;color:var(--tenue);margin:0 0 10px}
 #tcag .btn{min-height:44px;padding:0 16px;border-radius:8px;border:1px solid transparent;font:600 15px var(--sans);display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none!important;white-space:nowrap;background:none}
-#tcag .btn.pri{background:var(--nv);color:#fff!important}
+#tcag .btn.pri{background:var(--nv);color:#fff!important;border-radius:999px;padding:12px 20px;font-size:15px;font-weight:600;min-height:44px}
 #tcag .btn.pri:hover{background:var(--nv2)}
 #tcag .btn.sec{background:#fff;border-color:var(--bordo);color:var(--nv)!important}
 #tcag .btn.sec:hover{border-color:var(--oro)}
@@ -643,6 +643,7 @@ html.tc-guscio body{margin:0}
 #tcag .det-foot{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
 #tcag .det-ass{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 #tcag .det-ass select{min-height:44px;border:1px solid var(--bordo);border-radius:8px;padding:0 8px;font:16px var(--sans);background:#fff;max-width:100%}
+#tcag .det-ass select{font-size:15px;height:44px;padding:0 12px;border:1px solid var(--bordo);border-radius:var(--raggio)}
 #tcag .lsel select{min-height:44px;font-size:16px}
 #tcag .sc-body{display:block}
 #tcag .sc-l,
@@ -1178,7 +1179,7 @@ html.tc-guscio body{margin:0}
 #tcag .imp-ore .fld{margin:0}
 #tcag .imp-card .fld input{min-height:48px;font-size:16px}
 #tcag .imp-card .fld input:disabled{opacity:.5;background:#f3f1ea}
-#tcag .imp-salva{position:sticky;bottom:12px;z-index:60;margin-top:18px;max-width:520px;padding:10px;border-radius:12px;background:rgba(250,249,246,.96);border:1px solid var(--bordo);box-shadow:var(--ombra)}
+#tcag .imp-salva{position:sticky;bottom:12px;z-index:60;margin-top:24px;max-width:520px;padding:0;border-radius:12px;background:transparent;border:0;box-shadow:var(--ombra)}
 #tcag .imp-salva .btn{width:100%}
 @media (max-width:1279px){#tcag .acct .role{display:none}
 #tcag .nv-item{padding:8px 10px}
@@ -1674,7 +1675,8 @@ html.tc-guscio body{margin:0}
 #tcag .bp-pagina h2,
 #tcag .bp-pagina h3{font-family:var(--serif);font-weight:600;color:var(--nv);font-size:24px;line-height:1.15;letter-spacing:-0.02em}
 #tcag .bp-lista{display:flex;flex-direction:column;gap:8px}
-#tcag .bp-riga{display:flex;flex-wrap:wrap;align-items:center;gap:12px;min-height:44px;padding:12px 0;width:100%;min-width:0;text-align:left;border-top:1px solid var(--bordo)}
+#tcag .bp-riga{display:flex;flex-wrap:wrap;align-items:center;gap:12px;min-height:44px;padding:12px 0;width:100%;min-width:0;text-align:left;border-bottom:1px solid var(--bordo)}
+#tcag .bp-riga b:empty{display:none}
 #tcag .bp-riga>*{min-width:0;overflow-wrap:anywhere}
 #tcag .bp-stato{font:600 14px var(--sans)}
 #tcag .bp-stato-ok{color:var(--verde)}
@@ -1682,6 +1684,9 @@ html.tc-guscio body{margin:0}
 #tcag .bp-doc{display:flex;flex-direction:column;gap:8px;min-width:0;max-width:100%;padding:16px 0;border-top:1px solid var(--bordo)}
 #tcag .bp-riass{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
 #tcag .bp-manca{border:1px solid var(--bordo);border-radius:12px;padding:16px}
+#tcag .bp-manca-riga{display:flex;flex-direction:column;gap:4px;border-left:3px solid var(--oro);padding-left:12px}
+#tcag .bp-manca-chiave{font-size:13px;font-weight:400;color:var(--tenue);order:2}
+#tcag .bp-manca-domanda{font-size:15px;font-weight:600;color:var(--testo);order:1}
 #tcag .bp-campo{display:flex;flex-direction:column;gap:8px}
 #tcag .bp-unita-righe{display:flex;flex-direction:column;gap:8px}
 #tcag .bp-unita-riga{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:center}
@@ -3548,6 +3553,50 @@ html.tc-guscio body{margin:0}
 #tcag .br-libro:has(.br-foglio.br-m66) .br-pag:not(.br-pag-copertina)::after{content:'';position:absolute;inset:8mm 24mm;z-index:0;pointer-events:none;background:linear-gradient(var(--mt-accento,var(--oro)),var(--mt-accento,var(--oro))) 50% 0/40% .4mm no-repeat,linear-gradient(var(--mt-accento,var(--oro)),var(--mt-accento,var(--oro))) 50% 100%/40% .4mm no-repeat}
 #tcag .br-libro:has(.br-foglio.br-m66) .br-pag-testa{color:var(--mt-accento,var(--oro));border-bottom-color:var(--mt-accento,var(--oro))}
 #tcag .br-libro:has(.br-foglio.br-m66) .br-gal-riq{border-radius:0}
+#tcag .br-m67{background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--mt-fascia,var(--nv)) 70%,var(--mt-sfondo,var(--nv))) 0%,var(--mt-sfondo,var(--nv)) 100%);color:var(--mt-testo,var(--bianco))}
+#tcag .br-m67.br-v{padding:24mm 30mm 14mm;grid-template-areas:"foto foto" "testo testo" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 40mm;grid-template-rows:210mm auto auto minmax(0,1fr);gap:8mm}
+#tcag .br-m67.br-o{padding:20mm 26mm 12mm;grid-template-areas:"foto testo" "foto dati" "foto contatti" "foto qr";grid-template-columns:220mm minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto;gap:6mm 14mm}
+#tcag .br-m67 .br-foto .br-riq{border-radius:1mm;box-shadow:0 3mm 8mm rgba(0,0,0,.45)}
+#tcag .br-m67 .br-titolo{font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(30pt * var(--mt-titolo-scala,1));font-style:italic;font-weight:400;line-height:1.12;letter-spacing:-.01em;text-align:left;color:var(--mt-titolo,var(--oro));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m67 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:20pt;font-weight:700;white-space:nowrap;color:var(--mt-accento,var(--oro))}
+#tcag .br-m67 .br-dati{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 6mm;align-content:start;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m67.br-o .br-dati{grid-template-columns:repeat(2,minmax(0,1fr))}
+#tcag .br-m67 .br-dato{border-bottom:.2mm solid color-mix(in srgb,var(--mt-testo,var(--bianco)) 15%,transparent)}
+#tcag .br-m67 .br-dato dt{font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--bianco))}
+#tcag .br-m67 .br-dato dd{font-size:10pt;font-weight:400;color:var(--mt-testo,var(--bianco))}
+#tcag .br-libro:has(.br-foglio.br-m67) .br-pag:not(.br-pag-copertina){background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--mt-fascia,var(--nv)) 70%,var(--mt-sfondo,var(--nv))) 0%,var(--mt-sfondo,var(--nv)) 100%);color:var(--mt-testo,var(--bianco))}
+#tcag .br-libro:has(.br-foglio.br-m67) .br-pag-testa,
+#tcag .br-libro:has(.br-foglio.br-m67) .br-sc-tit{color:var(--mt-titolo,var(--oro));border-bottom-color:var(--mt-accento,var(--oro))}
+#tcag .br-libro:has(.br-foglio.br-m67) .br-gal-riq{border-radius:1mm}
+#tcag .br-m68{background:var(--mt-sfondo,var(--avorio));color:var(--mt-testo,var(--testo))}
+#tcag .br-m68.br-v{padding:0 0 14mm;grid-template-areas:"foto foto" "testo testo" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 40mm;grid-template-rows:210mm auto auto minmax(0,1fr);gap:8mm}
+#tcag .br-m68.br-o{padding:0 0 12mm;grid-template-areas:"foto foto foto" "testo dati qr" "contatti dati qr";grid-template-columns:minmax(0,1fr) minmax(0,1fr) 40mm;grid-template-rows:148mm auto minmax(0,1fr);gap:6mm 10mm}
+#tcag .br-m68 .br-foto .br-riq{border-radius:0}
+#tcag .br-m68 .br-dati,
+#tcag .br-m68 .br-contatti{padding-left:24mm;padding-right:24mm}
+#tcag .br-m68 .br-qr{margin-right:24mm;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m68 .br-testo{justify-self:center;align-items:center;text-align:center;margin:0 24mm;padding:6mm 10mm;background:var(--mt-sfondo,var(--avorio));border:.3mm solid var(--mt-accento,var(--oro));clip-path:polygon(3mm 0,calc(100% - 3mm) 0,100% 3mm,100% calc(100% - 3mm),calc(100% - 3mm) 100%,3mm 100%,0 calc(100% - 3mm),0 3mm)}
+#tcag .br-m68 .br-titolo{font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(26pt * var(--mt-titolo-scala,1));font-weight:400;line-height:1.1;text-align:center;color:var(--mt-titolo,var(--nv));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m68 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:20pt;font-weight:700;white-space:nowrap;color:var(--mt-titolo,var(--nv))}
+#tcag .br-libro:has(.br-foglio.br-m68) .br-pag-testa,
+#tcag .br-libro:has(.br-foglio.br-m68) .br-sc-tit{border:.3mm solid var(--mt-accento,var(--oro));clip-path:polygon(2mm 0,calc(100% - 2mm) 0,100% 2mm,100% calc(100% - 2mm),calc(100% - 2mm) 100%,2mm 100%,0 calc(100% - 2mm),0 2mm);text-align:center}
+#tcag .br-libro:has(.br-foglio.br-m68) .br-gal-riq{border-radius:0}
+#tcag .br-m69{background:var(--mt-sfondo,var(--testo));color:var(--mt-testo,var(--bianco))}
+#tcag .br-m69::before{content:'';position:absolute;top:0;left:0;right:0;height:22mm;background:var(--mt-fascia,var(--nv));z-index:0;pointer-events:none}
+#tcag .br-m69 .br-logo{position:absolute;top:6mm;left:24mm;z-index:3;background:none;color:var(--mt-titolo,var(--bianco));padding:0;border-radius:0}
+#tcag .br-m69.br-v{padding:30mm 24mm 14mm;grid-template-areas:"foto foto" "testo testo" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 40mm;grid-template-rows:230mm auto auto minmax(0,1fr);gap:6mm 8mm}
+#tcag .br-m69.br-o{padding:30mm 24mm 12mm;grid-template-areas:"foto foto foto" "testo testo testo" "dati contatti qr";grid-template-columns:minmax(0,1fr) minmax(0,1fr) 40mm;grid-template-rows:150mm auto minmax(0,1fr);gap:6mm 10mm}
+#tcag .br-m69 .br-foto .br-riq{border-radius:0}
+#tcag .br-m69 .br-testo{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4mm;text-align:left;border-top:.6mm solid var(--mt-accento,var(--oro));padding-top:5mm}
+#tcag .br-m69 .br-titolo{text-align:left;max-width:60%;font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(24pt * var(--mt-titolo-scala,1));font-weight:600;line-height:1.1;color:var(--mt-titolo,var(--bianco));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m69 .br-prezzo{justify-content:flex-end;margin-left:auto;text-align:right;color:var(--mt-testo,var(--bianco))}
+#tcag .br-m69 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:30pt;font-weight:700;white-space:nowrap;color:var(--mt-accento,var(--oro))}
+#tcag .br-m69 .br-dati{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 6mm;align-content:start;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m69 .br-dato dd{font-size:10pt;font-weight:400;color:var(--mt-accento,var(--oro))}
+#tcag .br-libro:has(.br-foglio.br-m69) .br-sc-corpo{column-count:2;column-gap:10mm}
+#tcag .br-libro:has(.br-foglio.br-m69) .br-sc-riga dd{color:var(--mt-accento,var(--oro))}
+#tcag .br-libro:has(.br-foglio.br-m69) .br-pag-testa{color:var(--mt-titolo,var(--bianco));border-bottom-color:var(--mt-accento,var(--oro))}
+#tcag .br-libro:has(.br-foglio.br-m69) .br-gal-riq{border-radius:0}
 #tcag .br-mini-m28{background:linear-gradient(var(--nv),var(--nv)) 50% 14%/50% 3px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 55%/40% 20% no-repeat,var(--avorio)}
 #tcag .br-mini-m29{background:repeating-linear-gradient(transparent 0 6px,var(--bordo) 6px 7px) 0 85%/100% 30% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 8%/86% 56% no-repeat,var(--avorio)}
 #tcag .br-mini-m30{background:linear-gradient(var(--nv),var(--nv)) 0 0/100% 6% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 30%/88% 48% no-repeat,var(--avorio)}
@@ -3587,6 +3636,9 @@ html.tc-guscio body{margin:0}
 #tcag .br-mini-m64{background:linear-gradient(var(--oro),var(--oro)) 50% 84%/40% 3px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 22%/64% 46% no-repeat,var(--nv)}
 #tcag .br-mini-m65{background:radial-gradient(circle at 50% 8%,transparent 0 5%,var(--oro) 5% 6.5%,transparent 6.5%),linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 50%/80% 50% no-repeat,var(--avorio)}
 #tcag .br-mini-m66{background:linear-gradient(var(--oro),var(--oro)) 0 64%/100% 2px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 64% no-repeat,var(--testo)}
+#tcag .br-mini-m67{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 20%/70% 46% no-repeat,radial-gradient(circle at 50% 40%,var(--nv),var(--testo))}
+#tcag .br-mini-m68{background:linear-gradient(var(--oro),var(--oro)) 50% 76%/50% 1px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 50% no-repeat,var(--avorio)}
+#tcag .br-mini-m69{background:linear-gradient(var(--nv),var(--nv)) 0 0/100% 10% no-repeat,linear-gradient(var(--oro),var(--oro)) 0 68%/100% 2px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 14%/88% 50% no-repeat,var(--testo)}
 #tcag .adm-largo{max-width:1800px}
 #tcag .bp-colonne{display:flex;flex-direction:column;gap:16px;min-width:0}
 #tcag .bp-col{display:flex;flex-direction:column;gap:16px;min-width:0}
@@ -3611,7 +3663,7 @@ html.tc-guscio body{margin:0}
 #tcag .adm-largo .lrow .bpa-riass{margin-top:4px}
 #tcag .adm-largo h2{font-family:var(--serif);font-weight:600;color:var(--nv);font-size:24px;line-height:1.15;margin:16px 0 8px}
 #tcag .adm-largo .sec-h{margin:24px 0 8px}
-#tcag .stru-lista{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+#tcag .stru-lista{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:16px}
 @media (min-width:1100px){#tcag .stru-lista{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 #tcag .stru-riga{display:flex;flex-direction:column;gap:12px;min-width:0}
@@ -4038,7 +4090,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.61.0';
+  var VERSIONE = 'V6.62.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -11601,6 +11653,7 @@ function findClose(){
   }
   /* =========================================================
      BROCHURE (V6.18.0, epic T-MVXP2YEM)
+     V6.62.0: Lusso layouts 67 Velluto, 68 Riserva, 69 Prestige in BR_MODELLI; the model check reads the list, so 70 is refused.
      V6.61.0: Lusso layouts 64 Notte d’oro, 65 Monogramma, 66 Galà in BR_MODELLI; the model check reads the list, so 67 is refused.
      V6.60.0: Fotografici layouts 61 Luce, 62 Reportage, 63 Margine nero in BR_MODELLI; the model check reads the list, so 64 is refused.
      V6.59.0: Fotografici layouts 58 Trittico, 59 Didascalia, 60 Inquadratura in BR_MODELLI; the model check reads the list, so 61 is refused.
@@ -11645,7 +11698,7 @@ function findClose(){
     ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件', inquadra:'スキャンして写真と詳細を見る', volume:'容積', piano:'階数', classe_energetica:'省エネ等級', anno_costruzione:'築年', citta:'市町村', caratteristiche:'設備', distanze:'周辺施設までの距離', galleria:'フォトギャラリー', planimetria:'間取り図', dati_titolo:'物件データ', dist_ospedale:'病院', dist_stazione:'駅', dist_autostrada:'高速道路IC', dist_supermercato:'スーパー', dist_centro_comm:'ショッピングセンター', dist_spiaggia:'ビーチ', dist_parco:'遊園地', dist_museo:'博物館', dist_porto:'港', dist_scuola:'学校', zona_titolo:'周辺エリア', zona_indicativa:'おおよその位置' }
   };
   // V6.45.0: name and category of each model live in MT_MODELLI (04e4k); here only the brochure fields
-  var BR_MODELLI = [{ n:1, foto:1 }, { n:2, foto:4 }, { n:3, foto:3 }, { n:4, foto:1 }, { n:5, foto:2 }, { n:6, foto:3 }, { n:7, foto:6 }, { n:8, foto:2 }, { n:9, foto:4 }, { n:10, foto:4 }, { n:11, foto:4, blocchi:['occhiello','rif'] }, { n:12, foto:4, blocchi:['occhiello','rif'] }, { n:13, foto:4, blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, foto:4, blocchi:['occhiello','pregio'] }, { n:15, foto:3, blocchi:['occhiello'] }, { n:16, foto:1, blocchi:['occhiello','cifre'] }, { n:17, foto:3, blocchi:['occhiello'] }, { n:18, foto:3, blocchi:['occhiello','cifre'] }, { n:19, foto:1 }, { n:20, foto:1 }, { n:21, foto:1 }, { n:22, foto:1 }, { n:23, foto:2 }, { n:24, foto:1 }, { n:25, foto:1 }, { n:26, foto:3 }, { n:27, foto:1 }, { n:28, foto:2 }, { n:29, foto:1 }, { n:30, foto:1 }, { n:31, foto:1 }, { n:32, foto:2 }, { n:33, foto:1 }, { n:34, foto:1 }, { n:35, foto:1 }, { n:36, foto:1 }, { n:37, foto:1 }, { n:38, foto:1 }, { n:39, foto:2 }, { n:40, foto:1 }, { n:41, foto:1 }, { n:42, foto:1 }, { n:43, foto:1 }, { n:44, foto:1 }, { n:45, foto:1 }, { n:46, foto:1 }, { n:47, foto:1 }, { n:48, foto:1 }, { n:49, foto:1 }, { n:50, foto:1 }, { n:51, foto:2 }, { n:52, foto:1 }, { n:53, foto:1 }, { n:54, foto:3 }, { n:55, foto:1 }, { n:56, foto:1 }, { n:57, foto:1 }, { n:58, foto:1 }, { n:59, foto:1 }, { n:60, foto:2 }, { n:61, foto:1 }, { n:62, foto:1 }, { n:63, foto:1 }, { n:64, foto:1 }, { n:65, foto:1 }, { n:66, foto:1 }];
+  var BR_MODELLI = [{ n:1, foto:1 }, { n:2, foto:4 }, { n:3, foto:3 }, { n:4, foto:1 }, { n:5, foto:2 }, { n:6, foto:3 }, { n:7, foto:6 }, { n:8, foto:2 }, { n:9, foto:4 }, { n:10, foto:4 }, { n:11, foto:4, blocchi:['occhiello','rif'] }, { n:12, foto:4, blocchi:['occhiello','rif'] }, { n:13, foto:4, blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, foto:4, blocchi:['occhiello','pregio'] }, { n:15, foto:3, blocchi:['occhiello'] }, { n:16, foto:1, blocchi:['occhiello','cifre'] }, { n:17, foto:3, blocchi:['occhiello'] }, { n:18, foto:3, blocchi:['occhiello','cifre'] }, { n:19, foto:1 }, { n:20, foto:1 }, { n:21, foto:1 }, { n:22, foto:1 }, { n:23, foto:2 }, { n:24, foto:1 }, { n:25, foto:1 }, { n:26, foto:3 }, { n:27, foto:1 }, { n:28, foto:2 }, { n:29, foto:1 }, { n:30, foto:1 }, { n:31, foto:1 }, { n:32, foto:2 }, { n:33, foto:1 }, { n:34, foto:1 }, { n:35, foto:1 }, { n:36, foto:1 }, { n:37, foto:1 }, { n:38, foto:1 }, { n:39, foto:2 }, { n:40, foto:1 }, { n:41, foto:1 }, { n:42, foto:1 }, { n:43, foto:1 }, { n:44, foto:1 }, { n:45, foto:1 }, { n:46, foto:1 }, { n:47, foto:1 }, { n:48, foto:1 }, { n:49, foto:1 }, { n:50, foto:1 }, { n:51, foto:2 }, { n:52, foto:1 }, { n:53, foto:1 }, { n:54, foto:3 }, { n:55, foto:1 }, { n:56, foto:1 }, { n:57, foto:1 }, { n:58, foto:1 }, { n:59, foto:1 }, { n:60, foto:2 }, { n:61, foto:1 }, { n:62, foto:1 }, { n:63, foto:1 }, { n:64, foto:1 }, { n:65, foto:1 }, { n:66, foto:1 }, { n:67, foto:1 }, { n:68, foto:1 }, { n:69, foto:1 }];
   var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
@@ -11677,7 +11730,7 @@ function findClose(){
   function brModelliDi(cat){
     return mtModelliDi('br', cat);
   }
-  /* V6.27.0: true only when m is the number n of a model of BR_MODELLI (V6.61.0: 64-66 accepted, 67 refused, read from the list, never a fixed 30) */
+  /* V6.27.0: true only when m is the number n of a model of BR_MODELLI (V6.62.0: 67-69 accepted, 70 refused, read from the list, never a fixed 30) */
   function brModelloEsiste(m){
     if(typeof m !== 'number') return false;
     for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].n === m) return true;
@@ -13415,7 +13468,7 @@ function findClose(){
   var BR_T_FONT = 5000;
   var BR_PREF_T_API = 30000;
   var BR_PREF_ATTESA = 2000;
-  var BR_PREF_MODELLO_MAX = 66;
+  var BR_PREF_MODELLO_MAX = 69;
   var BR_PREF = { stato:'idle', dati:null, toccato:false, timer:0, vtTimer:0 };
 
   // adds the Bunny Fonts stylesheets of the sheet, each one once: Playfair Display and Inter, plus Noto for Chinese and Japanese
@@ -15473,7 +15526,7 @@ function vtEdPannello(i){
 
   var MT_LOGO = ['fascia', 'angolo', 'firma'];
   var MT_LOGO_NOMI = { fascia: 'Fascia', angolo: 'Angolo', firma: 'Firma' };
-  // the 72 models: 66 brochure (n 1..66) and 6 vetrine (n 1..6); one source for name, category, default palette, text style, fonts and logo
+  // the 75 models: 69 brochure (n 1..69) and 6 vetrine (n 1..6); one source for name, category, default palette, text style, fonts and logo
   var MT_MODELLI = [
     {doc:'br', n:1, nome:'Copertina piena', cat:'classici', classe:'br-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
     {doc:'br', n:2, nome:'Griglia classica', cat:'classici', classe:'br-m2', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
@@ -15541,6 +15594,9 @@ function vtEdPannello(i){
     {doc:'br', n:64, nome:'Notte d’oro', cat:'lusso', classe:'br-m64', tavolozza:'notte-oro', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'firma'},
     {doc:'br', n:65, nome:'Monogramma', cat:'lusso', classe:'br-m65', tavolozza:'avorio-bordeaux', stile:'raffinato', font:{titolo:'playfair', testo:'georgia'}, logo:'angolo'},
     {doc:'br', n:66, nome:'Galà', cat:'lusso', classe:'br-m66', tavolozza:'vino', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:67, nome:'Velluto', cat:'lusso', classe:'br-m67', tavolozza:'vino', stile:'raffinato', font:{titolo:'playfair', testo:'georgia'}, logo:'angolo'},
+    {doc:'br', n:68, nome:'Riserva', cat:'lusso', classe:'br-m68', tavolozza:'bosco', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'firma'},
+    {doc:'br', n:69, nome:'Prestige', cat:'lusso', classe:'br-m69', tavolozza:'carbone', stile:'elegante', font:{titolo:'georgia', testo:'inter'}, logo:'fascia'},
     {doc:'vt', n:1, nome:'Vetrina classica', cat:'classici', classe:'vt-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:2, nome:'Cartello lusso', cat:'lusso', classe:'vt-m2', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:3, nome:'Notte sul lago', cat:'lusso', classe:'vt-m3', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
