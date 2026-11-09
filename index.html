@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 0ec73624)
+  Guscio app Team Contato - V1.4.0 (build 46ff6811)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.63.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.64.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '0ec73624', blocco: 'V6.63.0' };
+window.TC_APP = { versione: '1.4.0', build: '46ff6811', blocco: 'V6.64.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -3670,6 +3670,74 @@ html.tc-guscio body{margin:0}
 #tcag .br-mini-m70{background:linear-gradient(to top,var(--testo) 0%,transparent 40%) 0 0/100% 70% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 70% no-repeat,var(--testo)}
 #tcag .br-mini-m71{background:linear-gradient(var(--bianco),var(--bianco)) 10% 74%/52% 18% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 90% 10%/70% 60% no-repeat,var(--avorio)}
 #tcag .br-mini-m72{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 30%/64% 40% no-repeat,var(--avorio);box-shadow:inset 0 0 0 3px var(--avorio),inset 0 0 0 4px var(--nv),inset 0 0 0 6px var(--avorio),inset 0 0 0 7px var(--nv)}
+#tcag .br-m73{background:var(--mt-sfondo,var(--bianco));color:var(--mt-testo,var(--testo))}
+#tcag .br-m73.br-v{padding:34mm 30mm 18mm;grid-template-areas:". foto ." ". testo ." "dati dati dati" "contatti contatti qr";grid-template-columns:44mm minmax(0,1fr) 44mm;grid-template-rows:220mm auto minmax(0,1fr) auto;gap:8mm 6mm}
+#tcag .br-m73.br-o{padding:22mm 30mm 16mm;grid-template-areas:". foto ." ". testo ." "contatti dati qr";grid-template-columns:minmax(0,1fr) 150mm minmax(0,1fr);grid-template-rows:160mm auto minmax(0,1fr);gap:6mm 12mm}
+#tcag .br-m73 .br-foto .br-riq{border-radius:0;box-shadow:0 2mm 6mm rgba(0,0,0,.18)}
+#tcag .br-m73 .br-testo{justify-self:center;align-items:center;gap:2mm;padding:4mm 8mm;border:.3mm solid var(--mt-testo,var(--testo));text-align:center}
+#tcag .br-m73 .br-titolo{font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(16pt * var(--mt-titolo-scala,1));font-weight:500;line-height:1.2;text-align:center;color:var(--mt-titolo,var(--nv));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m73 .br-prezzo{justify-content:center;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m73 .br-prezzo span{font-family:var(--mt-font-testo,var(--br-sans));font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m73 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:14pt;font-weight:700;white-space:nowrap;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m73 .br-descr{display:none}
+#tcag .br-m73 .br-dati{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 6mm;align-content:start;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m73.br-o .br-dati{grid-template-columns:repeat(2,minmax(0,1fr))}
+#tcag .br-m73 .br-dato{border-bottom:.2mm solid color-mix(in srgb,var(--mt-testo,var(--testo)) 20%,transparent)}
+#tcag .br-m73 .br-dato dt{font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m73 .br-dato dd{font-size:10pt;font-weight:600;color:var(--mt-testo,var(--testo))}
+#tcag .br-m73 .br-contatti{font-family:var(--mt-font-testo,var(--br-sans));font-size:10pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-m73 .br-contatti b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:13pt;font-weight:700;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m73 .br-qr{font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m73 .br-qr span{font-size:9pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-libro:has(.br-foglio.br-m73) .br-pag-testa{color:var(--mt-titolo,var(--nv));border-bottom-color:var(--mt-accento,var(--oro))}
+#tcag .br-libro:has(.br-foglio.br-m73) .br-gal{gap:10mm}
+#tcag .br-libro:has(.br-foglio.br-m73) .br-gal-riq{border-radius:0;outline:.3mm solid var(--mt-accento,var(--oro));outline-offset:3mm;box-shadow:0 2mm 6mm rgba(0,0,0,.18)}
+#tcag .br-m74{background:linear-gradient(115deg,transparent 0 30%,color-mix(in srgb,var(--mt-testo,var(--testo)) 6%,var(--mt-sfondo,var(--avorio))) 30% 31%,transparent 31% 58%,color-mix(in srgb,var(--mt-testo,var(--testo)) 4%,var(--mt-sfondo,var(--avorio))) 58% 58.6%,transparent 58.6%),linear-gradient(35deg,transparent 0 44%,color-mix(in srgb,var(--mt-testo,var(--testo)) 5%,var(--mt-sfondo,var(--avorio))) 44% 45.5%,transparent 45.5%),var(--mt-sfondo,var(--avorio));color:var(--mt-testo,var(--testo))}
+#tcag .br-m74.br-v{padding:22mm 22mm 16mm;grid-template-areas:"foto foto" "testo testo" "dati dati" "contatti qr";grid-template-columns:minmax(0,1fr) 40mm;grid-template-rows:200mm auto minmax(0,1fr) auto;gap:7mm 8mm}
+#tcag .br-m74.br-o{padding:20mm 24mm 16mm;grid-template-areas:"foto foto foto" "testo dati qr" "contatti dati qr";grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 40mm;grid-template-rows:170mm auto minmax(0,1fr);gap:6mm 10mm}
+#tcag .br-m74 .br-foto .br-riq{border-radius:0}
+#tcag .br-m74 .br-testo{text-align:left}
+#tcag .br-m74 .br-titolo{font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(26pt * var(--mt-titolo-scala,1));font-weight:500;line-height:1.15;text-transform:uppercase;letter-spacing:.22em;text-align:left;color:var(--mt-titolo,var(--nv));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m74 .br-prezzo{color:var(--mt-titolo,var(--nv))}
+#tcag .br-m74 .br-prezzo span{font-family:var(--mt-font-testo,var(--br-sans));font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m74 .br-prezzo b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:22pt;font-weight:700;white-space:nowrap;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m74 .br-descr{display:none}
+#tcag .br-m74 .br-dati{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 6mm;align-content:start;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m74.br-o .br-dati{grid-template-columns:repeat(2,minmax(0,1fr))}
+#tcag .br-m74 .br-dato{border-bottom:.2mm solid color-mix(in srgb,var(--mt-testo,var(--testo)) 20%,transparent)}
+#tcag .br-m74 .br-dato dt{font-size:8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--mt-testo,var(--testo))}
+#tcag .br-m74 .br-dato dd{font-size:10pt;font-weight:600;color:var(--mt-testo,var(--testo))}
+#tcag .br-m74 .br-contatti{font-family:var(--mt-font-testo,var(--br-sans));font-size:10pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-m74 .br-contatti b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:13pt;font-weight:700;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m74 .br-qr{font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m74 .br-qr span{font-size:9pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-libro:has(.br-foglio.br-m74) .br-pag:not(.br-pag-copertina){background:linear-gradient(115deg,transparent 0 30%,color-mix(in srgb,var(--mt-testo,var(--testo)) 3%,var(--mt-sfondo,var(--avorio))) 30% 31%,transparent 31% 58%,color-mix(in srgb,var(--mt-testo,var(--testo)) 2%,var(--mt-sfondo,var(--avorio))) 58% 58.6%,transparent 58.6%),linear-gradient(35deg,transparent 0 44%,color-mix(in srgb,var(--mt-testo,var(--testo)) 3%,var(--mt-sfondo,var(--avorio))) 44% 45.5%,transparent 45.5%),var(--mt-sfondo,var(--avorio));color:var(--mt-testo,var(--testo))}
+#tcag .br-libro:has(.br-foglio.br-m74) .br-pag-testa{text-transform:uppercase;color:var(--mt-titolo,var(--nv));border-bottom-color:var(--mt-accento,var(--oro))}
+#tcag .br-libro:has(.br-foglio.br-m74) .br-gal-riq{border-radius:0}
+#tcag .br-m75{background:var(--mt-sfondo,var(--bianco));color:var(--mt-testo,var(--testo))}
+#tcag .br-m75.br-v{padding:0;grid-template-areas:"foto foto foto" "contatti testo qr";grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) 44mm;grid-template-rows:minmax(0,1fr) 44mm;gap:0}
+#tcag .br-m75.br-o{padding:0;grid-template-areas:"foto foto foto" "contatti testo qr";grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) 44mm;grid-template-rows:minmax(0,1fr) 44mm;gap:0}
+#tcag .br-m75 .br-foto .br-riq{border-radius:0}
+#tcag .br-m75 .br-testo{align-self:center;align-items:center;padding:0 6mm;text-align:center}
+#tcag .br-m75 .br-titolo{font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(12pt * var(--mt-titolo-scala,1));font-weight:500;line-height:1.2;text-transform:uppercase;letter-spacing:.3em;text-align:center;color:var(--mt-titolo,var(--nv));display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tcag .br-m75 .br-prezzo{display:none}
+#tcag .br-m75 .br-dati{display:none}
+#tcag .br-m75 .br-descr{display:none}
+#tcag .br-m75 .br-contatti{align-self:center;padding-left:14mm;font-family:var(--mt-font-testo,var(--br-sans));font-size:10pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-m75 .br-contatti b{font-family:var(--mt-font-titolo,var(--br-serif));font-size:12pt;font-weight:600;color:var(--mt-titolo,var(--nv))}
+#tcag .br-m75 .br-qr{align-self:center;padding-right:10mm;font-family:var(--mt-font-testo,var(--br-sans))}
+#tcag .br-m75 .br-qr-svg{width:24mm;height:24mm}
+#tcag .br-m75 .br-qr span{font-size:8pt;color:var(--mt-testo,var(--testo))}
+#tcag .br-libro:has(.br-foglio.br-m75) .br-pag-testa{text-align:center;border-bottom-color:transparent}
+#tcag .br-libro:has(.br-foglio.br-m75) .br-pag-corpo{justify-self:center}
+#tcag .br-libro:has(.br-foglio.br-m75) .br-sc-corpo{column-count:2;column-gap:14mm}
+#tcag .br-libro:has(.br-foglio.br-m75) .br-sc-riga{border:none}
+#tcag .br-libro:has(.br-foglio.br-m75) .br-gal{gap:12mm}
+#tcag .br-libro:has(.br-foglio.br-m75) .br-gal-riq{border-radius:0}
+#tcag .br-libro:has(.br-foglio.br-m75) .br-pag-piede{border-top-color:transparent}
+#tcag .br-mini-m73{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 34%/34% 52% no-repeat,linear-gradient(var(--nv),var(--nv)) 50% 82%/30% 1px no-repeat,var(--avorio)}
+#tcag .br-mini-m74{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 28%/84% 44% no-repeat,linear-gradient(115deg,transparent 0 40%,color-mix(in srgb,var(--nv) 8%,transparent) 40% 42%,transparent 42%),var(--avorio)}
+#tcag .br-mini-m75{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 88% no-repeat,linear-gradient(var(--avorio),var(--avorio)) 0 88%/100% 12% no-repeat,var(--bianco)}
 #tcag .br-mini-m28{background:linear-gradient(var(--nv),var(--nv)) 50% 14%/50% 3px no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 55%/40% 20% no-repeat,var(--avorio)}
 #tcag .br-mini-m29{background:repeating-linear-gradient(transparent 0 6px,var(--bordo) 6px 7px) 0 85%/100% 30% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 8%/86% 56% no-repeat,var(--avorio)}
 #tcag .br-mini-m30{background:linear-gradient(var(--nv),var(--nv)) 0 0/100% 6% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 30%/88% 48% no-repeat,var(--avorio)}
@@ -4163,7 +4231,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.63.0';
+  var VERSIONE = 'V6.64.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -11726,6 +11794,7 @@ function findClose(){
   }
   /* =========================================================
      BROCHURE (V6.18.0, epic T-MVXP2YEM)
+     V6.64.0: Lusso layouts 73 Collezione privata, 74 Marmo, 75 Silenzio in BR_MODELLI; the model check reads the list, so 76 is refused.
      V6.63.0: Lusso layouts 70 Lago di sera, 71 Atelier, 72 Residenza in BR_MODELLI; the model check reads the list, so 73 is refused.
      V6.62.0: Lusso layouts 67 Velluto, 68 Riserva, 69 Prestige in BR_MODELLI; the model check reads the list, so 70 is refused.
      V6.61.0: Lusso layouts 64 Notte d’oro, 65 Monogramma, 66 Galà in BR_MODELLI; the model check reads the list, so 67 is refused.
@@ -11772,7 +11841,7 @@ function findClose(){
     ja: { prezzo:'価格', prezzo_riservato:'価格要相談', superficie:'面積', camere:'寝室', bagni:'バスルーム', tipo:'物件種別', contratto:'契約', zona:'エリア', codice:'物件番号', scansiona:'スキャンして物件情報を見る', contatti:'お問い合わせ', vendita:'売買', affitto:'賃貸', collezione:'ラグジュアリーコレクション', pregio:'高級物件', inquadra:'スキャンして写真と詳細を見る', volume:'容積', piano:'階数', classe_energetica:'省エネ等級', anno_costruzione:'築年', citta:'市町村', caratteristiche:'設備', distanze:'周辺施設までの距離', galleria:'フォトギャラリー', planimetria:'間取り図', dati_titolo:'物件データ', dist_ospedale:'病院', dist_stazione:'駅', dist_autostrada:'高速道路IC', dist_supermercato:'スーパー', dist_centro_comm:'ショッピングセンター', dist_spiaggia:'ビーチ', dist_parco:'遊園地', dist_museo:'博物館', dist_porto:'港', dist_scuola:'学校', zona_titolo:'周辺エリア', zona_indicativa:'おおよその位置' }
   };
   // V6.45.0: name and category of each model live in MT_MODELLI (04e4k); here only the brochure fields
-  var BR_MODELLI = [{ n:1, foto:1 }, { n:2, foto:4 }, { n:3, foto:3 }, { n:4, foto:1 }, { n:5, foto:2 }, { n:6, foto:3 }, { n:7, foto:6 }, { n:8, foto:2 }, { n:9, foto:4 }, { n:10, foto:4 }, { n:11, foto:4, blocchi:['occhiello','rif'] }, { n:12, foto:4, blocchi:['occhiello','rif'] }, { n:13, foto:4, blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, foto:4, blocchi:['occhiello','pregio'] }, { n:15, foto:3, blocchi:['occhiello'] }, { n:16, foto:1, blocchi:['occhiello','cifre'] }, { n:17, foto:3, blocchi:['occhiello'] }, { n:18, foto:3, blocchi:['occhiello','cifre'] }, { n:19, foto:1 }, { n:20, foto:1 }, { n:21, foto:1 }, { n:22, foto:1 }, { n:23, foto:2 }, { n:24, foto:1 }, { n:25, foto:1 }, { n:26, foto:3 }, { n:27, foto:1 }, { n:28, foto:2 }, { n:29, foto:1 }, { n:30, foto:1 }, { n:31, foto:1 }, { n:32, foto:2 }, { n:33, foto:1 }, { n:34, foto:1 }, { n:35, foto:1 }, { n:36, foto:1 }, { n:37, foto:1 }, { n:38, foto:1 }, { n:39, foto:2 }, { n:40, foto:1 }, { n:41, foto:1 }, { n:42, foto:1 }, { n:43, foto:1 }, { n:44, foto:1 }, { n:45, foto:1 }, { n:46, foto:1 }, { n:47, foto:1 }, { n:48, foto:1 }, { n:49, foto:1 }, { n:50, foto:1 }, { n:51, foto:2 }, { n:52, foto:1 }, { n:53, foto:1 }, { n:54, foto:3 }, { n:55, foto:1 }, { n:56, foto:1 }, { n:57, foto:1 }, { n:58, foto:1 }, { n:59, foto:1 }, { n:60, foto:2 }, { n:61, foto:1 }, { n:62, foto:1 }, { n:63, foto:1 }, { n:64, foto:1 }, { n:65, foto:1 }, { n:66, foto:1 }, { n:67, foto:1 }, { n:68, foto:1 }, { n:69, foto:1 }, { n:70, foto:1 }, { n:71, foto:2 }, { n:72, foto:1 }];
+  var BR_MODELLI = [{ n:1, foto:1 }, { n:2, foto:4 }, { n:3, foto:3 }, { n:4, foto:1 }, { n:5, foto:2 }, { n:6, foto:3 }, { n:7, foto:6 }, { n:8, foto:2 }, { n:9, foto:4 }, { n:10, foto:4 }, { n:11, foto:4, blocchi:['occhiello','rif'] }, { n:12, foto:4, blocchi:['occhiello','rif'] }, { n:13, foto:4, blocchi:['occhiello','rif','cifre','collezione'] }, { n:14, foto:4, blocchi:['occhiello','pregio'] }, { n:15, foto:3, blocchi:['occhiello'] }, { n:16, foto:1, blocchi:['occhiello','cifre'] }, { n:17, foto:3, blocchi:['occhiello'] }, { n:18, foto:3, blocchi:['occhiello','cifre'] }, { n:19, foto:1 }, { n:20, foto:1 }, { n:21, foto:1 }, { n:22, foto:1 }, { n:23, foto:2 }, { n:24, foto:1 }, { n:25, foto:1 }, { n:26, foto:3 }, { n:27, foto:1 }, { n:28, foto:2 }, { n:29, foto:1 }, { n:30, foto:1 }, { n:31, foto:1 }, { n:32, foto:2 }, { n:33, foto:1 }, { n:34, foto:1 }, { n:35, foto:1 }, { n:36, foto:1 }, { n:37, foto:1 }, { n:38, foto:1 }, { n:39, foto:2 }, { n:40, foto:1 }, { n:41, foto:1 }, { n:42, foto:1 }, { n:43, foto:1 }, { n:44, foto:1 }, { n:45, foto:1 }, { n:46, foto:1 }, { n:47, foto:1 }, { n:48, foto:1 }, { n:49, foto:1 }, { n:50, foto:1 }, { n:51, foto:2 }, { n:52, foto:1 }, { n:53, foto:1 }, { n:54, foto:3 }, { n:55, foto:1 }, { n:56, foto:1 }, { n:57, foto:1 }, { n:58, foto:1 }, { n:59, foto:1 }, { n:60, foto:2 }, { n:61, foto:1 }, { n:62, foto:1 }, { n:63, foto:1 }, { n:64, foto:1 }, { n:65, foto:1 }, { n:66, foto:1 }, { n:67, foto:1 }, { n:68, foto:1 }, { n:69, foto:1 }, { n:70, foto:1 }, { n:71, foto:2 }, { n:72, foto:1 }, { n:73, foto:1 }, { n:74, foto:1 }, { n:75, foto:1 }];
   var BR_CATEGORIE = [['classici','Classici'],['moderni','Moderni'],['fotografici','Fotografici'],['lusso','Lusso']];
   var BR_T_API = 30000;
   var BR_T_STAMPA = 20000;
@@ -11804,7 +11873,7 @@ function findClose(){
   function brModelliDi(cat){
     return mtModelliDi('br', cat);
   }
-  /* V6.27.0: true only when m is the number n of a model of BR_MODELLI (V6.63.0: 70-72 accepted, 73 refused, read from the list, never a fixed 30) */
+  /* V6.27.0: true only when m is the number n of a model of BR_MODELLI (V6.64.0: 73-75 accepted, 76 refused, read from the list, never a fixed 30) */
   function brModelloEsiste(m){
     if(typeof m !== 'number') return false;
     for(var i = 0; i < BR_MODELLI.length; i++) if(BR_MODELLI[i].n === m) return true;
@@ -13542,7 +13611,7 @@ function findClose(){
   var BR_T_FONT = 5000;
   var BR_PREF_T_API = 30000;
   var BR_PREF_ATTESA = 2000;
-  var BR_PREF_MODELLO_MAX = 72;
+  var BR_PREF_MODELLO_MAX = 75;
   var BR_PREF = { stato:'idle', dati:null, toccato:false, timer:0, vtTimer:0 };
 
   // adds the Bunny Fonts stylesheets of the sheet, each one once: Playfair Display and Inter, plus Noto for Chinese and Japanese
@@ -15600,7 +15669,7 @@ function vtEdPannello(i){
 
   var MT_LOGO = ['fascia', 'angolo', 'firma'];
   var MT_LOGO_NOMI = { fascia: 'Fascia', angolo: 'Angolo', firma: 'Firma' };
-  // the 78 models: 72 brochure (n 1..72) and 6 vetrine (n 1..6); one source for name, category, default palette, text style, fonts and logo
+  // the 81 models: 75 brochure (n 1..75) and 6 vetrine (n 1..6); one source for name, category, default palette, text style, fonts and logo
   var MT_MODELLI = [
     {doc:'br', n:1, nome:'Copertina piena', cat:'classici', classe:'br-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
     {doc:'br', n:2, nome:'Griglia classica', cat:'classici', classe:'br-m2', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
@@ -15674,6 +15743,9 @@ function vtEdPannello(i){
     {doc:'br', n:70, nome:'Lago di sera', cat:'lusso', classe:'br-m70', tavolozza:'notte', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
     {doc:'br', n:71, nome:'Atelier', cat:'lusso', classe:'br-m71', tavolozza:'cipria', stile:'raffinato', font:{titolo:'playfair', testo:'georgia'}, logo:'firma'},
     {doc:'br', n:72, nome:'Residenza', cat:'lusso', classe:'br-m72', tavolozza:'sabbia-blu', stile:'elegante', font:{titolo:'georgia', testo:'inter'}, logo:'fascia'},
+    {doc:'br', n:73, nome:'Collezione privata', cat:'lusso', classe:'br-m73', tavolozza:'inchiostro', stile:'raffinato', font:{titolo:'playfair', testo:'georgia'}, logo:'firma'},
+    {doc:'br', n:74, nome:'Marmo', cat:'lusso', classe:'br-m74', tavolozza:'ardesia', stile:'elegante', font:{titolo:'georgia', testo:'inter'}, logo:'angolo'},
+    {doc:'br', n:75, nome:'Silenzio', cat:'lusso', classe:'br-m75', tavolozza:'bianco', stile:'minimale', font:{titolo:'playfair', testo:'inter'}, logo:'firma'},
     {doc:'vt', n:1, nome:'Vetrina classica', cat:'classici', classe:'vt-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:2, nome:'Cartello lusso', cat:'lusso', classe:'vt-m2', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:3, nome:'Notte sul lago', cat:'lusso', classe:'vt-m3', tavolozza:'modello', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
