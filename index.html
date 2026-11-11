@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build d164d867)
+  Guscio app Team Contato - V1.4.0 (build 95223d00)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.74.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.75.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'd164d867', blocco: 'V6.74.0' };
+window.TC_APP = { versione: '1.4.0', build: '95223d00', blocco: 'V6.75.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -5193,6 +5193,104 @@ html.tc-guscio body{margin:0}
 #tcag .vt-m51.vt-A3o .vt-zona{grid-column:3;grid-row:2}
 #tcag .vt-m51.vt-A3o .vt-codice{grid-column:2;grid-row:3}
 #tcag .vt-m51.vt-A3o .vt-qr{grid-column:4;grid-row:2 / -1}
+#tcag .vt-m52{background:var(--mt-sfondo,var(--bianco))}
+#tcag .vt-m52.vt-A3v{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto minmax(0,1fr) auto auto;padding:0;column-gap:0;row-gap:0}
+#tcag .vt-m52.vt-A3o{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;grid-template-rows:auto auto auto minmax(0,1fr) auto;padding:0;column-gap:calc(4 * var(--vt-u));row-gap:0}
+#tcag .vt-m52 .vt-corpo,
+#tcag .vt-m52 .vt-testa{display:contents}
+#tcag .vt-m52 .vt-foto{grid-column:1 / -1;grid-row:1 / 5;box-sizing:border-box;min-height:0;overflow:hidden}
+#tcag .vt-m52 .vt-prezzo{grid-column:1;grid-row:1;justify-self:start;align-self:start;position:relative;z-index:1;margin:calc(16 * var(--vt-u)) 0 0 calc(6 * var(--vt-u));padding:calc(1.5 * var(--vt-u)) calc(3 * var(--vt-u));background:var(--mt-accento,var(--oro));color:var(--mt-testo,var(--testo));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 26pt);font-weight:700;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m52 .vt-codice{grid-column:1;grid-row:2;justify-self:start;align-self:start;position:relative;z-index:1;margin:calc(2 * var(--vt-u)) 0 0 calc(6 * var(--vt-u));padding:calc(1.5 * var(--vt-u)) calc(3 * var(--vt-u));background:var(--mt-accento,var(--oro));color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m52 .vt-zona{grid-column:1;grid-row:3;justify-self:start;align-self:start;position:relative;z-index:1;margin:calc(2 * var(--vt-u)) 0 0 calc(6 * var(--vt-u));padding:calc(1.5 * var(--vt-u)) calc(3 * var(--vt-u));background:var(--mt-accento,var(--oro));color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m52 .vt-titolo{grid-column:1;grid-row:5;justify-self:start;align-self:start;position:relative;z-index:1;margin:calc(-10 * var(--vt-u)) 0 0;padding:calc(6 * var(--vt-u)) calc(6 * var(--vt-u)) calc(2 * var(--vt-u));background:var(--mt-sfondo,var(--bianco));color:var(--mt-titolo,var(--nv));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 34pt);font-weight:700;line-height:1.05;letter-spacing:-0.02em;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m52 .vt-cifre{grid-column:1;grid-row:6;align-self:end;display:flex;flex-wrap:wrap;gap:calc(2 * var(--vt-u)) calc(6 * var(--vt-u));padding:0 calc(6 * var(--vt-u)) calc(6 * var(--vt-u));background:var(--mt-sfondo,var(--bianco))}
+#tcag .vt-m52.vt-A3o .vt-cifre{grid-column:2;grid-row:5}
+#tcag .vt-m52 .vt-cifra b{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 17pt);font-weight:600}
+#tcag .vt-m52 .vt-cifra span{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m52 .vt-qr{grid-column:2;grid-row:5 / -1;align-self:end;margin:0 calc(6 * var(--vt-u)) calc(6 * var(--vt-u)) 0;z-index:2;background:var(--bianco)}
+#tcag .vt-m52.vt-A3o .vt-qr{grid-column:3;grid-row:5;margin:0 0 calc(6 * var(--vt-u))}
+#tcag .vt-m52 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m53{background:var(--mt-sfondo,var(--bianco))}
+#tcag .vt-m53.vt-A3v{background:linear-gradient(180deg,var(--mt-sfondo,var(--bianco)) 0 50%,var(--mt-fascia,var(--nv)) 50% 100%);grid-template-columns:minmax(0,1fr);grid-template-rows:40% minmax(0,1fr);padding:0;column-gap:0;row-gap:0}
+#tcag .vt-m53.vt-A3o{background:linear-gradient(90deg,var(--mt-sfondo,var(--bianco)) 0 50%,var(--mt-fascia,var(--nv)) 50% 100%);grid-template-columns:40% minmax(0,1fr);grid-template-rows:minmax(0,1fr);padding:0;column-gap:0;row-gap:0}
+#tcag .vt-m53 .vt-corpo{grid-column:1;grid-row:1;box-sizing:border-box;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:end;gap:calc(2.5 * var(--vt-u)) calc(4 * var(--vt-u));padding:calc(6 * var(--vt-u));background:transparent;text-align:left}
+#tcag .vt-m53.vt-A3o .vt-corpo{grid-template-columns:minmax(0,1fr)}
+#tcag .vt-m53 .vt-testa,
+#tcag .vt-m53 .vt-cifre,
+#tcag .vt-m53 .vt-zona,
+#tcag .vt-m53 .vt-codice{grid-column:1}
+#tcag .vt-m53 .vt-foto{grid-column:1 / -1;grid-row:2;box-sizing:border-box;min-height:0;margin:calc(2 * var(--vt-u)) calc(8 * var(--vt-u)) calc(8 * var(--vt-u))}
+#tcag .vt-m53.vt-A3o .vt-foto{grid-column:2;grid-row:1;margin:calc(8 * var(--vt-u)) calc(8 * var(--vt-u)) calc(8 * var(--vt-u)) calc(2 * var(--vt-u))}
+#tcag .vt-m53 .vt-titolo{margin:0;color:var(--mt-titolo,var(--nv));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 40pt);font-weight:700;line-height:1.05;letter-spacing:-0.02em;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m53.vt-A3o .vt-titolo{font-size:calc(var(--vt-k) * 32pt)}
+#tcag .vt-m53 .vt-prezzo{margin:0;color:var(--mt-titolo,var(--nv));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 30pt);font-weight:700;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m53 .vt-cifre{display:flex;flex-wrap:wrap;gap:calc(2 * var(--vt-u)) calc(6 * var(--vt-u));color:var(--mt-testo,var(--testo))}
+#tcag .vt-m53 .vt-cifra b{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 17pt);font-weight:600}
+#tcag .vt-m53 .vt-cifra span{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m53 .vt-zona{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m53 .vt-codice{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m53 .vt-qr{grid-column:2;grid-row:1 / span 6;align-self:end;z-index:2;background:var(--bianco)}
+#tcag .vt-m53.vt-A3o .vt-qr{grid-column:1;grid-row:auto;justify-self:start;margin-top:calc(4 * var(--vt-u))}
+#tcag .vt-m53 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m54{background:var(--mt-sfondo,var(--bianco))}
+#tcag .vt-m54.vt-A3v{grid-template-columns:20% 60% 20%;grid-template-rows:12% 60% auto auto minmax(0,1fr);padding:0;column-gap:0;row-gap:0}
+#tcag .vt-m54.vt-A3o{grid-template-columns:20% 60% 20%;grid-template-rows:8% 60% auto auto minmax(0,1fr);padding:0;column-gap:0;row-gap:0}
+#tcag .vt-m54 .vt-corpo,
+#tcag .vt-m54 .vt-testa{display:contents}
+#tcag .vt-m54 .vt-foto{grid-column:2;grid-row:2;box-sizing:border-box;min-height:0}
+#tcag .vt-m54 .vt-titolo{grid-column:2;grid-row:3;margin:calc(5 * var(--vt-u)) 0 0;text-align:center;letter-spacing:.2em;line-height:1.3;color:var(--mt-titolo,var(--nv));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 18pt);font-weight:400;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m54 .vt-prezzo{grid-column:2;grid-row:4;text-align:center;margin:0;color:var(--mt-titolo,var(--nv));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 16pt);font-weight:600;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m54 .vt-cifre{display:none}
+#tcag .vt-m54 .vt-zona{display:none}
+#tcag .vt-m54 .vt-codice{grid-column:1;grid-row:5;align-self:end;margin:0 0 calc(6 * var(--vt-u)) calc(6 * var(--vt-u));color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m54 .vt-qr{grid-column:1 / -1;grid-row:5;align-self:end;justify-self:end;margin:0 calc(6 * var(--vt-u)) calc(6 * var(--vt-u)) 0;z-index:2;background:var(--bianco)}
+#tcag .vt-m54.vt-A3o .vt-qr{grid-column:3;grid-row:2;align-self:end;justify-self:center;margin:0}
+#tcag .vt-m54 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m55{background:var(--mt-fascia,var(--nv))}
+#tcag .vt-m55.vt-A3v{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:calc(100 * var(--vt-u)) auto auto auto minmax(0,1fr);padding:0 calc(5 * var(--vt-u)) calc(5 * var(--vt-u));column-gap:0;row-gap:calc(1.5 * var(--vt-u))}
+#tcag .vt-m55.vt-A3o{grid-template-columns:calc(70.71 * var(--vt-u)) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto auto auto auto;padding:0;column-gap:0;row-gap:calc(1.5 * var(--vt-u))}
+#tcag .vt-m55 .vt-corpo,
+#tcag .vt-m55 .vt-testa{display:contents}
+#tcag .vt-m55 .vt-foto{grid-column:1 / -1;grid-row:1;box-sizing:border-box;min-height:0;margin:0 calc(-5 * var(--vt-u)) calc(2 * var(--vt-u));overflow:hidden}
+#tcag .vt-m55.vt-A3o .vt-foto{grid-column:1;grid-row:1 / -1;margin:0}
+#tcag .vt-m55 .vt-titolo{grid-column:1;grid-row:2;margin:0;padding:0 calc(5 * var(--vt-u));color:var(--mt-sfondo,var(--bianco));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 36pt);font-weight:700;line-height:1.05;letter-spacing:-0.02em;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m55.vt-A3o .vt-titolo{grid-column:2;grid-row:1;padding:0 calc(4 * var(--vt-u));font-size:calc(var(--vt-k) * 26pt)}
+#tcag .vt-m55 .vt-prezzo{grid-column:1;grid-row:3;margin:0;padding:0 calc(5 * var(--vt-u));color:var(--mt-sfondo,var(--bianco));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 36pt);font-weight:700;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m55.vt-A3o .vt-prezzo{grid-column:2;grid-row:2;padding:0 calc(4 * var(--vt-u));font-size:calc(var(--vt-k) * 28pt)}
+#tcag .vt-m55 .vt-cifre{grid-column:1;grid-row:4;display:flex;flex-wrap:wrap;gap:calc(1 * var(--vt-u)) calc(5 * var(--vt-u));padding:0 calc(5 * var(--vt-u));color:var(--mt-sfondo,var(--bianco))}
+#tcag .vt-m55.vt-A3o .vt-cifre{grid-column:2;grid-row:3;padding:0 calc(4 * var(--vt-u))}
+#tcag .vt-m55 .vt-cifra b{color:var(--mt-sfondo,var(--bianco));font-size:calc(var(--vt-k) * 17pt);font-weight:600}
+#tcag .vt-m55 .vt-cifra span{color:var(--mt-sfondo,var(--bianco));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m55 .vt-zona{grid-column:1;grid-row:5;align-self:start;padding:0 calc(5 * var(--vt-u));color:var(--mt-sfondo,var(--bianco));font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m55.vt-A3o .vt-zona{grid-column:2;grid-row:4;padding:0 calc(4 * var(--vt-u))}
+#tcag .vt-m55 .vt-codice{grid-column:1;grid-row:5;align-self:end;padding:0 calc(5 * var(--vt-u)) calc(5 * var(--vt-u));color:var(--mt-sfondo,var(--bianco));font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m55.vt-A3o .vt-codice{grid-column:2;grid-row:5;padding:0 calc(4 * var(--vt-u))}
+#tcag .vt-m55 .vt-qr{grid-column:2;grid-row:2 / -1;align-self:end;justify-self:end;margin:0 0 calc(5 * var(--vt-u));z-index:2;background:var(--bianco)}
+#tcag .vt-m55.vt-A3o .vt-qr{grid-column:2;grid-row:7;align-self:end;justify-self:start;margin:0 calc(4 * var(--vt-u)) calc(4 * var(--vt-u))}
+#tcag .vt-m55 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m56{background:radial-gradient(circle,color-mix(in srgb,var(--mt-testo,var(--testo)) 12%,transparent) 0 .6mm,transparent .7mm) 0 0/6mm 6mm,var(--mt-sfondo,var(--bianco))}
+#tcag .vt-m56.vt-A3v{grid-template-columns:minmax(0,1fr);grid-template-rows:58% minmax(0,1fr);padding:calc(8 * var(--vt-u));column-gap:0;row-gap:0}
+#tcag .vt-m56.vt-A3o{grid-template-columns:55% minmax(0,1fr);grid-template-rows:minmax(0,1fr);padding:calc(8 * var(--vt-u));column-gap:0;row-gap:0}
+#tcag .vt-m56 .vt-foto{grid-column:1;grid-row:1;box-sizing:border-box;min-height:0;border-radius:6mm;overflow:hidden}
+#tcag .vt-m56.vt-A3o .vt-foto{margin-right:calc(6 * var(--vt-u))}
+#tcag .vt-m56 .vt-corpo{grid-column:1;grid-row:2;box-sizing:border-box;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:end;gap:calc(2.5 * var(--vt-u)) calc(4 * var(--vt-u));padding:calc(5 * var(--vt-u)) 0 0}
+#tcag .vt-m56.vt-A3o .vt-corpo{grid-column:2;grid-row:1}
+#tcag .vt-m56 .vt-testa,
+#tcag .vt-m56 .vt-cifre,
+#tcag .vt-m56 .vt-zona,
+#tcag .vt-m56 .vt-codice{grid-column:1}
+#tcag .vt-m56 .vt-titolo{margin:0;color:var(--mt-titolo,var(--nv));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 36pt);font-weight:700;line-height:1.05;letter-spacing:-0.02em;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m56.vt-A3o .vt-titolo{font-size:calc(var(--vt-k) * 30pt)}
+#tcag .vt-m56 .vt-prezzo{margin:0;color:var(--mt-titolo,var(--nv));font-family:var(--mt-font-titolo,var(--br-serif));font-size:calc(var(--vt-k) * 30pt);font-weight:700;overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m56 .vt-prezzo::before{content:'';display:inline-block;width:calc(4 * var(--vt-u));height:calc(4 * var(--vt-u));margin-right:calc(2 * var(--vt-u));vertical-align:middle;border-radius:50%;background:var(--mt-accento,var(--oro))}
+#tcag .vt-m56 .vt-cifre{display:flex;flex-wrap:wrap;gap:calc(1 * var(--vt-u)) calc(5 * var(--vt-u));color:var(--mt-testo,var(--testo))}
+#tcag .vt-m56 .vt-cifra b{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 17pt);font-weight:600}
+#tcag .vt-m56 .vt-cifra span{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m56 .vt-zona{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 12pt)}
+#tcag .vt-m56 .vt-codice{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt)}
+#tcag .vt-m56 .vt-qr{grid-column:2;grid-row:1 / span 6;align-self:end;z-index:2;background:var(--bianco);border-radius:calc(1 * var(--vt-u))}
+#tcag .vt-m56 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m56.vt-A3v .vt-corpo{padding-top:calc(5 * var(--vt-u))}
 #tcag .vt-mini-m47{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/46% 100% no-repeat,linear-gradient(var(--oro),var(--oro)) 50% 0/2% 100% no-repeat,var(--bianco)}
 #tcag .vt-mini-m48{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 100% 0/70% 55% no-repeat,linear-gradient(var(--nv),var(--nv)) 0 60%/60% 10% no-repeat,var(--avorio)}
 #tcag .vt-mini-m49{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 58% no-repeat,linear-gradient(var(--nv),var(--nv)) 25% 66%/50% 8% no-repeat,var(--avorio)}
@@ -5249,6 +5347,11 @@ html.tc-guscio body{margin:0}
 #tcag .vt-mini-m49{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 58% no-repeat,linear-gradient(var(--nv),var(--nv)) 25% 66%/50% 8% no-repeat,var(--avorio)}
 #tcag .vt-mini-m50{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/66% 45% no-repeat,linear-gradient(var(--nv),var(--nv)) 30% 55%/62% 20% no-repeat,linear-gradient(var(--bianco),var(--bianco)) 100% 92%/50% 18% no-repeat,var(--bordo)}
 #tcag .vt-mini-m51{background:linear-gradient(var(--bianco),var(--bianco)) 4% 10%/12% 80% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 100% 0/78% 70% no-repeat,linear-gradient(var(--oro),var(--oro)) 96% 100%/20% 6% no-repeat,var(--testo)}
+#tcag .vt-mini-m52{background:linear-gradient(var(--oro),var(--oro)) 10% 12%/36% 8% no-repeat,linear-gradient(var(--oro),var(--oro)) 10% 24%/28% 8% no-repeat,linear-gradient(var(--avorio),var(--avorio)) 0 100%/100% 24% no-repeat,var(--mini-foto)}
+#tcag .vt-mini-m53{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 80% 50%/44% 60% no-repeat,linear-gradient(90deg,var(--testo) 50%,var(--nv) 50%)}
+#tcag .vt-mini-m54{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 30%/60% 50% no-repeat,linear-gradient(var(--testo),var(--testo)) 50% 76%/30% 2% no-repeat,var(--bianco)}
+#tcag .vt-mini-m55{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 70% no-repeat,var(--nv)}
+#tcag .vt-mini-m56{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 12%/80% 50% no-repeat,radial-gradient(circle at 16% 80%,var(--oro) 0 6%,transparent 6%),radial-gradient(circle,var(--bordo) 0 1px,transparent 1.5px) 0 0/6px 6px,var(--avorio)}
 #tcag .vt-foglio.vt-colori{background:var(--vt-sfondo);color:var(--vt-testo)}
 #tcag .vt-foglio.vt-colori .vt-corpo,
 #tcag .vt-foglio.vt-colori .vt-testa,
@@ -5446,7 +5549,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.74.0';
+  var VERSIONE = 'V6.75.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -15212,9 +15315,10 @@ function findClose(){
      V6.72.0: Moderni models 37-41 (Griglia svizzera, Cerchio, Diagonale, Contorno, Colonna), rows with only n.
      V6.73.0: Moderni models 42-46 (Tipografico, Riquadro sospeso, Strisce, Spigolo, Modulo), rows with only n.
      V6.74.0: Moderni models 47-51 (Asse, Ritaglio, Onda, Scalino, Titolo verticale), rows with only n.
+     V6.75.0: Moderni models 52-56 (Etichetta, Due toni, Minimo, Quadrato, Puntino), rows with only n.
      Riusa il motore della brochure (dati, lingue, QR, font, stampa): le funzioni si chiamano, non si copiano.
      Stato: VT in memoria (formato e modello). Lingua e immobile sono quelli della brochure (BR). */
-  var VT_MODELLI = [{ n:1, nome:'Vetrina classica', cat:'classici' }, { n:2, nome:'Cartello lusso', cat:'lusso' }, { n:3, nome:'Notte sul lago', cat:'lusso' }, { n:4, nome:'Minimal', cat:'moderni' }, { n:5, nome:'Doppia foto', cat:'fotografici' }, { n:6, nome:'QR grande', cat:'moderni' }, { n:7 }, { n:8 }, { n:9 }, { n:10 }, { n:11 }, { n:12 }, { n:13 }, { n:14 }, { n:15 }, { n:16 }, { n:17 }, { n:18 }, { n:19 }, { n:20 }, { n:21 }, { n:22 }, { n:23 }, { n:24 }, { n:25 }, { n:26 }, { n:27 }, { n:28 }, { n:29 }, { n:30 }, { n:31 }, { n:32 }, { n:33 }, { n:34 }, { n:35 }, { n:36 }, { n:37 }, { n:38 }, { n:39 }, { n:40 }, { n:41 }, { n:42 }, { n:43 }, { n:44 }, { n:45 }, { n:46 }, { n:47 }, { n:48 }, { n:49 }, { n:50 }, { n:51 }];
+  var VT_MODELLI = [{ n:1, nome:'Vetrina classica', cat:'classici' }, { n:2, nome:'Cartello lusso', cat:'lusso' }, { n:3, nome:'Notte sul lago', cat:'lusso' }, { n:4, nome:'Minimal', cat:'moderni' }, { n:5, nome:'Doppia foto', cat:'fotografici' }, { n:6, nome:'QR grande', cat:'moderni' }, { n:7 }, { n:8 }, { n:9 }, { n:10 }, { n:11 }, { n:12 }, { n:13 }, { n:14 }, { n:15 }, { n:16 }, { n:17 }, { n:18 }, { n:19 }, { n:20 }, { n:21 }, { n:22 }, { n:23 }, { n:24 }, { n:25 }, { n:26 }, { n:27 }, { n:28 }, { n:29 }, { n:30 }, { n:31 }, { n:32 }, { n:33 }, { n:34 }, { n:35 }, { n:36 }, { n:37 }, { n:38 }, { n:39 }, { n:40 }, { n:41 }, { n:42 }, { n:43 }, { n:44 }, { n:45 }, { n:46 }, { n:47 }, { n:48 }, { n:49 }, { n:50 }, { n:51 }, { n:52 }, { n:53 }, { n:54 }, { n:55 }, { n:56 }];
   var VT_FORMATI = [['A3v', 'A3 verticale'], ['A3o', 'A3 orizzontale']];
   var VT = { formato:'A3v', modello:1, categoria:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:0, edPrima:null, preferiti:[], toccato:false, prefFatta:false };
 
@@ -17024,7 +17128,12 @@ function vtEdPannello(i){
     {doc:'vt', n:48, nome:'Ritaglio', cat:'moderni', classe:'vt-m48', tavolozza:'lago', stile:'deciso', font:{titolo:'inter', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:49, nome:'Onda', cat:'moderni', classe:'vt-m49', tavolozza:'mare', stile:'moderno', font:{titolo:'sistema-sans', testo:'inter'}, logo:'angolo'},
     {doc:'vt', n:50, nome:'Scalino', cat:'moderni', classe:'vt-m50', tavolozza:'ardesia', stile:'moderno', font:{titolo:'inter', testo:'inter'}, logo:'angolo'},
-    {doc:'vt', n:51, nome:'Titolo verticale', cat:'moderni', classe:'vt-m51', tavolozza:'carbone', stile:'deciso', font:{titolo:'inter', testo:'inter'}, logo:'angolo'}
+    {doc:'vt', n:51, nome:'Titolo verticale', cat:'moderni', classe:'vt-m51', tavolozza:'carbone', stile:'deciso', font:{titolo:'inter', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:52, nome:'Etichetta', cat:'moderni', classe:'vt-m52', tavolozza:'terracotta', stile:'tecnico', font:{titolo:'sistema-sans', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:53, nome:'Due toni', cat:'moderni', classe:'vt-m53', tavolozza:'notte', stile:'moderno', font:{titolo:'inter', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:54, nome:'Minimo', cat:'moderni', classe:'vt-m54', tavolozza:'bianco', stile:'minimale', font:{titolo:'sistema-sans', testo:'sistema-sans'}, logo:'firma'},
+    {doc:'vt', n:55, nome:'Quadrato', cat:'moderni', classe:'vt-m55', tavolozza:'cobalto', stile:'deciso', font:{titolo:'inter', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:56, nome:'Puntino', cat:'moderni', classe:'vt-m56', tavolozza:'cipria', stile:'moderno', font:{titolo:'inter', testo:'inter'}, logo:'angolo'}
   ];
 
   /* ---------- pure helpers (also run by the bench) ---------- */
