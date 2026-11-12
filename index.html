@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build db8a6f7c)
+  Guscio app Team Contato - V1.4.0 (build 97f0bc03)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.83.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.84.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'db8a6f7c', blocco: 'V6.83.0' };
+window.TC_APP = { versione: '1.4.0', build: '97f0bc03', blocco: 'V6.84.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -6120,6 +6120,141 @@ html.tc-guscio body{margin:0}
 #tcag .vt-m96 .vt-zona{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 12pt);overflow-wrap:anywhere;min-width:0}
 #tcag .vt-m96 .vt-codice{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);overflow-wrap:anywhere;min-width:0}
 #tcag .vt-m96 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m97{background:linear-gradient(to bottom,var(--mt-sfondo,var(--avorio)),color-mix(in srgb,var(--mt-accento,var(--oro)) 15%,var(--mt-sfondo,var(--avorio))))}
+#tcag .vt-m97.vt-A3v{grid-template-columns:minmax(0,1fr);grid-template-rows:58% minmax(0,1fr);row-gap:calc(5 * var(--vt-u));padding:calc(10 * var(--vt-u)) calc(8 * var(--vt-u)) calc(6 * var(--vt-u))}
+#tcag .vt-m97.vt-A3o{grid-template-columns:56% minmax(0,1fr);grid-template-rows:minmax(0,1fr);column-gap:calc(6 * var(--vt-u));padding:calc(8 * var(--vt-u))}
+#tcag .vt-m97 .vt-foto{grid-column:1;grid-row:1;border-radius:0;border-bottom:.6mm solid var(--mt-accento,var(--oro));box-sizing:border-box}
+#tcag .vt-m97 .vt-corpo{grid-column:1;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:start;gap:calc(2 * var(--vt-u)) calc(3 * var(--vt-u));box-sizing:border-box;min-width:0;min-height:0}
+#tcag .vt-m97.vt-A3o .vt-corpo{grid-column:2;grid-row:1;align-content:center}
+#tcag .vt-m97 .vt-titolo{text-transform:uppercase;letter-spacing:.24em;font-size:calc(var(--vt-k) * 26pt);font-weight:500;line-height:1.15;color:var(--mt-titolo,var(--nv))}
+#tcag .vt-m97.vt-A3o .vt-titolo{font-size:calc(var(--vt-k) * 22pt)}
+#tcag .vt-m97 .vt-prezzo{font-style:italic;font-size:calc(var(--vt-k) * 30pt);font-weight:600;color:var(--mt-titolo,var(--nv))}
+#tcag .vt-m97 .vt-titolo,
+#tcag .vt-m97 .vt-prezzo{margin:0;min-width:0;overflow-wrap:anywhere;font-family:var(--mt-font-titolo,var(--br-serif))}
+#tcag .vt-m97 .vt-testa,
+#tcag .vt-m97 .vt-cifre,
+#tcag .vt-m97 .vt-zona,
+#tcag .vt-m97 .vt-codice,
+#tcag .vt-m97 .vt-contatti{grid-column:1}
+#tcag .vt-m97 .vt-qr{grid-column:2;grid-row:1 / span 5;align-self:end;z-index:2;background:var(--bianco);padding:calc(1.5 * var(--vt-u))}
+#tcag .vt-m97 .vt-cifre{display:flex;flex-wrap:wrap}
+#tcag .vt-m97 .vt-cifra{padding:0 calc(3 * var(--vt-u));border-left:.3mm solid var(--mt-accento,var(--oro))}
+#tcag .vt-m97 .vt-cifra:first-child{padding-left:0;border-left:0}
+#tcag .vt-m97 .vt-cifra b{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m97 .vt-cifra span{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m97 .vt-zona{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 12pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m97 .vt-codice{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m97 .vt-frase,
+#tcag .vt-m97 .vt-contatti{color:var(--mt-testo,var(--testo))}
+#tcag .vt-m97 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m98{background:var(--mt-fascia,var(--nv))}
+#tcag .vt-m98.vt-A3v{grid-template-columns:minmax(0,1fr);grid-template-rows:60% minmax(0,1fr);row-gap:calc(5 * var(--vt-u));padding:calc(10 * var(--vt-u)) calc(8 * var(--vt-u)) calc(6 * var(--vt-u))}
+#tcag .vt-m98.vt-A3o{grid-template-columns:54% minmax(0,1fr);grid-template-rows:minmax(0,1fr);column-gap:calc(6 * var(--vt-u));padding:calc(8 * var(--vt-u))}
+#tcag .vt-m98 .vt-foto{grid-column:1;grid-row:1;box-sizing:border-box;padding:.8mm;background:var(--mt-accento,var(--oro));clip-path:polygon(8% 0,92% 0,100% 8%,100% 92%,92% 100%,8% 100%,0 92%,0 8%)}
+#tcag .vt-m98 .vt-img{clip-path:polygon(8% 0,92% 0,100% 8%,100% 92%,92% 100%,8% 100%,0 92%,0 8%)}
+#tcag .vt-m98 .vt-corpo{grid-column:1;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:start;gap:calc(2 * var(--vt-u)) calc(3 * var(--vt-u));box-sizing:border-box;min-width:0;min-height:0}
+#tcag .vt-m98.vt-A3o .vt-corpo{grid-column:2;grid-row:1;align-content:center}
+#tcag .vt-m98 .vt-titolo{font-style:italic;font-size:calc(var(--vt-k) * 32pt);font-weight:400;line-height:1.1;color:var(--mt-sfondo,var(--avorio))}
+#tcag .vt-m98.vt-A3o .vt-titolo{font-size:calc(var(--vt-k) * 26pt)}
+#tcag .vt-m98 .vt-prezzo{font-size:calc(var(--vt-k) * 28pt);font-weight:700;color:var(--mt-sfondo,var(--avorio))}
+#tcag .vt-m98 .vt-titolo,
+#tcag .vt-m98 .vt-prezzo{margin:0;min-width:0;overflow-wrap:anywhere;font-family:var(--mt-font-titolo,var(--br-serif))}
+#tcag .vt-m98 .vt-testa,
+#tcag .vt-m98 .vt-cifre,
+#tcag .vt-m98 .vt-zona,
+#tcag .vt-m98 .vt-codice,
+#tcag .vt-m98 .vt-contatti{grid-column:1}
+#tcag .vt-m98 .vt-qr{grid-column:2;grid-row:1 / span 5;align-self:end;z-index:2;background:var(--bianco);padding:calc(1.5 * var(--vt-u))}
+#tcag .vt-m98 .vt-cifre{display:flex;flex-wrap:wrap}
+#tcag .vt-m98 .vt-cifra{padding:0 calc(3 * var(--vt-u));border-left:.3mm solid var(--mt-accento,var(--oro))}
+#tcag .vt-m98 .vt-cifra:first-child{padding-left:0;border-left:0}
+#tcag .vt-m98 .vt-cifra b{color:var(--mt-sfondo,var(--avorio));font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m98 .vt-cifra span{color:var(--mt-sfondo,var(--avorio));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m98 .vt-zona{margin:0;color:var(--mt-sfondo,var(--avorio));font-size:calc(var(--vt-k) * 12pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m98 .vt-codice{margin:0;color:var(--mt-sfondo,var(--avorio));font-size:calc(var(--vt-k) * 10pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m98 .vt-frase,
+#tcag .vt-m98 .vt-contatti{color:var(--mt-sfondo,var(--avorio))}
+#tcag .vt-m98 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m99{background:var(--mt-sfondo,var(--bianco));padding:0}
+#tcag .vt-m99.vt-A3v{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#tcag .vt-m99.vt-A3o{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#tcag .vt-m99 .vt-foto{grid-column:1;grid-row:1}
+#tcag .vt-m99 .vt-corpo{grid-column:1;grid-row:1;align-self:end;position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:calc(2 * var(--vt-u)) calc(3 * var(--vt-u));box-sizing:border-box;min-width:0;margin:calc(6 * var(--vt-u));padding:calc(5 * var(--vt-u));border-radius:calc(2 * var(--vt-u));background:color-mix(in srgb,var(--mt-sfondo,var(--bianco)) 55%,transparent);-webkit-backdrop-filter:blur(3mm);backdrop-filter:blur(3mm)}
+#tcag .vt-m99.vt-A3o .vt-corpo{justify-self:start;width:60%}
+#tcag .vt-m99 .vt-titolo{text-transform:uppercase;letter-spacing:.2em;font-size:calc(var(--vt-k) * 28pt);font-weight:300;line-height:1.15;color:var(--mt-titolo,var(--nv))}
+#tcag .vt-m99.vt-A3o .vt-titolo{font-size:calc(var(--vt-k) * 24pt)}
+#tcag .vt-m99 .vt-prezzo{font-size:calc(var(--vt-k) * 30pt);font-weight:600;color:var(--mt-titolo,var(--nv))}
+#tcag .vt-m99 .vt-titolo,
+#tcag .vt-m99 .vt-prezzo{margin:0;min-width:0;overflow-wrap:anywhere;font-family:var(--mt-font-titolo,var(--br-serif))}
+#tcag .vt-m99 .vt-testa,
+#tcag .vt-m99 .vt-cifre,
+#tcag .vt-m99 .vt-zona,
+#tcag .vt-m99 .vt-codice,
+#tcag .vt-m99 .vt-contatti{grid-column:1}
+#tcag .vt-m99 .vt-qr{grid-column:2;grid-row:1 / span 5;align-self:end;z-index:2;background:var(--bianco);padding:calc(1.5 * var(--vt-u))}
+#tcag .vt-m99 .vt-cifre{display:flex;flex-wrap:wrap}
+#tcag .vt-m99 .vt-cifra{padding:0 calc(3 * var(--vt-u));border-left:.3mm solid var(--mt-accento,var(--oro))}
+#tcag .vt-m99 .vt-cifra:first-child{padding-left:0;border-left:0}
+#tcag .vt-m99 .vt-cifra b{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m99 .vt-cifra span{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m99 .vt-zona{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 12pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m99 .vt-codice{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m99 .vt-frase,
+#tcag .vt-m99 .vt-contatti{color:var(--mt-testo,var(--testo))}
+#tcag .vt-m99 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m100{background:var(--mt-sfondo,var(--nv))}
+#tcag .vt-m100.vt-A3v{grid-template-columns:minmax(0,1fr);grid-template-rows:56% minmax(0,1fr);row-gap:calc(4 * var(--vt-u));padding:calc(14 * var(--vt-u)) calc(6 * var(--vt-u)) calc(6 * var(--vt-u))}
+#tcag .vt-m100.vt-A3o{grid-template-columns:minmax(0,1fr);grid-template-rows:58% minmax(0,1fr);row-gap:calc(3 * var(--vt-u));padding:calc(9 * var(--vt-u)) calc(5 * var(--vt-u)) calc(4 * var(--vt-u))}
+#tcag .vt-m100 .vt-foto{grid-column:1;grid-row:1;box-sizing:border-box;border:.3mm solid var(--mt-accento,var(--oro))}
+#tcag .vt-m100 .vt-corpo{grid-column:1;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:start;gap:calc(2 * var(--vt-u)) calc(3 * var(--vt-u));text-align:center;box-sizing:border-box;min-width:0;min-height:0}
+#tcag .vt-m100 .vt-titolo{text-transform:uppercase;letter-spacing:.18em;text-align:center;font-size:calc(var(--vt-k) * 22pt);font-weight:500;line-height:1.15;color:var(--mt-titolo,var(--avorio))}
+#tcag .vt-m100.vt-A3o .vt-titolo{font-size:calc(var(--vt-k) * 20pt)}
+#tcag .vt-m100 .vt-prezzo{text-align:center;font-size:calc(var(--vt-k) * 40pt);font-weight:700;line-height:1;color:var(--mt-accento,var(--oro))}
+#tcag .vt-m100.vt-A3o .vt-prezzo{font-size:calc(var(--vt-k) * 34pt)}
+#tcag .vt-m100 .vt-titolo,
+#tcag .vt-m100 .vt-prezzo{margin:0;min-width:0;overflow-wrap:anywhere;font-family:var(--mt-font-titolo,var(--br-serif))}
+#tcag .vt-m100 .vt-testa,
+#tcag .vt-m100 .vt-cifre,
+#tcag .vt-m100 .vt-zona,
+#tcag .vt-m100 .vt-codice,
+#tcag .vt-m100 .vt-contatti{grid-column:1}
+#tcag .vt-m100 .vt-qr{grid-column:2;grid-row:1 / span 5;align-self:end;z-index:2;background:var(--bianco);padding:calc(1.5 * var(--vt-u))}
+#tcag .vt-m100 .vt-cifre{display:flex;flex-wrap:wrap;justify-content:center}
+#tcag .vt-m100 .vt-cifra{padding:0 calc(3 * var(--vt-u));border-left:.3mm solid var(--mt-accento,var(--oro))}
+#tcag .vt-m100 .vt-cifra:first-child{padding-left:0;border-left:0}
+#tcag .vt-m100 .vt-cifra b{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m100 .vt-cifra span{color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m100 .vt-zona{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 12pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m100 .vt-codice{margin:0;color:var(--mt-testo,var(--testo));font-size:calc(var(--vt-k) * 10pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m100 .vt-frase,
+#tcag .vt-m100 .vt-contatti{color:var(--mt-testo,var(--testo))}
+#tcag .vt-m100 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m101{background:var(--mt-sfondo,var(--nv));padding:0}
+#tcag .vt-m101.vt-A3v{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+#tcag .vt-m101.vt-A3o{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+#tcag .vt-m101 .vt-foto{grid-column:1;grid-row:1}
+#tcag .vt-m101 .vt-corpo{grid-column:1;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:calc(2 * var(--vt-u)) calc(3 * var(--vt-u));box-sizing:border-box;min-width:0;min-height:0;padding:0 calc(6 * var(--vt-u)) calc(5 * var(--vt-u))}
+#tcag .vt-m101 .vt-testa{grid-column:1 / -1;grid-row:1;justify-self:end;position:relative;z-index:2;max-width:70%;box-sizing:border-box;margin-top:calc(-18 * var(--vt-u));padding:calc(3 * var(--vt-u)) calc(5 * var(--vt-u));background:var(--mt-accento,var(--oro));border:1.2mm double color-mix(in srgb,var(--mt-accento,var(--oro)) 70%,black)}
+#tcag .vt-m101 .vt-cifre,
+#tcag .vt-m101 .vt-zona,
+#tcag .vt-m101 .vt-codice,
+#tcag .vt-m101 .vt-contatti{grid-column:1}
+#tcag .vt-m101 .vt-qr{grid-column:2;grid-row:2 / span 4;align-self:end;z-index:2;background:var(--bianco);padding:calc(1.5 * var(--vt-u))}
+#tcag .vt-m101 .vt-titolo{text-transform:uppercase;letter-spacing:.12em;font-size:calc(var(--vt-k) * 24pt);font-weight:600;line-height:1.15;color:var(--mt-sfondo,var(--testo))}
+#tcag .vt-m101.vt-A3o .vt-titolo{font-size:calc(var(--vt-k) * 20pt)}
+#tcag .vt-m101 .vt-prezzo{font-size:calc(var(--vt-k) * 28pt);font-weight:700;color:var(--mt-sfondo,var(--testo))}
+#tcag .vt-m101 .vt-titolo,
+#tcag .vt-m101 .vt-prezzo{margin:0;min-width:0;overflow-wrap:anywhere;font-family:var(--mt-font-titolo,var(--br-serif))}
+#tcag .vt-m101 .vt-cifre{display:flex;flex-wrap:wrap}
+#tcag .vt-m101 .vt-cifra{padding:0 calc(3 * var(--vt-u));border-left:.3mm solid var(--mt-accento,var(--oro))}
+#tcag .vt-m101 .vt-cifra:first-child{padding-left:0;border-left:0}
+#tcag .vt-m101 .vt-cifra b{color:var(--mt-testo,var(--avorio));font-size:calc(var(--vt-k) * 18pt);font-weight:600}
+#tcag .vt-m101 .vt-cifra span{color:var(--mt-testo,var(--avorio));font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
+#tcag .vt-m101 .vt-zona{margin:0;color:var(--mt-testo,var(--avorio));font-size:calc(var(--vt-k) * 12pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m101 .vt-codice{margin:0;color:var(--mt-testo,var(--avorio));font-size:calc(var(--vt-k) * 10pt);overflow-wrap:anywhere;min-width:0}
+#tcag .vt-m101 .vt-frase{color:var(--mt-sfondo,var(--testo))}
+#tcag .vt-m101 .vt-contatti{color:var(--mt-testo,var(--avorio))}
+#tcag .vt-m101 .vt-qr span{color:var(--testo);font-size:calc(var(--vt-k) * 10pt);text-transform:uppercase;letter-spacing:.12em}
 #tcag .vt-mini-m47{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/46% 100% no-repeat,linear-gradient(var(--oro),var(--oro)) 50% 0/2% 100% no-repeat,var(--bianco)}
 #tcag .vt-mini-m48{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 100% 0/70% 55% no-repeat,linear-gradient(var(--nv),var(--nv)) 0 60%/60% 10% no-repeat,var(--avorio)}
 #tcag .vt-mini-m49{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 0 0/100% 58% no-repeat,linear-gradient(var(--nv),var(--nv)) 25% 66%/50% 8% no-repeat,var(--avorio)}
@@ -6221,6 +6356,11 @@ html.tc-guscio body{margin:0}
 #tcag .vt-mini-m94{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 24%/70% 44% no-repeat,linear-gradient(var(--nv),var(--nv)) 50% 80%/50% 4% no-repeat,var(--avorio);box-shadow:inset 0 0 0 2px var(--avorio),inset 0 0 0 3px var(--nv),inset 0 0 0 5px var(--avorio),inset 0 0 0 6px var(--nv)}
 #tcag .vt-mini-m95{background:linear-gradient(var(--oro),var(--oro)) 50% 14%/50% 1px no-repeat,linear-gradient(var(--nv),var(--nv)) 50% 20%/56% 5% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 50%/46% 32% no-repeat,linear-gradient(var(--oro),var(--oro)) 50% 84%/50% 1px no-repeat,var(--avorio)}
 #tcag .vt-mini-m96{background:linear-gradient(var(--oro),var(--oro)) 16% 14%/52% 5% no-repeat,linear-gradient(var(--oro),var(--oro)) 0 82%/100% 2% no-repeat,linear-gradient(var(--nv),var(--nv)) 0 100%/100% 18% no-repeat,var(--mini-foto)}
+#tcag .vt-mini-m97{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 12%/80% 50% no-repeat,linear-gradient(var(--oro),var(--oro)) 50% 63%/80% 2% no-repeat,linear-gradient(var(--nv),var(--nv)) 50% 78%/60% 4% no-repeat,linear-gradient(var(--avorio),var(--bordo))}
+#tcag .vt-mini-m98{background:linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 14%/70% 46% no-repeat,linear-gradient(var(--oro),var(--oro)) 50% 13%/76% 52% no-repeat,linear-gradient(var(--avorio),var(--avorio)) 50% 80%/56% 4% no-repeat,var(--nv)}
+#tcag .vt-mini-m99{background:linear-gradient(var(--nv),var(--nv)) 20% 86%/40% 4% no-repeat,linear-gradient(var(--bianco),var(--bianco)) 50% 88%/84% 20% no-repeat,var(--mini-foto)}
+#tcag .vt-mini-m100{background:linear-gradient(var(--testo),var(--testo)) 0 0/100% 12% no-repeat,linear-gradient(var(--mini-foto),var(--mini-foto)) 50% 22%/84% 44% no-repeat,linear-gradient(var(--oro),var(--oro)) 50% 82%/50% 7% no-repeat,var(--nv)}
+#tcag .vt-mini-m101{background:linear-gradient(var(--oro),var(--oro)) 88% 76%/44% 14% no-repeat,linear-gradient(var(--testo),var(--testo)) 0 100%/100% 18% no-repeat,var(--mini-foto)}
 #tcag .vt-foglio.vt-colori{background:var(--vt-sfondo);color:var(--vt-testo)}
 #tcag .vt-foglio.vt-colori .vt-corpo,
 #tcag .vt-foglio.vt-colori .vt-testa,
@@ -6418,7 +6558,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.83.0';
+  var VERSIONE = 'V6.84.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -16193,9 +16333,10 @@ function findClose(){
      V6.81.0: Lusso models 82-86 (Oro su notte, Monogramma, Velluto, Galà, Sigillo d’oro), rows with only n.
      V6.82.0: Lusso models 87-91 (Marmo, Riserva, Prestige, Collezione, Silenzio), rows with only n.
      V6.83.0: Lusso models 92-96 (Villa sul lago, Atelier, Residenza, Ambasciata, Notturno), rows with only n.
+     V6.84.0: Lusso models 97-101 (Champagne, Smeraldo, Cristallo, Bordeaux, Ottone), rows with only n.
      Riusa il motore della brochure (dati, lingue, QR, font, stampa): le funzioni si chiamano, non si copiano.
      Stato: VT in memoria (formato e modello). Lingua e immobile sono quelli della brochure (BR). */
-  var VT_MODELLI = [{ n:1, nome:'Vetrina classica', cat:'classici' }, { n:2, nome:'Cartello lusso', cat:'lusso' }, { n:3, nome:'Notte sul lago', cat:'lusso' }, { n:4, nome:'Minimal', cat:'moderni' }, { n:5, nome:'Doppia foto', cat:'fotografici' }, { n:6, nome:'QR grande', cat:'moderni' }, { n:7 }, { n:8 }, { n:9 }, { n:10 }, { n:11 }, { n:12 }, { n:13 }, { n:14 }, { n:15 }, { n:16 }, { n:17 }, { n:18 }, { n:19 }, { n:20 }, { n:21 }, { n:22 }, { n:23 }, { n:24 }, { n:25 }, { n:26 }, { n:27 }, { n:28 }, { n:29 }, { n:30 }, { n:31 }, { n:32 }, { n:33 }, { n:34 }, { n:35 }, { n:36 }, { n:37 }, { n:38 }, { n:39 }, { n:40 }, { n:41 }, { n:42 }, { n:43 }, { n:44 }, { n:45 }, { n:46 }, { n:47 }, { n:48 }, { n:49 }, { n:50 }, { n:51 }, { n:52 }, { n:53 }, { n:54 }, { n:55 }, { n:56 }, { n:57 }, { n:58 }, { n:59 }, { n:60 }, { n:61 }, { n:62 }, { n:63 }, { n:64 }, { n:65 }, { n:66 }, { n:67 }, { n:68 }, { n:69 }, { n:70 }, { n:71 }, { n:72 }, { n:73 }, { n:74 }, { n:75 }, { n:76 }, { n:77 }, { n:78 }, { n:79 }, { n:80 }, { n:81 }, { n:82 }, { n:83 }, { n:84 }, { n:85 }, { n:86 }, { n:87 }, { n:88 }, { n:89 }, { n:90 }, { n:91 }, { n:92 }, { n:93 }, { n:94 }, { n:95 }, { n:96 }];
+  var VT_MODELLI = [{ n:1, nome:'Vetrina classica', cat:'classici' }, { n:2, nome:'Cartello lusso', cat:'lusso' }, { n:3, nome:'Notte sul lago', cat:'lusso' }, { n:4, nome:'Minimal', cat:'moderni' }, { n:5, nome:'Doppia foto', cat:'fotografici' }, { n:6, nome:'QR grande', cat:'moderni' }, { n:7 }, { n:8 }, { n:9 }, { n:10 }, { n:11 }, { n:12 }, { n:13 }, { n:14 }, { n:15 }, { n:16 }, { n:17 }, { n:18 }, { n:19 }, { n:20 }, { n:21 }, { n:22 }, { n:23 }, { n:24 }, { n:25 }, { n:26 }, { n:27 }, { n:28 }, { n:29 }, { n:30 }, { n:31 }, { n:32 }, { n:33 }, { n:34 }, { n:35 }, { n:36 }, { n:37 }, { n:38 }, { n:39 }, { n:40 }, { n:41 }, { n:42 }, { n:43 }, { n:44 }, { n:45 }, { n:46 }, { n:47 }, { n:48 }, { n:49 }, { n:50 }, { n:51 }, { n:52 }, { n:53 }, { n:54 }, { n:55 }, { n:56 }, { n:57 }, { n:58 }, { n:59 }, { n:60 }, { n:61 }, { n:62 }, { n:63 }, { n:64 }, { n:65 }, { n:66 }, { n:67 }, { n:68 }, { n:69 }, { n:70 }, { n:71 }, { n:72 }, { n:73 }, { n:74 }, { n:75 }, { n:76 }, { n:77 }, { n:78 }, { n:79 }, { n:80 }, { n:81 }, { n:82 }, { n:83 }, { n:84 }, { n:85 }, { n:86 }, { n:87 }, { n:88 }, { n:89 }, { n:90 }, { n:91 }, { n:92 }, { n:93 }, { n:94 }, { n:95 }, { n:96 }, { n:97 }, { n:98 }, { n:99 }, { n:100 }, { n:101 }];
   var VT_FORMATI = [['A3v', 'A3 verticale'], ['A3o', 'A3 orizzontale']];
   var VT = { formato:'A3v', modello:1, categoria:'', msg:'', mod:null, modChiave:'', annulla:[], ripeti:[], edSel:0, edPrima:null, preferiti:[], toccato:false, prefFatta:false };
 
@@ -17875,7 +18016,7 @@ function vtEdPannello(i){
 
   var MT_LOGO = ['fascia', 'angolo', 'firma'];
   var MT_LOGO_NOMI = { fascia: 'Fascia', angolo: 'Angolo', firma: 'Firma' };
-  // the 174 models: 78 brochure (n 1..78) and 96 vetrine (n 1..96); one source for name, category, default palette, text style, fonts and logo
+  // the 179 models: 78 brochure (n 1..78) and 101 vetrine (n 1..101); one source for name, category, default palette, text style, fonts and logo
   var MT_MODELLI = [
     {doc:'br', n:1, nome:'Copertina piena', cat:'classici', classe:'br-m1', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
     {doc:'br', n:2, nome:'Griglia classica', cat:'classici', classe:'br-m2', tavolozza:'modello', stile:'classico', font:{titolo:'playfair', testo:'inter'}, logo:'fascia'},
@@ -18050,7 +18191,12 @@ function vtEdPannello(i){
     {doc:'vt', n:93, nome:'Atelier', cat:'lusso', classe:'vt-m93', tavolozza:'cipria', stile:'raffinato', font:{titolo:'playfair', testo:'georgia'}, logo:'firma'},
     {doc:'vt', n:94, nome:'Residenza', cat:'lusso', classe:'vt-m94', tavolozza:'sabbia-blu', stile:'elegante', font:{titolo:'georgia', testo:'inter'}, logo:'fascia'},
     {doc:'vt', n:95, nome:'Ambasciata', cat:'lusso', classe:'vt-m95', tavolozza:'avorio-bordeaux', stile:'elegante', font:{titolo:'georgia', testo:'georgia'}, logo:'firma'},
-    {doc:'vt', n:96, nome:'Notturno', cat:'lusso', classe:'vt-m96', tavolozza:'notte-oro', stile:'raffinato', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'}
+    {doc:'vt', n:96, nome:'Notturno', cat:'lusso', classe:'vt-m96', tavolozza:'notte-oro', stile:'raffinato', font:{titolo:'playfair', testo:'inter'}, logo:'angolo'},
+    {doc:'vt', n:97, nome:'Champagne', cat:'lusso', classe:'vt-m97', tavolozza:'sabbia', stile:'elegante', font:{titolo:'playfair', testo:'inter'}, logo:'firma'},
+    {doc:'vt', n:98, nome:'Smeraldo', cat:'lusso', classe:'vt-m98', tavolozza:'bosco', stile:'raffinato', font:{titolo:'playfair', testo:'georgia'}, logo:'angolo'},
+    {doc:'vt', n:99, nome:'Cristallo', cat:'lusso', classe:'vt-m99', tavolozza:'lago', stile:'minimale', font:{titolo:'inter', testo:'inter'}, logo:'firma'},
+    {doc:'vt', n:100, nome:'Bordeaux', cat:'lusso', classe:'vt-m100', tavolozza:'vino', stile:'elegante', font:{titolo:'georgia', testo:'inter'}, logo:'fascia'},
+    {doc:'vt', n:101, nome:'Ottone', cat:'lusso', classe:'vt-m101', tavolozza:'carbone', stile:'tecnico', font:{titolo:'sistema-serif', testo:'inter'}, logo:'angolo'}
   ];
 
   /* ---------- pure helpers (also run by the bench) ---------- */
