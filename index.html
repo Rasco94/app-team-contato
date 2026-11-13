@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 5442ff8b)
+  Guscio app Team Contato - V1.4.0 (build ef42e26b)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.85.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.86.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '5442ff8b', blocco: 'V6.85.1' };
+window.TC_APP = { versione: '1.4.0', build: 'ef42e26b', blocco: 'V6.86.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -845,6 +845,17 @@ html.tc-guscio body{margin:0}
 #tcag .ren-vbtn[aria-pressed=true] .rv-n::before{content:"\2713\00a0"}
 #tcag .rv-n{font:700 16px/1.25 var(--sans);color:var(--nv)}
 #tcag .rv-t{font-size:14px;color:var(--tenue)}
+#tcag .ren-avanzate{margin:0 0 14px;border:1px solid var(--bordo);border-radius:8px;padding:2px 12px 12px;background:var(--bianco)}
+#tcag .ren-avanzate summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font:700 16px var(--sans);color:var(--nv)}
+#tcag .ren-avanzate summary:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+#tcag .ren-av-riga{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:4px;min-width:0;margin:16px 0 0}
+#tcag .ren-av-riga label{font:600 16px/1.3 var(--sans);color:var(--testo)}
+#tcag .ren-av-riga output{font:600 16px var(--sans);color:var(--nv);font-variant-numeric:tabular-nums;min-width:4ch;text-align:right}
+#tcag .ren-av-riga input[type=range]{grid-column:1/-1;width:100%;min-width:0;box-sizing:border-box;height:44px;margin:0;accent-color:var(--nv);cursor:pointer}
+#tcag .ren-av-riga input[type=range]:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+#tcag .ren-av-riga .ren-nota{grid-column:1/-1;margin:0}
+#tcag .ren-avanzate .btn{width:100%;margin-top:4px}
+#tcag .ren-avanzate input:disabled{opacity:.55;cursor:not-allowed}
 #tcag #tcag-ren-genera{width:100%}
 #tcag .ren-lav{padding:22px}
 #tcag .ren-barra{height:16px;background:var(--bordo);border-radius:8px;overflow:hidden;margin:6px 0 12px}
@@ -6704,7 +6715,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.85.1';
+  var VERSIONE = 'V6.86.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -12388,7 +12399,7 @@ function findClose(){
   var REN = {
     carico:'idle', errStili:'', stili:[], varianti:[], limiti:{ descrizione_max:300 }, serv:null, dicitura:'',
     foto:null, fotoOcc:false, fotoMsg:'',
-    stile:'', descr:'', variante:'', optTieni:false, tieni:false,
+    stile:'', descr:'', variante:'', optTieni:false, tieni:false, avOpt:null, av:null,
     fase:'form',            // form | invio | lavoro | errore | fatto
     lav:null, err:null, ris:null, storico:[], seq:0,
     timer:0, tick:0, t0:0, tentErr:0, pronto:false, ultimoImp:null, errT:0
@@ -12493,6 +12504,11 @@ function findClose(){
             <section class="card ren-passo" aria-labelledby="tcag-ren-h4">
               <h2 id="tcag-ren-h4"><span class="ren-n" aria-hidden="true">4</span>Crea il render</h2>
               <div id="tcag-ren-var" class="ren-var" role="group" aria-label="Qualità" hidden></div>
+              <details class="ren-avanzate" id="tcag-ren-av" hidden><summary>Avanzate</summary>
+                <div class="ren-av-riga"><label for="tcag-ren-av-passi">Passate</label><output id="tcag-ren-av-passi-v" for="tcag-ren-av-passi"></output><input type="range" id="tcag-ren-av-passi" step="1"><p class="ren-nota">Più passate = più dettagli, ma più tempo.</p></div>
+                <div class="ren-av-riga"><label for="tcag-ren-av-forza">Quanto cambiare</label><output id="tcag-ren-av-forza-v" for="tcag-ren-av-forza"></output><input type="range" id="tcag-ren-av-forza" step="0.05"><p class="ren-nota">Più alto = l’AI cambia di più la stanza.</p></div>
+                <div class="ren-av-riga"><label for="tcag-ren-av-controllo">Tenuta della stanza</label><output id="tcag-ren-av-controllo-v" for="tcag-ren-av-controllo"></output><input type="range" id="tcag-ren-av-controllo" step="0.05"><p class="ren-nota">Più alto = muri, finestre e prospettiva restano più fedeli alla foto.</p></div>
+                <button class="btn sec big" type="button" data-act="ren-av-std">Valori standard</button></details>
               <button class="btn pri big" type="button" id="tcag-ren-genera" data-act="ren-genera" disabled>${ic('sparkles', 20)}<span>Genera il render</span></button>
               <p id="tcag-ren-hint" class="ren-nota" role="status" aria-live="polite"></p>
               <p id="tcag-ren-servizio" class="ren-nota" hidden></p>
@@ -12516,7 +12532,8 @@ function findClose(){
     });
     var d = g('ren-d');
     d.addEventListener('input', function(){ REN.descr = d.value; aggiornaDescr(); aggiornaGenera(); });
-    g('ren-tieni').addEventListener('change', function(ev){ REN.tieni = !!ev.target.checked; });
+    g('ren-tieni').addEventListener('change', function(ev){ REN.tieni = !!ev.target.checked; disegnaAvanzate(); });
+    ['passi', 'forza', 'controllo'].forEach(function(k){ g('ren-av-' + k).addEventListener('input', renAvDaCursori); });
     // trascinare la foto sulla pagina (computer)
     var f1 = g('ren-form');
     ['dragenter', 'dragover'].forEach(function(n){ f1.addEventListener(n, function(ev){ if(renOccupato()) return; ev.preventDefault(); f1.classList.add('trascina'); }); });
@@ -12550,10 +12567,11 @@ function findClose(){
       REN.dicitura = typeof j.dicitura === 'string' && j.dicitura.length > 20 && j.dicitura.length <= 400 ? j.dicitura : REN_DICITURA;
       REN.optTieni = !!(j && j.opzioni && j.opzioni.tieni_arredo === true);
       if(!REN.optTieni) REN.tieni = false;
+      REN.avOpt = renLeggiAvanzate(j && j.avanzate); if(!REN.avOpt) REN.av = null;
       if(REN.stile && !REN.stili.some(function(s){ return s.id === REN.stile; })) REN.stile = '';
       if(!REN.variante || !REN.varianti.some(function(v){ return v.id === REN.variante; })) REN.variante = REN.varianti.length ? REN.varianti[0].id : '';
       REN.carico = 'ok'; REN.pronto = true;
-      disegnaStili(); disegnaTieni(); disegnaVarianti(); disegnaSugg();
+      disegnaStili(); disegnaTieni(); disegnaVarianti(); disegnaAvanzate(); disegnaSugg();
       var d = g('ren-d'); if(d) d.maxLength = REN.limiti.descrizione_max;
       aggiornaRender();
     }).catch(function(e){
@@ -12582,6 +12600,31 @@ function findClose(){
       return H`<button class="ren-vbtn" type="button" aria-pressed="${v.id === REN.variante ? 'true' : 'false'}" data-act="ren-var" data-id="${v.id}"><span class="rv-n">${v.nome}</span><span class="rv-t">circa ${v.tempo} secondi</span></button>`;
     }));
   }
+  function disegnaAvanzate(){
+    var box = g('ren-av'); if(!box) return;
+    box.hidden = !REN.avOpt; if(!REN.avOpt) return;
+    var o = REN.avOpt;
+    ['passi', 'forza', 'controllo'].forEach(function(k){
+      var inp = g('ren-av-' + k), out = g('ren-av-' + k + '-v');
+      if(!inp || !out) return;
+      inp.min = String(o[k].min); inp.max = String(o[k].max);
+      var val;
+      if(REN.av) val = REN.av[k];
+      else if(k === 'passi') val = o.def.passi[REN.variante] || o.def.passi.standard;
+      else if(k === 'forza') val = REN.optTieni && REN.tieni ? o.def.forzaTieni : o.def.forza;
+      else val = o.def.controllo;
+      inp.value = String(val);
+      out.textContent = k === 'passi' ? String(Math.round(+inp.value)) : renNumIt(+inp.value);
+    });
+  }
+  function renAvDaCursori(){
+    REN.av = { passi:+g('ren-av-passi').value, forza:+g('ren-av-forza').value, controllo:+g('ren-av-controllo').value };
+    disegnaAvanzate(); aggiornaGenera();
+  }
+  function renAvStandard(){
+    if(renOccupato()) return;
+    REN.av = null; disegnaAvanzate(); aggiornaGenera();
+  }
   function disegnaSugg(){
     var el = g('ren-sugg'); if(!el) return;
     put(el, REN_SUGG.map(function(t, i){ return H`<button class="ren-chip" type="button" data-act="ren-sugg" data-i="${i}">${t}</button>`; }));
@@ -12590,7 +12633,33 @@ function findClose(){
     for(var i = 0; i < REN.varianti.length; i++) if(REN.varianti[i].id === REN.variante) return REN.varianti[i];
     return null;
   }
-  function renTempo(){ var v = renVariante(); return v ? v.tempo : REN_TEMPO_S; }
+  function renTempo(){ var v = renVariante(), t = v ? v.tempo : REN_TEMPO_S; return REN.av && REN.avOpt ? renTempoPassi(t, REN.av.passi, REN.avOpt.def.passi[REN.variante] || 28) : t; }
+  function renLeggiAvanzate(a){
+    if(!a || typeof a !== 'object') return null;
+    var p = a.passi, f = a.forza, c = a.controllo, d = a.predefiniti;
+    if(!p || typeof p !== 'object' || !f || typeof f !== 'object' || !c || typeof c !== 'object' || !d || typeof d !== 'object') return null;
+    var dp = d.passi;
+    if(!dp || typeof dp !== 'object') return null;
+    var v = [p.min, p.max, f.min, f.max, c.min, c.max, dp.standard, dp.veloce, d.forza, d.forza_tieni_arredo, d.controllo];
+    for(var i = 0; i < v.length; i++) if(typeof v[i] !== 'number' || !Number.isFinite(v[i])) return null;
+    if(p.min >= p.max || f.min >= f.max || c.min >= c.max) return null;
+    if(p.min < 1 || p.max > 200) return null;
+    if(f.min < 0 || f.max > 2 || c.min < 0 || c.max > 2) return null;
+    if(dp.standard < p.min || dp.standard > p.max || dp.veloce < p.min || dp.veloce > p.max) return null;
+    if(d.forza < f.min || d.forza > f.max || d.forza_tieni_arredo < f.min || d.forza_tieni_arredo > f.max) return null;
+    if(d.controllo < c.min || d.controllo > c.max) return null;
+    return { passi:{ min:p.min, max:p.max }, forza:{ min:f.min, max:f.max }, controllo:{ min:c.min, max:c.max },
+      def:{ passi:{ standard:dp.standard, veloce:dp.veloce }, forza:d.forza, forzaTieni:d.forza_tieni_arredo, controllo:d.controllo } };
+  }
+  function renTempoPassi(tempo, passi, passiDef){
+    if(!(typeof tempo === 'number' && Number.isFinite(tempo) && tempo > 0)) return tempo;
+    if(!(typeof passi === 'number' && Number.isFinite(passi) && passi > 0)) return tempo;
+    if(!(typeof passiDef === 'number' && Number.isFinite(passiDef) && passiDef > 0)) return tempo;
+    return Math.round(tempo * passi / passiDef);
+  }
+  function renNumIt(v){
+    return Number(v).toFixed(2).replace('.', ',');
+  }
 
   /* ---------- foto: lettura, riduzione nel browser, anteprima ---------- */
   /* V6.8: lettura comune di una foto, usata dal Render e da «Precompila con AI» (moduli).
@@ -12703,7 +12772,7 @@ function findClose(){
       sv.textContent = 'Adesso ci sono ' + REN.serv.in_coda + (REN.serv.in_coda === 1 ? ' render' : ' render') + ' in coda' + (REN.serv.attesa > 0 ? ': attesa di circa ' + Math.max(1, Math.round(REN.serv.attesa / 60)) + ' min.' : '.');
     } else sv.hidden = true;
     // stile e qualità non si cambiano mentre si lavora
-    $$('#tcag-ren-stili button, #tcag-ren-var button, #tcag-ren-sugg button').forEach(function(x){ x.disabled = occ; });
+    $$('#tcag-ren-stili button, #tcag-ren-var button, #tcag-ren-sugg button, #tcag-ren-av input, #tcag-ren-av button').forEach(function(x){ x.disabled = occ; });
     g('ren-d').disabled = occ;
     var tc = g('ren-tieni'); if(tc) tc.disabled = occ;
   }
@@ -12733,6 +12802,7 @@ function findClose(){
     if(!REN.varianti.some(function(v){ return v.id === id; })) return;
     REN.variante = id;
     $$('#tcag-ren-var button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-id') === id ? 'true' : 'false'); });
+    disegnaAvanzate();
     aggiornaGenera();
   }
 
@@ -12747,7 +12817,7 @@ function findClose(){
   }
   function renGenera(imp){
     if(renOccupato()) return;                                   // niente doppio invio (doppio tocco, Invio ripetuto)
-    imp = imp || { foto:REN.foto && REN.foto.blob, w:REN.foto && REN.foto.w, h:REN.foto && REN.foto.h, stile:REN.stile, descr:REN.descr, variante:REN.variante, tieni: REN.optTieni && REN.tieni };
+    imp = imp || { foto:REN.foto && REN.foto.blob, w:REN.foto && REN.foto.w, h:REN.foto && REN.foto.h, stile:REN.stile, descr:REN.descr, variante:REN.variante, tieni: REN.optTieni && REN.tieni, av: REN.avOpt && REN.av ? { passi:REN.av.passi, forza:REN.av.forza, controllo:REN.av.controllo } : null };
     if(!imp.foto || !imp.stile || !REN.pronto) return;
     var seq = ++REN.seq;
     REN.ultimoImp = imp; REN.err = null; REN.ris = null; REN.lav = null; REN.tentErr = 0;
@@ -12757,6 +12827,7 @@ function findClose(){
       if(seq !== REN.seq) return;
       var corpo = { foto:b64, stile:imp.stile, descrizione:String(imp.descr || '').trim(), variante:imp.variante || '' };
       if(REN.optTieni) Object.assign(corpo, { tieni_arredo: !!imp.tieni });
+      if(imp.av) corpo.avanzate = imp.av;
       return renChiama('/genera', { metodo:'POST', corpo: JSON.stringify(corpo) }, REN_T_INVIO)
         .then(function(j){
           if(seq !== REN.seq) return;
@@ -22569,6 +22640,7 @@ function stucAzione(a, el){
       case 'ren-foto': renFoto(el.getAttribute('data-k')); break;
       case 'ren-stile': renScegliStile(el.getAttribute('data-id')); break;
       case 'ren-var': renScegliVar(el.getAttribute('data-id')); break;
+      case 'ren-av-std': renAvStandard(); break;
       case 'ren-sugg': renAggiungiSugg(+el.getAttribute('data-i')); break;
       case 'ren-genera': renGenera(); break;
       case 'ren-rigenera': renRigenera(); break;
