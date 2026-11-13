@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build ef42e26b)
+  Guscio app Team Contato - V1.4.0 (build a0507487)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.86.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.87.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: 'ef42e26b', blocco: 'V6.86.0' };
+window.TC_APP = { versione: '1.4.0', build: 'a0507487', blocco: 'V6.87.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -886,6 +886,30 @@ html.tc-guscio body{margin:0}
 #tcag .cf-r{display:block;width:100%;height:48px;margin:2px 0 0;accent-color:var(--nv);background:none}
 #tcag .ren-btns{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:14px}
 #tcag .ren-btns .btn{width:100%;white-space:normal;text-align:center;line-height:1.25;padding-top:8px;padding-bottom:8px}
+#tcag .ren-lotto{margin:0 0 12px;display:flex;flex-direction:column;gap:12px;min-width:0}
+#tcag .ren-lotto-av{margin:0;font:600 16px var(--sans);color:var(--nv)}
+#tcag .ren-lotto-l{list-style:none;margin:0;padding:0;border:1px solid var(--bordo);border-radius:var(--raggio);background:var(--bianco)}
+@media (min-width:768px){#tcag .ren-lotto-l{max-height:min(60vh,520px);overflow-y:auto;overscroll-behavior:contain}
+}
+#tcag .ren-lotto-r{display:grid;grid-template-columns:64px minmax(0,1fr);column-gap:12px;align-items:center;padding:8px 12px;min-height:80px}
+#tcag .ren-lotto-r+.ren-lotto-r{border-top:1px solid var(--bordo)}
+#tcag .ren-lotto-r[data-stato=invio],
+#tcag .ren-lotto-r[data-stato=lavoro]{background:var(--avorio);box-shadow:inset 3px 0 0 var(--nv)}
+#tcag .ren-lotto-img{display:block;width:64px;height:64px;object-fit:cover;border-radius:8px;background:var(--bordo)}
+#tcag .ren-lotto-t{display:flex;flex-direction:column;min-width:0}
+#tcag .ren-lotto-n{font:600 15px var(--sans);color:var(--testo);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tcag .ren-lotto-s{font-size:14px;line-height:1.4;color:var(--tenue);overflow-wrap:anywhere}
+#tcag .ren-lotto-r[data-stato=pronta] .ren-lotto-s,
+#tcag .ren-lotto-r[data-stato=invio] .ren-lotto-s,
+#tcag .ren-lotto-r[data-stato=lavoro] .ren-lotto-s{color:var(--nv)}
+#tcag .ren-lotto-r[data-stato=invio] .ren-lotto-s,
+#tcag .ren-lotto-r[data-stato=lavoro] .ren-lotto-s{font-weight:600}
+#tcag .ren-lotto-r[data-stato=fatto] .ren-lotto-s{color:var(--verde);font-weight:600}
+#tcag .ren-lotto-r[data-stato=errore] .ren-lotto-s{color:#8f0f1b}
+#tcag .ren-lotto-t .btn{align-self:flex-start;min-height:44px;margin-top:6px}
+#tcag .ren-lotto .ren-btns{margin-top:0}
+@media (min-width:480px){#tcag .ren-lotto .ren-btns{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 #tcag .ris-corpo{display:flex;flex-wrap:wrap;gap:16px 20px;align-items:flex-start}
 #tcag .ris-img{flex:0 1 auto;width:min(100%,calc((100vh - 320px) * var(--ar,1.33)));width:min(100%,calc((100dvh - 320px) * var(--ar,1.33)));min-width:min(100%,260px)}
 #tcag .ris-az{flex:1 1 180px;min-width:0}
@@ -6715,7 +6739,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.86.0';
+  var VERSIONE = 'V6.87.0';
 
   /* ====== DA COMPILARE (una volta sola) ======
      clientId: l'ID client OAuth di tipo "Applicazione web" creato in Google
@@ -12392,6 +12416,7 @@ function findClose(){
   var REN_ATTESA_MAX_MS = 25 * 60000;                         // oltre questo si smette di aspettare
   var REN_ERR_POLL_MAX = 6;                                   // controlli falliti di fila prima di fermarsi
   var REN_STORICO_MAX = 6;
+  var REN_LOTTO_MAX = 60;                                     // photos per batch: more would fill the phone's memory
   var REN_DICITURA = "Simulazione generata con intelligenza artificiale. Non rappresenta lo stato attuale dell'immobile; arredi e finiture sono indicativi e non inclusi nella vendita.";
   var REN_SUGG = ['rifai tutto l’arredo', 'divano grigio chiaro', 'tavolo in legno chiaro', 'pavimento in gres effetto legno',
                   'pareti bianche', 'lampade a sospensione', 'tende chiare', 'piante verdi'];
@@ -12402,7 +12427,7 @@ function findClose(){
     stile:'', descr:'', variante:'', optTieni:false, tieni:false, avOpt:null, av:null,
     fase:'form',            // form | invio | lavoro | errore | fatto
     lav:null, err:null, ris:null, storico:[], seq:0,
-    timer:0, tick:0, t0:0, tentErr:0, pronto:false, ultimoImp:null, errT:0
+    timer:0, tick:0, t0:0, tentErr:0, pronto:false, ultimoImp:null, errT:0, lotto:null
   };
 
   /* ---------- indirizzo e chiamate ---------- */
@@ -12478,13 +12503,15 @@ function findClose(){
               <p class="ren-aiuto">Fotografa la stanza dal punto in cui vuoi vedere il risultato. Meglio in orizzontale e con la luce accesa.</p>
               <div id="tcag-ren-anteprima" class="ren-anteprima" hidden></div>
               <p id="tcag-ren-fmsg" class="ren-err" role="alert" hidden></p>
+              <div id="tcag-ren-lotto" class="ren-lotto" hidden></div>
               <div class="ren-foto-btns" id="tcag-ren-fbtns">
                 <button class="btn pri big ren-cam" type="button" data-act="ren-foto" data-k="cam">${ic('camera', 22)}<span>Scatta una foto</span></button>
                 <button class="btn sec big" type="button" data-act="ren-foto" data-k="gal" id="tcag-ren-gal">${ic('upload', 20)}<span id="tcag-ren-gal-t">Scegli una foto</span></button>
               </div>
+              <p class="ren-nota">Puoi sceglierne anche più di una: le faccio una dopo l'altra con le stesse impostazioni.</p>
               <p class="ren-nota ren-drop-nota">Su computer puoi anche trascinare qui la foto.</p>
               <input type="file" id="tcag-ren-in-cam" class="ren-file" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
-              <input type="file" id="tcag-ren-in-gal" class="ren-file" accept="image/*" tabindex="-1" aria-hidden="true">
+              <input type="file" id="tcag-ren-in-gal" class="ren-file" accept="image/*" multiple tabindex="-1" aria-hidden="true">
             </section>
             <section class="card ren-passo" aria-labelledby="tcag-ren-h2">
               <h2 id="tcag-ren-h2"><span class="ren-n" aria-hidden="true">2</span>Lo stile</h2>
@@ -12526,8 +12553,8 @@ function findClose(){
   function legaRender(){
     ['cam', 'gal'].forEach(function(k){
       g('ren-in-' + k).addEventListener('change', function(ev){
-        var f = ev.target.files && ev.target.files[0]; ev.target.value = '';
-        if(f) renNuovaFoto(f);
+        var fl = ev.target.files ? Array.prototype.slice.call(ev.target.files) : []; ev.target.value = '';
+        if(!fl.length) return; if(fl.length > 1 || REN.lotto) renLottoAggiungi(fl); else renNuovaFoto(fl[0]);
       });
     });
     var d = g('ren-d');
@@ -12540,13 +12567,14 @@ function findClose(){
     f1.addEventListener('dragleave', function(ev){ if(!ev.relatedTarget || !f1.contains(ev.relatedTarget)) f1.classList.remove('trascina'); });
     f1.addEventListener('drop', function(ev){
       ev.preventDefault(); f1.classList.remove('trascina');
-      var f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
-      if(f && !renOccupato()) renNuovaFoto(f);
+      var fs = ev.dataTransfer && ev.dataTransfer.files;
+      if(!fs || !fs.length || renOccupato() || renLottoAttivo()) return; if(fs.length > 1 || REN.lotto) renLottoAggiungi(fs); else renNuovaFoto(fs[0]);
     });
     // se la scheda torna visibile durante l'attesa si controlla subito (i telefoni fermano i timer in secondo piano)
     document.addEventListener('visibilitychange', function(){
       if(!document.hidden && REN.fase === 'lavoro' && REN.lav && REN.timer){ clearTimeout(REN.timer); REN.timer = 0; renPoll(REN.seq); }
     });
+    window.addEventListener('beforeunload', renLottoAvvisoUscita);
   }
   var renOccupato = function(){ return REN.fase === 'invio' || REN.fase === 'lavoro'; };
 
@@ -12679,35 +12707,36 @@ function findClose(){
       cv.toBlob(function(b){ cb(b || null); }, 'image/jpeg', qualita);
     } catch(e){ cb(null); }
   }
-  function renNuovaFoto(file){
-    if(renOccupato()) return;
-    var fm = g('ren-fmsg');
-    function nope(t){ REN.fotoOcc = false; REN.fotoMsg = t; aggiornaFoto(); }
+  function renPreparaFoto(file, ok, ko){
     var tipo = String(file.type || '').toLowerCase();
     var heic = fotoEHeic(file);
-    if(file.size > REN_MAX_FILE){ nope('La foto è troppo grande (' + Math.round(file.size / 1048576) + ' MB, il massimo è 30 MB). Scattane una più piccola o riducila.'); return; }
-    if(!file.size){ nope('Il file è vuoto. Scegli un’altra foto.'); return; }
-    if(tipo && tipo.indexOf('image/') !== 0 && !heic){ nope('Questo file non è una foto. Scegli una foto (JPEG, PNG o WebP).'); return; }
-    REN.fotoOcc = true; REN.fotoMsg = ''; aggiornaFoto();
+    if(file.size > REN_MAX_FILE){ ko('La foto è troppo grande (' + Math.round(file.size / 1048576) + ' MB, il massimo è 30 MB). Scattane una più piccola o riducila.'); return; }
+    if(!file.size){ ko('Il file è vuoto. Scegli un’altra foto.'); return; }
+    if(tipo && tipo.indexOf('image/') !== 0 && !heic){ ko('Questo file non è una foto. Scegli una foto (JPEG, PNG o WebP).'); return; }
     fotoDecodifica(file, function(img, w, h){
-      if(!w || !h){ nope('Non riesco a leggere questa foto. Scegline un’altra.'); return; }
-      if(w * h > REN_MAX_PX){ nope('La foto è troppo grande (' + w + ' × ' + h + ' punti). Scattane una con meno risoluzione.'); return; }
+      if(!w || !h){ ko('Non riesco a leggere questa foto. Scegline un’altra.'); return; }
+      if(w * h > REN_MAX_PX){ ko('La foto è troppo grande (' + w + ' × ' + h + ' punti). Scattane una con meno risoluzione.'); return; }
       var s = Math.min(1, REN_LATO / Math.max(w, h)), cw = Math.max(1, Math.round(w * s)), ch = Math.max(1, Math.round(h * s));
-      if(Math.max(cw, ch) / Math.max(1, Math.min(cw, ch)) > REN_RAPPORTO_MAX){ nope('Usa una foto normale, non panoramica.'); return; }     // il render la deformerebbe e conta come un tentativo
-      if(Math.min(cw, ch) < REN_MIN_LATO){ nope('La foto è troppo piccola (' + w + ' × ' + h + ' punti). Ne serve una più grande.'); return; }
+      if(Math.max(cw, ch) / Math.max(1, Math.min(cw, ch)) > REN_RAPPORTO_MAX){ ko('Usa una foto normale, non panoramica.'); return; }     // il render la deformerebbe e conta come un tentativo
+      if(Math.min(cw, ch) < REN_MIN_LATO){ ko('La foto è troppo piccola (' + w + ' × ' + h + ' punti). Ne serve una più grande.'); return; }
       fotoInJpeg(img, cw, ch, 0.85, function(b){
-        if(!b){ nope('Non riesco a preparare la foto. Scegline un’altra.'); return; }
-        if(b.size > REN_MAX_JPEG){ nope('La foto è ancora troppo pesante. Scegline un’altra.'); return; }
-        renImpostaFoto(b, cw, ch);
+        if(!b){ ko('Non riesco a preparare la foto. Scegline un’altra.'); return; }
+        if(b.size > REN_MAX_JPEG){ ko('La foto è ancora troppo pesante. Scegline un’altra.'); return; }
+        ok(b, cw, ch);
       });
     }, function(){
-      nope(heic
+      ko(heic
         ? 'Questa foto è in formato HEIC e questo telefono non la legge qui. Usa «Scatta una foto», oppure su iPhone: Impostazioni, Fotocamera, Formati, «Più compatibile».'
         : 'Non riesco a leggere questo file. Scegli una foto JPEG, PNG o WebP.');
     });
   }
-  function renFoto(k){
+  function renNuovaFoto(file){
     if(renOccupato()) return;
+    REN.fotoOcc = true; REN.fotoMsg = ''; aggiornaFoto();
+    renPreparaFoto(file, function(b, w, h){ renImpostaFoto(b, w, h); }, function(t){ REN.fotoOcc = false; REN.fotoMsg = t; aggiornaFoto(); });
+  }
+  function renFoto(k){
+    if(renOccupato() || renLottoAttivo()) return;
     var inp = g('ren-in-' + (k === 'cam' ? 'cam' : 'gal'));
     if(inp) inp.click();
   }
@@ -12723,15 +12752,170 @@ function findClose(){
     var an = g('ren-anteprima'), fm = g('ren-fmsg'), bt = g('ren-fbtns'); if(!an) return;
     var occ = renOccupato();
     fm.hidden = !REN.fotoMsg; fm.textContent = REN.fotoMsg;
-    if(REN.fotoOcc){
+    if(REN.lotto){ an.hidden = true; put(an, ''); } else if(REN.fotoOcc){
       an.hidden = false; put(an, H`<p class="ren-prep">Preparo la foto…</p>`);
     } else if(REN.foto){
       an.hidden = false;
       put(an, H`<img src="${REN.foto.url}" alt="La tua foto" width="${REN.foto.w}" height="${REN.foto.h}"><p class="ren-nota">Foto pronta (${REN.foto.w} × ${REN.foto.h}). L'indirizzo e la posizione di dove l'hai scattata non vengono inviati.</p>`);
     } else { an.hidden = true; put(an, ''); }
     g('ren-gal-t').textContent = REN.foto ? 'Scegli un’altra foto' : 'Scegli una foto';
-    $$('button', bt).forEach(function(b){ b.disabled = occ || REN.fotoOcc; });
+    $$('button', bt).forEach(function(b){ b.disabled = occ || REN.fotoOcc || renLottoAttivo(); });
     var cam = $('.ren-cam', bt); if(cam) $('span', cam).textContent = REN.foto ? 'Scatta un’altra foto' : 'Scatta una foto';
+    disegnaLotto();
+  }
+
+  /* ---------- batch ---------- */
+  function renLottoAttivo(){ return !!(REN.lotto && REN.lotto.attivo); }
+  function renLottoConta(stato){
+    var n = 0;
+    if(REN.lotto) for(var i = 0; i < REN.lotto.voci.length; i++) if(REN.lotto.voci[i].stato === stato) n++;
+    return n;
+  }
+  function renLottoStatoTesto(v){
+    switch(v.stato){
+      case 'attesa': return 'In attesa';
+      case 'preparo': return 'Preparo la foto…';
+      case 'pronta': return 'Pronta';
+      case 'invio': return 'Invio…';
+      case 'lavoro': return 'Sto creando il render…';
+      case 'fatto': return 'Fatto';
+      case 'errore': return v.err || 'Non riuscita.';
+      default: return '';
+    }
+  }
+  // one photo at a time: the next one is prepared only when the previous one is done (phone memory)
+  function renLottoAggiungi(files){
+    if(renOccupato() || renLottoAttivo()) return;
+    if(!REN.lotto) REN.lotto = { voci:[], attivo:false, fermo:false, imp:null, msg:'', cur:-1, prep:false };
+    var L = REN.lotto, lista = Array.prototype.slice.call(files || []), posto = REN_LOTTO_MAX - L.voci.length;
+    L.msg = '';
+    if(lista.length > posto){ lista = lista.slice(0, Math.max(0, posto)); L.msg = "Ne prendo 60: il massimo per un lotto."; }
+    for(var k = 0; k < lista.length; k++){
+      var f = lista[k];
+      L.voci.push({ n:L.voci.length + 1, nome:String(f.name || ''), stato:'attesa', foto:null, err:'', id:'', dopo:'', blob:null, w:0, h:0, fh:0, file:f });
+    }
+    aggiornaFoto(); aggiornaGenera(); renLottoPrepara(L);
+  }
+  function renLottoPrepara(L){
+    if(REN.lotto !== L || L.prep) return;
+    var v = null;
+    for(var i = 0; i < L.voci.length; i++) if(L.voci[i].stato === 'attesa'){ v = L.voci[i]; break; }
+    if(!v){ aggiornaFoto(); aggiornaGenera(); return; }
+    L.prep = true; v.stato = 'preparo'; aggiornaFoto();
+    renPreparaFoto(v.file, function(blob, w, h){
+      L.prep = false; v.file = null;
+      if(REN.lotto !== L) return;
+      v.foto = { blob:blob, url:URL.createObjectURL(blob), w:w, h:h }; v.stato = 'pronta';
+      aggiornaFoto(); aggiornaGenera(); renLottoPrepara(L);
+    }, function(t){
+      L.prep = false; v.file = null;
+      if(REN.lotto !== L) return;
+      v.stato = 'errore'; v.err = t;
+      aggiornaFoto(); aggiornaGenera(); renLottoPrepara(L);
+    });
+  }
+  function disegnaLotto(){
+    var el = g('ren-lotto'); if(!el) return;
+    var L = REN.lotto;
+    if(!L){ el.hidden = true; put(el, ''); return; }
+    el.hidden = false;
+    var np = renLottoConta('pronta'), nf = renLottoConta('fatto'), tot = 0, ne = 0;
+    for(var i = 0; i < L.voci.length; i++) if(L.voci[i].foto){ tot++; if(L.voci[i].stato === 'errore') ne++; }
+    var pct = tot ? Math.round((nf + ne) / tot * 100) : 0;
+    var av = L.attivo ? 'Render ' + (tot - np) + ' di ' + tot + ' · circa ' + renStimaLotto(np + 1, renTempo()) + ' min alla fine' : L.voci.length + ' foto · ' + np + ' pronte';
+    var righe = L.voci.map(function(v, k){
+      return H`<li class="ren-lotto-r" data-stato="${v.stato}">${v.foto ? H`<img class="ren-lotto-img" src="${v.foto.url}" alt="" width="64" height="64">` : H`<span class="ren-lotto-img" aria-hidden="true"></span>`}<span class="ren-lotto-t"><span class="ren-lotto-n">${v.n + '. ' + (v.nome || 'Foto')}</span><span class="ren-lotto-s">${renLottoStatoTesto(v)}</span>${v.stato === 'fatto' ? H`<button class="btn sec" type="button" data-act="ren-lotto-scarica" data-i="${k}"><span>Scarica</span></button>` : ''}</span></li>`;
+    });
+    var bt = [];
+    if(L.attivo && !L.fermo) bt.push(H`<button class="btn sec big" type="button" data-act="ren-lotto-ferma">${ic('x', 20)}<span>Ferma</span></button>`);
+    if(!L.attivo && L.fermo && np) bt.push(H`<button class="btn pri big" type="button" data-act="ren-lotto-riprendi">${ic('right', 20)}<span>Riprendi</span></button>`);
+    if(!L.attivo && ne) bt.push(H`<button class="btn sec big" type="button" data-act="ren-lotto-riprova">${ic('refresh', 20)}<span>Riprova le non riuscite</span></button>`);
+    if(nf) bt.push(H`<button class="btn pri big" type="button" data-act="ren-lotto-zip">${ic('download', 20)}<span>Scarica tutto (.zip) · ${nf}</span></button>`);
+    bt.push(H`<button class="btn dng big" type="button" data-act="ren-lotto-svuota">${ic('x', 20)}<span>Svuota l'elenco</span></button>`);
+    put(el, H`${av ? H`<p class="ren-lotto-av" role="status">${av}</p>` : ''}${L.attivo ? H`<div class="ren-barra" role="progressbar" aria-label="Avanzamento del lotto" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div>` : ''}${L.msg ? H`<p class="ren-err" role="alert">${L.msg}</p>` : ''}<ol class="ren-lotto-l">${righe}</ol><div class="ren-btns">${bt}</div>`);
+    var sv = $('[data-act="ren-lotto-svuota"]', el); if(sv) sv.disabled = L.attivo;
+  }
+  function renLottoAvvia(tieniImp){
+    var L = REN.lotto;
+    if(!L || L.attivo || renOccupato() || renMotivo()) return;
+    if(!tieniImp || !L.imp){
+      L.imp = { stile:REN.stile, descr:REN.descr, variante:REN.variante, tieni: REN.optTieni && REN.tieni, av: REN.avOpt && REN.av ? { passi:REN.av.passi, forza:REN.av.forza, controllo:REN.av.controllo } : null };
+    }
+    L.attivo = true; L.fermo = false; L.msg = ''; renLottoProssima();
+  }
+  function renLottoProssima(){
+    var L = REN.lotto;
+    if(!L || !L.attivo || renOccupato()) return;
+    if(L.fermo){ L.attivo = false; L.msg = "Lotto fermato: premi Riprendi per continuare."; aggiornaRender(); return; }
+    var i = -1;
+    for(var k = 0; k < L.voci.length; k++) if(L.voci[k].stato === 'pronta'){ i = k; break; }
+    if(i < 0){ L.attivo = false; aggiornaRender(); toast('Lotto finito: ' + renLottoConta('fatto') + ' render fatti.'); return; }
+    var v = L.voci[i];
+    v.stato = 'invio'; L.cur = i;
+    renGenera(Object.assign({}, L.imp, { foto:v.foto.blob, w:v.foto.w, h:v.foto.h }));
+    if(REN.fase !== 'invio' && REN.fase !== 'lavoro'){
+      v.stato = 'pronta'; L.cur = -1; L.attivo = false; L.fermo = true; L.msg = "Non riesco a partire. Premi Riprendi.";
+      aggiornaRender();
+    }
+  }
+  function renLottoEsito(ris, err){
+    var L = REN.lotto, v = L.voci[L.cur];
+    L.cur = -1; REN.fase = 'form'; REN.lav = null; REN.err = null;
+    if(ris){ v.stato = 'fatto'; v.id = ris.id; v.dopo = ris.dopo; v.blob = ris.blob; v.w = ris.w; v.h = ris.h; v.fh = ris.fh; v.err = ''; }
+    else if(err && err.stop){ v.stato = 'pronta'; L.msg = err.testo; L.fermo = true; L.attivo = false; }
+    else { v.stato = 'errore'; v.err = (err && err.testo) || 'Qualcosa non ha funzionato. Riprova.'; }
+    aggiornaRender();
+    if(L.attivo) setTimeout(renLottoProssima, 1000);
+  }
+  function renLottoFerma(){
+    var L = REN.lotto; if(!L || !L.attivo) return;
+    L.fermo = true; L.msg = "Mi fermo dopo il render in corso."; disegnaLotto();
+  }
+  function renLottoRiprova(){
+    var L = REN.lotto; if(!L || L.attivo) return;
+    for(var i = 0; i < L.voci.length; i++){
+      var v = L.voci[i];
+      if(v.stato === 'errore' && v.foto){ v.stato = 'pronta'; v.err = ''; }
+    }
+    renLottoAvvia(true);
+  }
+  function renLottoSvuota(){
+    var L = REN.lotto; if(!L || L.attivo) return;
+    if(renLottoConta('fatto') && !window.confirm("Ci sono render non scaricati: svuotando l'elenco li perdi. Svuotare?")) return;
+    for(var i = 0; i < L.voci.length; i++){
+      var v = L.voci[i];
+      if(v.foto && v.foto.url) URL.revokeObjectURL(v.foto.url);
+      if(v.dopo) URL.revokeObjectURL(v.dopo);
+    }
+    REN.lotto = null; aggiornaRender();
+  }
+  function renLottoScarica(i){
+    var L = REN.lotto, v = L && L.voci[i];
+    if(!v || v.stato !== 'fatto' || !v.dopo) return;
+    var a = document.createElement('a');
+    a.href = v.dopo; a.download = renNomeLotto(v.n, v.nome); a.rel = 'noopener'; a.style.display = 'none';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+  }
+  function renLottoZip(){
+    var L = REN.lotto; if(!L) return;
+    var fatti = L.voci.filter(function(v){ return v.stato === 'fatto' && v.blob; });
+    if(!fatti.length) return;
+    Promise.resolve().then(function(){
+      return Promise.all(fatti.map(function(v){ return v.blob.arrayBuffer(); }));
+    }).then(function(bufs){
+      var z = renZipBytes(fatti.map(function(v, k){ return { nome:renNomeLotto(v.n, v.nome), dati:new Uint8Array(bufs[k]) }; }));
+      var u = URL.createObjectURL(new Blob([z], { type:'application/zip' }));
+      var a = document.createElement('a');
+      a.href = u; a.download = renNomeZip(new Date()); a.rel = 'noopener'; a.style.display = 'none';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(u); }, 60000);
+      toast('Salvato lo zip con ' + fatti.length + ' render. Sulle immagini c’è la dicitura AI: non toglierla.');
+    }).catch(function(){ toast('Non riesco a preparare lo zip. Scarica i render uno alla volta.'); });
+  }
+  function renLottoAvvisoUscita(ev){
+    if(!renLottoAttivo()) return;
+    ev.preventDefault(); ev.returnValue = ''; return '';
   }
 
   /* ---------- descrizione ---------- */
@@ -12754,6 +12938,7 @@ function findClose(){
     if(REN.carico === 'err') return 'Lo strumento non è raggiungibile. Premi «Riprova».';
     if(dianaRenderSpento()) return dianaMessaggioRender();             // V6.7: spento dall'admin (Gestione Diana Assistant)
     if(REN.serv && REN.serv.attivo === false) return 'Lo strumento è spento in questo momento. Riprova più tardi.';
+    if(REN.lotto){ if(!renLottoConta('pronta')) return (renLottoConta('attesa') + renLottoConta('preparo')) ? 'Preparo le foto…' : 'Nessuna foto pronta nell’elenco.'; if(!REN.stile) return 'Scegli uno stile (passo 2).'; return ''; }
     if(REN.fotoOcc) return 'Preparo la foto…';
     if(!REN.foto) return 'Prima scegli o scatta la foto (passo 1).';
     if(!REN.stile) return 'Scegli uno stile (passo 2).';
@@ -12761,11 +12946,11 @@ function findClose(){
   }
   function aggiornaGenera(){
     var b = g('ren-genera'); if(!b) return;
-    var occ = renOccupato(), mot = renMotivo();
+    var occ = renOccupato() || renLottoAttivo(), mot = renMotivo(), np = REN.lotto ? renLottoConta('pronta') : 0;
     b.disabled = occ || !!mot;
-    $('span', b).textContent = occ ? 'Sto lavorando…' : 'Genera il render';
+    $('span', b).textContent = occ ? 'Sto lavorando…' : (REN.lotto ? 'Genera ' + np + ' render' : 'Genera il render');
     var h = g('ren-hint');
-    h.textContent = occ ? 'Un render alla volta: aspetta che finisca.' : (mot || 'Ci vuole circa ' + renTempo() + ' secondi.');
+    h.textContent = occ ? (REN.lotto ? 'Le foto partono una alla volta: aspetta la fine del lotto.' : 'Un render alla volta: aspetta che finisca.') : (mot || (REN.lotto ? 'Ci vogliono circa ' + renStimaLotto(np, renTempo()) + ' min.' : 'Ci vuole circa ' + renTempo() + ' secondi.'));
     var sv = g('ren-servizio');
     if(REN.serv && REN.serv.attivo !== false && REN.serv.in_coda > 0 && !occ){
       sv.hidden = false;
@@ -12839,21 +13024,24 @@ function findClose(){
       diagRender(e);
       if(e && e.http === 401){ esci('La sessione è scaduta: accedi di nuovo.'); return; }
       if(e && e.http === 503 && e.corpo && e.corpo.manutenzione === true) dianaSegnaSpento('render', e.testoUtente);       // V6.7: spento dall'admin mentre la pagina era aperta
-      if(e && e.http === 409 && e.corpo && typeof e.corpo.id === 'string' && /^[A-Za-z0-9_-]{8,64}$/.test(e.corpo.id)){
+      if(e && e.http === 409 && !renLottoAttivo() && e.corpo && typeof e.corpo.id === 'string' && /^[A-Za-z0-9_-]{8,64}$/.test(e.corpo.id)){
         renInizioLavoro(e.corpo.id, { altro:true }); return;     // ne ha gia' uno in corso: lo seguo (con il SUO prima, non la foto nuova)
       }
-      renFine({ testo: renTestoErrore(e || {}, 'genera'), foto: e && e.http === 400 });
+      var lot = renLottoAttivo();
+      renFine({ testo: lot && e && e.http === 409 ? 'Hai già un render in corso: aspetta che finisca e premi Riprendi.' : renTestoErrore(e || {}, 'genera'), foto: e && e.http === 400, stop: lot && !!(e && (e.http === 429 || e.http === 409 || (e.http === 503 && e.corpo && e.corpo.manutenzione === true))) });
     });
   }
   function renInizioLavoro(id, j){
     REN.fase = 'lavoro'; REN.tentErr = 0; REN.t0 = Date.now();
     REN.lav = { id:id, stato: typeof j.stato === 'string' ? j.stato : 'in_coda', pos: +j.posizione || 0, attesa: +j.attesa_stimata_s || 0, trascorsi:0, prog:0, tOss:Date.now(), altro: !!j.altro };
+    if(renLottoAttivo() && REN.lotto.cur >= 0) REN.lotto.voci[REN.lotto.cur].stato = 'lavoro';
     aggiornaRender();
     clearInterval(REN.tick); REN.tick = setInterval(renTick, 1000);
     renPoll(REN.seq);
   }
   function renFine(err){
     clearTimeout(REN.timer); REN.timer = 0; clearInterval(REN.tick); REN.tick = 0;
+    if(renLottoAttivo() && REN.lotto.cur >= 0){ renLottoEsito(null, err); return; }
     REN.fase = 'errore'; REN.err = err;
     aggiornaRender(); renVaiAllOut();
   }
@@ -12873,7 +13061,7 @@ function findClose(){
         var cod = j && typeof j.errore === 'string' ? j.errore : '', msg = j && typeof j.messaggio === 'string' && j.messaggio.length <= 200 ? j.messaggio : '';
         var PRED = { gpu_occupata:'La scheda video è occupata da troppo tempo. Riprova fra qualche minuto.', servizio_spento:'Lo strumento è spento. Riprova più tardi.',
                      foto:'Non riesco a usare questa foto. Scattane un’altra.', interno:'Qualcosa non ha funzionato. Riprova.' };
-        renFine({ testo: msg || PRED[cod] || PRED.interno, foto: cod === 'foto' });
+        renFine({ testo: msg || PRED[cod] || PRED.interno, foto: cod === 'foto', stop: cod === 'notte' });
         return;
       }
       if(['in_coda', 'attesa_gpu', 'caricamento', 'in_corso'].indexOf(st) < 0) st = L.stato;
@@ -12932,6 +13120,7 @@ function findClose(){
       var imp = REN.ultimoImp, st = null;
       for(var i = 0; i < REN.stili.length; i++) if(imp && REN.stili[i].id === imp.stile) st = REN.stili[i];
       var fh = fascia > 0 && fascia < x.h ? x.h - fascia : x.h;      // altezza della sola foto
+      if(renLottoAttivo() && REN.lotto.cur >= 0){ if(x.prima) URL.revokeObjectURL(x.prima); renLottoEsito({ id:id, dopo:x.u, blob:b, w:x.w, h:x.h, fh:fh }, null); return; }
       var voce = altro
         ? { id:id, stile:'', ora: F_ORA.format(new Date()), prima: x.prima || '', dopo: x.u, w:x.w, h:x.h, fh:fh, blob:b, imp:null, avviso:'Stai vedendo il render che avevi già avviato, non quello della foto che hai scelto adesso.' }
         : { id:id, stile: st ? st.nome : '', ora: F_ORA.format(new Date()), prima: URL.createObjectURL(imp.foto), dopo: x.u, w:x.w, h:x.h, fh:fh, blob:b, imp:imp, avviso:'' };
@@ -13121,6 +13310,92 @@ function findClose(){
     aggiornaRender();
     clearInterval(REN.tick); REN.tick = setInterval(renTick, 1000);
     renPoll(REN.seq);
+  }
+/* Render batch: pure helpers for the ZIP download, file names and time estimate. No page access, no state. */
+  function renCrc32(u8){
+    var tab = [], c, n, k, i, crc;
+    for(n = 0; n < 256; n++){
+      c = n;
+      for(k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      tab[n] = c >>> 0;
+    }
+    crc = 0xFFFFFFFF;
+    for(i = 0; i < u8.length; i++) crc = tab[(crc ^ u8[i]) & 0xFF] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function renZipBytes(files){
+    var enc = new TextEncoder(), partes = [], centrale = [], pos = 0, cenLen = 0;
+    var lista = files || [];
+    for(var i = 0; i < lista.length; i++){
+      var nome = enc.encode(String(lista[i].nome));
+      var dati = lista[i].dati instanceof Uint8Array ? lista[i].dati : new Uint8Array(lista[i].dati || []);
+      var crc = renCrc32(dati);
+      var loc = new Uint8Array(30 + nome.length);
+      var dv = new DataView(loc.buffer);
+      dv.setUint32(0, 0x04034b50, true);
+      dv.setUint16(4, 20, true);
+      dv.setUint16(6, 0x0800, true);
+      dv.setUint16(8, 0, true);
+      dv.setUint16(10, 0, true);
+      dv.setUint16(12, 33, true);
+      dv.setUint32(14, crc, true);
+      dv.setUint32(18, dati.length, true);
+      dv.setUint32(22, dati.length, true);
+      dv.setUint16(26, nome.length, true);
+      dv.setUint16(28, 0, true);
+      loc.set(nome, 30);
+      var cen = new Uint8Array(46 + nome.length);
+      var cv = new DataView(cen.buffer);
+      cv.setUint32(0, 0x02014b50, true);
+      cv.setUint16(4, 20, true);
+      cv.setUint16(6, 20, true);
+      cv.setUint16(8, 0x0800, true);
+      cv.setUint16(10, 0, true);
+      cv.setUint16(12, 0, true);
+      cv.setUint16(14, 33, true);
+      cv.setUint32(16, crc, true);
+      cv.setUint32(20, dati.length, true);
+      cv.setUint32(24, dati.length, true);
+      cv.setUint16(28, nome.length, true);
+      cv.setUint16(30, 0, true);
+      cv.setUint16(32, 0, true);
+      cv.setUint16(34, 0, true);
+      cv.setUint16(36, 0, true);
+      cv.setUint32(38, 0, true);
+      cv.setUint32(42, pos, true);
+      cen.set(nome, 46);
+      partes.push(loc, dati);
+      centrale.push(cen);
+      pos += loc.length + dati.length;
+      cenLen += cen.length;
+    }
+    var fine = new Uint8Array(22);
+    var fv = new DataView(fine.buffer);
+    fv.setUint32(0, 0x06054b50, true);
+    fv.setUint16(4, 0, true);
+    fv.setUint16(6, 0, true);
+    fv.setUint16(8, lista.length, true);
+    fv.setUint16(10, lista.length, true);
+    fv.setUint32(12, cenLen, true);
+    fv.setUint32(16, pos, true);
+    fv.setUint16(20, 0, true);
+    var tutti = partes.concat(centrale, [fine]);
+    var tot = 0;
+    for(var j = 0; j < tutti.length; j++) tot += tutti[j].length;
+    var out = new Uint8Array(tot), off = 0;
+    for(var k = 0; k < tutti.length; k++){ out.set(tutti[k], off); off += tutti[k].length; }
+    return out;
+  }
+  function renNomeLotto(n, nome){
+    var b = String(nome || '').replace(/\.[^.]*$/, '').replace(/[^A-Za-z0-9-]/g, '').slice(0, 30);
+    return 'simulazione-ai-' + ('000' + n).slice(-3) + (b ? '-' + b : '') + '.jpg';
+  }
+  function renStimaLotto(restanti, tempoS){
+    return Math.ceil(restanti * tempoS / 60);
+  }
+  function renNomeZip(d){
+    var p = function(x){ return (x < 10 ? '0' : '') + x; };
+    return 'render-lotto-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + '.zip';
   }
   /* =========================================================
      BUSINESS PLAN FOR AGENTS (V6.15.0, epic T-MVUQGFOX, part 1)
@@ -22642,7 +22917,7 @@ function stucAzione(a, el){
       case 'ren-var': renScegliVar(el.getAttribute('data-id')); break;
       case 'ren-av-std': renAvStandard(); break;
       case 'ren-sugg': renAggiungiSugg(+el.getAttribute('data-i')); break;
-      case 'ren-genera': renGenera(); break;
+      case 'ren-genera': if(REN.lotto) renLottoAvvia(); else renGenera(); break;
       case 'ren-rigenera': renRigenera(); break;
       case 'ren-scarica': renScarica(); break;
       case 'ren-condividi': renCondividi(); break;
@@ -22651,6 +22926,12 @@ function stucAzione(a, el){
       case 'ren-storico': renStorico(+el.getAttribute('data-i')); break;
       case 'ren-ricontrolla': renRicontrolla(); break;
       case 'ren-stili-riprova': renStiliRiprova(); break;
+      case 'ren-lotto-svuota': renLottoSvuota(); break;
+      case 'ren-lotto-ferma': renLottoFerma(); break;
+      case 'ren-lotto-riprendi': renLottoAvvia(true); break;
+      case 'ren-lotto-riprova': renLottoRiprova(); break;
+      case 'ren-lotto-scarica': renLottoScarica(+el.getAttribute('data-i')); break;
+      case 'ren-lotto-zip': renLottoZip(); break;
       case 'cookie-pref': cookiePref(); break;
       case 'camp-agg': caricaCamp(); break;
       case 'acct': apriAccount(el); break;
