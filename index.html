@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 8ba958d1)
+  Guscio app Team Contato - V1.4.0 (build 32d8e48b)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.90.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.90.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '8ba958d1', blocco: 'V6.90.0' };
+window.TC_APP = { versione: '1.4.0', build: '32d8e48b', blocco: 'V6.90.1' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -22771,7 +22771,7 @@ function stucAzione(a, el){
     });
     (a.certificati || []).forEach(function(c){
       var g = c.giorni;
-      var testo = c.dominio + ': ' + (g == null ? 'non leggibile' : g + ' giorni');
+      var testo = c.nome + ': ' + (g == null ? 'non leggibile' : g + ' giorni');
       if(g == null || g < 7) add('certificati', 'grave', testo);
       else if(g < 14) add('certificati', 'attenzione', testo);
       else add('certificati', 'ok', testo);
@@ -22787,7 +22787,7 @@ function stucAzione(a, el){
     if(a.rilascio == null) add('rilascio', 'attenzione', 'Nessun dato sul rilascio');
     else if(a.rilascio.esito !== 'ok') add('rilascio', 'grave', 'Ultimo rilascio con errore');
     else add('rilascio', 'ok', 'Ultimo rilascio riuscito');
-    var s = a.sistema || {};
+    var s = a.host || {};
     if(s.riavvio_richiesto === true || Number(s.aggiornamenti_sicurezza) > 0) add('sistema', 'attenzione', 'Riavvio o aggiornamenti di sicurezza da fare');
     else add('sistema', 'ok', 'Sistema aggiornato');
     database();
@@ -22874,7 +22874,13 @@ function stucAzione(a, el){
       put(b, H`<div class="narrow adm-largo" id="tcag-vps"><div class="card"><div class="err" role="alert">${ic('warn', 18)}<span>${VPS.errore}</span><button class="btn sec sm" type="button" data-act="vps-riprova">Riprova</button></div></div></div>`);
       return;
     }
-    var d = VPS.dati, a = d.attuale || null, serie = d.serie || {}, punti = serie.punti || [];
+    try { vpsDisegna(b, VPS.dati); }
+    catch(e){ put(b, H`<div class="narrow adm-largo" id="tcag-vps"><div class="card"><div class="err" role="alert">${ic('warn', 18)}<span>Non riesco a mostrare i dati della VPS.</span><button class="btn sec sm" type="button" data-act="vps-riprova">Riprova</button></div></div></div>`); }
+  }
+
+  // il disegno dei dati: una risposta di forma diversa lancia qui e renderVpsAdmin mostra la card «Riprova»
+  function vpsDisegna(b, d){
+    var a = d.attuale || null, serie = d.serie || {}, punti = serie.punti || [];
     var voci = vpsSoglie(d, Date.now());
     function vociDi(k){ return voci.filter(function(v){ return v.voce === k; }); }
     function livelloDi(k){
@@ -22909,9 +22915,9 @@ function stucAzione(a, el){
       ['certificati', 'Certificati', giorniMin === null ? '-' : giorniMin + ' giorni'],
       ['backup', 'Backup', a && a.backup ? fmt(a.backup.ultimo_backup) : '-'],
       ['rilascio', 'Rilascio', a && a.rilascio ? a.rilascio.esito + ' · ' + String(a.rilascio.commit || '').slice(0, 7) : '-'],
-      ['database', 'Database', d.database ? mb(Number(d.database.db_byte) / 1048576) + ' MB · ' + d.database.connessioni + ' connessioni' : '-'],
+      ['database', 'Database', d.database ? mb(Number(d.database.byte) / 1048576) + ' MB · ' + d.database.connessioni + ' connessioni' : '-'],
       ['fogli', 'Copia dei fogli', d.fogli === 'spenta' ? 'Spenta' : d.fogli && d.fogli.ultima_copia ? fmt(d.fogli.ultima_copia) : '-'],
-      ['sistema', 'Sistema', a && a.sistema ? a.sistema.kernel + ' · aggiornamenti ' + a.sistema.aggiornamenti_sicurezza : '-']
+      ['sistema', 'Sistema', a && a.host ? a.host.kernel + ' · aggiornamenti ' + a.host.aggiornamenti_sicurezza : '-']
     ];
     var cardsHtml = CARTE.map(function(c){
       var liv = livelloDi(c[0]);
@@ -22945,10 +22951,11 @@ function stucAzione(a, el){
       return H`<section class="card vps-graf"><div class="vps-graf-testa"><h3>${g[0]}</h3><b>${valore}</b></div><svg class="vps-svg" viewBox="0 0 600 140" preserveAspectRatio="none" role="img" aria-label="${g[0] + ': ' + valore}">${linee}</svg><div class="vps-assi"><span>${fmt(pt[0].t)}</span><span>${fmt(pt[pt.length - 1].t)}</span></div></section>`;
     }
     var grafici = GRAFICI.map(graficoHtml);
-    var strisce = (serie.contenitori || []).map(function(nome){
-      var w = pt.length ? 600 / pt.length : 600;
-      var rects = pt.map(function(p, i){
-        var st = (p.contenitori || {})[nome];
+    var strisce = Object.keys(serie.contenitori || {}).map(function(nome){
+      var lista = serie.contenitori[nome] || [];
+      var w = lista.length ? 600 / lista.length : 600;
+      var rects = lista.map(function(p, i){
+        var st = p ? p.s : null;
         st = st === 'ok' || st === 'riavvio' ? st : 'giu';
         return H`<rect x="${i * w}" y="0" width="${w}" height="12" class="${'vps-s-' + st}"/>`;
       });
