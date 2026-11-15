@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 32d8e48b)
+  Guscio app Team Contato - V1.4.0 (build 586870d4)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
   Contiene il Code Block "Area Agenti" V6.90.1 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '32d8e48b', blocco: 'V6.90.1' };
+window.TC_APP = { versione: '1.4.0', build: '586870d4', blocco: 'V6.90.1' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -6759,7 +6759,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.90.0';
+  var VERSIONE = 'V6.90.1';
 
   // V6.89.0: sull'indirizzo di prova (agenti.prova) le azioni passano dalla piattaforma e l'AI dal tunnel, sullo stesso indirizzo; altrove nessun cambio
   function suIndirizzoProva(host){
@@ -22726,7 +22726,7 @@ function stucAzione(a, el){
     case 'stua-prova-chiedi': stucProvaChiedi(); break;
   }
 }
-/* ===================== ADMINISTRATION > VPS HEALTH (V6.90.0): admin only, only on agenti.prova ======================= */
+/* ===================== ADMINISTRATION > VPS HEALTH (V6.90.1): admin only, only on agenti.prova ======================= */
   var VPS = { dati: null, ore: 24, caricando: false, errore: null, timer: null, agg: 0 };   // agg = Date.now() of the last good answer
   var VPS_PERIODI = [[6, '6 ore'], [24, '24 ore'], [168, '7 giorni']];
   var VPS_PILL = { ok: 's-app', attenzione: 's-rich', grave: 's-nuova' };
