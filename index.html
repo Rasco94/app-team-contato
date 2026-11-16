@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 84f02969)
+  Guscio app Team Contato - V1.4.0 (build 0c9d8ab7)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.91.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.92.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '84f02969', blocco: 'V6.91.0' };
+window.TC_APP = { versione: '1.4.0', build: '0c9d8ab7', blocco: 'V6.92.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -6705,15 +6705,21 @@ html.tc-guscio body{margin:0}
 #tcag .br-pag.mt-font-testo .br-sc-corpo,
 #tcag .vt-foglio.mt-font-testo .vt-frase{font-family:var(--mt-font-testo)}
 #tcag .vps-periodi{margin:0 0 16px}
-#tcag .vps-griglia{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:0 0 24px}
+#tcag .vps-griglia{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px;margin:0 0 24px}
 #tcag .vps-griglia>*{min-width:0}
 #tcag .vps-card-testa,
 #tcag .vps-graf-testa{display:flex;align-items:center;justify-content:space-between;gap:8px}
-#tcag .vps-card h3,
+#tcag .vps-card h3{margin:0;font:600 12px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);overflow-wrap:anywhere}
 #tcag .vps-graf h3{margin:0;font:600 15px var(--sans);color:var(--testo);overflow-wrap:anywhere}
 #tcag .vps-card .mut{overflow-wrap:anywhere}
-#tcag .vps-valore{margin:8px 0 4px;font:600 18px var(--sans);color:var(--nv)}
-#tcag .vps-grafici{display:grid;gap:12px;margin:0 0 24px;min-width:0}
+#tcag .vps-valore{margin:6px 0;font:700 26px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--nv);overflow-wrap:anywhere}
+#tcag .vps-det{margin:6px 0 0;font-size:13px;line-height:1.45;color:var(--testo);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#tcag .vps-barra{display:block;width:100%;height:6px;margin:4px 0}
+#tcag .vps-barra-fondo{fill:var(--bordo)}
+#tcag .vps-b-ok{fill:var(--verde)}
+#tcag .vps-b-attenzione{fill:var(--oro-t)}
+#tcag .vps-b-grave{fill:var(--rosso)}
+#tcag .vps-grafici{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));gap:12px;margin:0 0 24px;min-width:0}
 #tcag .vps-graf{margin:0 0 12px;min-width:0}
 #tcag .vps-svg{display:block;width:100%;height:140px;margin:8px 0 4px}
 #tcag .vps-striscia{display:block;width:100%;height:12px;margin-top:8px}
@@ -6722,8 +6728,25 @@ html.tc-guscio body{margin:0}
 #tcag .vps-s-ok{fill:var(--verde)}
 #tcag .vps-s-riavvio{fill:var(--oro-t)}
 #tcag .vps-s-giu{fill:var(--rosso)}
-#tcag .vps-assi{display:flex;justify-content:space-between;font-size:13px;color:var(--tenue)}
+#tcag .vps-assi{display:flex;justify-content:space-between;font-size:13px;color:var(--tenue);font-variant-numeric:tabular-nums}
+#tcag .vps-stat{font-variant-numeric:tabular-nums}
+#tcag .vps-gl{stroke:var(--bordo);stroke-width:1;vector-effect:non-scaling-stroke}
 #tcag .vps-nota{margin-top:16px}
+#tcag .vps-cont{overflow-x:auto}
+#tcag .vps-tab{width:100%;border-collapse:collapse;font-size:13px}
+#tcag .vps-tab th{text-align:left;font-weight:600;color:var(--tenue);padding:6px 8px;border-bottom:1px solid var(--bordo)}
+#tcag .vps-tab td{padding:6px 8px;border-bottom:1px solid var(--bordo);vertical-align:middle;font-variant-numeric:tabular-nums}
+#tcag .vps-tab td:last-child{width:45%}
+#tcag .vps-legenda{margin-top:8px;font-size:12px}
+@media (max-width:479px){#tcag .vps-tab thead{display:none}
+#tcag .vps-tab,
+#tcag .vps-tab tbody,
+#tcag .vps-tab tr,
+#tcag .vps-tab td{display:block;width:100%}
+#tcag .vps-tab tr{padding:8px 0;border-bottom:1px solid var(--bordo)}
+#tcag .vps-tab td{border-bottom:0;padding:2px 8px}
+#tcag .vps-tab td:last-child{width:100%}
+}
 </style>
 <style>
 /* Fuori da #tcag, ma SOLO quando l'app e' attiva (classe messa dal JS dopo l'accesso): il sito cede il posto all'app. */
@@ -6759,7 +6782,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.91.0';
+  var VERSIONE = 'V6.92.0';
 
   // V6.89.0: sull'indirizzo di prova (agenti.prova) le azioni passano dalla piattaforma e l'AI dal tunnel, sullo stesso indirizzo; altrove nessun cambio
   function suIndirizzoProva(host){
@@ -22726,7 +22749,7 @@ function stucAzione(a, el){
     case 'stua-prova-chiedi': stucProvaChiedi(); break;
   }
 }
-/* ===================== ADMINISTRATION > VPS HEALTH (V6.91.0): admin only, only on agenti.prova ======================= */
+/* ===================== ADMINISTRATION > VPS HEALTH (V6.92.0): admin only, only on agenti.prova ======================= */
   var VPS = { dati: null, ore: 24, caricando: false, errore: null, timer: null, agg: 0 };   // agg = Date.now() of the last good answer
   var VPS_PERIODI = [[6, '6 ore'], [24, '24 ore'], [168, '7 giorni']];
   var VPS_PILL = { ok: 's-app', attenzione: 's-rich', grave: 's-nuova' };
@@ -22853,6 +22876,20 @@ function stucAzione(a, el){
     return Math.max(1, (massimo == null ? 0 : massimo) * 1.1);
   }
 
+  // pure: width of a usage bar, from 0 to 100 (one decimal); null when there is no number
+  function vpsLarghezza(pct){
+    if(typeof pct !== 'number' || !isFinite(pct)) return null;
+    return Math.round(Math.min(100, Math.max(0, pct)) * 10) / 10;
+  }
+
+  // pure: share of the entries with the container on (ok or riavvio), in percent; null when there are no entries
+  function vpsAcceso(lista){
+    if(!Array.isArray(lista) || !lista.length) return null;
+    var su = 0;
+    lista.forEach(function(p){ if(p && (p.s === 'ok' || p.s === 'riavvio')) su++; });
+    return su / lista.length * 100;
+  }
+
   function vpsFerma(){
     if(VPS.timer){ clearInterval(VPS.timer); VPS.timer = null; }
   }
@@ -22937,28 +22974,39 @@ function stucAzione(a, el){
       var lista = a && Array.isArray(a.dischi) ? a.dischi : [];
       return lista.filter(function(x){ return x && x.punto === '/'; })[0] || null;
     }
+    // every card gives: the short value, the bar percentage (or null) and the short detail ('' when there is none)
     function cartaCpu(c){
-      if(!num(c.uso_pct)) return '-';
-      var core = num(c.core) ? c.core : '-';
-      return vpsCifra(c.uso_pct, 1) + ' % su ' + core + ' core · carico ' + (c.carico || []).map(function(x){ return num(x) ? vpsCifra(x, 2) : '-'; }).join(' / ');
+      if(!num(c.uso_pct)) return { v: '-', p: null, d: '' };
+      var core = num(c.core) ? 'su ' + c.core + ' core · ' : '';
+      return { v: vpsCifra(c.uso_pct, 1) + ' %', p: c.uso_pct, d: core + 'carico ' + (c.carico || []).map(function(x){ return num(x) ? vpsCifra(x, 2) : '-'; }).join(' / ') };
+    }
+    // the RAM percentage is read from totale and disponibile; the usata_pct sent by the VPS is the fallback
+    function percRam(r){
+      if(num(r.totale_mb) && num(r.disponibile_mb) && r.totale_mb > 0) return (r.totale_mb - r.disponibile_mb) / r.totale_mb * 100;
+      return num(r.usata_pct) ? r.usata_pct : null;
     }
     function cartaRam(r){
-      if(!num(r.usata_pct)) return '-';
-      var p = vpsCifra(r.usata_pct, 1) + ' %';
-      if(!num(r.totale_mb) || !num(r.disponibile_mb)) return p;
-      return vpsCifra((r.totale_mb - r.disponibile_mb) / 1024, 1) + ' GB usati su ' + vpsCifra(r.totale_mb / 1024, 1) + ' GB (' + p + ') · liberi ' + vpsCifra(r.disponibile_mb / 1024, 1) + ' GB';
+      var p = percRam(r);
+      if(p === null) return { v: '-', p: null, d: '' };
+      var d = '';
+      if(num(r.totale_mb) && num(r.disponibile_mb)) d = vpsCifra((r.totale_mb - r.disponibile_mb) / 1024, 1) + ' GB usati su ' + vpsCifra(r.totale_mb / 1024, 1) + ' GB · liberi ' + vpsCifra(r.disponibile_mb / 1024, 1) + ' GB';
+      return { v: vpsCifra(p, 1) + ' %', p: p, d: d };
     }
     function cartaSwap(s){
-      if(s.totale_mb === 0) return 'Non attivo';
-      if(!num(s.totale_mb) || !num(s.usata_mb)) return '-';
-      return s.usata_mb + ' MB usati su ' + s.totale_mb + ' MB';
+      if(s.totale_mb === 0) return { v: 'Non attivo', p: null, d: '' };
+      if(!num(s.totale_mb) || !num(s.usata_mb) || s.totale_mb <= 0) return { v: '-', p: null, d: '' };
+      var p = s.usata_mb / s.totale_mb * 100;
+      return { v: vpsCifra(p, 1) + ' %', p: p, d: s.usata_mb + ' MB usati su ' + s.totale_mb + ' MB' };
     }
     function cartaDischi(lista){
-      return lista.map(function(d){
+      var radice = discoRadice() || lista[0] || null;
+      var p = radice && num(radice.usato_pct) ? radice.usato_pct : null;
+      var det = lista.map(function(d){
         if(!num(d.totale_gb) || !num(d.usato_pct)) return d.punto + ' ' + d.usato_pct + ' %';
         var usati = d.totale_gb * d.usato_pct / 100;
-        return d.punto + ': ' + vpsCifra(usati, 1) + ' GB usati su ' + vpsCifra(d.totale_gb, 1) + ' GB (' + vpsCifra(d.usato_pct, 1) + ' %) · liberi ' + vpsCifra(d.totale_gb - usati, 1) + ' GB';
+        return d.punto + ': ' + vpsCifra(usati, 1) + ' GB usati su ' + vpsCifra(d.totale_gb, 1) + ' GB · liberi ' + vpsCifra(d.totale_gb - usati, 1) + ' GB';
       }).join(' | ');
+      return { v: p === null ? '-' : vpsCifra(p, 1) + ' %', p: p, d: det };
     }
     var giorniMin = null;
     if(a && a.certificati){
@@ -22981,7 +23029,11 @@ function stucAzione(a, el){
     ];
     var cardsHtml = CARTE.map(function(c){
       var liv = livelloDi(c[0]);
-      return H`<section class="card vps-card"><div class="vps-card-testa"><h3>${c[1]}</h3><span class="pill ${VPS_PILL[liv]}">${VPS_LIVELLO[liv]}</span></div><p class="vps-valore">${c[2]}</p><p class="mut">${testiDi(c[0])}</p></section>`;
+      var t = c[2] && typeof c[2] === 'object' ? c[2] : { v: c[2], p: null, d: '' };
+      var w = vpsLarghezza(t.p);
+      var barra = w === null ? '' : H`<svg class="vps-barra" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><rect class="vps-barra-fondo" width="100" height="6"/><rect class="vps-barra-pieno vps-b-${liv}" width="${w}" height="6"/></svg>`;
+      var det = t.d ? H`<p class="vps-det">${t.d}</p>` : '';
+      return H`<section class="card vps-card"><div class="vps-card-testa"><h3>${c[1]}</h3><span class="pill ${VPS_PILL[liv]}">${VPS_LIVELLO[liv]}</span></div><p class="vps-valore">${t.v}</p>${barra}${det}<p class="mut">${testiDi(c[0])}</p></section>`;
     });
     var passo = Number(serie.passo_s) || 300;
     var pt = punti.map(function(p){
@@ -23007,6 +23059,7 @@ function stucAzione(a, el){
       var valore = ult === null ? '-' : Math.round(ult * 10) / 10 + g[3];
       if(!pt.length) return H`<section class="card vps-graf"><div class="vps-graf-testa"><h3>${g[0]}</h3><b>${valore}</b></div><p class="mut">Nessun dato nel periodo.</p></section>`;
       var linee = H`<path class="vps-linea" d="${vpsLinea(pt, g[1], passo, 600, 140, g[2])}"/>`;
+      var griglia = H`<line class="vps-gl" x1="0" y1="1" x2="600" y2="1"/><line class="vps-gl" x1="0" y1="70" x2="600" y2="70"/><line class="vps-gl" x1="0" y1="139" x2="600" y2="139"/>`;
       if(g[1] === 'disco_pct') linee = H`${linee}<path class="vps-linea vps-linea2" d="${vpsLinea(pt, 'disco_docker_pct', passo, 600, 140, 100)}"/>`;
       // full scale under the chart, and min, average and max of the period (GB in brackets for RAM and disk)
       function pieno(){
@@ -23025,10 +23078,12 @@ function stucAzione(a, el){
       var st = vpsStat(pt, g[1]);
       var riga = st ? H`<p class="mut vps-stat">${'min ' + dettaglio(st.min) + ' · media ' + dettaglio(st.media) + ' · max ' + dettaglio(st.max)}</p>` : '';
       var scala = H`<div class="vps-assi vps-scala"><span>0</span><span>${pieno()}</span></div>`;
-      return H`<section class="card vps-graf"><div class="vps-graf-testa"><h3>${g[0]}</h3><b>${valore}</b></div><svg class="vps-svg" viewBox="0 0 600 140" preserveAspectRatio="none" role="img" aria-label="${g[0] + ': ' + valore}">${linee}</svg>${scala}<div class="vps-assi"><span>${fmt(pt[0].t)}</span><span>${fmt(pt[pt.length - 1].t)}</span></div>${riga}</section>`;
+      return H`<section class="card vps-graf"><div class="vps-graf-testa"><h3>${g[0]}</h3><b>${valore}</b></div><svg class="vps-svg" viewBox="0 0 600 140" preserveAspectRatio="none" role="img" aria-label="${g[0] + ': ' + valore}">${griglia}${linee}</svg>${scala}<div class="vps-assi"><span>${fmt(pt[0].t)}</span><span>${fmt(pt[pt.length - 1].t)}</span></div>${riga}</section>`;
     }
     var grafici = GRAFICI.map(graficoHtml);
-    var strisce = Object.keys(serie.contenitori || {}).map(function(nome){
+    // V6.92.0: una sola card con la tabella dei contenitori (stato, % di tempo acceso nel periodo, striscia)
+    var contNomi = Object.keys(serie.contenitori || {});
+    var contenitori = contNomi.length ? H`<section class="card vps-graf vps-cont"><h3>Contenitori</h3><table class="vps-tab"><thead><tr><th>Nome</th><th>Ora</th><th>Acceso nel periodo</th><th>Andamento</th></tr></thead><tbody>${contNomi.map(function(nome){
       var lista = serie.contenitori[nome] || [];
       var w = lista.length ? 600 / lista.length : 600;
       var rects = lista.map(function(p, i){
@@ -23036,9 +23091,13 @@ function stucAzione(a, el){
         st = st === 'ok' || st === 'riavvio' ? st : 'giu';
         return H`<rect x="${i * w}" y="0" width="${w}" height="12" class="${'vps-s-' + st}"/>`;
       });
-      return H`<section class="card vps-graf"><h3>Contenitore ${nome}</h3><svg class="vps-striscia" viewBox="0 0 600 12" preserveAspectRatio="none" role="img" aria-label="Stato di ${nome}">${rects}</svg></section>`;
-    });
-    put(b, H`<div class="narrow adm-largo" id="tcag-vps">${erroreBlocco}${chips}${avvisoDati}<div class="vps-griglia">${cardsHtml}</div><div class="vps-grafici">${grafici}</div>${strisce}<p class="mut vps-nota">Aggiornato alle ${F_ORA.format(new Date(VPS.agg))} · si aggiorna ogni minuto · i buchi nei grafici = nessun dato</p></div>`);
+      var ultima = null, k;
+      for(k = lista.length - 1; k >= 0; k--){ if(lista[k]){ ultima = lista[k].s; break; } }
+      var stato = ultima === 'ok' ? ['s-app', 'In funzione'] : ultima === 'riavvio' ? ['s-rich', 'Riavviato'] : ['s-nuova', 'Fermo'];
+      var acceso = vpsAcceso(lista);
+      return H`<tr><td>${nome}</td><td><span class="pill ${stato[0]}">${stato[1]}</span></td><td>${acceso === null ? '-' : vpsCifra(acceso, 1) + ' %'}</td><td><svg class="vps-striscia" viewBox="0 0 600 12" preserveAspectRatio="none" role="img" aria-label="Stato di ${nome}">${rects}</svg></td></tr>`;
+    })}</tbody></table><p class="mut vps-legenda">Verde = acceso · giallo = riavvio · rosso = fermo o nessun dato</p></section>` : '';
+    put(b, H`<div class="narrow adm-largo" id="tcag-vps">${erroreBlocco}${chips}${avvisoDati}<div class="vps-griglia">${cardsHtml}</div><div class="vps-grafici">${grafici}</div>${contenitori}<p class="mut vps-nota">Aggiornato alle ${F_ORA.format(new Date(VPS.agg))} · si aggiorna ogni minuto · i buchi nei grafici = nessun dato</p></div>`);
   }
 
   function vpsAzione(a, el){
