@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://accounts.google.com https://ai.teamcontatoremax.com:8443 https://cdnjs.cloudflare.com blob: data:; frame-src https://accounts.google.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <!--
-  Guscio app Team Contato - V1.4.0 (build 0c9d8ab7)
+  Guscio app Team Contato - V1.4.0 (build cb2dbebd)
   GENERATO da strumenti/costruisci-app.cjs: non modificare a mano.
-  Contiene il Code Block "Area Agenti" V6.92.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
+  Contiene il Code Block "Area Agenti" V6.93.0 (stesso codice gia' pubblico sul sito) + il guscio dell'app.
   Nessun dato e nessun segreto: chi non e' entrato vede solo la schermata di accesso.
 -->
 <title>Team Contato · Area Agenti</title>
@@ -56,7 +56,7 @@
     if (v && /^[a-z0-9\/_-]{1,60}$/i.test(v) && !location.hash) history.replaceState(null, '', location.pathname + '#' + v);
   } catch (e) {}
 })(document);
-window.TC_APP = { versione: '1.4.0', build: '0c9d8ab7', blocco: 'V6.92.0' };
+window.TC_APP = { versione: '1.4.0', build: 'cb2dbebd', blocco: 'V6.93.0' };
 </script>
 <style>
 /* critico: la schermata d'avvio si vede subito, solo nell'app installata */
@@ -6782,7 +6782,7 @@ html.tcag-app-attiva .manage-cookies-bar{display:none!important}
   // dispositivo: serve alla scheda "App sul telefono" della pagina riservata (Altro)
   r.setAttribute('data-dev', (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : (/Android/.test(navigator.userAgent) ? 'android' : 'pc'));
 
-  var VERSIONE = 'V6.92.0';
+  var VERSIONE = 'V6.93.0';
 
   // V6.89.0: sull'indirizzo di prova (agenti.prova) le azioni passano dalla piattaforma e l'AI dal tunnel, sullo stesso indirizzo; altrove nessun cambio
   function suIndirizzoProva(host){
@@ -12954,7 +12954,8 @@ function findClose(){
     var a = document.createElement('a');
     a.href = v.dopo; a.download = renNomeLotto(v.n, v.nome); a.rel = 'noopener'; a.style.display = 'none';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+    if(v.fh > 0 && v.fh < v.h) toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+    else toast('Salvato.');
   }
   function renLottoZip(){
     var L = REN.lotto; if(!L || L.zipOcc) return;
@@ -12988,9 +12989,11 @@ function findClose(){
       a.href = u; a.download = renNomeZip(new Date()); a.rel = 'noopener'; a.style.display = 'none';
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(function(){ URL.revokeObjectURL(u); }, 60000);
+      var conFascia = fatti.some(function(v){ return v.fh > 0 && v.fh < v.h; });
+      var nota = conFascia ? '. Sulle immagini c’è la dicitura AI: non toglierla.' : '. Ricorda la dicitura nel testo dell’annuncio.';
       toast(conAff
-        ? 'Salvato lo zip con ' + fatti.length + ' render e ' + (fatti.length - mancate) + ' Prima | Dopo' + (mancate ? ' (' + mancate + ' non riusciti)' : '') + '. Sulle immagini c’è la dicitura AI: non toglierla.'
-        : 'Salvato lo zip con ' + fatti.length + ' render. Sulle immagini c’è la dicitura AI: non toglierla.');
+        ? 'Salvato lo zip con ' + fatti.length + ' render e ' + (fatti.length - mancate) + ' Prima | Dopo' + (mancate ? ' (' + mancate + ' non riusciti)' : '') + nota
+        : 'Salvato lo zip con ' + fatti.length + ' render' + nota);
     }).catch(function(){ L.zipOcc = false; L.zipMsg = ''; disegnaLotto(); toast('Non riesco a preparare lo zip. Scarica i render uno alla volta.'); });
   }
   function renLottoAvvisoUscita(ev){
@@ -13266,6 +13269,7 @@ function findClose(){
         ${E.foto ? H`<button class="btn sec big" type="button" data-act="ren-foto" data-k="gal">Scegli un’altra foto</button>` : ''}</div></div>`;
     } else if(f === 'fatto' && REN.ris){
       var R = REN.ris, ok = !!(navigator.canShare && window.File && (function(){ try { return navigator.canShare({ files:[new File([R.blob], 'x.jpg', { type:'image/jpeg' })] }); } catch(e){ return false; } })());
+      var conFascia = R.fh > 0 && R.fh < R.h;
       var fh = R.fh || R.h;       // il confronto usa solo la FOTO: la striscia con la dicitura sta in fondo al file e viene tagliata fuori dal riquadro
       h = H`<div class="card ren-ris" style="--ar:${(R.w / fh).toFixed(4)}">
         <h2>Ecco il render${R.stile ? ' · ' + R.stile : ''}</h2>
@@ -13279,18 +13283,18 @@ function findClose(){
         <input type="range" class="cf-r" id="tcag-cf-r" min="0" max="100" value="50" step="1" aria-label="Confronto prima e dopo: da 0 a 100">` : H`<p class="cf-lab">Il confronto con la foto di partenza non è disponibile.</p>`}
         </div><div class="ris-az">
         <div class="ren-btns">
-          <button class="btn pri big" type="button" data-act="ren-scarica">${ic('download', 20)}<span>Scarica con dicitura AI</span></button>
-          ${R.fh && R.fh < R.h ? H`${renAffVersoHtml()}<button class="btn sec big" type="button" data-act="ren-aff-scarica"${REN.affOcc ? ' disabled' : ''}>${ic('download', 20)}<span>${REN.affOcc ? 'Preparo l’immagine…' : 'Scarica Prima | Dopo'}</span></button>` : ''}
+          <button class="btn pri big" type="button" data-act="ren-scarica">${ic('download', 20)}<span>${conFascia ? 'Scarica con dicitura AI' : 'Scarica'}</span></button>
+          ${R.fh > 0 && R.fh <= R.h ? H`${renAffVersoHtml()}<button class="btn sec big" type="button" data-act="ren-aff-scarica"${REN.affOcc ? ' disabled' : ''}>${ic('download', 20)}<span>${REN.affOcc ? 'Preparo l’immagine…' : 'Scarica Prima | Dopo'}</span></button>` : ''}
           ${R.imp ? H`<button class="btn sec big" type="button" data-act="ren-rigenera">${ic('refresh', 20)}<span>Rigenera</span></button>` : ''}
           ${ok ? H`<button class="btn sec big" type="button" data-act="ren-condividi">${ic('send', 20)}<span>Condividi</span></button>` : ''}
           <button class="btn sec big" type="button" data-act="ren-nuova">Nuova foto</button>
         </div>
-        <p class="ren-nota ren-dic"><b>Dicitura sull’immagine:</b> ${REN.dicitura || REN_DICITURA}</p>
-        <p class="ren-nota">È già stampata sul file che scarichi, in una striscia in fondo (qui sopra non si vede: il confronto mostra solo la foto), e c’è anche la scritta «Simulazione AI» dentro la foto. Non ritagliarle. Un render non sostituisce le foto reali.</p>
+        <p class="ren-nota ren-dic"><b>${conFascia ? 'Dicitura sull’immagine:' : 'Dicitura da mettere nell’annuncio:'}</b> ${REN.dicitura || REN_DICITURA}</p>
+        ${conFascia ? H`<p class="ren-nota">È già stampata sul file che scarichi, in una striscia in fondo (qui sopra non si vede: il confronto mostra solo la foto), e c’è anche la scritta «Simulazione AI» dentro la foto. Non ritagliarle. Un render non sostituisce le foto reali.</p>` : H`<p class="ren-nota">Sul file non ci sono scritte: dentro c’è solo il marcatore invisibile «creata con intelligenza artificiale». Quando pubblichi, metti la dicitura nel testo dell’annuncio o del post. Un render non sostituisce le foto reali.</p>`}
         <details class="ren-canali"><summary>Dove lo pubblichi</summary>
           <ul class="ren-cons">
-            <li><b>Sito, social, Vetrina TV:</b> usa il file com’è, con la striscia e la scritta.</li>
-            <li><b>idealista:</b> non accetta scritte sulle foto. La dicitura va <b>in testa alla descrizione</b> dell’annuncio (copiala qui sotto). Chiedi a Oscar prima di caricare il file.</li>
+            ${conFascia ? H`<li><b>Sito, social, Vetrina TV:</b> usa il file com’è, con la striscia e la scritta.</li>` : H`<li><b>Sito, social, Vetrina TV:</b> metti la dicitura nel testo del post o dell’annuncio.</li>`}
+            ${conFascia ? H`<li><b>idealista:</b> non accetta scritte sulle foto. La dicitura va <b>in testa alla descrizione</b> dell’annuncio (copiala qui sotto). Chiedi a Oscar prima di caricare il file.</li>` : H`<li><b>idealista:</b> la dicitura va <b>in testa alla descrizione</b> dell’annuncio (copiala qui sotto).</li>`}
             <li><b>Immobiliare.it e Casa.it:</b> nella didascalia della foto, se c’è il campo; altrimenti in testa alla descrizione.</li>
           </ul>
           <button class="btn sec big" type="button" data-act="ren-copia">${ic('copy', 20)}<span>Copia la dicitura</span></button>
@@ -13348,7 +13352,8 @@ function findClose(){
     var a = document.createElement('a');
     a.href = R.dopo; a.download = renNomeFile(); a.rel = 'noopener'; a.style.display = 'none';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+    if(R.fh > 0 && R.fh < R.h) toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+    else toast('Salvato.');
   }
   function renMisureAffiancate(W, FH, verso, fasciaH){
     if(verso === 'v') return { w:W, h:2 * FH + fasciaH, prima:{ x:0, y:0 }, dopo:{ x:0, y:FH }, fascia:{ x:0, y:2 * FH, w:W, h:fasciaH } };
@@ -13400,7 +13405,7 @@ function findClose(){
   function renAffianca(voce, verso){
     var W = voce.w, FH = voce.fh, FA = voce.h - voce.fh;
     var MSG = "Non riesco a creare l'immagine affiancata.";
-    if(!(W > 0 && FH > 0 && FA > 0)) return Promise.reject(renErrore(MSG, 0));
+    if(!(W > 0 && FH > 0 && FA >= 0)) return Promise.reject(renErrore(MSG, 0));
     var m = renMisureAffiancate(W, FH, verso, FA), urlP = '';
     function apri(src){
       return new Promise(function(ok, no){
@@ -13426,7 +13431,7 @@ function findClose(){
       cx.fillRect(0, 0, m.w, m.h);
       cx.drawImage(imgs[0], m.prima.x, m.prima.y, W, FH);
       cx.drawImage(imgs[1], 0, 0, W, FH, m.dopo.x, m.dopo.y, W, FH);
-      cx.drawImage(imgs[1], 0, FH, W, FA, m.fascia.x, m.fascia.y, W, FA);
+      if(FA > 0) cx.drawImage(imgs[1], 0, FH, W, FA, m.fascia.x, m.fascia.y, W, FA);
       var px = Math.max(16, Math.round(Math.min(W, FH) * 0.045));
       renEtichetta(cx, 'Prima', m.prima.x, m.prima.y, px);
       renEtichetta(cx, 'Dopo', m.dopo.x, m.dopo.y, px);
@@ -13466,7 +13471,8 @@ function findClose(){
       a.href = u; a.download = renNomeAffiancata(R.id, verso); a.rel = 'noopener'; a.style.display = 'none';
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(function(){ URL.revokeObjectURL(u); }, 60000);
-      toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+      if(R.fh > 0 && R.fh < R.h) toast('Salvato. Sull’immagine c’è la dicitura AI: non toglierla.');
+      else toast('Salvato.');
     }).catch(function(e){
       REN.affOcc = false; disegnaOut();
       if(e && e.http === 401){ esci('La sessione è scaduta: accedi di nuovo.'); return; }
